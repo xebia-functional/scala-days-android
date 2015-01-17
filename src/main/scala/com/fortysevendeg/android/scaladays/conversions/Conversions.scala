@@ -34,8 +34,7 @@ trait ApiConversions {
       toInformation(apiConference.conference),
       Nil,
       speakerList,
-      apiConference.eventList flatMap toSeqEvent
-    )
+      apiConference.eventList flatMap toSeqEvent)
   
   }
   
@@ -50,10 +49,9 @@ trait ApiConversions {
       normalSite = apiConferenceInfo.normalSite,
       registrationSite = apiConferenceInfo.registrationSite,
       utcTimezoneOffset = apiConferenceInfo.utcTimezoneOffset,
-      utcTimezoneOffsetMillis = apiConferenceInfo.utcTimezoneOffsetMillis
-    )
+      utcTimezoneOffsetMillis = apiConferenceInfo.utcTimezoneOffsetMillis)
   
-  def toSpeaker(apiSpeaker: ApiSpeaker): Speaker = {
+  def toSpeaker(apiSpeaker: ApiSpeaker): Speaker =
     Speaker(
       id = apiSpeaker.id,
       name = apiSpeaker.name,
@@ -61,35 +59,28 @@ trait ApiConversions {
       company = apiSpeaker.company,
       twitter = apiSpeaker.twitter,
       picture = apiSpeaker.picture,
-      bio = apiSpeaker.bio
-    )
-  }
+      bio = apiSpeaker.bio)
+
   
-  def toSlot(apiSlot: ApiSlot): Slot = {
+  def toSlot(apiSlot: ApiSlot): Slot =
     Slot(
       id = apiSlot.id,
       startTime = apiSlot.startTime,
-      endTime = apiSlot.endTime
-    )
-  }
+      endTime = apiSlot.endTime)
 
-  def toTrack(apiTrack: ApiTrack): Track = {
+  def toTrack(apiTrack: ApiTrack): Track =
     Track(
       id = apiTrack.id,
       name = apiTrack.name,
       host = apiTrack.host,
       shortDescription = apiTrack.shortdescription,
-      description = apiTrack.description
-    )
-  }
+      description = apiTrack.description)
 
-  def toLocation(apiLocation: ApiLocation): Location = {
+  def toLocation(apiLocation: ApiLocation): Location =
     Location(
       id = apiLocation.id,
       name = apiLocation.name,
-      mapUrl = apiLocation.mapUrl
-    )
-  }
+      mapUrl = apiLocation.mapUrl)
   
   def toSeqEvent(apiEvent: ApiEvent)(implicit slotList: Seq[Slot], trackList: Seq[Track], locationList: Seq[Location], speakerList: Seq[Speaker]): Seq[Event] = {
     apiEvent.slotIds map { slotId =>

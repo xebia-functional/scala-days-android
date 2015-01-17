@@ -16,8 +16,6 @@
 
 package com.fortysevendeg.android.scaladays.json.impl
 
-import java.io.InputStream
-
 import com.fortysevendeg.android.scaladays.json._
 import com.fortysevendeg.android.scaladays.model.api._
 import com.fortysevendeg.android.scaladays.scaladays.Service
@@ -29,6 +27,18 @@ import scala.util.{Try, Success}
 
 import scala.concurrent.ExecutionContext.Implicits.global
 
+trait ApiReads {
+
+  implicit val slotReads = Json.reads[ApiSlot]
+  implicit val locationReads = Json.reads[ApiLocation]
+  implicit val speakerReads = Json.reads[ApiSpeaker]
+  implicit val conferenceReads = Json.reads[ApiInformation]
+  implicit val trackReads = Json.reads[ApiTrack]
+  implicit val eventReads = Json.reads[ApiEvent]
+  implicit val responseReads = Json.reads[ApiConference]
+
+}
+
 trait JsonServicesComponentImpl
     extends JsonServicesComponent {
 
@@ -37,15 +47,8 @@ trait JsonServicesComponentImpl
   lazy val jsonServices = new JsonServicesImpl
 
   class JsonServicesImpl
-      extends JsonServices {
-    
-    implicit val slotReads = Json.reads[ApiSlot]
-    implicit val locationReads = Json.reads[ApiLocation]
-    implicit val speakerReads = Json.reads[ApiSpeaker]
-    implicit val conferenceReads = Json.reads[ApiInformation]
-    implicit val trackReads = Json.reads[ApiTrack]
-    implicit val eventReads = Json.reads[ApiEvent]
-    implicit val responseReads = Json.reads[ApiConference]
+      extends JsonServices
+      with ApiReads {
     
     override def loadJson: Service[JsonRequest, JsonResponse] = request =>
       Future {
@@ -60,7 +63,7 @@ trait JsonServicesComponentImpl
       }
     
       def loadFileContent(jsonPath: String, fromCache: Boolean): Try[String] = {
-        if (fromCache) FileUtils.getCacheJson(jsonPath) else FileUtils.getAssetsJson(jsonPath)
+        if (fromCache) FileUtils.getJsonCache(jsonPath) else FileUtils.getJsonAssets(jsonPath)
       }
     }
 
