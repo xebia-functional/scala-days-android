@@ -25,76 +25,72 @@ trait ApiConversions {
   private def parseDate(date: String) =
     DateTimeUtils.parseDate(date, DateTimeUtils.ISODateFormatterDayPrecission)
   
-  def toConference(apiConference: ApiConference): Conference = {
-    implicit val speakerList = apiConference.speakerList map toSpeaker
-    implicit val slotList = apiConference.slotList map toSlot
-    implicit val trackList = apiConference.trackList map toTrack
-    implicit val locationList = apiConference.locationList map toLocation
-    Conference(
-      toInformation(apiConference.conference),
-      Nil,
-      speakerList,
-      apiConference.eventList flatMap toSeqEvent)
-  
-  }
-  
-  def toInformation(apiConferenceInfo: ApiInformation): Information =
-    Information(
-      id = apiConferenceInfo.id,
-      name = apiConferenceInfo.name,
-      longName = apiConferenceInfo.longName,
-      nameAndLocation = apiConferenceInfo.nameAndLocation,
-      firstDay = parseDate(apiConferenceInfo.firstDay),
-      lastDay = parseDate(apiConferenceInfo.lastDay),
-      normalSite = apiConferenceInfo.normalSite,
-      registrationSite = apiConferenceInfo.registrationSite,
-      utcTimezoneOffset = apiConferenceInfo.utcTimezoneOffset,
-      utcTimezoneOffsetMillis = apiConferenceInfo.utcTimezoneOffsetMillis)
-  
-  def toSpeaker(apiSpeaker: ApiSpeaker): Speaker =
-    Speaker(
-      id = apiSpeaker.id,
-      name = apiSpeaker.name,
-      title = apiSpeaker.title,
-      company = apiSpeaker.company,
-      twitter = apiSpeaker.twitter,
-      picture = apiSpeaker.picture,
-      bio = apiSpeaker.bio)
-
-  
-  def toSlot(apiSlot: ApiSlot): Slot =
-    Slot(
-      id = apiSlot.id,
-      startTime = apiSlot.startTime,
-      endTime = apiSlot.endTime)
-
-  def toTrack(apiTrack: ApiTrack): Track =
-    Track(
-      id = apiTrack.id,
-      name = apiTrack.name,
-      host = apiTrack.host,
-      shortDescription = apiTrack.shortdescription,
-      description = apiTrack.description)
-
-  def toLocation(apiLocation: ApiLocation): Location =
-    Location(
-      id = apiLocation.id,
-      name = apiLocation.name,
-      mapUrl = apiLocation.mapUrl)
-  
-  def toSeqEvent(apiEvent: ApiEvent)(implicit slotList: Seq[Slot], trackList: Seq[Track], locationList: Seq[Location], speakerList: Seq[Speaker]): Seq[Event] = {
-    apiEvent.slotIds map { slotId =>
-      val speakerIds = apiEvent.speakerIds getOrElse Nil
-      Event(
-        id = apiEvent.id,
-        title = apiEvent.title,
-        description = apiEvent.aabstract,
-        eventType = EventType(),
-        slot = slotList.find(_.id == slotId),
-        track = trackList.find(_.id == (apiEvent.trackId getOrElse None)),
-        location = locationList.find(_.id == (apiEvent.locationId getOrElse None)),
-        speakers = speakerList.filter(speaker => speakerIds.contains(speaker.id))
-      )
-    } filter(_.slot.nonEmpty)
-  }
+//  def toConference(apiConference: ApiConference): Conference = {
+//    Conference(
+//      toInformation(apiConference.info),
+//      apiConference.schedule map toEvent,
+//      apiConference.sponsors map toSponsorType,
+//      apiConference.speakers map toSpeaker)
+//
+//  }
+//
+//  def toInformation(apiConferenceInfo: ApiInformation): Information =
+//    Information(
+//      id = apiConferenceInfo.id,
+//      name = apiConferenceInfo.name,
+//      longName = apiConferenceInfo.longName,
+//      nameAndLocation = apiConferenceInfo.nameAndLocation,
+//      firstDay = parseDate(apiConferenceInfo.firstDay),
+//      lastDay = parseDate(apiConferenceInfo.lastDay),
+//      normalSite = apiConferenceInfo.normalSite,
+//      registrationSite = apiConferenceInfo.registrationSite,
+//      utcTimezoneOffset = apiConferenceInfo.utcTimezoneOffset,
+//      utcTimezoneOffsetMillis = apiConferenceInfo.utcTimezoneOffsetMillis)
+//
+//  def toEvent(apiEvent: ApiEvent): Event =
+//    Event(
+//      id = apiEvent.id,
+//      title = apiEvent.title,
+//      description = apiEvent.description,
+//      eventType = apiEvent.`type`,
+//      startTime = parseDate(apiEvent.startTime),
+//      endTime = parseDate(apiEvent.endTime),
+//      date = apiEvent.date,
+//      track = apiEvent.track map toTrack,
+//      location = apiEvent.location map toLocation,
+//      speakers = apiEvent.speakers getOrElse Nil map toSpeaker)
+//
+//  def toSponsorType(apiSponsorType: ApiSponsorType): SponsorType =
+//    SponsorType(
+//      name = apiSponsorType.`type`,
+//      sponsors = apiSponsorType.sponsors map toSponsor)
+//
+//  def toSponsor(apiSponsor: ApiSponsor): Sponsor =
+//    Sponsor(
+//      logo = apiSponsor.logo,
+//      url = apiSponsor.url)
+//
+//  def toSpeaker(apiSpeaker: ApiSpeaker): Speaker =
+//    Speaker(
+//      id = apiSpeaker.id,
+//      name = apiSpeaker.name,
+//      title = apiSpeaker.title,
+//      company = apiSpeaker.company,
+//      twitter = apiSpeaker.twitter,
+//      picture = apiSpeaker.picture,
+//      bio = apiSpeaker.bio)
+//
+//  def toTrack(apiTrack: ApiTrack): Track =
+//    Track(
+//      id = apiTrack.id,
+//      name = apiTrack.name,
+//      host = apiTrack.host,
+//      shortDescription = apiTrack.shortdescription,
+//      description = apiTrack.description)
+//
+//  def toLocation(apiLocation: ApiLocation): Location =
+//    Location(
+//      id = apiLocation.id,
+//      name = apiLocation.name,
+//      mapUrl = apiLocation.mapUrl)
 }

@@ -17,34 +17,10 @@
 package com.fortysevendeg.android.scaladays.model.api
 
 case class ApiConference(
-  slotList: Seq[ApiSlot],
-  htmlContents: Map[String, String],
-  locationList: Seq[ApiLocation],
-  conference: ApiInformation,
-  speakerList: Seq[ApiSpeaker],
-  trackList: Seq[ApiTrack],
-  eventList: Seq[ApiEvent])
-
-case class ApiSlot(
-  id: Int, 
-  startTime: String, 
-  endTime: String)
-
-case class Topic()
-
-case class ApiLocation(
-  id: Int, 
-  name: String, 
-  mapUrl: String)
-
-case class ApiSpeaker(
-  id: Int, 
-  name: String, 
-  title: String, 
-  picture: Option[String],
-  company: String,
-  twitter: Option[String],
-  bio: String)
+  info: ApiInformation,
+  schedule: Seq[ApiEvent],
+  sponsors: Seq[ApiSponsorType],
+  speakers: Seq[ApiSpeaker])
 
 case class ApiInformation(
   id: Int,
@@ -58,6 +34,18 @@ case class ApiInformation(
   utcTimezoneOffset: String,
   utcTimezoneOffsetMillis: Long)
 
+case class ApiEvent(
+  id: Int,
+  title: String,
+  description: String,
+  `type`: Int,
+  startTime: String,
+  endTime: String,
+  date: String,
+  track: Option[ApiTrack],
+  location: Option[ApiLocation],
+  speakers: Option[Seq[ApiSpeaker]])
+
 case class ApiTrack(
   id: Int,
   name: String,
@@ -65,12 +53,24 @@ case class ApiTrack(
   shortdescription: String,
   description: String)
 
-case class ApiEvent(
-  id: Int, 
+case class ApiLocation(
+  id: Int,
+  name: String,
+  mapUrl: String)
+
+case class ApiSponsorType(
+  `type`: String,
+  items: Seq[ApiSponsor])
+
+case class ApiSponsor(
+  logo: String,
+  url: String)
+
+case class ApiSpeaker(
+  id: Int,
+  name: String,
   title: String,
-  `type`: Int,
-  slotIds: Seq[Int],
-  trackId: Option[Int],
-  locationId: Option[Int],
-  speakerIds: Option[Seq[Int]],
-  aabstract: String)
+  company: String,
+  twitter: Option[String],
+  picture: Option[String],
+  bio: String)

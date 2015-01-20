@@ -16,76 +16,110 @@
 
 package com.fortysevendeg.android.scaladays.conversions
 
-import com.fortysevendeg.android.scaladays.utils.DateTimeUtils
-import org.joda.time.DateTime
+import com.fortysevendeg.android.scaladays.model.api._
 
 trait TestConfig {
   
-  val slotId = 1
-
-  val trackId = 2
-
-  val locationId = 3
-
-  val speakerId = 4
-
-  val informationId = 5
-
-  val eventId = 6
-
-  val wrongId = -1000
+  val info = ApiInformation(
+    nameAndLocation = "Scala Days San Francisco, March 16-18, San Francisco, California",
+    id = 111,
+    firstDay = "2015-03-16",
+    lastDay = "2015-03-20",
+    utcTimezoneOffset = "America/Los_Angeles",
+    name = "scaladays-sanfran-2015",
+    longName = "Scala Days San Francisco",
+    registrationSite = "https://secure.trifork.com/scaladays-sanfran-2015/registration/",
+    normalSite = "http://gotocon.com/scaladays-sanfran-2015",
+    utcTimezoneOffsetMillis = -25200000)    
   
-  val name = "name"
+  val speaker1 = ApiSpeaker(id = 1111,
+    picture = Some("http://event.scaladays.org/dl/photos/Scala%20Days%202015%20speakers/speaker1_square.png"),
+    name = "Speaker 1",
+    title = "",
+    company = "Company of speaker 1",
+    twitter = Some("@speaker1"),
+    bio = "Speaker 1 biography\nhttp://event.scaladays.org")
+  
+  val speaker2 = ApiSpeaker(id = 2222,
+    picture = Option("http://event.scaladays.org/dl/photos/Scala%20Days%202015%20speakers/speaker2_square.png"),
+    name = "Speaker 2",
+    title = "",
+    company = "Company of speaker 2",
+    twitter = Option("@speaker2"),
+    bio = "Speaker 2 biography\nhttp://event.scaladays.org")
+  
+  val event1 = ApiEvent(
+    id = 6520,
+    title = "Registration Open",
+    description = "",
+    `type` = 3,
+    startTime = "2015-03-16T23:00:00Z",
+    endTime = "2015-03-16T23:00:00Z",
+    date = "MONDAY MARCH 16",
+    track = None,
+    location = None,
+    speakers = None)
+  
+  val event2 = ApiEvent(id = 6524,
+    title = "Keynote: Scala - where it came from, where it's going",
+    description = "",
+    `type` = 2,
+    startTime = "2015-03-17T00:00:00Z",
+    endTime = "2015-03-17T00:00:00Z",
+    date = "MONDAY MARCH 16",
+    track = Some(ApiTrack(id = 1051,
+      host = "",
+      description = "",
+      name = "Keynote",
+      shortdescription = "")),
+    location = Some(ApiLocation(id = 589,
+      name = "Herbst Pavilion",
+      mapUrl = "")),
+    speakers = Some(Seq(speaker1)))
+  
+  val event3 = ApiEvent(id = 6525,
+    title = "Keynote Tuesday",
+    description = "",
+    `type` = 2,
+    startTime = "2015-03-17T16:00:00Z",
+    endTime = "2015-03-17T16:00:00Z",
+    date = "TUESDAY MARCH 17",
+    track = None,
+    location = Some(ApiLocation(id =  589,
+      name =  "Herbst Pavilion",
+      mapUrl =  ""
+    )),
+    speakers = Some(Seq(speaker2)))
+  
+  val events = Seq(event1, event2, event3)
+  
+  val speakers = Seq(speaker1, speaker2)
+  
+  val sponsors = Seq(
+    ApiSponsorType(`type` = "Hosted by", 
+    Seq(
+      ApiSponsor(url = "http://www.scala-days-sponsor1.com",
+        logo = "http://event.scaladays.org/dl/photos/sponsors/sponsor1.png"),
+      ApiSponsor(url = "http://www.scala-days-sponsor2.com",
+        logo = "http://event.scaladays.org/dl/photos/sponsors/sponsor2.png"))),
+    ApiSponsorType(`type` = "Platinum", 
+    Seq(
+      ApiSponsor(url = "http://www.scala-days-sponsor3.com",
+        logo = "http://event.scaladays.org/dl/photos/sponsors/sponsor3.png"))),
+    ApiSponsorType(`type` = "Gold", 
+    Nil),
+    ApiSponsorType(`type` = "Silver",
+      Seq(
+        ApiSponsor(url = "http://www.scala-days-sponsor4.com",
+          logo = "http://event.scaladays.org/dl/photos/sponsors/sponsor4.png"),
+        ApiSponsor(url = "http://www.scala-days-sponsor5.com",
+          logo = "http://event.scaladays.org/dl/photos/sponsors/sponsor5.png"))))
 
-  val longName = "longName"
-
-  val nameAndLocation = "nameAndLocation"
-
-  val firstDayString = "2015-03-16"
-
-  val firstDayStringError = "unknown_date"
-
-  lazy val firstDay = DateTime.parse(firstDayString, DateTimeUtils.ISODateFormatterDayPrecission)
-
-  val lastDayString = "2015-03-20"
-
-  val lastDayStringError = "unknown_date"
-
-  lazy val lastDay = DateTime.parse(lastDayString, DateTimeUtils.ISODateFormatterDayPrecission)
-
-  val title = "title"
-
-  val company = "company"
-
-  val twitter = "twitter"
-
-  val picture = "picture"
-
-  val bio = "bio"
-
-  val host = "host"
-
-  val description = "shortDescription"
-
-  val shortDescription = "description"
-
-  val startTime = "startTime"
-
-  val endTime = "endTime"
-
-  val mapUrl = "mapUrl"
-
-  val normalSite = "http://gotocon.com/scaladays-sanfran-2015"
-
-  val registrationSite = "https://secure.trifork.com/scaladays-sanfran-2015/registration/"
-
-  val utcTimezoneOffset = "America/Los_Angeles"
-
-  val utcTimezoneOffsetMillis = -25200000
-
-  val typeInt = 1
-
-  val aabstract = "aabstract"
+  val conference = ApiConference(
+    info = info,
+    schedule = events,
+    sponsors = sponsors,
+    speakers = speakers)
 
 }
 

@@ -29,12 +29,13 @@ import scala.concurrent.ExecutionContext.Implicits.global
 
 trait ApiReads {
 
-  implicit val slotReads = Json.reads[ApiSlot]
-  implicit val locationReads = Json.reads[ApiLocation]
-  implicit val speakerReads = Json.reads[ApiSpeaker]
   implicit val conferenceReads = Json.reads[ApiInformation]
   implicit val trackReads = Json.reads[ApiTrack]
+  implicit val locationReads = Json.reads[ApiLocation]
+  implicit val speakerReads = Json.reads[ApiSpeaker]
   implicit val eventReads = Json.reads[ApiEvent]
+  implicit val sponsorReads = Json.reads[ApiSponsor]
+  implicit val sponsorTypeReads = Json.reads[ApiSponsorType]
   implicit val responseReads = Json.reads[ApiConference]
 
 }

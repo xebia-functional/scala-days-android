@@ -25,6 +25,7 @@ object DateTimeUtils {
 
   val ISODateFormatterDayPrecission = ISODateTimeFormat.date.withZoneUTC
   val ISODateFormatterMillisPrecission = ISODateTimeFormat.dateTime
+  val ISODateFormatterDay = ISODateTimeFormat.date
   val DateWithoutZoneStringLength = 23
   
   def parseDate(

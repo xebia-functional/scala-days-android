@@ -16,7 +16,7 @@
 
 package com.fortysevendeg.android.scaladays.conversions
 
-import com.fortysevendeg.android.scaladays.model.app._
+import com.fortysevendeg.android.scaladays.model.api._
 import org.specs2.execute.{Result, AsResult}
 import org.specs2.mutable.Around
 import org.specs2.specification.Scope
@@ -27,22 +27,22 @@ trait BaseTestSupport extends Around with Scope {
 
 }
 
-trait ApiConversionsTestSupport
+trait JsonModelTestSupportTestSupport
   extends BaseTestSupport
   with TestConfig {
 
-  val slot = Slot(slotId, startTime, endTime)
 
-  val track = Track(trackId, name, host, shortDescription, description)
 
-  val location = Location(locationId, name, mapUrl)
+}
 
-  val speaker = Speaker(speakerId, name, title, company, Some(twitter), Some(picture), bio)
-
-  val information = Information(informationId, name, longName, nameAndLocation, firstDay, lastDay, normalSite, registrationSite, utcTimezoneOffset, utcTimezoneOffsetMillis)
-
-  val simpleEvent = Event(eventId, name, aabstract, EventType(), Some(slot), None, None, Nil)
-
-  val event = Event(eventId, name, aabstract, EventType(), Some(slot), Some(track), Some(location), Seq(speaker))
-
+object JsonImplicits {
+  import play.api.libs.json._
+  implicit val conferenceReads = Json.reads[ApiInformation]
+  implicit val sponsorReads = Json.reads[ApiSponsor]
+  implicit val sponsorTypeReads = Json.reads[ApiSponsorType]
+  implicit val locationReads = Json.reads[ApiLocation]
+  implicit val speakerReads = Json.reads[ApiSpeaker]
+  implicit val trackReads = Json.reads[ApiTrack]
+  implicit val eventReads = Json.reads[ApiEvent]
+  implicit val responseReads = Json.reads[ApiConference]
 }
