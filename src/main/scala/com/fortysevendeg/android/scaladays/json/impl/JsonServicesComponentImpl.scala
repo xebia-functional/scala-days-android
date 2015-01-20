@@ -45,7 +45,7 @@ trait JsonServicesComponentImpl
 
   self: AppContextProvider =>
 
-  lazy val jsonServices = new JsonServicesImpl
+  val jsonServices = new JsonServicesImpl
 
   class JsonServicesImpl
       extends JsonServices

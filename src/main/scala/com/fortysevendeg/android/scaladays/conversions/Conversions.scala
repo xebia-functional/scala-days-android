@@ -25,14 +25,12 @@ trait ApiConversions {
   private def parseDate(date: String) =
     DateTimeUtils.parseDate(date, DateTimeUtils.ISODateFormatterDayPrecission)
   
-  def toConference(apiConference: ApiConference): Conference = {
+  def toConference(apiConference: ApiConference): Conference =
     Conference(
       toInformation(apiConference.info),
       apiConference.schedule map toEvent,
       apiConference.sponsors map toSponsorType,
       apiConference.speakers map toSpeaker)
-
-  }
 
   def toInformation(apiConferenceInfo: ApiInformation): Information =
     Information(
@@ -63,7 +61,7 @@ trait ApiConversions {
   def toSponsorType(apiSponsorType: ApiSponsorType): SponsorType =
     SponsorType(
       name = apiSponsorType.`type`,
-      sponsors = apiSponsorType.sponsors map toSponsor)
+      sponsors = apiSponsorType.items map toSponsor)
 
   def toSponsor(apiSponsor: ApiSponsor): Sponsor =
     Sponsor(

@@ -29,11 +29,7 @@ trait BaseTestSupport extends Around with Scope {
 
 trait JsonModelTestSupportTestSupport
   extends BaseTestSupport
-  with TestConfig {
-
-
-
-}
+  with TestConfig
 
 object JsonImplicits {
   import play.api.libs.json._
