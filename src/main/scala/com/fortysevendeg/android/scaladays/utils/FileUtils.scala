@@ -16,7 +16,7 @@
 
 package com.fortysevendeg.android.scaladays.utils
 
-import java.io.{InputStream, File}
+import java.io.{Closeable, InputStream, File}
 
 import macroid.AppContext
 
@@ -26,14 +26,20 @@ object FileUtils {
   
   def getJsonAssets(fileName: String)(implicit appContext: AppContext): Try[String] =
     Try {
-      val assetsFile: InputStream = appContext.get.getResources.getAssets.open(fileName)
-      scala.io.Source.fromInputStream(assetsFile).mkString
+      withResource[InputStream, String](appContext.get.getResources.getAssets.open(fileName)) {
+        inputStream => scala.io.Source.fromInputStream(inputStream).mkString
+      }
     }
   
   def getJsonCache(fileName: String)(implicit appContext: AppContext): Try[String] =
     Try {
-      val cacheDir: File = appContext.get.getCacheDir
-      scala.io.Source.fromFile(new File(cacheDir, fileName), "UTF-8").mkString
+      withResource[File, String](appContext.get.getCacheDir) {
+        cacheDir => scala.io.Source.fromFile(new File(cacheDir, fileName), "UTF-8").mkString
+      }
     }
-
+  
+  private def withResource[C <: Closeable, R](closeable: C)(f: C => R) = {
+    import scala.util.control.Exception._
+    allCatch.andFinally{ closeable.close() } apply { f(closeable) }
+  }
 }

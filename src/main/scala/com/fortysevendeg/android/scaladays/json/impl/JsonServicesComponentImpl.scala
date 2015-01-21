@@ -54,9 +54,8 @@ trait JsonServicesComponentImpl
     override def loadJson: Service[JsonRequest, JsonResponse] = request =>
       Future {
         val fileContent: Try[String] = loadFileContent(request.jsonPath, request.fromCache)
-        fileContent map { jsonSource =>
-          val json: JsValue = Json.parse(jsonSource)
-          json.as[ApiConference]
+        (fileContent map Json.parse) map {
+          _.as[ApiConference]
         } match {
           case Success(apiConference) => JsonResponse(Some(apiConference))
           case _ => JsonResponse(None)
