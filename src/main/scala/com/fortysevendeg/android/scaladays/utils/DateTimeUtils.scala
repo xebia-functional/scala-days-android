@@ -14,21 +14,18 @@
  * limitations under the License.
  */
 
-package com.fortysevendeg.android.scaladays.ui
+package com.fortysevendeg.android.scaladays.utils
 
-import android.os.Bundle
-import android.support.v4.app.FragmentActivity
-import android.util.Log
-import macroid.{AppContext, Contexts}
+import org.joda.time.format.{DateTimeFormatter, ISODateTimeFormat}
+import org.joda.time.DateTime
 
-class MainActivity
-  extends FragmentActivity
-  with Contexts[FragmentActivity] {
+object DateTimeUtils {
 
-  override def onCreate(savedInstanceState: Bundle) = {
-    super.onCreate(savedInstanceState)
-    Log.d("Test", "On Create")
-    
-  }
+  val ISODateFormatterDayPrecission = ISODateTimeFormat.date.withZoneUTC
+  val ISODateFormatterMillisPrecission = ISODateTimeFormat.dateTime
+  val ISODateFormatterDay = ISODateTimeFormat.date
 
+  def parseDate(
+      date: String,
+      fmt: DateTimeFormatter = ISODateFormatterMillisPrecission): DateTime = DateTime.parse(date, fmt)
 }

@@ -14,21 +14,10 @@
  * limitations under the License.
  */
 
-package com.fortysevendeg.android.scaladays.ui
+package com.fortysevendeg.android.scaladays.json
 
-import android.os.Bundle
-import android.support.v4.app.FragmentActivity
-import android.util.Log
-import macroid.{AppContext, Contexts}
+import com.fortysevendeg.android.scaladays.model.api.ApiConference
 
-class MainActivity
-  extends FragmentActivity
-  with Contexts[FragmentActivity] {
+case class JsonRequest(jsonPath: String, fromCache: Boolean = false)
 
-  override def onCreate(savedInstanceState: Bundle) = {
-    super.onCreate(savedInstanceState)
-    Log.d("Test", "On Create")
-    
-  }
-
-}
+case class JsonResponse(apiResponse: Option[ApiConference])

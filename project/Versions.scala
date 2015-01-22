@@ -8,4 +8,5 @@ object Versions {
   val macroidExtras = "0.1-SNAPSHOT"
   val macroidV = "2.0.0-M3"
   val wartremoverV = "0.11"
+  val playJson = "2.3.4"
 }

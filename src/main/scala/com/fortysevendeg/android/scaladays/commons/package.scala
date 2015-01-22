@@ -14,21 +14,12 @@
  * limitations under the License.
  */
 
-package com.fortysevendeg.android.scaladays.ui
+package com.fortysevendeg.android.scaladays
 
-import android.os.Bundle
-import android.support.v4.app.FragmentActivity
-import android.util.Log
-import macroid.{AppContext, Contexts}
+import scala.concurrent.Future
 
-class MainActivity
-  extends FragmentActivity
-  with Contexts[FragmentActivity] {
+package object scaladays {
 
-  override def onCreate(savedInstanceState: Bundle) = {
-    super.onCreate(savedInstanceState)
-    Log.d("Test", "On Create")
-    
-  }
+  type Service[Req, Res] = Req => Future[Res]
 
 }

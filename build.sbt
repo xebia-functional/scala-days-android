@@ -1,5 +1,7 @@
 import Libraries.android._
 import Libraries.macroid._
+import Libraries.json._
+import Libraries.test._
 
 android.Plugin.androidBuild
 
@@ -29,6 +31,8 @@ libraryDependencies ++= Seq(
   aar(androidCardView),
   aar(androidRecyclerview),
   aar(macroidExtras),
+  playJson,
+  specs2,
   compilerPlugin(Libraries.wartRemover))
 
 run <<= run in Android

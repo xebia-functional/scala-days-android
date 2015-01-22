@@ -34,4 +34,11 @@ object Libraries {
     lazy val macroidExtras = "com.fortysevendeg" %% "macroid-extras" % Versions.macroidExtras
   }
 
+  object json {
+    lazy val playJson = "com.typesafe.play" %% "play-json" % Versions.playJson
+  }
+  
+  object test {
+    lazy val specs2 = "org.specs2" %% "specs2-core" % "2.4.15" % "test"
+  }
 }
