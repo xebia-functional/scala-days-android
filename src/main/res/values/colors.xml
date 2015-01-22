@@ -18,8 +18,9 @@
 <resources>
 
     <!-- Main colors -->
-    <color name="primary">#00BCD4</color>
-    <color name="primary_dark">#00ACC1</color>
-    <color name="accent">#00BCD4</color>
+    <color name="primary">#364550</color>
+    <color name="primary_dark">#2F3C46</color>
+    <color name="accent">#2F3C46</color>
+    <color name="menuBackground">#364550</color>
 
 </resources>

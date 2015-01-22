@@ -14,21 +14,23 @@
  * limitations under the License.
  */
 
-package com.fortysevendeg.android.scaladays.ui
+package com.fortysevendeg.android.scaladays.ui.commons
 
-import android.os.Bundle
-import android.support.v4.app.FragmentActivity
-import android.util.Log
-import macroid.{AppContext, Contexts}
+import android.graphics.Color
+import android.support.v7.widget.Toolbar
+import com.fortysevendeg.android.scaladays.R
+import com.fortysevendeg.macroid.extras.ViewTweaks._
+import macroid.Tweak
 
-class MainActivity
-  extends FragmentActivity
-  with Contexts[FragmentActivity] {
+object CommonsStyles {
 
-  override def onCreate(savedInstanceState: Bundle) = {
-    super.onCreate(savedInstanceState)
-    Log.d("Test", "On Create")
-    
-  }
+  val toolbarStyle = vBackground(R.color.primary) + ToolbarTweaksExtra.tbTextColor(Color.WHITE) + vMatchWidth
+
+}
+
+object ToolbarTweaksExtra {
+  type W = Toolbar
+
+  def tbTextColor(color: Int) = Tweak[W](_.setTitleTextColor(color))
 
 }

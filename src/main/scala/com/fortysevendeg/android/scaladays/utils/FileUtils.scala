@@ -16,7 +16,7 @@
 
 package com.fortysevendeg.android.scaladays.utils
 
-import java.io.{InputStream, File}
+import java.io.{FileInputStream, InputStream, File}
 
 import macroid.AppContext
 
@@ -35,8 +35,8 @@ object FileUtils {
   
   def getJsonCache(fileName: String)(implicit appContext: AppContext): Try[String] =
     Try {
-      withResource[File, String](appContext.get.getCacheDir) {
-        cacheDir => scala.io.Source.fromFile(new File(cacheDir, fileName), "UTF-8").mkString
+      withResource[FileInputStream, String](new FileInputStream(new File(appContext.get.getCacheDir, fileName))) {
+        file => scala.io.Source.fromInputStream(file, "UTF-8").mkString
       }
     }
 }

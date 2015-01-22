@@ -16,10 +16,17 @@
 
 <resources>
 
-    <style name="AppTheme" parent="@android:style/Theme.Holo.Light.DarkActionBar">
+  <style name="AppTheme" parent="AppTheme.Base"/>
 
-        <item name="android:actionBarStyle">@style/HoloActionBar</item>
-
-    </style>
+  <style name="AppTheme.Base" parent="Theme.AppCompat.Light.NoActionBar">
+    <item name="colorPrimary">@color/primary</item>
+    <item name="colorPrimaryDark">@color/primary_dark</item>
+    <item name="actionBarStyle">@style/ActionBarStyle</item>
+    <item name="android:windowNoTitle">true</item>
+    <!--<item name="windowActionBar">false</item>-->
+    <!--<item name="windowActionModeOverlay">true</item>-->
+    <!--<item name="android:windowDrawsSystemBarBackgrounds">true</item>-->
+    <!--<item name="android:windowTranslucentStatus">true</item>-->
+  </style>
 
 </resources>

@@ -16,12 +16,7 @@
   -->
 
 <resources>
-
-    <!-- Action bar -->
-
-    <style name="HoloActionBar"
-           parent="@android:style/Widget.Holo.Light.ActionBar.Solid.Inverse">
-        <item name="android:background">@color/primary</item>
+    <style name="ActionBarStyle" parent="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
+        <item name="android:textColor">#ffffff</item>
     </style>
-
 </resources>

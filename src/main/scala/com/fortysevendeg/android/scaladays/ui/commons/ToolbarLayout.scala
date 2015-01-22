@@ -14,15 +14,18 @@
  * limitations under the License.
  */
 
-package com.fortysevendeg.android.scaladays.utils
+package com.fortysevendeg.android.scaladays.ui.commons
 
-import java.io.Closeable
-import scala.util.control.Exception._
+import android.support.v7.widget.Toolbar
+import macroid.{ActivityContext, AppContext}
+import macroid.FullDsl._
+import CommonsStyles._
 
-object ResourceUtils {
+trait ToolbarLayout {
 
-  def withResource[C <: Closeable, R](closeable: C)(f: C => R) = {
-    allCatch.andFinally(closeable.close())(f(closeable))
-  }
+  var toolBar = slot[Toolbar]
+
+  def toolBarLayout(implicit appContext: AppContext, context: ActivityContext) =
+    w[Toolbar] <~ wire(toolBar) <~ toolbarStyle
 
 }
