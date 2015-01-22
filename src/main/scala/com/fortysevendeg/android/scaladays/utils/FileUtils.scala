@@ -16,11 +16,13 @@
 
 package com.fortysevendeg.android.scaladays.utils
 
-import java.io.{Closeable, InputStream, File}
+import java.io.{InputStream, File}
 
 import macroid.AppContext
 
 import scala.util.Try
+
+import ResourceUtils._
 
 object FileUtils {
   
@@ -37,9 +39,4 @@ object FileUtils {
         cacheDir => scala.io.Source.fromFile(new File(cacheDir, fileName), "UTF-8").mkString
       }
     }
-  
-  private def withResource[C <: Closeable, R](closeable: C)(f: C => R) = {
-    import scala.util.control.Exception._
-    allCatch.andFinally{ closeable.close() } apply { f(closeable) }
-  }
 }
