@@ -18,19 +18,23 @@ package com.fortysevendeg.android.scaladays.ui.main
 
 import android.content.res.Configuration
 import android.os.Bundle
-import android.support.v4.app.FragmentActivity
-import android.support.v7.app.{ActionBarDrawerToggle, ActionBarActivity}
+import android.support.v4.app.{FragmentManager, Fragment, FragmentActivity}
+import android.support.v7.app.{ActionBarActivity, ActionBarDrawerToggle}
 import android.support.v7.widget.LinearLayoutManager
 import android.view.{MenuItem, View}
 import com.fortysevendeg.android.scaladays.R
-import com.fortysevendeg.macroid.extras.ExtraActions._
-import macroid.Contexts
+import com.fortysevendeg.macroid.extras.ExtraFragment._
+import com.fortysevendeg.macroid.extras.ToolbarTweaks._
+import com.fortysevendeg.macroid.extras.DrawerLayoutTweaks._
+import macroid.FullDsl._
+import macroid._
 
 
 class MainActivity
   extends ActionBarActivity
   with Contexts[FragmentActivity]
-  with Layout {
+  with Layout
+  with IdGeneration {
 
   var actionBarDrawerToggle: Option[ActionBarDrawerToggle] = None
 
@@ -43,8 +47,8 @@ class MainActivity
     getSupportActionBar.setDisplayHomeAsUpEnabled(true)
     getSupportActionBar.setHomeButtonEnabled(true)
 
-    drawerLayout.map(view => {
-      val drawerToggle = new ActionBarDrawerToggle(this, view, R.string.openMenu, R.string.clodeMenu) {
+    drawerLayout map { drawerLayout =>
+      val drawerToggle = new ActionBarDrawerToggle(this, drawerLayout, R.string.openMenu, R.string.clodeMenu) {
         override def onDrawerClosed(drawerView: View): Unit = {
           super.onDrawerClosed(drawerView)
           invalidateOptionsMenu()
@@ -56,28 +60,39 @@ class MainActivity
         }
       }
       actionBarDrawerToggle = Some(drawerToggle)
-      view.setDrawerListener(drawerToggle)
-      view.setStatusBarBackgroundColor(getResources.getColor(R.color.primary))
-    })
+      drawerLayout.setDrawerListener(drawerToggle)
+    }
 
     val adapter = new DrawerMenuAdapter(new RecyclerClickListener {
       override def onClick(info: DrawerMenuItem): Unit = {
-        toolBar map {
-          _.setTitle(info.name)
-        }
-        aShortToast("Element " + info.name + " clicked")
+        runUi((toolBar <~ tbTitle(info.name)) ~ (drawerLayout <~ dlCloseDrawer(drawerMenuLayout)))
+        itemSelected(info)
       }
     })
+
 
     recyclerView.map(view => {
       view.setLayoutManager(new LinearLayoutManager(this))
       view.setAdapter(adapter)
     })
+
+    if (savedInstanceState == null) {
+      itemSelected(adapter.list.head)
+    }
+  }
+
+  private def itemSelected(info: DrawerMenuItem) {
+    runUi(replaceFragment(
+          builder = f[SampleFragment].pass(SampleFragment.titleArg → info.name),
+          id = Id.mainFragment,
+          tag = Some(Tag.mainFragment))
+    )
   }
 
   override def onPostCreate(savedInstanceState: Bundle): Unit = {
     super.onPostCreate(savedInstanceState)
     actionBarDrawerToggle map (_.syncState)
+
   }
 
   override def onConfigurationChanged(newConfig: Configuration): Unit = {

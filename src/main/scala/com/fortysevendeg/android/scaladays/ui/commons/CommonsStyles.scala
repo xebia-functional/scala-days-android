@@ -20,11 +20,12 @@ import android.graphics.Color
 import android.support.v7.widget.Toolbar
 import com.fortysevendeg.android.scaladays.R
 import com.fortysevendeg.macroid.extras.ViewTweaks._
+import com.fortysevendeg.macroid.extras.ToolbarTweaks._
 import macroid.Tweak
 
 object CommonsStyles {
 
-  val toolbarStyle = vBackground(R.color.primary) + ToolbarTweaksExtra.tbTextColor(Color.WHITE) + vMatchWidth
+  val toolbarStyle = vBackground(R.color.primary) + tbTextColor(Color.WHITE) + vMatchWidth
 
 }
 

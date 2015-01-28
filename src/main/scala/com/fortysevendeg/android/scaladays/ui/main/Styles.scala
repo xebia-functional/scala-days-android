@@ -17,17 +17,16 @@
 package com.fortysevendeg.android.scaladays.ui.main
 
 import android.graphics.Color
-import android.support.v4.widget.DrawerLayout
-import android.support.v7.widget.RecyclerView
-import android.view.{Gravity, View}
+import android.view.Gravity
 import android.view.ViewGroup.LayoutParams._
-import android.widget.{LinearLayout, TextView, AbsListView}
+import android.widget.{AbsListView, LinearLayout}
 import com.fortysevendeg.android.scaladays.R
+import com.fortysevendeg.macroid.extras.DrawerLayoutTweaks
 import com.fortysevendeg.macroid.extras.LinearLayoutTweaks._
 import com.fortysevendeg.macroid.extras.TextTweaks._
 import com.fortysevendeg.macroid.extras.ViewTweaks._
-import macroid.{Tweak, AppContext}
 import macroid.FullDsl._
+import macroid.{ActivityContext, AppContext}
 
 import scala.language.postfixOps
 
@@ -35,61 +34,33 @@ object Styles {
 
   val drawerStyle = vMatchParent
 
+  def drawerLayoutStyle(implicit appContext: AppContext, context: ActivityContext) =
+    llVertical +
+    lp[LinearLayout](304 dp, MATCH_PARENT) +
+    DrawerLayoutTweaks.dlLayoutGravity(Gravity.START)
+
   val contentStyle = vMatchParent + llVertical
 
   val fragmentContentStyle = vMatchParent
 
-  def drawerMenuStyle(implicit appContext: AppContext) = 
-    lp[AbsListView](280 dp, MATCH_PARENT) +
-    DrawerLayoutTweaks.dlLayoutGravity(Gravity.START) +
+  def drawerMenuStyle(implicit appContext: AppContext, context: ActivityContext) =
+    lp[AbsListView](MATCH_PARENT, MATCH_PARENT) +
     vBackgroundColor(appContext.app.getResources.getColor(R.color.menuBackground))
 
-  def menuItemStyle(implicit appContext: AppContext) = 
+  def imageMenuStyle(implicit appContext: AppContext, context: ActivityContext) =
+    lp[LinearLayout](MATCH_PARENT, 150 dp) +
+    vBackgroundColor(appContext.app.getResources.getColor(R.color.imageMenuBackground))
+
+  def menuItemStyle(implicit appContext: AppContext, context: ActivityContext) =
     lp[AbsListView](MATCH_PARENT, 50 dp) + 
     tvSize(18) + 
     tvColor(Color.WHITE) +
     tvGravity(Gravity.CENTER_VERTICAL) + 
     vPaddings(10 dp) +
-    TextTweaksExtra.tvDrawablePadding(10 dp)
+    tvDrawablePadding(10 dp)
 
-}
-
-object RecyclerViewTweaksExtras {
-  type W = RecyclerView
+  val sampleStyle = vMatchParent + llGravity(Gravity.CENTER)
   
-  def rvFitsSystemWindows(fitSystemWindows: Boolean) = Tweak[View] { view =>
-    Tweak[W](_.setFitsSystemWindows(fitSystemWindows))
-  }
-}
+  val sampleTextStyle = tvText(R.string.sampleText) + tvSize(24) + tvColor(Color.BLACK)
 
-object LinearLayoutTweaksExtra {
-  type W = LinearLayout
-
-  def llFitsSystemWindows(fitSystemWindows: Boolean) = Tweak[View] { view =>
-    Tweak[W](_.setFitsSystemWindows(fitSystemWindows))
-  }
-
-  def llPadding(left: Int, top: Int, right: Int, bottom: Int) = Tweak[View] { view =>
-    Tweak[W](_.setPadding(left, top, right, bottom))
-  }
-}
-
-object DrawerLayoutTweaks {
-  type W = DrawerLayout
-
-  def dlLayoutGravity(gravity: Int) = Tweak[View] { view =>
-    val param = new DrawerLayout.LayoutParams(view.getLayoutParams.width, view.getLayoutParams.height)
-    param.gravity = gravity
-    view.setLayoutParams(param)
-  }
-
-  def dlFitsSystemWindows(fitSystemWindows: Boolean) = Tweak[View] { view =>
-    Tweak[W](_.setFitsSystemWindows(fitSystemWindows))
-  }
-}
-
-object TextTweaksExtra {
-  type W = TextView
-  
-  def tvDrawablePadding(padding: Int) = Tweak[W](_.setCompoundDrawablePadding(padding))
 }

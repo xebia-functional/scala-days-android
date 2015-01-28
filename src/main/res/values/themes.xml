@@ -21,12 +21,7 @@
   <style name="AppTheme.Base" parent="Theme.AppCompat.Light.NoActionBar">
     <item name="colorPrimary">@color/primary</item>
     <item name="colorPrimaryDark">@color/primary_dark</item>
-    <item name="actionBarStyle">@style/ActionBarStyle</item>
-    <item name="android:windowNoTitle">true</item>
-    <!--<item name="windowActionBar">false</item>-->
-    <!--<item name="windowActionModeOverlay">true</item>-->
-    <!--<item name="android:windowDrawsSystemBarBackgrounds">true</item>-->
-    <!--<item name="android:windowTranslucentStatus">true</item>-->
+    <item name="colorAccent">@color/primary_dark</item>
   </style>
 
 </resources>

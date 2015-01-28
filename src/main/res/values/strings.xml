@@ -28,5 +28,7 @@
   
   <string name="openMenu">Open</string>
   <string name="clodeMenu">Close</string>
+  
+  <string name="sampleText">Sample Text</string>
 
 </resources>

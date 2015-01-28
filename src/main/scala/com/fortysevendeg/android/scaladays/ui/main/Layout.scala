@@ -22,25 +22,31 @@ import android.widget.{FrameLayout, LinearLayout, TextView}
 import com.fortysevendeg.android.scaladays.ui.commons.ToolbarLayout
 import com.fortysevendeg.android.scaladays.ui.main.Styles._
 import macroid.FullDsl._
-import macroid.{ActivityContext, AppContext}
+import macroid.{IdGeneration, ActivityContext, AppContext}
 
-trait Layout extends ToolbarLayout {
+trait Layout 
+  extends ToolbarLayout
+  with IdGeneration {
   
   var drawerLayout = slot[DrawerLayout]
+
+  var drawerMenuLayout = slot[LinearLayout]
 
   var fragmentContent = slot[FrameLayout]
 
   var recyclerView = slot[RecyclerView]
-
 
   def layout(implicit appContext: AppContext, context: ActivityContext) = {
     getUi(
       l[DrawerLayout](
         l[LinearLayout](
           toolBarLayout,
-          l[FrameLayout]() <~ wire(fragmentContent) <~ fragmentContentStyle
+          l[FrameLayout]() <~ wire(fragmentContent) <~ id(Id.mainFragment) <~ fragmentContentStyle
         ) <~ contentStyle,
-        w[RecyclerView] <~ wire(recyclerView) <~ drawerMenuStyle
+        l[LinearLayout](
+          l[FrameLayout]() <~ imageMenuStyle,
+          w[RecyclerView] <~ wire(recyclerView) <~ drawerMenuStyle
+        ) <~ wire(drawerMenuLayout) <~ drawerLayoutStyle
       ) <~ wire(drawerLayout) <~ drawerStyle
     )
   }
@@ -56,6 +62,19 @@ class Adapter(implicit appContext: AppContext, context: ActivityContext) {
       w[TextView] <~ wire(menuItem) <~ menuItemStyle
     )
   }
+
+  def layout = content
+}
+
+class ScheduleLayout(implicit appContext: AppContext, context: ActivityContext) {
+
+  var textView = slot[TextView]
+
+  val content = getUi(
+    l[LinearLayout](
+      w[TextView] <~ wire(textView) <~ sampleTextStyle
+    ) <~ sampleStyle
+  )
 
   def layout = content
 
