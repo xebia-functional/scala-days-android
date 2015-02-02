@@ -22,19 +22,21 @@ import android.util.Log
 import android.view.{LayoutInflater, View, ViewGroup}
 import macroid.Contexts
 
-class SampleFragment extends Fragment with Contexts[Fragment] {
+class SampleFragment
+    extends Fragment
+    with Contexts[Fragment] {
 
   private var fragmentLayout: Option[ScheduleLayout] = None
 
   override def onCreateView(inflater: LayoutInflater, container: ViewGroup, savedInstanceState: Bundle): View = {
 
     val fLayout = new ScheduleLayout
-    
+
     fLayout.textView map (_.setText(getArguments.getString(SampleFragment.titleArg)))
 
     fragmentLayout = Some(fLayout)
 
-    fLayout.layout
+    fLayout.content
 
   }
 }
@@ -42,5 +44,5 @@ class SampleFragment extends Fragment with Contexts[Fragment] {
 object SampleFragment {
 
   val titleArg = "titleArg"
-  
+
 }

@@ -21,7 +21,7 @@ import android.view.Gravity
 import android.view.ViewGroup.LayoutParams._
 import android.widget.{AbsListView, LinearLayout}
 import com.fortysevendeg.android.scaladays.R
-import com.fortysevendeg.macroid.extras.DrawerLayoutTweaks
+import com.fortysevendeg.macroid.extras.DrawerLayoutTweaks._
 import com.fortysevendeg.macroid.extras.LinearLayoutTweaks._
 import com.fortysevendeg.macroid.extras.TextTweaks._
 import com.fortysevendeg.macroid.extras.ViewTweaks._
@@ -30,14 +30,14 @@ import macroid.{ActivityContext, AppContext}
 
 import scala.language.postfixOps
 
-object Styles {
+trait Styles {
 
   val drawerStyle = vMatchParent
 
   def drawerLayoutStyle(implicit appContext: AppContext, context: ActivityContext) =
     llVertical +
     lp[LinearLayout](304 dp, MATCH_PARENT) +
-    DrawerLayoutTweaks.dlLayoutGravity(Gravity.START)
+    dlLayoutGravity(Gravity.START)
 
   val contentStyle = vMatchParent + llVertical
 

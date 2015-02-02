@@ -24,7 +24,7 @@ import macroid.{ActivityContext, AppContext}
 
 class DrawerMenuAdapter(listener: RecyclerClickListener)
     (implicit context: ActivityContext, appContext: AppContext)
-    extends RecyclerView.Adapter[ViewHolder] {
+    extends RecyclerView.Adapter[ViewHolderMenuAdapter] {
 
   val recyclerClickListener = listener
 
@@ -36,17 +36,17 @@ class DrawerMenuAdapter(listener: RecyclerClickListener)
     DrawerMenuItem(appContext.app.getString(R.string.menuPlaces), R.drawable.ic_map_marker),
     DrawerMenuItem(appContext.app.getString(R.string.menuAbout), R.drawable.ic_information_outline))
 
-  override def onCreateViewHolder(parentViewGroup: ViewGroup, i: Int): ViewHolder = {
-    val adapter = new Adapter
-    adapter.layout.setOnClickListener(new OnClickListener {
+  override def onCreateViewHolder(parentViewGroup: ViewGroup, i: Int): ViewHolderMenuAdapter = {
+    val adapter = new MenuAdapter()
+    adapter.content.setOnClickListener(new OnClickListener {
       override def onClick(v: View): Unit = recyclerClickListener.onClick(list(v.getTag.asInstanceOf[Int]))
     })
-    new ViewHolder(adapter)
+    new ViewHolderMenuAdapter(adapter)
   }
 
   override def getItemCount: Int = list.size
 
-  override def onBindViewHolder(viewHolder: ViewHolder, position: Int): Unit = {
+  override def onBindViewHolder(viewHolder: ViewHolderMenuAdapter, position: Int): Unit = {
     val demoInfo = list(position)
     viewHolder.content.setTag(position)
     viewHolder.title.map { textView =>
@@ -58,14 +58,6 @@ class DrawerMenuAdapter(listener: RecyclerClickListener)
 
 trait RecyclerClickListener {
   def onClick(info: DrawerMenuItem)
-}
-
-class ViewHolder(adapter: Adapter)(implicit context: ActivityContext, appContext: AppContext) extends RecyclerView.ViewHolder(adapter.layout) {
-
-  var content = adapter.layout
-
-  var title = adapter.menuItem
-
 }
 
 case class DrawerMenuItem(name: String, icon: Int)

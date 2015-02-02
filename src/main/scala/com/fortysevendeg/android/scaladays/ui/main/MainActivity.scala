@@ -71,10 +71,12 @@ class MainActivity
     })
 
 
-    recyclerView.map(view => {
-      view.setLayoutManager(new LinearLayoutManager(this))
-      view.setAdapter(adapter)
-    })
+    recyclerView map {
+      view => {
+        view.setLayoutManager(new LinearLayoutManager(this))
+        view.setAdapter(adapter)
+      }
+    }
 
     if (savedInstanceState == null) {
       itemSelected(adapter.list.head)
