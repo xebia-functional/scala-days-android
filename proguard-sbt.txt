@@ -177,7 +177,7 @@
 -keep class android.test.InstrumentationTestRunner { <init>(...); }
 
 # view AndroidManifest.xml #generated:10
--keep class com.fortysevendeg.android.scaladays.ui.MainActivity { <init>(...); }
+-keep class com.fortysevendeg.android.scaladays.ui.main.MainActivity { <init>(...); }
 
 -ignorewarnings
 -keep class scala.Dynamic

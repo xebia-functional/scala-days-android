@@ -16,10 +16,12 @@
 
 <resources>
 
-    <style name="AppTheme" parent="@android:style/Theme.Holo.Light.DarkActionBar">
+    <style name="AppTheme" parent="AppTheme.Base"/>
 
-        <item name="android:actionBarStyle">@style/HoloActionBar</item>
-
+    <style name="AppTheme.Base" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="colorPrimary">@color/primary</item>
+        <item name="colorPrimaryDark">@color/primary_dark</item>
+        <item name="colorAccent">@color/primary_dark</item>
     </style>
 
 </resources>
