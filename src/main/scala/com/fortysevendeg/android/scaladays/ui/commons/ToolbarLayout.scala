@@ -17,15 +17,23 @@
 package com.fortysevendeg.android.scaladays.ui.commons
 
 import android.support.v7.widget.Toolbar
-import macroid.{ActivityContext, AppContext}
+import android.view.ContextThemeWrapper
+import com.fortysevendeg.android.scaladays.R
 import macroid.FullDsl._
-import CommonsStyles._
+import macroid.{ActivityContext, AppContext, Ui}
 
-trait ToolbarLayout {
+trait ToolbarLayout
+    extends CommonsStyles {
 
   var toolBar = slot[Toolbar]
 
-  def toolBarLayout(implicit appContext: AppContext, context: ActivityContext) =
-    w[Toolbar] <~ wire(toolBar) <~ toolbarStyle
+  def toolBarLayout(implicit appContext: AppContext, activityContext: ActivityContext) =
+    Ui {
+      val contextTheme = new ContextThemeWrapper(activityContext.get, R.style.ThemeOverlay_AppCompat_Dark_ActionBar)
+      val darkToolBar = new Toolbar(contextTheme)
+      darkToolBar.setPopupTheme(R.style.ThemeOverlay_AppCompat_Light)
+      toolBar = Some(darkToolBar)
+      darkToolBar
+    } <~ toolbarStyle
 
 }

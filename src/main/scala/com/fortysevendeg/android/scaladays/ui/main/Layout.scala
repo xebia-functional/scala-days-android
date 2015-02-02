@@ -18,7 +18,6 @@ package com.fortysevendeg.android.scaladays.ui.main
 
 import android.support.v4.widget.DrawerLayout
 import android.support.v7.widget.RecyclerView
-import android.view.View
 import android.widget.{FrameLayout, LinearLayout, TextView}
 import com.fortysevendeg.android.scaladays.ui.commons.ToolbarLayout
 import macroid.FullDsl._
@@ -75,7 +74,8 @@ class ViewHolderMenuAdapter(adapter: MenuAdapter)(implicit context: ActivityCont
 
 }
 
-class ScheduleLayout(implicit appContext: AppContext, context: ActivityContext) extends Styles {
+class ScheduleLayout(implicit appContext: AppContext, context: ActivityContext)
+    extends Styles {
 
   var textView = slot[TextView]
 

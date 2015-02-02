@@ -16,22 +16,13 @@
 
 package com.fortysevendeg.android.scaladays.ui.commons
 
-import android.graphics.Color
-import android.support.v7.widget.Toolbar
 import com.fortysevendeg.android.scaladays.R
 import com.fortysevendeg.macroid.extras.ViewTweaks._
-import com.fortysevendeg.macroid.extras.ToolbarTweaks._
-import macroid.Tweak
+import macroid.AppContext
+import macroid.FullDsl._
 
-object CommonsStyles {
+trait CommonsStyles {
 
-  val toolbarStyle = vBackground(R.color.primary) + tbTextColor(Color.WHITE) + vMatchWidth
-
-}
-
-object ToolbarTweaksExtra {
-  type W = Toolbar
-
-  def tbTextColor(color: Int) = Tweak[W](_.setTitleTextColor(color))
+  def toolbarStyle(implicit appContext: AppContext) = vContentSizeMatchWidth(56 dp) + vBackground(R.color.primary)
 
 }

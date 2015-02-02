@@ -17,7 +17,7 @@
 package com.fortysevendeg.android.scaladays.ui.main
 
 import android.graphics.Color
-import android.view.Gravity
+import android.view.{View, Gravity}
 import android.view.ViewGroup.LayoutParams._
 import android.widget.{AbsListView, LinearLayout}
 import com.fortysevendeg.android.scaladays.R
@@ -26,7 +26,7 @@ import com.fortysevendeg.macroid.extras.LinearLayoutTweaks._
 import com.fortysevendeg.macroid.extras.TextTweaks._
 import com.fortysevendeg.macroid.extras.ViewTweaks._
 import macroid.FullDsl._
-import macroid.{ActivityContext, AppContext}
+import macroid.{Tweak, AppContext}
 
 import scala.language.postfixOps
 
@@ -34,7 +34,7 @@ trait Styles {
 
   val drawerStyle = vMatchParent
 
-  def drawerLayoutStyle(implicit appContext: AppContext, context: ActivityContext) =
+  def drawerLayoutStyle(implicit appContext: AppContext) =
     llVertical +
     lp[LinearLayout](304 dp, MATCH_PARENT) +
     dlLayoutGravity(Gravity.START)
@@ -43,15 +43,15 @@ trait Styles {
 
   val fragmentContentStyle = vMatchParent
 
-  def drawerMenuStyle(implicit appContext: AppContext, context: ActivityContext) =
+  def drawerMenuStyle(implicit appContext: AppContext) =
     lp[AbsListView](MATCH_PARENT, MATCH_PARENT) +
     vBackgroundColor(appContext.app.getResources.getColor(R.color.menuBackground))
 
-  def imageMenuStyle(implicit appContext: AppContext, context: ActivityContext) =
+  def imageMenuStyle(implicit appContext: AppContext) =
     lp[LinearLayout](MATCH_PARENT, 150 dp) +
     vBackgroundColor(appContext.app.getResources.getColor(R.color.imageMenuBackground))
 
-  def menuItemStyle(implicit appContext: AppContext, context: ActivityContext) =
+  def menuItemStyle(implicit appContext: AppContext) =
     lp[AbsListView](MATCH_PARENT, 50 dp) + 
     tvSize(18) + 
     tvColor(Color.WHITE) +
