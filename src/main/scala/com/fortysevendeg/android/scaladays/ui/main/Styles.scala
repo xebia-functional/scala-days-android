@@ -17,7 +17,7 @@
 package com.fortysevendeg.android.scaladays.ui.main
 
 import android.graphics.Color
-import android.view.{View, Gravity}
+import android.view.Gravity
 import android.view.ViewGroup.LayoutParams._
 import android.widget.{AbsListView, LinearLayout}
 import com.fortysevendeg.android.scaladays.R
@@ -25,8 +25,8 @@ import com.fortysevendeg.macroid.extras.DrawerLayoutTweaks._
 import com.fortysevendeg.macroid.extras.LinearLayoutTweaks._
 import com.fortysevendeg.macroid.extras.TextTweaks._
 import com.fortysevendeg.macroid.extras.ViewTweaks._
+import macroid.AppContext
 import macroid.FullDsl._
-import macroid.{Tweak, AppContext}
 
 import scala.language.postfixOps
 

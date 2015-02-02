@@ -18,14 +18,14 @@ package com.fortysevendeg.android.scaladays.ui.main
 
 import android.content.res.Configuration
 import android.os.Bundle
-import android.support.v4.app.{FragmentManager, Fragment, FragmentActivity}
+import android.support.v4.app.FragmentActivity
 import android.support.v7.app.{ActionBarActivity, ActionBarDrawerToggle}
 import android.support.v7.widget.LinearLayoutManager
 import android.view.{MenuItem, View}
 import com.fortysevendeg.android.scaladays.R
-import com.fortysevendeg.macroid.extras.ExtraFragment._
-import com.fortysevendeg.macroid.extras.ToolbarTweaks._
 import com.fortysevendeg.macroid.extras.DrawerLayoutTweaks._
+import com.fortysevendeg.macroid.extras.FragmentExtras._
+import com.fortysevendeg.macroid.extras.ToolbarTweaks._
 import macroid.FullDsl._
 import macroid._
 
