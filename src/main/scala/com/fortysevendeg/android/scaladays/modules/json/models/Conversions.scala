@@ -14,10 +14,9 @@
  * limitations under the License.
  */
 
-package com.fortysevendeg.android.scaladays.conversions
+package com.fortysevendeg.android.scaladays.modules.json.models
 
-import com.fortysevendeg.android.scaladays.model.api._
-import com.fortysevendeg.android.scaladays.model.app._
+import com.fortysevendeg.android.scaladays.model._
 import com.fortysevendeg.android.scaladays.utils.DateTimeUtils
 
 trait ApiConversions {

@@ -14,14 +14,10 @@
  * limitations under the License.
  */
 
-package com.fortysevendeg.android.scaladays.json
+package com.fortysevendeg.android.scaladays.modules.json
 
-import com.fortysevendeg.android.scaladays.scaladays.Service
+import com.fortysevendeg.android.scaladays.modules.json.models.ApiRoot
 
-trait JsonServices {
-  def loadJson: Service[JsonRequest, JsonResponse]
-}
+case class JsonRequest()
 
-trait JsonServicesComponent {
-  val jsonServices: JsonServices
-}
+case class JsonResponse(apiResponse: Option[ApiRoot])

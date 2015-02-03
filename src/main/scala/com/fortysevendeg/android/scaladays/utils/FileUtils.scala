@@ -16,27 +16,32 @@
 
 package com.fortysevendeg.android.scaladays.utils
 
-import java.io.{FileInputStream, InputStream, File}
+import java.io._
 
-import macroid.AppContext
+import com.fortysevendeg.android.scaladays.utils.ResourceUtils._
 
 import scala.util.Try
 
-import ResourceUtils._
+trait FileUtils {
 
-object FileUtils {
-  
-  def getJsonAssets(fileName: String)(implicit appContext: AppContext): Try[String] =
+  def getJson(file: File): Try[String] =
     Try {
-      withResource[InputStream, String](appContext.get.getResources.getAssets.open(fileName)) {
-        inputStream => scala.io.Source.fromInputStream(inputStream).mkString
-      }
-    }
-  
-  def getJsonCache(fileName: String)(implicit appContext: AppContext): Try[String] =
-    Try {
-      withResource[FileInputStream, String](new FileInputStream(new File(appContext.get.getCacheDir, fileName))) {
+      withResource[FileInputStream, String](new FileInputStream(file)) {
         file => scala.io.Source.fromInputStream(file, "UTF-8").mkString
       }
     }
+
+  def writeText(file: File, text: String): Try[Unit] =
+    Try {
+      withResource[FileOutputStream, Unit](new FileOutputStream(file)) {
+        outputStream =>
+          val outputWriter = new OutputStreamWriter(outputStream)
+          val bufferedWriter = new BufferedWriter(outputWriter, 16384)
+          bufferedWriter.write(text)
+          bufferedWriter.newLine()
+          bufferedWriter.close()
+          outputWriter.close()
+      }
+    }
+
 }

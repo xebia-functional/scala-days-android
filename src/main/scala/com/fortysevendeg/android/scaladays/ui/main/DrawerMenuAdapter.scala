@@ -20,6 +20,8 @@ import android.support.v7.widget.RecyclerView
 import android.view.View.OnClickListener
 import android.view.{View, ViewGroup}
 import com.fortysevendeg.android.scaladays.R
+import com.fortysevendeg.android.scaladays.utils.MenuSection._
+import com.fortysevendeg.android.scaladays.utils.MenuSection.MenuSection
 import macroid.{ActivityContext, AppContext}
 
 class DrawerMenuAdapter(listener: RecyclerClickListener)
@@ -29,12 +31,13 @@ class DrawerMenuAdapter(listener: RecyclerClickListener)
   val recyclerClickListener = listener
 
   val list = List(
-    DrawerMenuItem(appContext.app.getString(R.string.menuSchedule), R.drawable.ic_calendar),
-    DrawerMenuItem(appContext.app.getString(R.string.menuSocial), R.drawable.ic_message_reply),
-    DrawerMenuItem(appContext.app.getString(R.string.menuTickets), R.drawable.ic_tag),
-    DrawerMenuItem(appContext.app.getString(R.string.menuSponsors), R.drawable.ic_flag),
-    DrawerMenuItem(appContext.app.getString(R.string.menuPlaces), R.drawable.ic_map_marker),
-    DrawerMenuItem(appContext.app.getString(R.string.menuAbout), R.drawable.ic_information_outline))
+    DrawerMenuItem(appContext.app.getString(R.string.menuSchedule), R.drawable.ic_calendar, SAMPLE),
+    DrawerMenuItem(appContext.app.getString(R.string.menuSocial), R.drawable.ic_message_reply, SAMPLE),
+    DrawerMenuItem(appContext.app.getString(R.string.menuSpeakers), R.drawable.ic_message_reply, SPEAKERS),
+    DrawerMenuItem(appContext.app.getString(R.string.menuTickets), R.drawable.ic_tag, SAMPLE),
+    DrawerMenuItem(appContext.app.getString(R.string.menuSponsors), R.drawable.ic_flag, SAMPLE),
+    DrawerMenuItem(appContext.app.getString(R.string.menuPlaces), R.drawable.ic_map_marker, SAMPLE),
+    DrawerMenuItem(appContext.app.getString(R.string.menuAbout), R.drawable.ic_information_outline, SAMPLE))
 
   override def onCreateViewHolder(parentViewGroup: ViewGroup, i: Int): ViewHolderMenuAdapter = {
     val adapter = new MenuAdapter()
@@ -60,4 +63,4 @@ trait RecyclerClickListener {
   def onClick(info: DrawerMenuItem)
 }
 
-case class DrawerMenuItem(name: String, icon: Int)
+case class DrawerMenuItem(name: String, icon: Int, section: MenuSection)
