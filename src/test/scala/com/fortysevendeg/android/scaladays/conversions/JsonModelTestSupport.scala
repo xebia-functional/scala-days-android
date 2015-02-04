@@ -16,7 +16,7 @@
 
 package com.fortysevendeg.android.scaladays.conversions
 
-import com.fortysevendeg.android.scaladays.model.api._
+import com.fortysevendeg.android.scaladays.modules.json.models._
 import org.specs2.execute.{Result, AsResult}
 import org.specs2.mutable.Around
 import org.specs2.specification.Scope
@@ -33,6 +33,8 @@ trait JsonModelTestSupportTestSupport
 
 object JsonImplicits {
   import play.api.libs.json._
+
+  implicit val pictureReads = Json.reads[ApiPicture]
   implicit val conferenceReads = Json.reads[ApiInformation]
   implicit val sponsorReads = Json.reads[ApiSponsor]
   implicit val sponsorTypeReads = Json.reads[ApiSponsorType]
@@ -40,5 +42,8 @@ object JsonImplicits {
   implicit val speakerReads = Json.reads[ApiSpeaker]
   implicit val trackReads = Json.reads[ApiTrack]
   implicit val eventReads = Json.reads[ApiEvent]
+  implicit val venuesReads = Json.reads[ApiVenues]
   implicit val responseReads = Json.reads[ApiConference]
+  implicit val rootReads = Json.reads[ApiRoot]
+
 }

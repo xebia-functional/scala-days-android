@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.fortysevendeg.android.scaladays.json
+package com.fortysevendeg.android.scaladays.modules.json
 
 import com.fortysevendeg.android.scaladays.scaladays.Service
 

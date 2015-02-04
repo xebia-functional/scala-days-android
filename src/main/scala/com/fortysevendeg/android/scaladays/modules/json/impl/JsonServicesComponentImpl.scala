@@ -14,21 +14,25 @@
  * limitations under the License.
  */
 
-package com.fortysevendeg.android.scaladays.json.impl
+package com.fortysevendeg.android.scaladays.modules.json.impl
 
-import com.fortysevendeg.android.scaladays.json._
-import com.fortysevendeg.android.scaladays.model.api._
+import java.io.File
+
+import com.fortysevendeg.android.scaladays.commons.StringRes
+import com.fortysevendeg.android.scaladays.modules.json._
+import com.fortysevendeg.android.scaladays.modules.json.models._
 import com.fortysevendeg.android.scaladays.scaladays.Service
 import com.fortysevendeg.android.scaladays.utils.FileUtils
 import com.fortysevendeg.macroid.extras.AppContextProvider
-import play.api.libs.json.{JsValue, Json}
-import scala.concurrent.Future
-import scala.util.{Try, Success}
+import play.api.libs.json.Json
 
 import scala.concurrent.ExecutionContext.Implicits.global
+import scala.concurrent.Future
+import scala.util.{Failure, Success, Try}
 
 trait ApiReads {
 
+  implicit val pictureReads = Json.reads[ApiPicture]
   implicit val conferenceReads = Json.reads[ApiInformation]
   implicit val trackReads = Json.reads[ApiTrack]
   implicit val locationReads = Json.reads[ApiLocation]
@@ -36,12 +40,15 @@ trait ApiReads {
   implicit val eventReads = Json.reads[ApiEvent]
   implicit val sponsorReads = Json.reads[ApiSponsor]
   implicit val sponsorTypeReads = Json.reads[ApiSponsorType]
+  implicit val venuesReads = Json.reads[ApiVenues]
   implicit val responseReads = Json.reads[ApiConference]
+  implicit val rootReads = Json.reads[ApiRoot]
 
 }
 
 trait JsonServicesComponentImpl
-    extends JsonServicesComponent {
+    extends JsonServicesComponent
+    with FileUtils {
 
   self: AppContextProvider =>
 
@@ -49,22 +56,20 @@ trait JsonServicesComponentImpl
 
   class JsonServicesImpl
       extends JsonServices
+      with ApiConversions
       with ApiReads {
-    
+
     override def loadJson: Service[JsonRequest, JsonResponse] = request =>
       Future {
-        val fileContent: Try[String] = loadFileContent(request.jsonPath, request.fromCache)
-        (fileContent map Json.parse) map {
-          _.as[ApiConference]
-        } match {
-          case Success(apiConference) => JsonResponse(Some(apiConference))
-          case _ => JsonResponse(None)
+        (for {
+          json <- getJson(new File(appContextProvider.get.getFilesDir, StringRes.jsonFilename))
+          apiRoot <- Try(Json.parse(json).as[ApiRoot])
+        } yield apiRoot) match {
+          case Success(apiRoot) => JsonResponse(Some(toRoot(apiRoot)))
+          case Failure(ex) => JsonResponse(None)
         }
       }
-    
-      def loadFileContent(jsonPath: String, fromCache: Boolean): Try[String] = {
-        if (fromCache) FileUtils.getJsonCache(jsonPath) else FileUtils.getJsonAssets(jsonPath)
-      }
-    }
+
+  }
 
 }

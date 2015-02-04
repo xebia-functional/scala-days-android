@@ -16,7 +16,7 @@
 
 package com.fortysevendeg.android.scaladays.conversions
 
-import com.fortysevendeg.android.scaladays.model.api._
+import com.fortysevendeg.android.scaladays.modules.json.models._
 
 trait TestConfig {
   
@@ -30,7 +30,8 @@ trait TestConfig {
     longName = "Scala Days San Francisco",
     registrationSite = "https://secure.trifork.com/scaladays-sanfran-2015/registration/",
     normalSite = "http://gotocon.com/scaladays-sanfran-2015",
-    utcTimezoneOffsetMillis = -25200000)    
+    utcTimezoneOffsetMillis = -25200000,
+    pictures = Seq.empty)
   
   val speaker1 = ApiSpeaker(id = 1111,
     picture = Some("http://event.scaladays.org/dl/photos/Scala%20Days%202015%20speakers/speaker1_square.png"),
@@ -119,7 +120,11 @@ trait TestConfig {
     info = info,
     schedule = events,
     sponsors = sponsors,
-    speakers = speakers)
+    speakers = speakers,
+    venues = Seq.empty,
+    codeOfConduct = None)
+
+  val root = ApiRoot(Seq(conference))
 
 }
 

@@ -14,9 +14,12 @@
  * limitations under the License.
  */
 
-package com.fortysevendeg.android.scaladays.model.app
+package com.fortysevendeg.android.scaladays.model
 
 import org.joda.time.DateTime
+
+case class Root(
+    conferences: Seq[Conference])
 
 case class Conference(
   info: Information,

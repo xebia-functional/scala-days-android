@@ -14,16 +14,18 @@
  * limitations under the License.
  */
 
-package com.fortysevendeg.android.scaladays.conversions
+package com.fortysevendeg.android.scaladays.modules.json.models
 
-import com.fortysevendeg.android.scaladays.model.api._
-import com.fortysevendeg.android.scaladays.model.app._
+import com.fortysevendeg.android.scaladays.model._
 import com.fortysevendeg.android.scaladays.utils.DateTimeUtils
 
 trait ApiConversions {
 
   private def parseDate(date: String) =
     DateTimeUtils.parseDate(date, DateTimeUtils.ISODateFormatterDayPrecission)
+
+  def toRoot(apiRoot: ApiRoot): Root =
+    Root(apiRoot.conferences map toConference)
   
   def toConference(apiConference: ApiConference): Conference =
     Conference(

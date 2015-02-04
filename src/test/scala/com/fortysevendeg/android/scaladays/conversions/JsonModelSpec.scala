@@ -16,7 +16,9 @@
 
 package com.fortysevendeg.android.scaladays.conversions
 
-import com.fortysevendeg.android.scaladays.model.api._
+import java.util.Calendar
+
+import com.fortysevendeg.android.scaladays.modules.json.models.{ApiRoot, ApiConference}
 import org.specs2.mutable._
 import play.api.libs.json.{Json, JsValue}
 
@@ -34,8 +36,8 @@ class JsonModelSpec
       
       val jsonSource = scala.io.Source.fromInputStream(JsonImplicits.getClass.getResourceAsStream("/scaladays2015.json")).mkString
       val json: JsValue = Json.parse(jsonSource)
-      val jsonValue = json.as[ApiConference]
-      jsonValue shouldEqual conference
+      val jsonValue = json.as[ApiRoot]
+      jsonValue.conferences(0).info.id shouldEqual 111
     }
 
   }

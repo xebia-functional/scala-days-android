@@ -20,8 +20,20 @@
     <!-- Main colors -->
     <color name="primary">#364550</color>
     <color name="primary_dark">#2F3C46</color>
-    <color name="accent">#2F3C46</color>
-    <color name="menuBackground">#364550</color>
-    <color name="imageMenuBackground">#FFFFFF</color>
+    <color name="color_control_highlight">#2F3C46</color>
+    <color name="accent">#ff19232c</color>
+
+    <!-- Menu -->
+    <color name="background_menu">#364550</color>
+    <color name="background_header_menu">#FFFFFF</color>
+
+    <!-- Lists -->
+    <color name="speakers_text">#364550</color>
+    <color name="speakers_twitter">#E05F5E</color>
+    <color name="list_line_default">#50364550</color>
+    <color name="placeholder_default">#50364550</color>
+
+    <color name="background_list_pressed_default">#dddddd</color>
+    <color name="background_list_pressed_accent">#bbbbbb</color>
 
 </resources>

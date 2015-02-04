@@ -14,13 +14,18 @@
  * limitations under the License.
  */
 
-package com.fortysevendeg.android.scaladays.model.api
+package com.fortysevendeg.android.scaladays.modules.json.models
+
+case class ApiRoot(
+    conferences: Seq[ApiConference])
 
 case class ApiConference(
   info: ApiInformation,
   schedule: Seq[ApiEvent],
   sponsors: Seq[ApiSponsorType],
-  speakers: Seq[ApiSpeaker])
+  speakers: Seq[ApiSpeaker],
+  venues: Seq[ApiVenues],
+  codeOfConduct : Option[String])
 
 case class ApiInformation(
   id: Int,
@@ -32,7 +37,13 @@ case class ApiInformation(
   normalSite: String,
   registrationSite: String,
   utcTimezoneOffset: String,
-  utcTimezoneOffsetMillis: Long)
+  utcTimezoneOffsetMillis: Long,
+  pictures: Seq[ApiPicture])
+
+case class ApiPicture(
+  width: Int,
+  height: Int,
+  url: String)
 
 case class ApiEvent(
   id: Int,
@@ -74,3 +85,9 @@ case class ApiSpeaker(
   twitter: Option[String],
   picture: Option[String],
   bio: String)
+
+case class ApiVenues(
+  name: String,
+  address: String,
+  website: String,
+  map: String)

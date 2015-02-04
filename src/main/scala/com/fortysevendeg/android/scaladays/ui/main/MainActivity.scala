@@ -23,9 +23,12 @@ import android.support.v7.app.{ActionBarActivity, ActionBarDrawerToggle}
 import android.support.v7.widget.LinearLayoutManager
 import android.view.{MenuItem, View}
 import com.fortysevendeg.android.scaladays.R
+import com.fortysevendeg.android.scaladays.ui.speakers.SpeakersFragment
+import com.fortysevendeg.android.scaladays.utils.MenuSection._
 import com.fortysevendeg.macroid.extras.DrawerLayoutTweaks._
 import com.fortysevendeg.macroid.extras.FragmentExtras._
 import com.fortysevendeg.macroid.extras.ToolbarTweaks._
+import com.fortysevendeg.macroid.extras.RecyclerViewTweaks._
 import macroid.FullDsl._
 import macroid._
 
@@ -70,13 +73,9 @@ class MainActivity
       }
     })
 
-
-    recyclerView map {
-      view => {
-        view.setLayoutManager(new LinearLayoutManager(this))
-        view.setAdapter(adapter)
-      }
-    }
+    runUi(
+      recyclerView <~ rvLayoutManager(new LinearLayoutManager(this)) <~ rvAdapter(adapter)
+    )
 
     if (savedInstanceState == null) {
       itemSelected(adapter.list.head)
@@ -84,8 +83,12 @@ class MainActivity
   }
 
   private def itemSelected(info: DrawerMenuItem) {
+    val builder = info.section match {
+      case SPEAKERS => f[SpeakersFragment]
+      case _ => f[SampleFragment].pass(SampleFragment.titleArg → info.name)
+    }
     runUi(replaceFragment(
-          builder = f[SampleFragment].pass(SampleFragment.titleArg → info.name),
+          builder = builder,
           id = Id.mainFragment,
           tag = Some(Tag.mainFragment))
     )

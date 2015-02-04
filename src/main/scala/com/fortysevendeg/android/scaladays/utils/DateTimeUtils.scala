@@ -27,5 +27,5 @@ object DateTimeUtils {
 
   def parseDate(
       date: String,
-      fmt: DateTimeFormatter = ISODateFormatterMillisPrecission): DateTime = DateTime.parse(date, fmt)
+      fmt: DateTimeFormatter = ISODateFormatterMillisPrecission): DateTime = DateTime.now()
 }
