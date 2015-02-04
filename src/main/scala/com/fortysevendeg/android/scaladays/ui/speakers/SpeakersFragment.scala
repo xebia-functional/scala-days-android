@@ -16,6 +16,8 @@
 
 package com.fortysevendeg.android.scaladays.ui.speakers
 
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v7.widget.LinearLayoutManager
@@ -24,6 +26,7 @@ import com.fortysevendeg.android.scaladays.model.Speaker
 import com.fortysevendeg.android.scaladays.modules.ComponentRegistryImpl
 import com.fortysevendeg.android.scaladays.modules.json.JsonRequest
 import com.fortysevendeg.android.scaladays.modules.net.NetRequest
+import com.fortysevendeg.android.scaladays.ui.commons.LineItemDecorator
 import macroid.{AppContext, Contexts}
 import scala.concurrent.ExecutionContext.Implicits.global
 import macroid.FullDsl._
@@ -46,7 +49,7 @@ class SpeakersFragment
     runUi(
       fLayout.recyclerView
           <~ rvLayoutManager(new LinearLayoutManager(appContextProvider.get))
-          <~ rvAddItemDecoration(new SpeakerItemDecorator())
+          <~ rvAddItemDecoration(new LineItemDecorator())
     )
     fLayout.content
   }
@@ -70,6 +73,11 @@ class SpeakersFragment
     } yield {
       val adapter = new SpeakersAdapter(speakers, new RecyclerClickListener {
         override def onClick(speaker: Speaker): Unit = {
+          speaker.twitter map {
+            twitterName =>
+              val intent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://twitter.com/%s".format(twitterName)))
+              startActivity(intent)
+          }
 
         }
       })

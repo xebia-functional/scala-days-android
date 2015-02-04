@@ -45,8 +45,6 @@ trait NetServicesComponentImpl
       Future {
         val file = new File(appContextProvider.get.getFilesDir, StringRes.jsonFilename)
         if (request.forceDownload || !file.exists()) {
-          NetResponse(true)
-        } else {
           getJson(appContextProvider.get.getString(R.string.url_json_conference)) map {
             json =>
               if (file.exists()) file.delete()
@@ -60,6 +58,8 @@ trait NetServicesComponentImpl
             case None => NetResponse(false)
             case _ => NetResponse(true)
           }
+        } else {
+          NetResponse(true)
         }
       }
 

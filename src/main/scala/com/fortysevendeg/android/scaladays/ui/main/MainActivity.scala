@@ -28,6 +28,7 @@ import com.fortysevendeg.android.scaladays.utils.MenuSection._
 import com.fortysevendeg.macroid.extras.DrawerLayoutTweaks._
 import com.fortysevendeg.macroid.extras.FragmentExtras._
 import com.fortysevendeg.macroid.extras.ToolbarTweaks._
+import com.fortysevendeg.macroid.extras.RecyclerViewTweaks._
 import macroid.FullDsl._
 import macroid._
 
@@ -72,12 +73,9 @@ class MainActivity
       }
     })
 
-    recyclerView map {
-      view => {
-        view.setLayoutManager(new LinearLayoutManager(this))
-        view.setAdapter(adapter)
-      }
-    }
+    runUi(
+      recyclerView <~ rvLayoutManager(new LinearLayoutManager(this)) <~ rvAdapter(adapter)
+    )
 
     if (savedInstanceState == null) {
       itemSelected(adapter.list.head)
