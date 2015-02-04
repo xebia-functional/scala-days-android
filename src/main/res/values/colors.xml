@@ -24,4 +24,11 @@
     <color name="menuBackground">#364550</color>
     <color name="imageMenuBackground">#FFFFFF</color>
 
+    <!-- Lists -->
+
+    <color name="speakers_text">#364550</color>
+    <color name="speakers_twitter">#E05F5E</color>
+    <color name="list_line_default">#50364550</color>
+    <color name="placeholder_default">#50364550</color>
+
 </resources>

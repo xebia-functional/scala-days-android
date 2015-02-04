@@ -31,14 +31,18 @@ object Libraries {
       "org.macroid" %% s"macroid${if(!module.isEmpty) s"-$module" else ""}" % Versions.macroidV
 
     lazy val macroidRoot = macroid()
-    lazy val macroidExtras = "com.fortysevendeg" %% "macroid-extras" % Versions.macroidExtras
+    lazy val macroidExtras = "com.fortysevendeg" %% "macroid-extras" % Versions.macroidExtrasV
   }
 
   object json {
-    lazy val playJson = "com.typesafe.play" %% "play-json" % Versions.playJson
+    lazy val playJson = "com.typesafe.play" %% "play-json" % Versions.playJsonV
   }
   
   object test {
-    lazy val specs2 = "org.specs2" %% "specs2-core" % "2.4.15" % "test"
+    lazy val specs2 = "org.specs2" %% "specs2-core" % Versions.specs2V % "test"
+  }
+
+  object graphics {
+    lazy val glide = "com.github.bumptech.glide" % "glide" % Versions.glideV
   }
 }

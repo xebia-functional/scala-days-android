@@ -16,6 +16,8 @@
 
 package com.fortysevendeg.android.scaladays.conversions
 
+import java.util.Calendar
+
 import com.fortysevendeg.android.scaladays.modules.json.models.{ApiRoot, ApiConference}
 import org.specs2.mutable._
 import play.api.libs.json.{Json, JsValue}

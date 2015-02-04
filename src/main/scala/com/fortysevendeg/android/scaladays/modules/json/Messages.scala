@@ -16,8 +16,8 @@
 
 package com.fortysevendeg.android.scaladays.modules.json
 
-import com.fortysevendeg.android.scaladays.modules.json.models.ApiRoot
+import com.fortysevendeg.android.scaladays.model.Root
 
 case class JsonRequest()
 
-case class JsonResponse(apiResponse: Option[ApiRoot])
+case class JsonResponse(apiResponse: Option[Root])

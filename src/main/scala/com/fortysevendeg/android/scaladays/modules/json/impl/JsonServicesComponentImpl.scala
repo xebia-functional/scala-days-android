@@ -56,20 +56,16 @@ trait JsonServicesComponentImpl
 
   class JsonServicesImpl
       extends JsonServices
+      with ApiConversions
       with ApiReads {
 
     override def loadJson: Service[JsonRequest, JsonResponse] = request =>
       Future {
-        val fileContent: Try[String] = getJson(new File(appContextProvider.get.getFilesDir, StringRes.jsonFilename))
-        fileContent match {
-          case Success(json) => {
-            Try {
-              Json.parse(json).as[ApiRoot]
-            } match {
-              case Success(apiRoot) => JsonResponse(Some(apiRoot))
-              case Failure(ex) => JsonResponse(None)
-            }
-          }
+        (for {
+          json <- getJson(new File(appContextProvider.get.getFilesDir, StringRes.jsonFilename))
+          apiRoot <- Try(Json.parse(json).as[ApiRoot])
+        } yield apiRoot) match {
+          case Success(apiRoot) => JsonResponse(Some(toRoot(apiRoot)))
           case Failure(ex) => JsonResponse(None)
         }
       }

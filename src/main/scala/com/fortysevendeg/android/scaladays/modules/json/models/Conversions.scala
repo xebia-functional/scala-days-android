@@ -23,6 +23,9 @@ trait ApiConversions {
 
   private def parseDate(date: String) =
     DateTimeUtils.parseDate(date, DateTimeUtils.ISODateFormatterDayPrecission)
+
+  def toRoot(apiRoot: ApiRoot): Root =
+    Root(apiRoot.conferences map toConference)
   
   def toConference(apiConference: ApiConference): Conference =
     Conference(

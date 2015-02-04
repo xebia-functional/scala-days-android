@@ -2,6 +2,7 @@ import Libraries.android._
 import Libraries.macroid._
 import Libraries.json._
 import Libraries.test._
+import Libraries.graphics._
 
 android.Plugin.androidBuild
 
@@ -33,6 +34,7 @@ libraryDependencies ++= Seq(
   aar(macroidExtras),
   playJson,
   specs2,
+  glide,
   compilerPlugin(Libraries.wartRemover))
 
 run <<= run in Android

@@ -16,21 +16,65 @@
 
 package com.fortysevendeg.android.scaladays.ui.speakers
 
-import android.widget.{LinearLayout, TextView}
+import android.support.v7.widget.RecyclerView
+import android.widget._
 import macroid.{ActivityContext, AppContext}
 import macroid.FullDsl._
 
 class Layout(implicit appContext: AppContext, context: ActivityContext)
     extends Styles {
 
-  var textView = slot[TextView]
+  var recyclerView = slot[RecyclerView]
+
+  var progressBar = slot[ProgressBar]
 
   val content = getUi(
-    l[LinearLayout](
-      w[TextView] <~ wire(textView) <~ sampleTextStyle
-    ) <~ sampleStyle
+    l[FrameLayout](
+      w[ProgressBar] <~ wire(progressBar) <~ progressBarStyle,
+      w[RecyclerView] <~ wire(recyclerView) <~ recyclerViewStyle
+    ) <~ rootStyle
   )
 
   def layout = content
+
+}
+
+class SpeakersLayoutAdapter(implicit context: ActivityContext, appContext: AppContext)
+    extends Styles {
+
+  var avatar = slot[ImageView]
+
+  var name = slot[TextView]
+
+  var twitter = slot[TextView]
+
+  var bio = slot[TextView]
+
+  val content = layout
+
+  private def layout(implicit appContext: AppContext, context: ActivityContext) = getUi(
+    l[LinearLayout](
+      w[ImageView] <~ wire(avatar) <~ avatarStyle,
+      l[LinearLayout](
+        w[TextView] <~ wire(name) <~ nameItemStyle,
+        w[TextView] <~ wire(twitter) <~ twitterItemStyle,
+        w[TextView] <~ wire(bio) <~ bioItemStyle
+      ) <~ itemNoAvatarContentStyle
+    ) <~ itemContentStyle
+  )
+}
+
+class ViewHolderSpeakersAdapter(adapter: SpeakersLayoutAdapter)(implicit context: ActivityContext, appContext: AppContext)
+    extends RecyclerView.ViewHolder(adapter.content) {
+
+  var content = adapter.content
+
+  var avatar = adapter.avatar
+
+  var name = adapter.name
+
+  var twitter = adapter.twitter
+
+  var bio = adapter.bio
 
 }
