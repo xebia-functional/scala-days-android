@@ -31,7 +31,7 @@ class DrawerMenuAdapter(listener: RecyclerClickListener)
   val recyclerClickListener = listener
 
   val list = List(
-    DrawerMenuItem(appContext.app.getString(R.string.menuSchedule), R.drawable.ic_calendar, SAMPLE),
+    DrawerMenuItem(appContext.app.getString(R.string.menuSchedule), R.drawable.ic_calendar, SCHEDULE),
     DrawerMenuItem(appContext.app.getString(R.string.menuSocial), R.drawable.ic_message_reply, SAMPLE),
     DrawerMenuItem(appContext.app.getString(R.string.menuSpeakers), R.drawable.ic_message_reply, SPEAKERS),
     DrawerMenuItem(appContext.app.getString(R.string.menuTickets), R.drawable.ic_tag, SAMPLE),

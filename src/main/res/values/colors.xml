@@ -31,9 +31,17 @@
     <color name="speakers_text">#364550</color>
     <color name="speakers_twitter">#E05F5E</color>
     <color name="list_line_default">#50364550</color>
-    <color name="placeholder_default">#50364550</color>
+    <color name="placeholder_default">#E4E9EB</color>
 
     <color name="background_list_pressed_default">#dddddd</color>
     <color name="background_list_pressed_accent">#bbbbbb</color>
+
+    <!-- Schedule -->
+    <color name="background_list_schedule_hour">#4695AE</color>
+    <color name="background_list_schedule_info">#55B2CE</color>
+    <color name="text_schedule_room">#427E91</color>
+    <color name="text_schedule_name">#ffffff</color>
+    <color name="text_schedule_twitter">#364550</color>
+    <color name="list_line_schedule">#6CCFE9</color>
 
 </resources>

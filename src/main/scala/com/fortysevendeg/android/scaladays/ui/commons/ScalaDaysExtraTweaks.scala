@@ -16,10 +16,11 @@
 
 package com.fortysevendeg.android.scaladays.ui.commons
 
-import android.widget.ImageView
+import android.widget.{TextView, ImageView}
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.CenterCrop
 import macroid.{AppContext, Tweak}
+import org.joda.time.DateTime
 
 object GlideTweaks {
   type W = ImageView
@@ -49,4 +50,11 @@ object GlideTweaks {
           .into(imageView)
     }
   )
+}
+
+object DateTimeTextViewTweaks {
+  type W = TextView
+
+  def tvDateTimeText(dateTime: DateTime): Tweak[W] = Tweak[W](_.setText("%d:%d".format(dateTime.getHourOfDay, dateTime.getMinuteOfHour)))
+
 }

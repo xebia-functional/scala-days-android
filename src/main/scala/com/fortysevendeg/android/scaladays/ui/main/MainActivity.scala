@@ -23,6 +23,7 @@ import android.support.v7.app.{ActionBarActivity, ActionBarDrawerToggle}
 import android.support.v7.widget.LinearLayoutManager
 import android.view.{MenuItem, View}
 import com.fortysevendeg.android.scaladays.R
+import com.fortysevendeg.android.scaladays.ui.schedule.ScheduleFragment
 import com.fortysevendeg.android.scaladays.ui.speakers.SpeakersFragment
 import com.fortysevendeg.android.scaladays.utils.MenuSection._
 import com.fortysevendeg.macroid.extras.DrawerLayoutTweaks._
@@ -85,6 +86,7 @@ class MainActivity
   private def itemSelected(info: DrawerMenuItem) {
     val builder = info.section match {
       case SPEAKERS => f[SpeakersFragment]
+      case SCHEDULE => f[ScheduleFragment]
       case _ => f[SampleFragment].pass(SampleFragment.titleArg → info.name)
     }
     runUi(replaceFragment(
