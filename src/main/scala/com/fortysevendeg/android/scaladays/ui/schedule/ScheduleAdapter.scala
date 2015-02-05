@@ -27,7 +27,7 @@ import com.fortysevendeg.macroid.extras.ViewGroupTweaks._
 import macroid.FullDsl._
 import macroid.{ActivityContext, AppContext}
 
-class ScheduleAdapter(events: Seq[Event], listener: RecyclerClickListener)
+class ScheduleAdapter(timeZone: String, events: Seq[Event], listener: RecyclerClickListener)
     (implicit context: ActivityContext, appContext: AppContext)
     extends RecyclerView.Adapter[ViewHolderSpeakersAdapter] {
 
@@ -58,7 +58,7 @@ class ScheduleAdapter(events: Seq[Event], listener: RecyclerClickListener)
       )
     }
     runUi(
-      (viewHolder.hour <~ tvDateTimeHourMinute(event.startTime, "America/Los_Angeles")) ~
+      (viewHolder.hour <~ tvDateTimeHourMinute(event.startTime, timeZone)) ~
           (viewHolder.name <~ tvText(event.title)) ~
           (viewHolder.room <~ event.track.map(track => tvText(track.name) + vVisible).getOrElse(vGone))
     )

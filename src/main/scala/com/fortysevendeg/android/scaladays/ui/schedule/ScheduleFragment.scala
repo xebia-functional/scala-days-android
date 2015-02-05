@@ -59,17 +59,17 @@ class ScheduleFragment
       jsonResponse <- jsonServices.loadJson(JsonRequest())
     } yield {
       jsonResponse.apiResponse
-    }).map(_ map (api => reloadList(api.conferences(0).schedule))).recover {
+    }).map(_ map (api => reloadList(api.conferences(0).info.utcTimezoneOffset, api.conferences(0).schedule))).recover {
       case _ => aShortToast("error")
     }
   }
 
-  def reloadList(events: Seq[Event]) = {
+  def reloadList(timeZone: String, events: Seq[Event]) = {
     for {
       layout <- fragmentLayout
       recyclerView <- layout.recyclerView
     } yield {
-      val adapter = new ScheduleAdapter(events, new RecyclerClickListener {
+      val adapter = new ScheduleAdapter(timeZone, events, new RecyclerClickListener {
         override def onClick(event: Event): Unit = {
 
         }
