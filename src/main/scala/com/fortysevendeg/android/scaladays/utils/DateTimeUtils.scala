@@ -23,6 +23,7 @@ object DateTimeUtils {
 
   val ISODateFormatterDay = ISODateTimeFormat.date
   val ISODateFormatterDateTime = ISODateTimeFormat.dateTimeNoMillis
+  val ISODateFormatterTime = ISODateTimeFormat.hourMinute
 
   def parseDate(
       date: String,

@@ -18,6 +18,7 @@ package com.fortysevendeg.android.scaladays.ui.schedule
 
 import android.support.v7.widget.RecyclerView
 import android.widget._
+import com.fortysevendeg.android.scaladays.model.Speaker
 import macroid.FullDsl._
 import macroid.{ActivityContext, AppContext}
 
@@ -39,6 +40,24 @@ class Layout(implicit appContext: AppContext, context: ActivityContext)
 
 }
 
+class SpeakersLayout(speaker: Speaker)(implicit context: ActivityContext, appContext: AppContext)
+    extends Styles {
+
+  val content = layout
+
+  var speakerName = slot[TextView]
+
+  var speakerTwitter = slot[TextView]
+
+  private def layout(implicit appContext: AppContext, context: ActivityContext) = getUi(
+    l[LinearLayout](
+      w[TextView] <~ wire(speakerName) <~ speakerNameItemStyle(speaker.name),
+      w[TextView] <~ wire(speakerTwitter) <~ speakerTwitterItemStyle(speaker.twitter)
+    ) <~ itemSpeakerContentStyle
+  )
+
+}
+
 class ScheduleLayoutAdapter(implicit context: ActivityContext, appContext: AppContext)
     extends Styles {
 
@@ -50,10 +69,6 @@ class ScheduleLayoutAdapter(implicit context: ActivityContext, appContext: AppCo
 
   var speakerContent = slot[LinearLayout]
 
-  var speakerName = slot[TextView]
-
-  var speakerTwitter = slot[TextView]
-
   val content = layout
 
   private def layout(implicit appContext: AppContext, context: ActivityContext) = getUi(
@@ -62,10 +77,7 @@ class ScheduleLayoutAdapter(implicit context: ActivityContext, appContext: AppCo
       l[LinearLayout](
         w[TextView] <~ wire(room) <~ roomItemStyle,
         w[TextView] <~ wire(name) <~ nameItemStyle,
-        l[LinearLayout](
-          w[TextView] <~ wire(speakerName) <~ speakerNameItemStyle,
-          w[TextView] <~ wire(speakerTwitter) <~ speakerTwitterItemStyle
-        ) <~ itemSpeakerContentStyle <~ wire(speakerContent)
+        l[LinearLayout]() <~ itemSpeakersContentStyle <~ wire(speakerContent)
       ) <~ itemInfoContentStyle
     ) <~ itemContentStyle
   )
@@ -83,9 +95,5 @@ class ViewHolderSpeakersAdapter(adapter: ScheduleLayoutAdapter)(implicit context
   var name = adapter.name
 
   var speakerContent = adapter.speakerContent
-
-  var speakerName = adapter.speakerName
-
-  var speakerTwitter = adapter.speakerTwitter
 
 }

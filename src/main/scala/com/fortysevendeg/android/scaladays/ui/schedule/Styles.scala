@@ -48,24 +48,26 @@ trait Styles {
     vMatchParent + llHorizontal
 
   def hourStyle(implicit appContext: AppContext) = lp[LinearLayout](70 dp, MATCH_PARENT) + tvSize(14) +
-      vPadding(0, 8 dp, 0, 0) + vBackgroundColorResource(R.color.background_list_schedule_hour) +
-      tvGravity(Gravity.CENTER) + tvColorResource(R.color.text_schedule_name)
+      vPadding(0, 12 dp, 0, 0) + vBackgroundColorResource(R.color.background_list_schedule_hour) +
+      tvGravity(Gravity.CENTER_HORIZONTAL) + tvColorResource(R.color.text_schedule_name) + tvBold
 
-  def itemInfoContentStyle(implicit appContext: AppContext) = vMatchWidth + llVertical + vPaddings(8 dp) +
+  def itemInfoContentStyle(implicit appContext: AppContext) = vMatchWidth + llVertical + vPadding(16 dp, 12 dp, 16 dp, 12 dp) +
       vBackgroundColorResource(R.color.background_list_schedule_info)
 
-  val itemSpeakerContentStyle = vMatchWidth + llHorizontal
+  val itemSpeakersContentStyle = vMatchWidth + llVertical
+
+  def itemSpeakerContentStyle(implicit appContext: AppContext) = vMatchWidth + llHorizontal + vPadding(0, 4 dp, 0, 0)
 
   def roomItemStyle(implicit appContext: AppContext) = vWrapContent + tvSize(12) +
-      tvColorResource(R.color.text_schedule_room)
+      tvColorResource(R.color.text_schedule_room) + vPadding(0, 0, 0, 4 dp)
 
   def nameItemStyle(implicit appContext: AppContext) = vWrapContent + tvSize(14) +
-      tvColorResource(R.color.text_schedule_name)
+      tvColorResource(R.color.text_schedule_name) + tvBold
 
-  def speakerNameItemStyle(implicit appContext: AppContext) = vWrapContent + tvSize(14) +
-      vPadding(0, 0, 4 dp, 0) + tvColorResource(R.color.text_schedule_name)
+  def speakerNameItemStyle(name: String)(implicit appContext: AppContext) = vWrapContent + tvSize(14) +
+      vPadding(0, 0, 4 dp, 0) + tvColorResource(R.color.text_schedule_name) + tvText(name)
 
-  def speakerTwitterItemStyle(implicit appContext: AppContext) = vWrapContent + tvSize(14) +
-      tvColorResource(R.color.text_schedule_twitter)
+  def speakerTwitterItemStyle(twitter: Option[String])(implicit appContext: AppContext) = vWrapContent + tvSize(14) +
+      tvColorResource(R.color.text_schedule_twitter) + twitter.map(tvText(_) + vVisible).getOrElse(vGone)
 
 }

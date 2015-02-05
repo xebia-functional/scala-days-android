@@ -19,10 +19,11 @@ package com.fortysevendeg.android.scaladays.ui.schedule
 import android.support.v7.widget.RecyclerView
 import android.view.View.OnClickListener
 import android.view.{View, ViewGroup}
-import com.fortysevendeg.android.scaladays.model.Event
+import com.fortysevendeg.android.scaladays.model.{Speaker, Event}
 import com.fortysevendeg.android.scaladays.ui.commons.DateTimeTextViewTweaks._
 import com.fortysevendeg.macroid.extras.TextTweaks._
 import com.fortysevendeg.macroid.extras.ViewTweaks._
+import com.fortysevendeg.macroid.extras.ViewGroupTweaks._
 import macroid.FullDsl._
 import macroid.{ActivityContext, AppContext}
 
@@ -45,15 +46,29 @@ class ScheduleAdapter(events: Seq[Event], listener: RecyclerClickListener)
   override def onBindViewHolder(viewHolder: ViewHolderSpeakersAdapter, position: Int): Unit = {
     val event = events(position)
     viewHolder.content.setTag(position)
+    if (event.speakers.size == 0) {
+      runUi(viewHolder.speakerContent <~ vGone)
+    } else {
+      runUi(viewHolder.speakerContent <~ vVisible <~ vgRemoveAllViews)
+      event.speakers.map(
+        speaker => {
+          val speakerLayout = new SpeakersLayout(speaker)
+          runUi((viewHolder.speakerContent <~ vgAddView(speakerLayout.content)))
+        }
+      )
+    }
     runUi(
-      (viewHolder.hour <~ tvDateTimeText(event.startTime)) ~
+      (viewHolder.hour <~ tvDateTimeHourMinute(event.startTime, "America/Los_Angeles")) ~
           (viewHolder.name <~ tvText(event.title)) ~
-          (viewHolder.speakerContent <~ vGone) ~
           (viewHolder.room <~ event.track.map(track => tvText(track.name) + vVisible).getOrElse(vGone))
     )
   }
   override def getItemViewType(position: Int): Int = {
     super.getItemViewType(position)
+  }
+
+  def getSpeakersView(speakers: Seq[Speaker]) = {
+
   }
 }
 

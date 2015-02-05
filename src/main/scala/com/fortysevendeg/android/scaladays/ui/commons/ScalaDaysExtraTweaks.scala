@@ -19,6 +19,7 @@ package com.fortysevendeg.android.scaladays.ui.commons
 import android.widget.{TextView, ImageView}
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.CenterCrop
+import com.fortysevendeg.android.scaladays.utils.DateTimeUtils
 import macroid.{AppContext, Tweak}
 import org.joda.time.DateTime
 
@@ -55,6 +56,7 @@ object GlideTweaks {
 object DateTimeTextViewTweaks {
   type W = TextView
 
-  def tvDateTimeText(dateTime: DateTime): Tweak[W] = Tweak[W](_.setText("%d:%d".format(dateTime.getHourOfDay, dateTime.getMinuteOfHour)))
+  def tvDateTimeHourMinute(dateTime: DateTime, timeZone: String = "UTC"): Tweak[W] =
+    Tweak[W](_.setText(DateTimeUtils.convertTimeZone(dateTime, timeZone).toString(DateTimeUtils.ISODateFormatterTime)))
 
 }
