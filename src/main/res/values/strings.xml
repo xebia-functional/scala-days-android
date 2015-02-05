@@ -32,4 +32,25 @@
 
     <string name="sampleText">Sample Text</string>
 
+    <string name="dayOfWeek0">Sunday</string>
+    <string name="dayOfWeek1">Monday</string>
+    <string name="dayOfWeek2">Tuesday</string>
+    <string name="dayOfWeek3">Wednesday</string>
+    <string name="dayOfWeek4">Thursday</string>
+    <string name="dayOfWeek5">Friday</string>
+    <string name="dayOfWeek6">Saturday</string>
+
+    <string name="monthOfYear1">January</string>
+    <string name="monthOfYear2">February</string>
+    <string name="monthOfYear3">March</string>
+    <string name="monthOfYear4">April</string>
+    <string name="monthOfYear5">May</string>
+    <string name="monthOfYear6">June</string>
+    <string name="monthOfYear7">July</string>
+    <string name="monthOfYear8">August</string>
+    <string name="monthOfYear9">September</string>
+    <string name="monthOfYear10">October</string>
+    <string name="monthOfYear11">November</string>
+    <string name="monthOfYear12">December</string>
+
 </resources>

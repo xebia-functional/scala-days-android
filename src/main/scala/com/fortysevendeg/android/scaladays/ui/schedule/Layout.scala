@@ -83,7 +83,7 @@ class ScheduleLayoutAdapter(implicit context: ActivityContext, appContext: AppCo
   )
 }
 
-class ViewHolderSpeakersAdapter(adapter: ScheduleLayoutAdapter)(implicit context: ActivityContext, appContext: AppContext)
+class ViewHolderScheduleAdapter(adapter: ScheduleLayoutAdapter)(implicit context: ActivityContext, appContext: AppContext)
     extends RecyclerView.ViewHolder(adapter.content) {
 
   var content = adapter.content
@@ -95,5 +95,28 @@ class ViewHolderSpeakersAdapter(adapter: ScheduleLayoutAdapter)(implicit context
   var name = adapter.name
 
   var speakerContent = adapter.speakerContent
+
+}
+
+class HeaderLayoutAdapter(implicit context: ActivityContext, appContext: AppContext)
+    extends Styles {
+
+  var headerName = slot[TextView]
+
+  val content = layout
+
+  private def layout(implicit appContext: AppContext, context: ActivityContext) = getUi(
+    l[LinearLayout](
+      w[TextView] <~ wire(headerName) <~ headerNameStyle
+    ) <~ headerContentStyle
+  )
+}
+
+class ViewHolderHeaderAdapter(adapter: HeaderLayoutAdapter)(implicit context: ActivityContext, appContext: AppContext)
+    extends RecyclerView.ViewHolder(adapter.content) {
+
+  var content = adapter.content
+
+  var headerName = adapter.headerName
 
 }

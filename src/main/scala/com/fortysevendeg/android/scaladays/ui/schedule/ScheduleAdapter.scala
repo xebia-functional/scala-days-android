@@ -26,58 +26,80 @@ import com.fortysevendeg.macroid.extras.ViewTweaks._
 import com.fortysevendeg.macroid.extras.ViewGroupTweaks._
 import macroid.FullDsl._
 import macroid.{ActivityContext, AppContext}
+import ScheduleAdapter._
 
-class ScheduleAdapter(timeZone: String, events: Seq[Event], listener: RecyclerClickListener)
+class ScheduleAdapter(timeZone: String, scheduleItems: Seq[ScheduleItem], listener: RecyclerClickListener)
     (implicit context: ActivityContext, appContext: AppContext)
-    extends RecyclerView.Adapter[ViewHolderSpeakersAdapter] {
+    extends RecyclerView.Adapter[RecyclerView.ViewHolder] {
 
   val recyclerClickListener = listener
 
-  override def onCreateViewHolder(parentViewGroup: ViewGroup, i: Int): ViewHolderSpeakersAdapter = {
-    val adapter = new ScheduleLayoutAdapter()
-    adapter.content.setOnClickListener(new OnClickListener {
-      override def onClick(v: View): Unit = recyclerClickListener.onClick(events(v.getTag.asInstanceOf[Int]))
-    })
-    new ViewHolderSpeakersAdapter(adapter)
+  override def onCreateViewHolder(parentViewGroup: ViewGroup, viewType: Int): RecyclerView.ViewHolder = {
+    viewType match {
+      case viewType if viewType == itemViewTypeTalk =>
+        val adapter = new ScheduleLayoutAdapter()
+        adapter.content.setOnClickListener(new OnClickListener {
+          override def onClick(v: View): Unit = recyclerClickListener.onClick(scheduleItems(v.getTag.asInstanceOf[Int]))
+        })
+        new ViewHolderScheduleAdapter(adapter)
+      case viewType if viewType == itemViewTypeHeader =>
+        val adapter = new HeaderLayoutAdapter()
+        adapter.content.setOnClickListener(new OnClickListener {
+          override def onClick(v: View): Unit = recyclerClickListener.onClick(scheduleItems(v.getTag.asInstanceOf[Int]))
+        })
+        new ViewHolderHeaderAdapter(adapter)
+    }
   }
 
-  override def getItemCount: Int = events.size
+  override def getItemCount: Int = scheduleItems.size
 
-  override def onBindViewHolder(viewHolder: ViewHolderSpeakersAdapter, position: Int): Unit = {
-    val event = events(position)
-    viewHolder.content.setTag(position)
-    if (event.speakers.size == 0) {
-      runUi(viewHolder.speakerContent <~ vGone)
-    } else {
-      runUi(viewHolder.speakerContent <~ vVisible <~ vgRemoveAllViews)
-      event.speakers.map(
-        speaker => {
-          val speakerLayout = new SpeakersLayout(speaker)
-          runUi((viewHolder.speakerContent <~ vgAddView(speakerLayout.content)))
+  override def onBindViewHolder(viewHolder: RecyclerView.ViewHolder, position: Int): Unit = {
+    val scheduleItem = scheduleItems(position)
+    getItemViewType(position) match {
+      case viewType if viewType == itemViewTypeTalk =>
+        val vh = viewHolder.asInstanceOf[ViewHolderScheduleAdapter]
+        scheduleItem.event map {
+          event =>
+            vh.content.setTag(position)
+            if (event.speakers.size == 0) {
+              runUi(vh.speakerContent <~ vGone)
+            } else {
+              runUi(vh.speakerContent <~ vVisible <~ vgRemoveAllViews)
+              event.speakers.map(
+                speaker => {
+                  val speakerLayout = new SpeakersLayout(speaker)
+                  runUi((vh.speakerContent <~ vgAddView(speakerLayout.content)))
+                }
+              )
+            }
+            runUi(
+              (vh.hour <~ tvDateTimeHourMinute(event.startTime, timeZone)) ~
+                  (vh.name <~ tvText(event.title)) ~
+                  (vh.room <~ event.track.map(track => tvText(track.name) + vVisible).getOrElse(vGone))
+            )
         }
-      )
+      case viewType if viewType == itemViewTypeHeader =>
+        val vh = viewHolder.asInstanceOf[ViewHolderHeaderAdapter]
+        runUi(
+          vh.headerName <~ scheduleItem.header.map(tvText(_) + vVisible).getOrElse(vGone)
+        )
     }
-    runUi(
-      (viewHolder.hour <~ tvDateTimeHourMinute(event.startTime, timeZone)) ~
-          (viewHolder.name <~ tvText(event.title)) ~
-          (viewHolder.room <~ event.track.map(track => tvText(track.name) + vVisible).getOrElse(vGone))
-    )
+
+
+
   }
   override def getItemViewType(position: Int): Int = {
-    super.getItemViewType(position)
+    if (scheduleItems(position).isHeader) itemViewTypeHeader else itemViewTypeTalk
   }
 
-  def getSpeakersView(speakers: Seq[Speaker]) = {
-
-  }
 }
 
 object ScheduleAdapter {
   val itemViewTypeHeader = 0
-  val itemViewTypeTalk = 0
+  val itemViewTypeTalk = 1
 }
 
 trait RecyclerClickListener {
-  def onClick(event: Event)
+  def onClick(scheduleItem: ScheduleItem)
 }
 

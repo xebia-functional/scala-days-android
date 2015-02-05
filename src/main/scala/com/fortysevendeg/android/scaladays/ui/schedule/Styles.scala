@@ -16,7 +16,7 @@
 
 package com.fortysevendeg.android.scaladays.ui.schedule
 
-import android.view.Gravity
+import android.view.{ViewGroup, Gravity}
 import android.view.ViewGroup.LayoutParams._
 import android.widget.ImageView.ScaleType
 import android.widget.LinearLayout
@@ -42,7 +42,16 @@ trait Styles {
 
   val progressBarStyle = vWrapContent + flLayoutGravity(Gravity.CENTER)
 
-  // Styles for Adapter
+  // Styles for Header Adapter
+
+  def headerContentStyle(implicit appContext: AppContext) = lp[ViewGroup](MATCH_PARENT, 44 dp) + llHorizontal +
+      vBackgroundColorResource(R.color.background_list_schedule_header)
+
+  def headerNameStyle(implicit appContext: AppContext) = vWrapContent + tvSize(14) +
+      llLayoutGravity(Gravity.CENTER_VERTICAL) + tvColorResource(R.color.text_schedule_name) +
+      tvBold + tvAllCaps + vPadding(16 dp, 0, 0, 0)
+
+  // Styles for Schedule Adapter
 
   def itemContentStyle(implicit appContext: AppContext) =
     vMatchParent + llHorizontal
@@ -51,8 +60,8 @@ trait Styles {
       vPadding(0, 12 dp, 0, 0) + vBackgroundColorResource(R.color.background_list_schedule_hour) +
       tvGravity(Gravity.CENTER_HORIZONTAL) + tvColorResource(R.color.text_schedule_name) + tvBold
 
-  def itemInfoContentStyle(implicit appContext: AppContext) = vMatchWidth + llVertical + vPadding(16 dp, 12 dp, 16 dp, 12 dp) +
-      vBackgroundColorResource(R.color.background_list_schedule_info)
+  def itemInfoContentStyle(implicit appContext: AppContext) = vMatchWidth + llVertical +
+      vPadding(16 dp, 12 dp, 16 dp, 12 dp) + vBackgroundColorResource(R.color.background_list_schedule_info)
 
   val itemSpeakersContentStyle = vMatchWidth + llVertical
 

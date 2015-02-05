@@ -65,12 +65,13 @@ class ScheduleFragment
   }
 
   def reloadList(timeZone: String, events: Seq[Event]) = {
+    val scheduleItems = ScheduleConversion.toScheduleItem(timeZone, events)
     for {
       layout <- fragmentLayout
       recyclerView <- layout.recyclerView
     } yield {
-      val adapter = new ScheduleAdapter(timeZone, events, new RecyclerClickListener {
-        override def onClick(event: Event): Unit = {
+      val adapter = new ScheduleAdapter(timeZone, scheduleItems, new RecyclerClickListener {
+        override def onClick(scheduleItem: ScheduleItem): Unit = {
 
         }
       })

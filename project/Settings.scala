@@ -21,6 +21,7 @@ object Settings {
     "-ignorewarnings",
     "-keep class scala.Dynamic",
     "-keep class com.fortysevendeg.** { *; }",
+    "-keep class org.joda.** { *; }",
     "-keep class macroid.** { *; }",
     "-keep class android.** { *; }",
     "-keep class com.google.** { *; }")
