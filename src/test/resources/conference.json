@@ -1,0 +1,2934 @@
+{
+  "generalInfo": {"version": "1.0.1"},
+  "conferences": [
+    {
+      "info": {
+        "nameAndLocation": "Scala Days San Francisco, March 16-18, San Francisco, California",
+        "id": 111,
+        "firstDay": "2015-03-16",
+        "lastDay": "2015-03-20",
+        "utcTimezoneOffset": "America\/Los_Angeles",
+        "name": "scaladays-sanfran-2015",
+        "longName": "Scala Days San Francisco",
+        "registrationSite": "https:\/\/secure.trifork.com\/scaladays-sanfran-2015\/registration\/",
+        "normalSite": "http:\/\/event.scaladays.org\/scaladays-sanfran-2015",
+        "utcTimezoneOffsetMillis": -25200000,
+        "hashtag": "#SDSanFrancisto15",
+        "pictures": [
+          {
+            "width": 298,
+            "height": 188,
+            "url": "http:\/\/scala-days-2015.s3.amazonaws.com\/san_francisco.png"
+          },
+          {
+            "width": 596,
+            "height": 376,
+            "url": "http:\/\/scala-days-2015.s3.amazonaws.com\/san_francisco@2x.png"
+          },
+          {
+            "width": 894,
+            "height": 564,
+            "url": "http:\/\/scala-days-2015.s3.amazonaws.com\/san_francisco@3x.png"
+          }
+        ]
+      },
+      "schedule": [
+        {
+          "id": 6520,
+          "title": "Registration Open",
+          "description": "",
+          "type": 3,
+          "startTime": "2015-03-16T23:00:00Z",
+          "endTime": "2015-03-16T23:00:00Z",
+          "date": "MONDAY MARCH 16"
+        },
+        {
+          "id": 6524,
+          "title": "Keynote: Scala - where it came from, where it's going",
+          "description": "",
+          "type": 2,
+          "startTime": "2015-03-17T00:00:00Z",
+          "endTime": "2015-03-17T00:00:00Z",
+          "date": "MONDAY MARCH 16",
+          "track": {
+            "id": 1051,
+            "host": "",
+            "description": "",
+            "name": "Keynote",
+            "class": "TrackVO",
+            "shortdescription": ""
+          },
+          "location": {
+            "id": 589,
+            "name": "Herbst Pavilion",
+            "class": "LocationVO",
+            "mapUrl": ""
+          },
+          "speakers": [
+            {
+              "id": 4838,
+              "picture": "http:\/\/event.scaladays.org\/dl\/photos\/Scala%20Days%202015%20speakers/xxxxx.png",
+              "name": "Xxxxx speaker",
+              "title": "",
+              "company": "Company",
+              "twitter": "@twitter",
+              "bio": "Speaker bio"
+            }
+          ]
+        },
+        {
+          "id": 6522,
+          "title": "Welcome Party",
+          "description": "",
+          "type": 3,
+          "startTime": "2015-03-17T01:30:00Z",
+          "endTime": "2015-03-17T01:30:00Z",
+          "date": "MONDAY MARCH 16"
+        },
+        {
+          "id": 6520,
+          "title": "Registration Open",
+          "description": "",
+          "type": 3,
+          "startTime": "2015-03-17T15:00:00Z",
+          "endTime": "2015-03-17T15:00:00Z",
+          "date": "TUESDAY MARCH 17"
+        },
+        {
+          "id": 6525,
+          "title": "Keynote Tuesday",
+          "description": "",
+          "type": 2,
+          "startTime": "2015-03-17T16:00:00Z",
+          "endTime": "2015-03-17T16:00:00Z",
+          "date": "TUESDAY MARCH 17",
+          "location": {
+            "id": 589,
+            "name": "Herbst Pavilion",
+            "class": "LocationVO",
+            "mapUrl": ""
+          },
+          "speakers": [
+            {
+              "id": 4936,
+              "picture": "http:\/\/event.scaladays.org\/dl\/photos\/Scala%20Days%202015%20speakers/xxxxx.png",
+              "name": "Xxxxx speaker",
+              "title": "",
+              "company": "Company",
+              "twitter": null,
+              "bio": "Speaker bio"
+            }
+          ]
+        },
+        {
+          "id": 6526,
+          "title": "Break",
+          "description": "",
+          "type": 3,
+          "startTime": "2015-03-17T17:00:00Z",
+          "endTime": "2015-03-17T17:00:00Z",
+          "date": "TUESDAY MARCH 17"
+        },
+        {
+          "id": 6527,
+          "title": "Scala Collections Performance",
+          "description": "Java 8 has Streams, Scala has parallel collections, and GS\nCollections has ParallelIterables. Since we use parallelism to achieve\nbetter performance, it's interesting to ask: how well do they perform?\nWe'll look at how these three APIs work with a critical eye toward\nperformance. We'll also look at potential optimizations or additions\nto the Scala Collections Framework  \n\n \t* Persistent collections vs \"plain\" immutable collections\n \t* Ctrie vs concurrent hash maps\n \t* @specialized collections vs primitive collections\n \t* open addressing vs chaining in hash maps",
+          "type": 2,
+          "startTime": "2015-03-17T17:25:00Z",
+          "endTime": "2015-03-17T17:25:00Z",
+          "date": "TUESDAY MARCH 17",
+          "track": {
+            "id": 1043,
+            "host": "",
+            "description": "",
+            "name": "Track 1-Intermediate Tuesday",
+            "class": "TrackVO",
+            "shortdescription": ""
+          },
+          "location": {
+            "id": 589,
+            "name": "Herbst Pavilion",
+            "class": "LocationVO",
+            "mapUrl": ""
+          },
+          "speakers": [
+            {
+              "id": 4880,
+              "picture": "http:\/\/event.scaladays.org\/dl\/photos\/Scala%20Days%202015%20speakers/xxxxx.png",
+              "name": "Xxxxx speaker",
+              "title": "",
+              "company": "Company",
+              "twitter": "@twitter",
+              "bio": "Speaker bio"
+            }
+          ]
+        },
+        {
+          "id": 6542,
+          "title": "Essential Scala: Six Core Principles for Learning Scala",
+          "description": "How can programmers quickly and effectively learn to write idiomatic\nScala? This is a question we at Underscore had to answer when\ndeveloping our own training material. We knew we wanted to go beyond\nteaching syntax and give developers the concepts and techniques they\nneeded to develop Scala in a systematic and idiomatic way. In this\ntalk I will describe these six concepts, which are: expressions,\nvalues, and types; objects and methods; algebraic data types;\nstructural recursion; functors and monads; and type classes. This talk\nshould be of interest to anyone who is transitioning to, or leading a\nteam that is transitioning to, Scala, and anyone interested in\nguidelines for idiomatic Scala code.",
+          "type": 2,
+          "startTime": "2015-03-17T17:25:00Z",
+          "endTime": "2015-03-17T17:25:00Z",
+          "date": "TUESDAY MARCH 17",
+          "track": {
+            "id": 1044,
+            "host": "",
+            "description": "",
+            "name": "Track 2 - Intermediate Tuesday",
+            "class": "TrackVO",
+            "shortdescription": ""
+          },
+          "location": {
+            "id": 590,
+            "name": "Cowell Theater",
+            "class": "LocationVO",
+            "mapUrl": ""
+          },
+          "speakers": [
+            {
+              "id": 4883,
+              "picture": "http:\/\/event.scaladays.org\/dl\/photos\/Scala%20Days%202015%20speakers/xxxxx.png",
+              "name": "Xxxxx speaker",
+              "title": "",
+              "company": "Company",
+              "twitter": "@twitter",
+              "bio": "Speaker bio"
+            }
+          ]
+        },
+        {
+          "id": 6549,
+          "title": "Toward a Safer Scala",
+          "description": "Scala has many, well-known WTF LOLs that result from the language\ntoo enthusiastically attempting to help the programmer. Scala can also\nbe written across a wide range of styles from the Typelevel to the\nBetter Java. The Scala ecosystem has static analysis and linting tools\nwhich can help avoid confusing behavior, baffling compiler messages,\nand divergent coding styles. A survey of the available tools will\nprepare attendees to determine which can be best applied in greenfield\nand existing projects. A case study of a team using static analysis\ntools over many years will also be presented. Attendees will leave\nwith steps to immediately improve their production builds and\nstrategies to introduce more sweeping changes with time.",
+          "type": 2,
+          "startTime": "2015-03-17T17:25:00Z",
+          "endTime": "2015-03-17T17:25:00Z",
+          "date": "TUESDAY MARCH 17",
+          "track": {
+            "id": 1045,
+            "host": "",
+            "description": "",
+            "name": "Track 3 - Beginner Tuesday",
+            "class": "TrackVO",
+            "shortdescription": ""
+          },
+          "location": {
+            "id": 591,
+            "name": "Golden Gate Room",
+            "class": "LocationVO",
+            "mapUrl": ""
+          },
+          "speakers": [
+            {
+              "id": 4884,
+              "picture": "http:\/\/event.scaladays.org\/dl\/photos\/Scala%20Days%202015%20speakers/xxxxx.png",
+              "name": "Xxxxx speaker",
+              "title": "",
+              "company": "Company",
+              "twitter": "@twitter",
+              "bio": "Speaker bio"
+            }
+          ]
+        },
+        {
+          "id": 6556,
+          "title": "Visualize the things",
+          "description": "Sparkle is an open source data service written in Scala to support\ninteractive data visualization analytics. While much of the attention\nin the open source data analytics community has been on tools for\nmanaging big data batch analytics, in the Sparkle project we've been\nexploring the possibilities enabled by a service that sits between the\nbig data store and the web\/mobile UI to support interactive analytics.\nWith the growth in server processing power and RAM storage,\ninteractive analytics is becoming ever more general purpose and ever\nmore applicable to larger data sets. As this trend continues,\ninteractive analytics will emerge as the third stage in big data\npipelines: ETL -> batch analytics -> interactive analytics. We'll\ndiscuss the opportunities this new architectural stage presents. We'll\ndemonstrate some recent progress with Sparkle including handling large\ndatasets with Cassandra, integrating batch calculation with Spark, low\nlatency calculation with Reactive streams, and continued work on\nsupporting a standard protocol for web\/mobile visualization clients.",
+          "type": 2,
+          "startTime": "2015-03-17T17:25:00Z",
+          "endTime": "2015-03-17T17:25:00Z",
+          "date": "TUESDAY MARCH 17",
+          "track": {
+            "id": 1046,
+            "host": "",
+            "description": "",
+            "name": "Track 4 - Advanced Tuesday",
+            "class": "TrackVO",
+            "shortdescription": ""
+          },
+          "location": {
+            "id": 592,
+            "name": "Southside Theater",
+            "class": "LocationVO",
+            "mapUrl": ""
+          },
+          "speakers": [
+            {
+              "id": 4885,
+              "picture": "http:\/\/event.scaladays.org\/dl\/photos\/Scala%20Days%202015%20speakers/xxxxx.png",
+              "name": "Xxxxx speaker",
+              "title": "",
+              "company": "Company",
+              "twitter": "@twitter",
+              "bio": "Speaker bio"
+            }
+          ]
+        },
+        {
+          "id": 6526,
+          "title": "Break",
+          "description": "",
+          "type": 3,
+          "startTime": "2015-03-17T18:10:00Z",
+          "endTime": "2015-03-17T18:10:00Z",
+          "date": "TUESDAY MARCH 17"
+        },
+        {
+          "id": 6528,
+          "title": "Life Beyond the Illusion of Present",
+          "description": "The idea of the present is an illusion. Everything we see, hear and\nfeel is just an echo from the past. But this illusion has influenced\nus and the way we view the world in so many ways; from Newton's\nphysics with a linearly progressing timeline accruing absolute\nknowledge along the way to the von Neumann machine with its total\nordering of instructions updating mutable state with full control of\nthe \"present\". But unfortunately this is not how the world works.\nThere is no present, all we have is facts derived from the merging of\nmultiple pasts. The truth is closer to Einstein's physics where\neverything is relative to one's perspective.  \n\n\t As developers we need to wake up and break free from the perceived\nreality of living in a single globally consistent present. The advent\nof multicore and cloud computing architectures meant that most\napplications today are distributed systems--multiple cores separated\nby the memory bus or multiple nodes separated by the network--which\nputs a harsh end to this illusion. Facts travel at the speed of light\n(at best), which makes the distinction between past and perceived\npresent even more apparent in a distributed system where latency is\nhigher and where facts (messages) can get lost.  \n\n\t The only way to design truly scalable and performant systems that\ncan construct a sufficiently consistent view of history--and thereby\nour local \"present\"--is by treating time as a first class construct in\nour programming model and to model the present as facts derived from\nthe merging of multiple concurrent pasts.  \n\n\t In this talk we will explore what all this means to the design of\nour systems, how we need to view and model consistency, consensus,\ncommunication, history and behaviour, and look at some practical tools\nand techniques to bring it all together.",
+          "type": 2,
+          "startTime": "2015-03-17T18:35:00Z",
+          "endTime": "2015-03-17T18:35:00Z",
+          "date": "TUESDAY MARCH 17",
+          "track": {
+            "id": 1043,
+            "host": "",
+            "description": "",
+            "name": "Track 1-Intermediate Tuesday",
+            "class": "TrackVO",
+            "shortdescription": ""
+          },
+          "location": {
+            "id": 589,
+            "name": "Herbst Pavilion",
+            "class": "LocationVO",
+            "mapUrl": ""
+          },
+          "speakers": [
+            {
+              "id": 4881,
+              "picture": "http:\/\/event.scaladays.org\/dl\/photos\/Scala%20Days%202015%20speakers/xxxxx.png",
+              "name": "Xxxxx speaker",
+              "title": "",
+              "company": "Company",
+              "twitter": "@twitter",
+              "bio": "Speaker bio"
+            }
+          ]
+        },
+        {
+          "id": 6543,
+          "title": "Quantifind's story: Building custom real-time data analytics infrastructure",
+          "description": "Building interactive data analytics products on top of large volumes\nof data is challenging. This talk will outline Quantifind's\ninfrastructure story for building analytics software. We will describe\nthe infrastructure that we originally built on top of existing systems\nsuch as Spark\/Hadoop. However, the bulk of this talk will focus on a\nnew, custom distributed system that we have built in-house for our\npredictive analytics software. This new system includes a distributed,\nin-memory, real-time computing platform that supports fast interactive\nquerying against large volumes of compacted raw data that isn't\npre-aggregated. This infrastructure can be viewed as an in-memory\ncombination of map\/reduce style computation and indexed structures\nbuilt from bit sets to offsets in the compacted data. Akka Cluster\nsits at the core of this system for distributed communication between\nnodes. We will discuss why we chose to build our own system as well as\ntips and tricks that we've learned along the way for pushing the JVM\nfor these types of systems.",
+          "type": 2,
+          "startTime": "2015-03-17T18:35:00Z",
+          "endTime": "2015-03-17T18:35:00Z",
+          "date": "TUESDAY MARCH 17",
+          "track": {
+            "id": 1044,
+            "host": "",
+            "description": "",
+            "name": "Track 2 - Intermediate Tuesday",
+            "class": "TrackVO",
+            "shortdescription": ""
+          },
+          "location": {
+            "id": 590,
+            "name": "Cowell Theater",
+            "class": "LocationVO",
+            "mapUrl": ""
+          },
+          "speakers": [
+            {
+              "id": 4886,
+              "picture": "http:\/\/event.scaladays.org\/dl\/photos\/Scala%20Days%202015%20speakers/xxxxx.png",
+              "name": "Xxxxx speaker",
+              "title": "",
+              "company": "Company",
+              "twitter": "@twitter",
+              "bio": "Speaker bio"
+            }
+          ]
+        },
+        {
+          "id": 6550,
+          "title": "Scala applications on the cloud",
+          "description": "Applications are evolving from a traditional model to be able to\nHighly Available and Scaleable. Platform as a Service in general and\nCloudFoundry in particular has substantial industry support and\nenables hosting of multiple applications. The session will start with\nan overview of CloudFoundry and how to push Scala\/Play applications to\nthe cloud. In addition to ease of deployment, we will also look at\nwhat the CloudFoundry has to offer in terms of HA, scaling and\nsecurity which is built in to the platform and how to control those\nknobs. Attend this session for a technical overview of CloudFoundry\nand how to run Scala\/Play applications on the cloud and to reap the\nbenefits of HA, scaling, security and so on that the PaaS has to\noffer.",
+          "type": 2,
+          "startTime": "2015-03-17T18:35:00Z",
+          "endTime": "2015-03-17T18:35:00Z",
+          "date": "TUESDAY MARCH 17",
+          "track": {
+            "id": 1045,
+            "host": "",
+            "description": "",
+            "name": "Track 3 - Beginner Tuesday",
+            "class": "TrackVO",
+            "shortdescription": ""
+          },
+          "location": {
+            "id": 591,
+            "name": "Golden Gate Room",
+            "class": "LocationVO",
+            "mapUrl": ""
+          },
+          "speakers": [
+            {
+              "id": 4887,
+              "picture": "http:\/\/event.scaladays.org\/dl\/photos\/Scala%20Days%202015%20speakers/xxxxx.png",
+              "name": "Xxxxx speaker",
+              "title": "",
+              "company": "Company",
+              "twitter": "@twitter",
+              "bio": "Speaker bio"
+            }
+          ]
+        },
+        {
+          "id": 6655,
+          "title": "Shattering Hadoop's Large-Scale Sort Record with Spark and Scala",
+          "description": "In this talk, we present a case study on how we build high\nperformance distributed programs using Apache Spark and Scala. Based\non the case study, we discuss common performance pitfalls and\nprinciples for both high level (e.g. task scheduling) and low level\n(e.g. cache locality) performance optimizations in data intensive\napplications.  \n\n\t Using Spark and Scala, we recently set a new world record in 100TB\ndistributed sorting in the Sort Benchmark [1]. Participants from all\nover the world often build dedicated sorting systems using C\/C++ for\nthe benchmark, while we enter using a general data processing engine\n(Spark) and Scala\/JVM.  \n\n\t Our program sorted 100TB in 23 mins using 206 i2.8xlarge machines on\nAmazon EC2. Using only 1\/10th of number of machines, our record is 3X\nfaster than last year's record set by Hadoop MapReduce. Sorting 100TB\nof data following the benchmark rules generates 500TB of disk I\/O and\n200TB of network I\/O. Our Spark\/Scala-based program saturates the\nbandwidth of 8 SSDs and 10Gbps links on available on these machines\nduring sorting.",
+          "type": 2,
+          "startTime": "2015-03-17T18:35:00Z",
+          "endTime": "2015-03-17T18:35:00Z",
+          "date": "TUESDAY MARCH 17",
+          "track": {
+            "id": 1046,
+            "host": "",
+            "description": "",
+            "name": "Track 4 - Advanced Tuesday",
+            "class": "TrackVO",
+            "shortdescription": ""
+          },
+          "location": {
+            "id": 592,
+            "name": "Southside Theater",
+            "class": "LocationVO",
+            "mapUrl": ""
+          },
+          "speakers": [
+            {
+              "id": 4977,
+              "picture": "http:\/\/event.scaladays.org\/dl\/photos\/Scala%20Days%202015%20speakers/xxxxx.png",
+              "name": "Xxxxx speaker",
+              "title": "",
+              "company": "Company",
+              "twitter": "@twitter",
+              "bio": "Speaker bio"
+            }
+          ]
+        },
+        {
+          "id": 6521,
+          "title": "Lunch",
+          "description": "",
+          "type": 3,
+          "startTime": "2015-03-17T19:20:00Z",
+          "endTime": "2015-03-17T19:20:00Z",
+          "date": "TUESDAY MARCH 17"
+        },
+        {
+          "id": 6529,
+          "title": "Scala - The Real Spark of Data Science",
+          "description": "The toolkit of data scientists is full of new technologies and\nframeworks that promise huge scale, fast execution and simplified\nprimitives. The problem is, none of these are really important. What\nseparates great data scientists from good, is their ability to reason\nabout data and iterate quickly through ideas. The main tool to achieve\nthis is the programming model they use, and no language is better at\nthis than Scala.  \n\n\t Join Vitaly Gordon, a Scalding contributor, Spark aficionado and the\nlead of the newly formed data science group at Salesforce on this talk\nabout how Scala is the real spark of data science.",
+          "type": 2,
+          "startTime": "2015-03-17T20:20:00Z",
+          "endTime": "2015-03-17T20:20:00Z",
+          "date": "TUESDAY MARCH 17",
+          "track": {
+            "id": 1043,
+            "host": "",
+            "description": "",
+            "name": "Track 1-Intermediate Tuesday",
+            "class": "TrackVO",
+            "shortdescription": ""
+          },
+          "location": {
+            "id": 589,
+            "name": "Herbst Pavilion",
+            "class": "LocationVO",
+            "mapUrl": ""
+          },
+          "speakers": [
+            {
+              "id": 4890,
+              "picture": "http:\/\/event.scaladays.org\/dl\/photos\/Scala%20Days%202015%20speakers/xxxxx.png",
+              "name": "Xxxxx speaker",
+              "title": "",
+              "company": "Company",
+              "twitter": "@twitter",
+              "bio": "Speaker bio"
+            }
+          ]
+        },
+        {
+          "id": 6544,
+          "title": "State of the Meta",
+          "description": "scala.meta is the culmination of our experience with metaprogramming\nin Scala. Our design provides an elegant model of the language and\nsolves the problems of compatibility across compilers and tools. Since\nthe announcement of scala.meta at ScalaDays 2014, we've been working\nhard turning it into reality.  \n\n\t In the talk, we will demonstrate how existing metaprograms can be\nmigrated to our new platform and highlight the benefits that\nscala.meta brings to macro users, library designers and tool authors.\nCurious to see how the unification of trees, symbols and types is\nworking? What additional capabilities do our new quasiquotes have? And\nhave we really managed to allow macros to be defined in the same\nproject that uses them? Come over and see for yourself!",
+          "type": 2,
+          "startTime": "2015-03-17T20:20:00Z",
+          "endTime": "2015-03-17T20:20:00Z",
+          "date": "TUESDAY MARCH 17",
+          "track": {
+            "id": 1044,
+            "host": "",
+            "description": "",
+            "name": "Track 2 - Intermediate Tuesday",
+            "class": "TrackVO",
+            "shortdescription": ""
+          },
+          "location": {
+            "id": 590,
+            "name": "Cowell Theater",
+            "class": "LocationVO",
+            "mapUrl": ""
+          },
+          "speakers": [
+            {
+              "id": 4891,
+              "picture": "http:\/\/event.scaladays.org",
+              "name": "Xxxxx speaker",
+              "title": "",
+              "company": "Company",
+              "twitter": "@twitter",
+              "bio": "Speaker bio"
+            }
+          ]
+        },
+        {
+          "id": 6551,
+          "title": "Whirlwind tour of the Scala Ecosystem",
+          "description": "",
+          "type": 2,
+          "startTime": "2015-03-17T20:20:00Z",
+          "endTime": "2015-03-17T20:20:00Z",
+          "date": "TUESDAY MARCH 17",
+          "track": {
+            "id": 1045,
+            "host": "",
+            "description": "",
+            "name": "Track 3 - Beginner Tuesday",
+            "class": "TrackVO",
+            "shortdescription": ""
+          },
+          "location": {
+            "id": 591,
+            "name": "Golden Gate Room",
+            "class": "LocationVO",
+            "mapUrl": ""
+          },
+          "speakers": [
+            {
+              "id": 4888,
+              "picture": "http:\/\/event.scaladays.org\/dl\/photos\/Scala%20Days%202015%20speakers/xxxxx.png",
+              "name": "Xxxxx speaker",
+              "title": "",
+              "company": "Company",
+              "twitter": "@twitter",
+              "bio": "Speaker bio"
+            }
+          ]
+        },
+        {
+          "id": 6558,
+          "title": "Leveraging Scala Macros for Better Validation",
+          "description": "Data validation is a common enough problem that numerous attempts\nhave been made to solve it elegantly. The de-facto solution in Java\n(JSR 303) has a number of shortcomings and fails to leverage the\npowerful Scala type system. The release of Scala 2.10.x introduced a\ncouple of experimental metaprogramming features, namely reflection and\nmacros. In this talk I'll introduce macros by way of a practical\nexample: implementing a full-blown data validation engine, utilizing\ndef macros and a Scala DSL to enable elegant validator definition\nsyntax and call-site.",
+          "type": 2,
+          "startTime": "2015-03-17T20:20:00Z",
+          "endTime": "2015-03-17T20:20:00Z",
+          "date": "TUESDAY MARCH 17",
+          "track": {
+            "id": 1046,
+            "host": "",
+            "description": "",
+            "name": "Track 4 - Advanced Tuesday",
+            "class": "TrackVO",
+            "shortdescription": ""
+          },
+          "location": {
+            "id": 592,
+            "name": "Southside Theater",
+            "class": "LocationVO",
+            "mapUrl": ""
+          },
+          "speakers": [
+            {
+              "id": 4892,
+              "picture": "http:\/\/event.scaladays.org\/dl\/photos\/Scala%20Days%202015%20speakers/xxxxx.png",
+              "name": "Xxxxx speaker",
+              "title": "",
+              "company": "Company",
+              "twitter": "@twitter",
+              "bio": "Speaker bio"
+            }
+          ]
+        },
+        {
+          "id": 6526,
+          "title": "Break",
+          "description": "",
+          "type": 3,
+          "startTime": "2015-03-17T21:05:00Z",
+          "endTime": "2015-03-17T21:05:00Z",
+          "date": "TUESDAY MARCH 17"
+        },
+        {
+          "id": 6530,
+          "title": "Being Lazy with Scala",
+          "description": "Conciseness, expressiveness, and fluency, among other things, are\nsome of the core strengths of Scala. Beyond the language capabilities,\nthe Scala library has a wealth of capabilities to make expressive and\nconcise code quite efficient. This combination of benefits comes from\nthe functional side of Scala where function composition and lazy\nevaluations are common place. In this presentation we will learn about\nbeing lazy and, by doing so, how we can make the code quite efficient\nboth from the point of view of expression and execution.",
+          "type": 2,
+          "startTime": "2015-03-17T21:30:00Z",
+          "endTime": "2015-03-17T21:30:00Z",
+          "date": "TUESDAY MARCH 17",
+          "track": {
+            "id": 1043,
+            "host": "",
+            "description": "",
+            "name": "Track 1-Intermediate Tuesday",
+            "class": "TrackVO",
+            "shortdescription": ""
+          },
+          "location": {
+            "id": 589,
+            "name": "Herbst Pavilion",
+            "class": "LocationVO",
+            "mapUrl": ""
+          },
+          "speakers": [
+            {
+              "id": 4882,
+              "picture": "http:\/\/event.scaladays.org\/dl\/photos\/Scala%20Days%202015%20speakers/xxxxx.png",
+              "name": "Xxxxx speaker",
+              "title": "Founder",
+              "company": "Company",
+              "twitter": "@twitter",
+              "bio": "Speaker bio"
+            }
+          ]
+        },
+        {
+          "id": 6545,
+          "title": "Reactive Patterns used in Typesafe Activator",
+          "description": "Typesafe Activator is a browser-based or command-line tool that\nhelps developers get started with the Typesafe Reactive Platform. In\nthis talk, Typesafe engineer Henrik Engstrm will present the four\ntraits that constitutes a reactive application and demonstrate, in\ncode, how we use an reactive approach when building Typesafe Activator\nwith Play, Akka and sbt.",
+          "type": 2,
+          "startTime": "2015-03-17T21:30:00Z",
+          "endTime": "2015-03-17T21:30:00Z",
+          "date": "TUESDAY MARCH 17",
+          "track": {
+            "id": 1044,
+            "host": "",
+            "description": "",
+            "name": "Track 2 - Intermediate Tuesday",
+            "class": "TrackVO",
+            "shortdescription": ""
+          },
+          "location": {
+            "id": 590,
+            "name": "Cowell Theater",
+            "class": "LocationVO",
+            "mapUrl": ""
+          },
+          "speakers": [
+            {
+              "id": 4893,
+              "picture": "http:\/\/event.scaladays.org\/dl\/photos\/Scala%20Days%202015%20speakers/xxxxx.png",
+              "name": "Xxxxx speaker",
+              "title": "",
+              "company": "Company",
+              "twitter": "@twitter",
+              "bio": "Speaker biography"
+            }
+          ]
+        },
+        {
+          "id": 6552,
+          "title": "Apache Spark: A Large Community Project in Scala",
+          "description": "This talk will briefly introduce Spark, but focus on various lessons\nlearned maintaining a large code base and developer community in\nScala. Some topics that will be discussed are: 1. Interacting with\nScala newcomers in the Spark community and our philosophy around\nexposing Scala features in our public API 2. Maintaining a\nmulti-langauge project baed on Scala. 3. Ecosystem tooling for Scala\nprojects, such as build tools, style checkers, etc 4. Maintaining\nbinary compatibility in a widely used Scala project. 5. Tracking down\nand reporting bugs in Scala itself. 6. Our overall experience with\nScala, Akka, etc. The goal is to provide guidance for other Scala\nprojects and feedback to the broader Scala community.",
+          "type": 2,
+          "startTime": "2015-03-17T21:30:00Z",
+          "endTime": "2015-03-17T21:30:00Z",
+          "date": "TUESDAY MARCH 17",
+          "track": {
+            "id": 1045,
+            "host": "",
+            "description": "",
+            "name": "Track 3 - Beginner Tuesday",
+            "class": "TrackVO",
+            "shortdescription": ""
+          },
+          "location": {
+            "id": 591,
+            "name": "Golden Gate Room",
+            "class": "LocationVO",
+            "mapUrl": ""
+          },
+          "speakers": [
+            {
+              "id": 4937,
+              "picture": "http:\/\/event.scaladays.org",
+              "name": "Xxxxx speaker",
+              "title": "",
+              "company": "Company",
+              "twitter": "@twitter",
+              "bio": ""
+            }
+          ]
+        },
+        {
+          "id": 6559,
+          "title": "Type-level Programming in Scala 101",
+          "description": "Scala boasts a powerful type system which assists developers in\nwriting and maintaining bug-free software. Unfortunately, many members\nof the growing Scala community struggle to utilize the Scala type\nsystem due to prior experience with poor static type systems or none\nat all. This talk aims to narrow the gap between haves and have-nots\nof type-level programming by teaching some basics of type manipulation\nin Scala.  \n\n\t This presentation is the product of my journey into the Scala type\nsystem from a background in Java. I will review the familiar\nvalue-level runtime programming, and show how the same logic can be\nutilized at compile time via the type system. By the end of the talk\nyou will be motivated with a new comfort level in types enabling you\nto take the plunge into the riches of one of Scala's greatest\nfeatures.",
+          "type": 2,
+          "startTime": "2015-03-17T21:30:00Z",
+          "endTime": "2015-03-17T21:30:00Z",
+          "date": "TUESDAY MARCH 17",
+          "track": {
+            "id": 1046,
+            "host": "",
+            "description": "",
+            "name": "Track 4 - Advanced Tuesday",
+            "class": "TrackVO",
+            "shortdescription": ""
+          },
+          "location": {
+            "id": 592,
+            "name": "Southside Theater",
+            "class": "LocationVO",
+            "mapUrl": ""
+          },
+          "speakers": [
+            {
+              "id": 4894,
+              "picture": "http:\/\/event.scaladays.org\/dl\/photos\/Scala%20Days%202015%20speakers/xxxxx.png",
+              "name": "Xxxxx speaker",
+              "title": "",
+              "company": "Company",
+              "twitter": "@twitter",
+              "bio": "Speaker biography"
+            }
+          ]
+        },
+        {
+          "id": 6526,
+          "title": "Break",
+          "description": "",
+          "type": 3,
+          "startTime": "2015-03-17T22:15:00Z",
+          "endTime": "2015-03-17T22:15:00Z",
+          "date": "TUESDAY MARCH 17"
+        },
+        {
+          "id": 6531,
+          "title": "Happy Paths: Functional Constructs in the Wild",
+          "description": "We will cover how to keep abstractions manageable for diverse teams,\nwhile still taking advantage of the type system. This includes\nborrowing from Scalaz, type lambda syntax, cake pattern, and patterns\nwith Trys, Futures, Options, and all your favorite combinations of\nthese.  \n\n\t Our team at PayPal began as a startup (Stackmob) and has\ntransitioned into an internal infrastructure team (Stingray). Along\nthe way, we went from Java to Scala to Scalaz and back to Scala. James\nand Joe embody creative tension between functional programming\nelegance and pragmatic maintainability that guides our Scala dialect\nchoices in a mixed Scala\/Java landscape.",
+          "type": 2,
+          "startTime": "2015-03-17T22:40:00Z",
+          "endTime": "2015-03-17T22:40:00Z",
+          "date": "TUESDAY MARCH 17",
+          "track": {
+            "id": 1043,
+            "host": "",
+            "description": "",
+            "name": "Track 1-Intermediate Tuesday",
+            "class": "TrackVO",
+            "shortdescription": ""
+          },
+          "location": {
+            "id": 589,
+            "name": "Herbst Pavilion",
+            "class": "LocationVO",
+            "mapUrl": ""
+          },
+          "speakers": [
+            {
+              "id": 4895,
+              "picture": "http:\/\/event.scaladays.org",
+              "name": "Xxxxx speaker",
+              "title": "",
+              "company": "Company",
+              "twitter": null,
+              "bio": "Speaker biography"
+            },
+            {
+              "id": 4896,
+              "picture": "http:\/\/event.scaladays.org\/dl\/photos\/Scala%20Days%202015%20speakers/xxxxx.png",
+              "name": "Xxxxx speaker",
+              "title": "",
+              "company": "Company",
+              "twitter": null,
+              "bio": "Speaker biography"
+            }
+          ]
+        },
+        {
+          "id": 6546,
+          "title": "S3 at Scale:  Async Scala Client with Play Iteratees and Composable Operations",
+          "description": "At Nitro, we needed a scalable way to perform complex work across all\nof the data in our S3 buckets, which has billions of keys. We\nimplemented a fully asynchronous client on top of the Amazon Java SDK\nwith throttled & restartable bucket enumerators and composable\noperations built with Scala Futures & Play Iteratees. We will go in\ndepth on the code and the design and will be opensourcing this client\naround the time of the talk.",
+          "type": 2,
+          "startTime": "2015-03-17T22:40:00Z",
+          "endTime": "2015-03-17T22:40:00Z",
+          "date": "TUESDAY MARCH 17",
+          "track": {
+            "id": 1044,
+            "host": "",
+            "description": "",
+            "name": "Track 2 - Intermediate Tuesday",
+            "class": "TrackVO",
+            "shortdescription": ""
+          },
+          "location": {
+            "id": 590,
+            "name": "Cowell Theater",
+            "class": "LocationVO",
+            "mapUrl": ""
+          },
+          "speakers": [
+            {
+              "id": 4897,
+              "picture": "http:\/\/event.scaladays.org\/dl\/photos\/Scala%20Days%202015%20speakers/xxxxx.png",
+              "name": "Xxxxx speaker",
+              "title": "",
+              "company": "Company",
+              "twitter": "@twitter",
+              "bio": "Speaker biography"
+            }
+          ]
+        },
+        {
+          "id": 6553,
+          "title": "Improving Correctness With Types",
+          "description": "Object oriented programmers create and use types everyday, however\nthese are usually limited to classes that group and encapsulate data.\nA type system is a theorem prover, and types are capable of much more.\nWhen they are used to express invariants, the type system can prove\nthese hold and show where they do not. Tests prove your code is\ncorrect for some values, types can prove your code is correct for all\nvalues.  \n\n\t This talk is aimed at Scala developers with a background in object\noriented programming who want to learn new ways to use types to\nimprove the correctness of their code. It introduces the topic in a\npractical fashion, concentrating on the \"easy wins\" developers can\napply to their code today.  \n\n\t We will look at how invariants and preconditions are traditionally\nexpressed with assertions and the runtime errors they produce. We\nexamine how some of these are solved with types in the standard\nlibrary and elsewhere and the guarantees they provide. Then we show\nhow common invariants can be expressed with custom data types and how\nthese use compiler errors to prevent bugs. This will touch on tagged\ntypes, typesafe wrappers, algebraic data types and path dependent\ntypes.  \n\n\t Finally the talk demonstrates there is a whole world of types\noutside of object oriented design and hopes to encourage you to spend\nthe time to discover these for yourself.",
+          "type": 2,
+          "startTime": "2015-03-17T22:40:00Z",
+          "endTime": "2015-03-17T22:40:00Z",
+          "date": "TUESDAY MARCH 17",
+          "track": {
+            "id": 1045,
+            "host": "",
+            "description": "",
+            "name": "Track 3 - Beginner Tuesday",
+            "class": "TrackVO",
+            "shortdescription": ""
+          },
+          "location": {
+            "id": 591,
+            "name": "Golden Gate Room",
+            "class": "LocationVO",
+            "mapUrl": ""
+          },
+          "speakers": [
+            {
+              "id": 4898,
+              "picture": "http:\/\/event.scaladays.org\/dl\/photos\/Scala%20Days%202015%20speakers/xxxxx.png",
+              "name": "Xxxxx speaker",
+              "title": "",
+              "company": "Company",
+              "twitter": "@twitter",
+              "bio": "Speaker biography"
+            }
+          ]
+        },
+        {
+          "id": 6560,
+          "title": "Type-safe off-heap memory for Scala",
+          "description": "Wide adoption of Scala has led to it being used in a vast variety of\nscenarios ranging from simple apps to massively concurrent distributed\nservices handling millions of requests per second.  \n\n\t Scaling doesn't come for free and at certain stage one becomes\nlimited by the underlying platform. A common scaling problem on the\nHotSpot JVM is performance of garbage collection on large heaps. Past\ncertain heap sizes GC pauses become completely unacceptable for\nlatency-critical applications.  \n\n\t In this talk, we are going to present an alternative approach for\ntype-safe off-heap memory management that doesn't rely on JVM garbage\ncollection. We believe that it can vastly simplify development of\nlatency-critical applications which suffer from GC pauses. Our\nframework provides tools for allocation and automatic deterministic\ndeallocation of off-heap memory and other system resources without\nperformance overhead.",
+          "type": 2,
+          "startTime": "2015-03-17T22:40:00Z",
+          "endTime": "2015-03-17T22:40:00Z",
+          "date": "TUESDAY MARCH 17",
+          "track": {
+            "id": 1046,
+            "host": "",
+            "description": "",
+            "name": "Track 4 - Advanced Tuesday",
+            "class": "TrackVO",
+            "shortdescription": ""
+          },
+          "location": {
+            "id": 592,
+            "name": "Southside Theater",
+            "class": "LocationVO",
+            "mapUrl": ""
+          },
+          "speakers": [
+            {
+              "id": 4899,
+              "picture": "http:\/\/event.scaladays.org\/dl\/photos\/Scala%20Days%202015%20speakers/xxxxx.png",
+              "name": "Xxxxx speaker",
+              "title": "",
+              "company": "Company",
+              "twitter": "@twitter",
+              "bio": "Speaker biography"
+            }
+          ]
+        },
+        {
+          "id": 6526,
+          "title": "Break",
+          "description": "",
+          "type": 3,
+          "startTime": "2015-03-17T23:25:00Z",
+          "endTime": "2015-03-17T23:25:00Z",
+          "date": "TUESDAY MARCH 17"
+        },
+        {
+          "id": 6532,
+          "title": "A Skeptic's Look at scalaz' \"Gateway Drugs\"",
+          "description": "\"We've all seen them on the corner of our local software development\nneighborhoods: FP purists, shamelessly peddling scalaz to unsuspecting\ndevelopers. Lured in by promises of Free Monoids, Semigroups, and\nEndofunctors these developers soon seem lost in throes of ecstatic\ncoding. \"  \n\n\t To the skeptical and stubbornly practical among us, the above might\nring a little true - especially if read in Rob Serling's voice. Images\nof gibbering horrors lurking in the depths of mathematical perfection\nswim before our eyes.  \n\n\t But what if there is true value in the world of scalaz? What if it\nis possible to use these tools for good (and a little bit of evil -\nit's fun to use learning for evil!) and profit... Without getting\nhopelessly lost in the opium dens of FP?  \n\n\t In this talk we will look at some of the \"gateway drugs\" of scalaz:\nValidation, NonEmptyList, \/, OptionT, and more. How do they work from\na practical standpoint? What is their value for real world\napplications? And just how fun is it to *really* code with these\ntools?",
+          "type": 2,
+          "startTime": "2015-03-17T23:50:00Z",
+          "endTime": "2015-03-17T23:50:00Z",
+          "date": "TUESDAY MARCH 17",
+          "track": {
+            "id": 1043,
+            "host": "",
+            "description": "",
+            "name": "Track 1-Intermediate Tuesday",
+            "class": "TrackVO",
+            "shortdescription": ""
+          },
+          "location": {
+            "id": 589,
+            "name": "Herbst Pavilion",
+            "class": "LocationVO",
+            "mapUrl": ""
+          },
+          "speakers": [
+            {
+              "id": 4900,
+              "picture": "http:\/\/event.scaladays.org\/dl\/photos\/Scala%20Days%202015%20speakers/xxxxx.png",
+              "name": "Xxxxx speaker",
+              "title": "",
+              "company": "Company",
+              "twitter": "@twitter",
+              "bio": "Speaker biography"
+            }
+          ]
+        },
+        {
+          "id": 6547,
+          "title": "Akka in Production: Why and How",
+          "description": "Everyone in the Scala world is using or looking into using Akka for\nlow-latency, scalable, distributed or concurrent systems. I'd like to\nshare my story of developing and productionizing multiple Akka apps,\nincluding low-latency ingestion and real-time processing systems, and\nSpark-based applications.  \n\n \t* When does one use actors vs futures?\n \t* Can we use Akka with, or in place of, Storm?\n \t* How did we set up instrumentation and monitoring in production?\n \t* How does one use VisualVM to debug Akka apps in production?\n \t* What happens if the mailbox gets full?\n \t* What is our Akka stack like?\n\n\t I will share best practices for building Akka and Scala apps,\npitfalls and things we'd like to avoid, and a vision of where we would\nlike to go for ideal Akka monitoring, instrumentation, and debugging\nfacilities.",
+          "type": 2,
+          "startTime": "2015-03-17T23:50:00Z",
+          "endTime": "2015-03-17T23:50:00Z",
+          "date": "TUESDAY MARCH 17",
+          "track": {
+            "id": 1044,
+            "host": "",
+            "description": "",
+            "name": "Track 2 - Intermediate Tuesday",
+            "class": "TrackVO",
+            "shortdescription": ""
+          },
+          "location": {
+            "id": 590,
+            "name": "Cowell Theater",
+            "class": "LocationVO",
+            "mapUrl": ""
+          },
+          "speakers": [
+            {
+              "id": 4901,
+              "picture": "http:\/\/event.scaladays.org",
+              "name": "Xxxxx speaker",
+              "title": "",
+              "company": "Company",
+              "twitter": "@twitter",
+              "bio": "Speaker biography"
+            }
+          ]
+        },
+        {
+          "id": 6561,
+          "title": "Function-Passing Style, A New Model for Asynchronous and Distributed Programming",
+          "description": "In this talk, I'll present some of our ongoing work on a new\nprogramming model for asynchronous and distributed programming. For\nnow, we call it \"function-passing\" or \"function-passing style\", and it\ncan be thought of as an inversion of the actor model - keep your data\nstationary, send and apply your functionality (functions\/spores) to\nthat stationary data, and get typed communication all for free, all in\na friendly collections\/futures-like package!",
+          "type": 2,
+          "startTime": "2015-03-17T23:50:00Z",
+          "endTime": "2015-03-17T23:50:00Z",
+          "date": "TUESDAY MARCH 17",
+          "track": {
+            "id": 1046,
+            "host": "",
+            "description": "",
+            "name": "Track 4 - Advanced Tuesday",
+            "class": "TrackVO",
+            "shortdescription": ""
+          },
+          "location": {
+            "id": 592,
+            "name": "Southside Theater",
+            "class": "LocationVO",
+            "mapUrl": ""
+          },
+          "speakers": [
+            {
+              "id": 4903,
+              "picture": "http:\/\/event.scaladays.org\/dl\/photos\/Scala%20Days%202015%20speakers/xxxxx.png",
+              "name": "Xxxxx speaker",
+              "title": "",
+              "company": "Company",
+              "twitter": "@twitter",
+              "bio": "Speaker biography"
+            }
+          ]
+        },
+        {
+          "id": 6579,
+          "title": "Anatomy of a Modern Play Application",
+          "description": "Have you ever wanted to take your Play application and development\nworkflow to the next level? Make it easier, faster, more productive,\nand fun? In this very opinionated talk we investigate, layer by layer,\nhow to fully explore Play's typesafe and reactive potential:Polyglot\npersistence with Slick and NoSQL, Future-based services architecture,\nCoast-to-coast JSON, Effective templates, Practical asset management\npipeline, State-of-the-art internationalization, Advanced end-to-end\ntesting and debugging, Enhanced error reporting, Leveraging Typesafe\nConfig HOCON, Custom environments, Jumpstarting your projects with\nTypesafe Activator, Lessons learned: our experience with large\nprojects.",
+          "type": 2,
+          "startTime": "2015-03-17T23:50:00Z",
+          "endTime": "2015-03-17T23:50:00Z",
+          "date": "TUESDAY MARCH 17",
+          "track": {
+            "id": 1045,
+            "host": "",
+            "description": "",
+            "name": "Track 3 - Beginner Tuesday",
+            "class": "TrackVO",
+            "shortdescription": ""
+          },
+          "location": {
+            "id": 591,
+            "name": "Golden Gate Room",
+            "class": "LocationVO",
+            "mapUrl": ""
+          },
+          "speakers": [
+            {
+              "id": 4931,
+              "picture": "http:\/\/event.scaladays.org\/dl\/photos\/Scala%20Days%202015%20speakers/xxxxx.png",
+              "name": "Xxxxx speaker",
+              "title": "",
+              "company": "Company",
+              "twitter": "@twitter",
+              "bio": "Speaker biography"
+            }
+          ]
+        },
+        {
+          "id": 6526,
+          "title": "Break",
+          "description": "",
+          "type": 3,
+          "startTime": "2015-03-18T00:35:00Z",
+          "endTime": "2015-03-18T00:35:00Z",
+          "date": "TUESDAY MARCH 17"
+        },
+        {
+          "id": 6548,
+          "title": "banana-rdf: Interacting with the Web of Data in Scala",
+          "description": "banana-rdf is a Scala library for RDF and Linked Data. It makes it\neasy to manipulate RDF data on the JVM (abstracting the Java libraries\nJena and Sesame, or using the pure Scala implementation Plantain) and\nin the browser thanks to scala-js. It adds type-safety and\nimmutability without sacrificing performances.  \n\n\t RDF has now become ubiquitous on the Web. Thanks to schema.org\n(Google, Yahoo, Microsoft, Yandex) or the Open Graph Protocol\n(Facebook), Web authors can annotate Web pages with RDF data. More\nrecently, the LDP Working Group at W3C (IBM, Oracle, ...) has led the\ndevelopment of the Linked Data Platform, providing a way to interact\n(read and write) with such data.  \n\n\t In this talk, I will show how one can leverage such a Web of Data\nusing banana-rdf.",
+          "type": 2,
+          "startTime": "2015-03-18T01:00:00Z",
+          "endTime": "2015-03-18T01:00:00Z",
+          "date": "TUESDAY MARCH 17",
+          "track": {
+            "id": 1044,
+            "host": "",
+            "description": "",
+            "name": "Track 2 - Intermediate Tuesday",
+            "class": "TrackVO",
+            "shortdescription": ""
+          },
+          "location": {
+            "id": 590,
+            "name": "Cowell Theater",
+            "class": "LocationVO",
+            "mapUrl": ""
+          },
+          "speakers": [
+            {
+              "id": 4905,
+              "picture": "http:\/\/event.scaladays.org\/dl\/photos\/Scala%20Days%202015%20speakers/xxxxx.png",
+              "name": "Xxxxx speaker",
+              "title": "",
+              "company": "Company",
+              "twitter": "@twitter",
+              "bio": "Speaker biography"
+            }
+          ]
+        },
+        {
+          "id": 6555,
+          "title": "Easy Scalability with Akka",
+          "description": "Every enterprise developer these days needs to be an expert in\nbuilding REST API systems to enable mobile applications, SOA\narchitectures and single page javascript web apps. The challenge is\nthat most REST API backends can't quickly scale to the numbers of\nrequests needed in a modern enterprise. In this talk, we will\nintroduce enterprise developers to Akka in an engaging and simple way\nand give them the confidence that they could quickly and easily build\nan enterprise web service that scales in their own workplace. This\nlive coding session will showcase Akka's power by taking an existing\nREST API and improving its throughput drastically by introducing a\ndistributed actor system. Starting from a simple RESTful application\nexposing read and write operations, we'll introduce a series of Akka\nfeatures and patterns, scaling the performance and reliability of the\nsystem progressively.  \n\n\t We will introduce the Actor pattern, and show how Akka brings this\npattern easily and simply to the JVM. A simple actor system will\nseparate concerns and serve as the basis of the exercise. Clustering\nwill allow the system to grow and shrink dynamically, across one or\nmore machines, with messages being passed transparently between nodes\nas needed. CQRS (Command-Query Response Separation) will decouple\nwrites from reads and introduce non-blocking message handling, and\nAkka Persistence will make nodes tolerant to failure and avoid data\nloss.  \n\n\t We'll show how simple decoupling via message-passing of the system\ncomponents allows you to scale each part of your service to match\nchanging load.  \n\n\t If you need more write performance, you can increase the number of\nnodes handling writes. Need more REST-API capability, increase the\nnodes binding to HTTP. Each element is independently elastic for full\ntuneability.  \n\n\t Throughout the process, we'll use Gatling to gauge our results in\nthe form of handled requests per second. Watch our application go from\nFast to Enterprise-Level Web Scale in 45 minutes or less, with very\nlittle code.",
+          "type": 2,
+          "startTime": "2015-03-18T01:00:00Z",
+          "endTime": "2015-03-18T01:00:00Z",
+          "date": "TUESDAY MARCH 17",
+          "track": {
+            "id": 1045,
+            "host": "",
+            "description": "",
+            "name": "Track 3 - Beginner Tuesday",
+            "class": "TrackVO",
+            "shortdescription": ""
+          },
+          "location": {
+            "id": 591,
+            "name": "Golden Gate Room",
+            "class": "LocationVO",
+            "mapUrl": ""
+          },
+          "speakers": [
+            {
+              "id": 4906,
+              "picture": "http:\/\/event.scaladays.org\/dl\/photos\/Scala%20Days%202015%20speakers/xxxxx.png",
+              "name": "Xxxxx speaker",
+              "title": "",
+              "company": "Company",
+              "twitter": "@twitter",
+              "bio": "Speaker biography"
+            }
+          ]
+        },
+        {
+          "id": 6562,
+          "title": "Type-indexed maps for fun and functional dependency injection",
+          "description": "Type-indexed maps (TMap) are data structures that support type-safe,\nconstant time lookups of elements by their type. They are unordered,\nallow structural typing and can be used as composable records. Unlike\nHList-based implementations as in Shapeless, TMaps are implemented\nusing subtyping, which leads to pretty readable types and error\nmessages. TMap types can easily be written by hand.  \n\n\t TMaps are a perfect fit for monadic dependency injection. They\nenable the Reader monad to be used for multiple dependencies with zero\nboiler plate. The combination can be viewed as a partial\nimplementation of implicit parameters as a library rather than a\ncompiler feature. Unlike Scala's native implicit parameters, this\nallows complete type-inference without having to specify them in every\nmethod signature.  \n\n\t TMaps can also be used to emulate named arguments, tuples and\nstructural typing.",
+          "type": 2,
+          "startTime": "2015-03-18T01:00:00Z",
+          "endTime": "2015-03-18T01:00:00Z",
+          "date": "TUESDAY MARCH 17",
+          "track": {
+            "id": 1046,
+            "host": "",
+            "description": "",
+            "name": "Track 4 - Advanced Tuesday",
+            "class": "TrackVO",
+            "shortdescription": ""
+          },
+          "location": {
+            "id": 592,
+            "name": "Southside Theater",
+            "class": "LocationVO",
+            "mapUrl": ""
+          },
+          "speakers": [
+            {
+              "id": 4907,
+              "picture": "http:\/\/event.scaladays.org\/dl\/photos\/Scala%20Days%202015%20speakers/xxxxx.png",
+              "name": "Xxxxx speaker",
+              "title": "",
+              "company": "Company",
+              "twitter": "@twitter",
+              "bio": "Speaker biography"
+            }
+          ]
+        },
+        {
+          "id": 6523,
+          "title": "Community Party",
+          "description": "",
+          "type": 3,
+          "startTime": "2015-03-18T01:45:00Z",
+          "endTime": "2015-03-18T01:45:00Z",
+          "date": "TUESDAY MARCH 17"
+        },
+        {
+          "id": 6520,
+          "title": "Registration Open",
+          "description": "",
+          "type": 3,
+          "startTime": "2015-03-18T15:00:00Z",
+          "endTime": "2015-03-18T15:00:00Z",
+          "date": "WEDNESDAY MARCH 18"
+        },
+        {
+          "id": 6534,
+          "title": "Technical Leadership from wherever you are",
+          "description": "Leadership isn't something that you obtain with a manager role. It's\nsomething that you *are*. Leaders exist everywhere in an organization.\nLeaders lead up, sideways, and down in a hierarchy. How do they do\nthat? Why do they do that? How do they maintain their technical acumen\nif they relinquish their hands-on roles? You may choose to use your\nleadership skills to lead a project, lead an organization or simply to\nrally your coworkers. Or, you may just build better communication with\nyour manager. You will leave this talk with a better understanding of\nwhat your leadership tendencies are, and how you might grow as a\nleader, regardless of whether or not you want to become a manager.",
+          "type": 2,
+          "startTime": "2015-03-18T16:00:00Z",
+          "endTime": "2015-03-18T16:00:00Z",
+          "date": "WEDNESDAY MARCH 18",
+          "location": {
+            "id": 589,
+            "name": "Herbst Pavilion",
+            "class": "LocationVO",
+            "mapUrl": ""
+          },
+          "speakers": [
+            {
+              "id": 4861,
+              "picture": "http:\/\/event.scaladays.org\/dl\/photos\/Scala%20Days%202015%20speakers/xxxxx.png",
+              "name": "Xxxxx speaker",
+              "title": "",
+              "company": "Company",
+              "twitter": "@twitter",
+              "bio": "Speaker biography"
+            }
+          ]
+        },
+        {
+          "id": 6526,
+          "title": "Break",
+          "description": "",
+          "type": 3,
+          "startTime": "2015-03-18T17:00:00Z",
+          "endTime": "2015-03-18T17:00:00Z",
+          "date": "WEDNESDAY MARCH 18"
+        },
+        {
+          "id": 6535,
+          "title": "Scala: Power and Versatility",
+          "description": "Scala is an amazingly powerful tool for all sorts of applications,\nfrom web and mobile to desktop and the cloud. Monadic patterns in\nScala let me express both sequential and asynchronous data flows\neasier than ever. I could use these patterns in an SBT plugin for\nsubmitting solutions to Google Code Jam problems where I could link\ntogether REST requests with local computations. Scala futures and Akka\nlet me scale bioinformatics algorithms both up and out. Scala.js let\nme use bioinformatics algorithms in the browser--one language to rule\nthem all! Combining Scala.js and Play helped me build web applications\nthat are easy to use and fun to build! In this talk, I will present a\nvariety of projects that show Scala's power and versatility.",
+          "type": 2,
+          "startTime": "2015-03-18T17:25:00Z",
+          "endTime": "2015-03-18T17:25:00Z",
+          "date": "WEDNESDAY MARCH 18",
+          "track": {
+            "id": 1047,
+            "host": "",
+            "description": "",
+            "name": "Track 1: Intermediate Wednesday",
+            "class": "TrackVO",
+            "shortdescription": ""
+          },
+          "location": {
+            "id": 589,
+            "name": "Herbst Pavilion",
+            "class": "LocationVO",
+            "mapUrl": ""
+          },
+          "speakers": [
+            {
+              "id": 4860,
+              "picture": "http:\/\/event.scaladays.org\/dl\/photos\/Scala%20Days%202015%20speakers/xxxxx.png",
+              "name": "Xxxxx speaker",
+              "title": "",
+              "company": "",
+              "twitter": "@twitter",
+              "bio": "Speaker biography"
+            }
+          ]
+        },
+        {
+          "id": 6563,
+          "title": "How is Scala Made",
+          "description": "",
+          "type": 2,
+          "startTime": "2015-03-18T17:25:00Z",
+          "endTime": "2015-03-18T17:25:00Z",
+          "date": "WEDNESDAY MARCH 18",
+          "track": {
+            "id": 1048,
+            "host": "",
+            "description": "",
+            "name": "Track 2 - Intermediate Wednesday",
+            "class": "TrackVO",
+            "shortdescription": ""
+          },
+          "location": {
+            "id": 590,
+            "name": "Cowell Theater",
+            "class": "LocationVO",
+            "mapUrl": ""
+          },
+          "speakers": [
+            {
+              "id": 4908,
+              "picture": "http:\/\/event.scaladays.org\/dl\/photos\/Scala%20Days%202015%20speakers/xxxxx.png",
+              "name": "Xxxxx speaker",
+              "title": "",
+              "company": "Company",
+              "twitter": "@twitter",
+              "bio": ""
+            }
+          ]
+        },
+        {
+          "id": 6564,
+          "title": "Some Things Never Change: Immutable Data in the Real World",
+          "description": "It's a deceptively simple concept: programming is safer when values\ndon't change. There's plenty of depth to explore when applying that\nconcept to real world programs. We'll start by looking at the history\nof immutability in programming and delve into the details of how vals\nwork in Scala. From there, we'll go beyond the truism that immutable\ndata makes concurrency easier and examine other benefits and tradeoffs\nin the practice of programming with immutable values. We'll discuss\nsome elegant and counter-intuitive outcomes of functional data\nstructures that take advantage of immutable data. With those in mind,\nwe'll take a hard look at the performance of the standard library\nimplementations of immutable collections in Scala. Finally, we'll\nexplore frameworks in and out of Scala that do exciting things with\nimmutable data, from the database level (append-only DBs) to data\nprocessing (Summingbird) to front-end development (Facebook's React &\nOm).",
+          "type": 2,
+          "startTime": "2015-03-18T17:25:00Z",
+          "endTime": "2015-03-18T17:25:00Z",
+          "date": "WEDNESDAY MARCH 18",
+          "track": {
+            "id": 1049,
+            "host": "",
+            "description": "",
+            "name": "Track 3 - Beginner Wednesday",
+            "class": "TrackVO",
+            "shortdescription": ""
+          },
+          "location": {
+            "id": 591,
+            "name": "Golden Gate Room",
+            "class": "LocationVO",
+            "mapUrl": ""
+          },
+          "speakers": [
+            {
+              "id": 4909,
+              "picture": "http:\/\/event.scaladays.org\/dl\/photos\/Scala%20Days%202015%20speakers/xxxxx.png",
+              "name": "Xxxxx speaker",
+              "title": "",
+              "company": "Company",
+              "twitter": "@twitter",
+              "bio": "Speaker biography"
+            }
+          ]
+        },
+        {
+          "id": 6565,
+          "title": "The swiss army knife of generic programming: shapeless's TypeClass type class in action",
+          "description": "The TypeClass type class (yes, you read that right), introduced to\nshapeless 2.0.0 at the beginning of 2013 by Lars Hupel of Scalaz fame,\ndeserves a great deal more attention than it has received up until\nnow. Built on top of shapeless's core generic programming primitives\nit allows instances for a wide variety of useful type classes to be\nderived for Scala ADTs with no (or at most minimal) boilerplate.  \n\n\t But until recently the types it could derive for (families of Scala\ncase classes sharing a common sealed trait and with fairly minimal\nsupport for recursion) was quite limited. In shapeless 2.1.0 its scope\nhas been significantly expanded to include non-case classes (so long\nas they are sufficiently \"case class-like\") and more complex recursion\npatterns (eg. through types outside the immediate family). It now also\nallows for the provision of specialized, non-derived, instances for\nspecific case class members of the families being derived for.  \n\n\t This means that TypeClass is now the tool of choice for many\nimportant generic programming problems in Scala.  \n\n\t In this talk I will demonstrate this with example derivations of\nordering and type-safe equality type classes, serialization and\ndeserialization and a variety of other folds, unfolds and\ntransformations which would otherwise require huge amounts of tedious\nboilerplate to implement.",
+          "type": 2,
+          "startTime": "2015-03-18T17:25:00Z",
+          "endTime": "2015-03-18T17:25:00Z",
+          "date": "WEDNESDAY MARCH 18",
+          "track": {
+            "id": 1050,
+            "host": "",
+            "description": "",
+            "name": "Track 4 - Advanced Wednesday",
+            "class": "TrackVO",
+            "shortdescription": ""
+          },
+          "location": {
+            "id": 592,
+            "name": "Southside Theater",
+            "class": "LocationVO",
+            "mapUrl": ""
+          },
+          "speakers": [
+            {
+              "id": 4910,
+              "picture": "http:\/\/event.scaladays.org\/dl\/photos\/Scala%20Days%202015%20speakers/xxxxx.png",
+              "name": "Xxxxx speaker",
+              "title": "",
+              "company": "Company",
+              "twitter": "@twitter",
+              "bio": "Speaker biography"
+            }
+          ]
+        },
+        {
+          "id": 6526,
+          "title": "Break",
+          "description": "",
+          "type": 3,
+          "startTime": "2015-03-18T18:10:00Z",
+          "endTime": "2015-03-18T18:10:00Z",
+          "date": "WEDNESDAY MARCH 18"
+        },
+        {
+          "id": 6536,
+          "title": "The Unreasonable Effectiveness of Scala for Big Data",
+          "description": "\"Big Data\" encompasses more than large data volumes. It's also about\nflexible approaches to ingesting, managing and leveraging data sets of\nany size. That flexibility demands tools that are equally flexible,\ntools that are built on the right abstractions. Functional programming\nis the source of those abstractions, because FP is based on\nMathematics and working with data is essentially doing Mathematics.\nBecause of Scala's basis in functional programming, combined with its\ngeneral flexibility and JVM roots, it has emerged as the de facto\nstandard for Big Data programming. In fact, Big Data projects are\ndriving Scala adoption right now. This talk shows you why.  \n\n\t We'll examine code examples from the following tools:  \n\n \t* Scalding and Summingbird - for Hadoop and Storm.\n \t* Spark and H2O - the Next Generation...\n \t* Spire and Algebird - Mathematics.\n\n\t Finally, we'll discuss that natural synergy between functional\nprogramming and SQL, the venerable standard for data processing.",
+          "type": 2,
+          "startTime": "2015-03-18T18:35:00Z",
+          "endTime": "2015-03-18T18:35:00Z",
+          "date": "WEDNESDAY MARCH 18",
+          "track": {
+            "id": 1047,
+            "host": "",
+            "description": "",
+            "name": "Track 1: Intermediate Wednesday",
+            "class": "TrackVO",
+            "shortdescription": ""
+          },
+          "location": {
+            "id": 589,
+            "name": "Herbst Pavilion",
+            "class": "LocationVO",
+            "mapUrl": ""
+          },
+          "speakers": [
+            {
+              "id": 4911,
+              "picture": "http:\/\/event.scaladays.org\/dl\/photos\/Scala%20Days%202015%20speakers/xxxxx.png",
+              "name": "Xxxxx speaker",
+              "title": "",
+              "company": "Company",
+              "twitter": "@twitter",
+              "bio": "Speaker biography"
+            }
+          ]
+        },
+        {
+          "id": 6566,
+          "title": "Grok: an optimistic mini-library for efficient and safe parsing",
+          "description": "Suppose you have some input--maybe a configuration file, maybe a\nlog, maybe structured numeric data. Suppose you want to extract some\nkey information--maybe a little, maybe as much as you can. You think\nyou have a pretty good idea of the format, but the input needs\nvalidation and of course there could always be errors. If there is an\nerror, you'd like to know something about what or where it was. What\nshould you do?  \n\n\t You could try using primitives like String.split and .toInt, but\nthey're fragile, don't pass back detailed information, and are\nincredibly slow in the face of numerous minor (recoverable) errors.\nRegex matching gives more flexibility in specifying what you want, but\nrecursion is awkward and again, information about errors is hard to\ncome by.  \n\n\t You could encode all possibilities for failure into your types,\nincluding how to pass back the relevant information about errors, but\nthen you spend most of your effort thinking about every which way\nsomething can go wrong, and more effort handling the error cases than\nthe successes, when you really want to think about success.  \n\n\t Grok provides an alternative by doing everything wrong: it is\nmutable, low-level, and has non-local return flow (via stackless\nexceptions). But it often provides just what you need: robustness to\nerror, low-effort collection of error information, and speed, all\nwhile allowing you to optimistically focus on getting the information\nyou need out of the input.  \n\n\t This talk will give a number of examples of input and validation\ntasks, showing the strength and weakness of various approaches, mostly\nbut not exclusively focusing on those where Grok is compelling.",
+          "type": 2,
+          "startTime": "2015-03-18T18:35:00Z",
+          "endTime": "2015-03-18T18:35:00Z",
+          "date": "WEDNESDAY MARCH 18",
+          "track": {
+            "id": 1050,
+            "host": "",
+            "description": "",
+            "name": "Track 4 - Advanced Wednesday",
+            "class": "TrackVO",
+            "shortdescription": ""
+          },
+          "location": {
+            "id": 592,
+            "name": "Southside Theater",
+            "class": "LocationVO",
+            "mapUrl": ""
+          },
+          "speakers": [
+            {
+              "id": 4914,
+              "picture": "http:\/\/event.scaladays.org",
+              "name": "Xxxxx speaker",
+              "title": "",
+              "company": "Company",
+              "twitter": "@twitter",
+              "bio": "Speaker biography"
+            }
+          ]
+        },
+        {
+          "id": 6567,
+          "title": "Scala IDE from 0 to 4.0",
+          "description": "This is an experience report in building an open-source soft\nreal-time character processing system (an IDE for Scala).  \n\n\t Version 4.0 has been in development for more than 2 years and came\nup with a slew of new features and performance improvements. But how\ndid we get there? In this talk I'll go through the most important\nfeatures in 4.0 and cast a look back at previous releases, showing how\nwe got from a bare-bones IDE to a fully-fledged IDE for Scala. I'll\ntouch on technical aspects, but also on the social and open-source\ndynamics we faced along the way.",
+          "type": 2,
+          "startTime": "2015-03-18T18:35:00Z",
+          "endTime": "2015-03-18T18:35:00Z",
+          "date": "WEDNESDAY MARCH 18",
+          "track": {
+            "id": 1049,
+            "host": "",
+            "description": "",
+            "name": "Track 3 - Beginner Wednesday",
+            "class": "TrackVO",
+            "shortdescription": ""
+          },
+          "location": {
+            "id": 591,
+            "name": "Golden Gate Room",
+            "class": "LocationVO",
+            "mapUrl": ""
+          },
+          "speakers": [
+            {
+              "id": 4913,
+              "picture": "http:\/\/event.scaladays.org\/dl\/photos\/Scala%20Days%202015%20speakers/xxxxx.png",
+              "name": "Xxxxx speaker",
+              "title": "",
+              "company": "Company",
+              "twitter": "@twitter",
+              "bio": "Speaker biography"
+            }
+          ]
+        },
+        {
+          "id": 6568,
+          "title": "Making XML & JSON Enjoyable in Scala",
+          "description": "Working with structured data like JSON and XML won't ever feature on\nanyone's bucket list. Yet the need to serialize, parse and manipulate\nstructured data will remain an unfortunate fact of life for as long as\nwe still need to exchange information between heterogeneous\napplications, services and people.  \n\n\t Rapture provides an elegant, intuitive and boilerplate-free API for\nworking with JSON, XML and other structured data types within Scala,\noffering a rich toolset for moving seamlessly between the dynamic\nworlds of structured data and the static world of Scala, without\ncompromising either.  \n\n\t Advanced Scala features like Dynamic types, macros, singleton types,\nString contexts and higher-kinded types all find their way into the\nimplementation of the Rapture API, so for the inquisitively-minded,\nthere will be some insight into how these features are used.",
+          "type": 2,
+          "startTime": "2015-03-18T18:35:00Z",
+          "endTime": "2015-03-18T18:35:00Z",
+          "date": "WEDNESDAY MARCH 18",
+          "track": {
+            "id": 1048,
+            "host": "",
+            "description": "",
+            "name": "Track 2 - Intermediate Wednesday",
+            "class": "TrackVO",
+            "shortdescription": ""
+          },
+          "location": {
+            "id": 590,
+            "name": "Cowell Theater",
+            "class": "LocationVO",
+            "mapUrl": ""
+          },
+          "speakers": [
+            {
+              "id": 4912,
+              "picture": "http:\/\/event.scaladays.org\/dl\/photos\/Scala%20Days%202015%20speakers/xxxxx.png",
+              "name": "Xxxxx speaker",
+              "title": "",
+              "company": "Company",
+              "twitter": "@twitter",
+              "bio": "Speaker biography"
+            }
+          ]
+        },
+        {
+          "id": 6521,
+          "title": "Lunch",
+          "description": "",
+          "type": 3,
+          "startTime": "2015-03-18T19:20:00Z",
+          "endTime": "2015-03-18T19:20:00Z",
+          "date": "WEDNESDAY MARCH 18"
+        },
+        {
+          "id": 6537,
+          "title": "Akka HTTP: the Reactive Web Toolkit",
+          "description": "If you want to provide or consume HTTP services with your Actors\nthen this talk is for you: Akka HTTP is the successor of spray.io and\nbuilding on this excellent foundation it takes reactive web\ninteractions to the next level. Fully asynchronous and non-blocking, a\ntype-safe and very powerful declarative API, an immutable HTTP model\nwithout compromises, all these are perfectly fitted to the Actor\nworld. And being based entirely on Akka Streams enables interoperation\nwith all other Reactive Streams implementations for producing or\nconsuming data.  \n\n\t This presentation details how Akka HTTP is structured, how it is\nused and why you will not want to use anything else after having tried\nit.",
+          "type": 2,
+          "startTime": "2015-03-18T20:20:00Z",
+          "endTime": "2015-03-18T20:20:00Z",
+          "date": "WEDNESDAY MARCH 18",
+          "track": {
+            "id": 1047,
+            "host": "",
+            "description": "",
+            "name": "Track 1: Intermediate Wednesday",
+            "class": "TrackVO",
+            "shortdescription": ""
+          },
+          "location": {
+            "id": 589,
+            "name": "Herbst Pavilion",
+            "class": "LocationVO",
+            "mapUrl": ""
+          },
+          "speakers": [
+            {
+              "id": 4915,
+              "picture": "http:\/\/event.scaladays.org\/dl\/photos\/Scala%20Days%202015%20speakers\/xxxxx.png",
+              "name": "Xxxxx speaker",
+              "title": "",
+              "company": "Company",
+              "twitter": "@twitter",
+              "bio": "Speaker biography"
+            }
+          ]
+        },
+        {
+          "id": 6538,
+          "title": "Project Valhalla: The good, the Bad and the Ugly",
+          "description": "Project Valhalla promises to add virtual machine support for value\nclasses and specialization in Java. However, the assumptions built\ninto the low level specialization scheme are not compatible to all of\nthe Scala programming language features, such as existentials and\nvariance: there is a semantic gap between the Java specialization in\nProject Valhalla and the Scala programming language.  \n\n\t In this talk I will explain the inner working of the specialization\nin Project Valhalla, highlighting where the semantics in Java and\nScala diverge. We will go through several language-level solutions to\nbridge this gap, each with its own trade-offs, finally converging\ntowards a scheme that allows Scala to define new specialized classes\nand to interoperate with Java-defined ones.  \n\n\t With all facts on the table, we can look at the changes necessary in\nthe Scala type system and the patterns that will become invalid. In\ndoing so, we'll be able to isolate what's good about embracing Project\nValhalla, what's bad and what's ugly: those patterns that will just\nhave to go away. Expect to learn about reified types, bytecode\ntransformations and their correspondence to high-level Scala code.",
+          "type": 2,
+          "startTime": "2015-03-18T20:20:00Z",
+          "endTime": "2015-03-18T20:20:00Z",
+          "date": "WEDNESDAY MARCH 18",
+          "track": {
+            "id": 1050,
+            "host": "",
+            "description": "",
+            "name": "Track 4 - Advanced Wednesday",
+            "class": "TrackVO",
+            "shortdescription": ""
+          },
+          "location": {
+            "id": 592,
+            "name": "Southside Theater",
+            "class": "LocationVO",
+            "mapUrl": ""
+          },
+          "speakers": [
+            {
+              "id": 4918,
+              "picture": "http:\/\/event.scaladays.org\/dl\/photos\/Scala%20Days%202015%20speakers\/xxxxx.png",
+              "name": "Xxxxx speaker",
+              "title": "",
+              "company": "Company",
+              "twitter": "@twitter",
+              "bio": "Speaker biography"
+            }
+          ]
+        },
+        {
+          "id": 6569,
+          "title": "Under the Hood of Scala Implicits",
+          "description": "Implicit conversions and implicit parameters are fundamental and\nunique features of Scala that are powerful at the same time. To use\nthese features to their maximum potential, and do so with confidence,\nyou have to understand the specifics of how Scala compiler's implicits\nsearch works. I will cover this topic in details, including ways you\ncan optimize the implicits search algorithm in your library.  \n\n\t The second part of my session will focus on IntelliJ IDEA and how to\nleverage your IDE for working with implicits. Among other helpful IDE\nfeatures, I will show how to debug implicits in IntelliJ IDEA.  \n\n\t As examples we'll take a look at a few Scala libraries, including\nSpray with its well-known Magnet pattern.  \n\n\t On top of that, during my talk I'll show you a few new tips and\ntricks on how to be more efficient by using IntelliJ IDEA's hidden\ngems when working with Scala.",
+          "type": 2,
+          "startTime": "2015-03-18T20:20:00Z",
+          "endTime": "2015-03-18T20:20:00Z",
+          "date": "WEDNESDAY MARCH 18",
+          "track": {
+            "id": 1048,
+            "host": "",
+            "description": "",
+            "name": "Track 2 - Intermediate Wednesday",
+            "class": "TrackVO",
+            "shortdescription": ""
+          },
+          "location": {
+            "id": 590,
+            "name": "Cowell Theater",
+            "class": "LocationVO",
+            "mapUrl": ""
+          },
+          "speakers": [
+            {
+              "id": 4916,
+              "picture": "http:\/\/event.scaladays.org\/dl\/photos\/Scala%20Days%202015%20speakers/xxxxx.png",
+              "name": "Xxxxx speaker",
+              "title": "",
+              "company": "Company",
+              "twitter": "@twitter",
+              "bio": "Speaker biography"
+            }
+          ]
+        },
+        {
+          "id": 6570,
+          "title": "Scalable task distribution with Scala, Akka and Mesos",
+          "description": "With evergrowing numbers of servers in our data centers, operating\nthese servers has become a complex task. In addition there is a trend\ntowards writing microservices instead of monolithic systems, because\nthey are easier to maintain and deploy independently. Because of the\nfewer resources such a microservice needs, we traditionally divide our\nlarge servers into smaller pieces using VMs, which leads to even more\nservers that need to be operated.  \n\n\t Mesos takes a different approach. Instead of dividing server nodes\ninto smaller pieces, it creates a pool of all the resources in the\ncluster. These resources can then be used by all applications in the\ncluster, very similar to a threadpool on a local machine. This makes\nit easy to create fault tolerant, heterogeneous systems, because tasks\ndo not have a fixed amount of resources allocated to them. They get\ntheir resources assigned on demand.  \n\n\t In this talk, we will learn how the distributed init and control\nsystem Marathon (https:\/\/github.com\/mesosphere\/marathon [1]) utilizes\nScala and Akka to reliably deploy applications in a cluster and how it\nensures that a configured number of instances is always running. In\naddition, we will see how Marathon coordinates rolling upgrades of\nhierarchical application groups with interdependencies and makes sure\nthat a minimum number of instances is kept running to serve the\nincoming requests and how it prevents faulty deployments from\ndestroying the cluster. \n\nLinks:\n------\n[1] https:\/\/github.com\/mesosphere\/marathon",
+          "type": 2,
+          "startTime": "2015-03-18T20:20:00Z",
+          "endTime": "2015-03-18T20:20:00Z",
+          "date": "WEDNESDAY MARCH 18",
+          "track": {
+            "id": 1049,
+            "host": "",
+            "description": "",
+            "name": "Track 3 - Beginner Wednesday",
+            "class": "TrackVO",
+            "shortdescription": ""
+          },
+          "location": {
+            "id": 591,
+            "name": "Golden Gate Room",
+            "class": "LocationVO",
+            "mapUrl": ""
+          },
+          "speakers": [
+            {
+              "id": 4917,
+              "picture": "http:\/\/event.scaladays.org\/dl\/photos\/Scala%20Days%202015%20speakers/xxxxx.png",
+              "name": "Xxxxx speaker",
+              "title": "",
+              "company": "Company",
+              "twitter": "@twitter",
+              "bio": "Speaker biography"
+            }
+          ]
+        },
+        {
+          "id": 6526,
+          "title": "Break",
+          "description": "",
+          "type": 3,
+          "startTime": "2015-03-18T21:05:00Z",
+          "endTime": "2015-03-18T21:05:00Z",
+          "date": "WEDNESDAY MARCH 18"
+        },
+        {
+          "id": 6557,
+          "title": "The road to sbt 1.0 is paved with server",
+          "description": "",
+          "type": 2,
+          "startTime": "2015-03-18T21:30:00Z",
+          "endTime": "2015-03-18T21:30:00Z",
+          "date": "WEDNESDAY MARCH 18",
+          "track": {
+            "id": 1048,
+            "host": "",
+            "description": "",
+            "name": "Track 2 - Intermediate Wednesday",
+            "class": "TrackVO",
+            "shortdescription": ""
+          },
+          "location": {
+            "id": 590,
+            "name": "Cowell Theater",
+            "class": "LocationVO",
+            "mapUrl": ""
+          },
+          "speakers": [
+            {
+              "id": 4889,
+              "picture": "http:\/\/event.scaladays.org\/dl\/photos\/Scala%20Days%202015%20speakers/xxxxx.png",
+              "name": "Xxxxx speaker",
+              "title": "",
+              "company": "Company",
+              "twitter": "@twitter",
+              "bio": "Speaker biography"
+            },
+            {
+              "id": 4888,
+              "picture": "http:\/\/event.scaladays.org\/dl\/photos\/Scala%20Days%202015%20speakers/xxxxx.png",
+              "name": "Xxxxx speaker",
+              "title": "",
+              "company": "Company",
+              "twitter": "@twitter",
+              "bio": "Speaker biography"
+            }
+          ]
+        },
+        {
+          "id": 6571,
+          "title": "Exercise in machine learning",
+          "description": "Jan will build a system that collects data from a wearable fitness\ntracker, communicating through a mobile app to an actor system, which\nprocesses the data, looking for type of exercise, effort and checks\nfor proper form. The core of the talk is the actor system in Akka and\nScala that--with help from Spark--analyses the data, and exposes\nappropriate REST APIs. The rest of the codebase includes some C and\nC++ for the wearables, and Swift in the mobile application.",
+          "type": 2,
+          "startTime": "2015-03-18T21:30:00Z",
+          "endTime": "2015-03-18T21:30:00Z",
+          "date": "WEDNESDAY MARCH 18",
+          "track": {
+            "id": 1047,
+            "host": "",
+            "description": "",
+            "name": "Track 1: Intermediate Wednesday",
+            "class": "TrackVO",
+            "shortdescription": ""
+          },
+          "location": {
+            "id": 589,
+            "name": "Herbst Pavilion",
+            "class": "LocationVO",
+            "mapUrl": ""
+          },
+          "speakers": [
+            {
+              "id": 4919,
+              "picture": "http:\/\/event.scaladays.org\/dl\/photos\/Scala%20Days%202015%20speakers\/xxxxx.png",
+              "name": "Xxxxx speaker",
+              "title": "",
+              "company": "Company",
+              "twitter": "@twitter",
+              "bio": "Speaker biography"
+            }
+          ]
+        },
+        {
+          "id": 6573,
+          "title": "TBD-Wednesday",
+          "description": "",
+          "type": 2,
+          "startTime": "2015-03-18T21:30:00Z",
+          "endTime": "2015-03-18T21:30:00Z",
+          "date": "WEDNESDAY MARCH 18",
+          "track": {
+            "id": 1049,
+            "host": "",
+            "description": "",
+            "name": "Track 3 - Beginner Wednesday",
+            "class": "TrackVO",
+            "shortdescription": ""
+          },
+          "location": {
+            "id": 591,
+            "name": "Golden Gate Room",
+            "class": "LocationVO",
+            "mapUrl": ""
+          },
+          "speakers": []
+        },
+        {
+          "id": 6574,
+          "title": "Functional Natural Language Processing with Scala",
+          "description": "A key aspect of the success in the research and application of\nNatural Language Processing (NLP) systems relies on the use of\nmethodological approaches developed and tested in other disciplines,\nfrom Linguistics and Cognitive Sciences to Information Theory and\nMachine Learning. The purpose of this presentation is to show how some\nof these methodologies can be successfully applied to a variety of\nscenarios thanks to the power and versatility of Scala. We will\nprovide details on pragmatic implementations of these methodologies\nusing functional programming approaches, resulting in correct and\nperforming systems that can be used in industry for a variety of NLP\ntasks.  \n\n\t After an introduction to the building blocks of NLP, we will move to\na more advanced topics in statistical parsing making use of ScalaNLP,\na set of Scala libraries for processing natural language. We will\nintroduce Epic, an NLP library with models available for eight\nlanguages. We will explain how to use this library, and then will\ndrill down into how you can extend the system to build your own models\nwhile introducing some of the theory of Machine Learning for NLP. We\nwill also present a library that makes extensive use of the facilities\nthat Scala provides to build external Domain Specific Languages (DSL).\nThese external DSL can be utilized by linguists and data scientists to\nprovide accurate transcriptions and transliterations of texts,\nallowing them to obtain relevant quantitative and qualitative results\nfrom the linguistic corpora. Finally, we will discuss examples of\nlarge, complex systems that combine different modules from NLP and\nNatural Language Understanding using the Stanford NLP libraries,\nincluding an application that identifies metaphors in the web. Along\nthe way, we will describe the relevant parts of the Scala Breeze\nnumerical computing library, and how Breeze and Scala make building\nthese kinds of systems easier.",
+          "type": 2,
+          "startTime": "2015-03-18T21:30:00Z",
+          "endTime": "2015-03-18T21:30:00Z",
+          "date": "WEDNESDAY MARCH 18",
+          "track": {
+            "id": 1050,
+            "host": "",
+            "description": "",
+            "name": "Track 4 - Advanced Wednesday",
+            "class": "TrackVO",
+            "shortdescription": ""
+          },
+          "location": {
+            "id": 592,
+            "name": "Southside Theater",
+            "class": "LocationVO",
+            "mapUrl": ""
+          },
+          "speakers": [
+            {
+              "id": 4922,
+              "picture": "http:\/\/event.scaladays.org",
+              "name": "Xxxxx speaker",
+              "title": "",
+              "company": "Company",
+              "twitter": "@twitter",
+              "bio": "Speaker biography"
+            },
+            {
+              "id": 4921,
+              "picture": "http:\/\/event.scaladays.org\/dl\/photos\/Scala%20Days%202015%20speakers\/xxxxx.png",
+              "name": "Xxxxx speaker",
+              "title": "",
+              "company": "Company",
+              "twitter": "@twitter",
+              "bio": "Speaker biography"
+            }
+          ]
+        },
+        {
+          "id": 6526,
+          "title": "Break",
+          "description": "",
+          "type": 3,
+          "startTime": "2015-03-18T22:15:00Z",
+          "endTime": "2015-03-18T22:15:00Z",
+          "date": "WEDNESDAY MARCH 18"
+        },
+        {
+          "id": 6539,
+          "title": "Scala needs YOU!",
+          "description": "Enlist now!  \n\n\t Ask not what your Scala can do for you, but what you can do for your\nScala!  \n\n\t Never, in the field of developing Scala, has so much been owed by so\nmany to so few.  \n\n\t Yes, this is a propaganda talk. It's a talk about getting involved,\nwhat you can do to help Scala development, and how to do so. We will\ncover:  \n\n \t* Documentation submissions\n \t* Bug fixes\n \t* Library contributions and Larger Scala language changes (SIPs,\netc)\n\n\t It might be propaganda, but it will not be technically light.\nInstead we will have practical demos and details of how to contribute\neach of the above, and why you should do so.  \n\n\t If you have ever thought about volunteering some time on the Scala\ncompiler, Libraries, Documentation or anything else in the\nScala-verse, come and find out how.  \n\n\t CODE, FOR VICTORY!",
+          "type": 2,
+          "startTime": "2015-03-18T22:40:00Z",
+          "endTime": "2015-03-18T22:40:00Z",
+          "date": "WEDNESDAY MARCH 18",
+          "track": {
+            "id": 1047,
+            "host": "",
+            "description": "",
+            "name": "Track 1: Intermediate Wednesday",
+            "class": "TrackVO",
+            "shortdescription": ""
+          },
+          "location": {
+            "id": 589,
+            "name": "Herbst Pavilion",
+            "class": "LocationVO",
+            "mapUrl": ""
+          },
+          "speakers": [
+            {
+              "id": 4923,
+              "picture": "http:\/\/event.scaladays.org\/dl\/photos\/Scala%20Days%202015%20speakers\/xxxxx.png",
+              "name": "Xxxxx speaker",
+              "title": "",
+              "company": "Company",
+              "twitter": "@twitter",
+              "bio": "Speaker biography"
+            }
+          ]
+        },
+        {
+          "id": 6575,
+          "title": "The JVM Backend and Optimizer in Scala 2.12",
+          "description": "Scala 2.12 will target JDK 8.  \n\n\t In the first part of my talk I will present the technical details of\nhow the next version of Scala takes advantage of the new features\nprovided by the platform. At the language level, function types in\nScala and Java are compatible in both directions. At the bytecode\nlevel, Scala generates function objects in the same way as Java. I\nwill also discuss the utility of Java's default methods in interfaces\nfor compiling Scala traits.  \n\n\t The second part of the talk is about the new bytecode optimizer\navailable in Scala 2.12. A compile-time optimizer can improve\nperformance even when running on an optimizing runtime like the JVM. I\nwill outline the differences and advantages of the new optimizer\ncompared to the current one in Scala 2.11. I will also show the\nfundamental limitations of the optimizer imposed by binary\ncompatibility and separate compilation.",
+          "type": 2,
+          "startTime": "2015-03-18T22:40:00Z",
+          "endTime": "2015-03-18T22:40:00Z",
+          "date": "WEDNESDAY MARCH 18",
+          "track": {
+            "id": 1048,
+            "host": "",
+            "description": "",
+            "name": "Track 2 - Intermediate Wednesday",
+            "class": "TrackVO",
+            "shortdescription": ""
+          },
+          "location": {
+            "id": 590,
+            "name": "Cowell Theater",
+            "class": "LocationVO",
+            "mapUrl": ""
+          },
+          "speakers": [
+            {
+              "id": 4955,
+              "picture": "http:\/\/event.scaladays.org\/dl\/photos\/Scala%20Days%202015%20speakers/xxxxx.png",
+              "name": "Xxxxx speaker",
+              "title": "",
+              "company": "Company",
+              "twitter": "@twitter",
+              "bio": "Speaker biography"
+            }
+          ]
+        },
+        {
+          "id": 6576,
+          "title": "Legacy modernization from monolithic PHP to reactive SOA",
+          "description": "There are two types of 5 year old software startups: the ones that\nare embarrassed about the technical debt they accrued during rapid\ngrowth, and the ones that failed. To survive and scale towards 100M\nusers, Hootsuite is undergoing an architectural transformation from\nour legacy monolithic PHP to reactive SOA with Scala, Akka, and Play.\nHow do we pivot to a new architecture while retaining identical\nfunctionality with low risk and zero downtime? How do we interface new\nreactive systems with legacy systems that can't keep up?  \n\n\t This talk will detail two modernization projects accomplished in\n2014. The first was our user authentication and information\nmicroservice, which we developed, migrated to and deployed with zero\ndowntime. The second is a URL shortening and image hosting service\nthat provides both an API to our web and mobile products and a user\ninterface.",
+          "type": 2,
+          "startTime": "2015-03-18T22:40:00Z",
+          "endTime": "2015-03-18T22:40:00Z",
+          "date": "WEDNESDAY MARCH 18",
+          "track": {
+            "id": 1049,
+            "host": "",
+            "description": "",
+            "name": "Track 3 - Beginner Wednesday",
+            "class": "TrackVO",
+            "shortdescription": ""
+          },
+          "location": {
+            "id": 591,
+            "name": "Golden Gate Room",
+            "class": "LocationVO",
+            "mapUrl": ""
+          },
+          "speakers": [
+            {
+              "id": 4925,
+              "picture": "http:\/\/event.scaladays.org\/dl\/photos\/Scala%20Days%202015%20speakers/xxxxx.png",
+              "name": "Xxxxx speaker",
+              "title": "",
+              "company": "Company",
+              "twitter": "@twitter",
+              "bio": "Speaker biography"
+            }
+          ]
+        },
+        {
+          "id": 6577,
+          "title": "Reasonable RPC with Remotely",
+          "description": "Remotely is an elegant, purely functional machine-to-machine\ncommunication library developed in Scala at Verizon. Remotely is fast,\nlightweight, and models network operations as a monad. It features\ncompositional, reusable protocols and codecs, where the compatibility\nbetween client and server is enforced using Scala's type system. It\nhas support for TCP endpoints, with combinators for encryption,\ncircuit-breaking, and load-balancing. In this talk we describe the API\nof Remotely, and delve into its design and implementation.",
+          "type": 2,
+          "startTime": "2015-03-18T22:40:00Z",
+          "endTime": "2015-03-18T22:40:00Z",
+          "date": "WEDNESDAY MARCH 18",
+          "track": {
+            "id": 1050,
+            "host": "",
+            "description": "",
+            "name": "Track 4 - Advanced Wednesday",
+            "class": "TrackVO",
+            "shortdescription": ""
+          },
+          "location": {
+            "id": 592,
+            "name": "Southside Theater",
+            "class": "LocationVO",
+            "mapUrl": ""
+          },
+          "speakers": [
+            {
+              "id": 4927,
+              "picture": "http:\/\/event.scaladays.org\/dl\/photos\/Scala%20Days%202015%20speakers\/xxxxx.png",
+              "name": "Xxxxx speaker",
+              "title": "",
+              "company": "Company",
+              "twitter": "@twitter",
+              "bio": "Speaker biography"
+            },
+            {
+              "id": 4926,
+              "picture": "http:\/\/event.scaladays.org\/dl\/photos\/Scala%20Days%202015%20speakers/xxxxx.png",
+              "name": "Xxxxx speaker",
+              "title": "",
+              "company": "Company",
+              "twitter": "@twitter",
+              "bio": "Speaker biography"
+            }
+          ]
+        },
+        {
+          "id": 6526,
+          "title": "Break",
+          "description": "",
+          "type": 3,
+          "startTime": "2015-03-18T23:25:00Z",
+          "endTime": "2015-03-18T23:25:00Z",
+          "date": "WEDNESDAY MARCH 18"
+        },
+        {
+          "id": 6540,
+          "title": "A Guided Tour of a Distributed Application",
+          "description": "In this talk we will present our discoveries having written a new,\ndistributed application named Typesafe ConductR. We will present the\napplication in order to set the scene, and then we will describe how\nwe've applied akka-cluster, akka-streams, akka-http and\nakka-data-replication (Conflict Free Replicated Data Types). This is a\ntalk for anyone writing a distributed application using Akka, but may\nalso be useful if you have an operations focus within your\norganization.",
+          "type": 2,
+          "startTime": "2015-03-18T23:50:00Z",
+          "endTime": "2015-03-18T23:50:00Z",
+          "date": "WEDNESDAY MARCH 18",
+          "track": {
+            "id": 1047,
+            "host": "",
+            "description": "",
+            "name": "Track 1: Intermediate Wednesday",
+            "class": "TrackVO",
+            "shortdescription": ""
+          },
+          "location": {
+            "id": 589,
+            "name": "Herbst Pavilion",
+            "class": "LocationVO",
+            "mapUrl": ""
+          },
+          "speakers": [
+            {
+              "id": 4928,
+              "picture": "http:\/\/event.scaladays.org\/dl\/photos\/Scala%20Days%202015%20speakers\/xxxxx.png",
+              "name": "Xxxxx speaker",
+              "title": "",
+              "company": "Company",
+              "twitter": "@twitter",
+              "bio": ""
+            }
+          ]
+        },
+        {
+          "id": 6554,
+          "title": "Reactive Slick for Database Programming",
+          "description": "When it comes to using relational databases in a reactive, scalable\nand non-blocking application design, Java's standard JDBC API and the\nway in which it is traditionally used has always been a sore point.\nScoping database sessions correctly and configuring a connection pool\nin an efficient way were already non-trivial in blocking JEE-style\napplications, but if you try to fit the inherently blocking JDBC API\ninto a Play or Akka app, it gets even harder. In the newest version of\nSlick, Typesafe's database library, we provide a different way of\nsequencing database actions, based on the ideas of Haskell's IO monad.\nThis talk will show you how to use this new API to safely compose and\nexecute database calls, returning Futures and Reactive Streams from\nthem. Bridging the gap between the blocking JDBC API and your\nnon-blocking applications also requires a very different threading\nmodel and connection pool configuration than in a blocking app. You\nwill learn what Slick does behind the scenes to take care of these\nissues in order to give you good scalability and performance out of\nthe box.",
+          "type": 2,
+          "startTime": "2015-03-18T23:50:00Z",
+          "endTime": "2015-03-18T23:50:00Z",
+          "date": "WEDNESDAY MARCH 18",
+          "track": {
+            "id": 1045,
+            "host": "",
+            "description": "",
+            "name": "Track 3 - Beginner Tuesday",
+            "class": "TrackVO",
+            "shortdescription": ""
+          },
+          "location": {
+            "id": 591,
+            "name": "Golden Gate Room",
+            "class": "LocationVO",
+            "mapUrl": ""
+          },
+          "speakers": [
+            {
+              "id": 4902,
+              "picture": "http:\/\/event.scaladays.org\/dl\/photos\/Scala%20Days%202015%20speakers/xxxxx.png",
+              "name": "Xxxxx speaker",
+              "title": "",
+              "company": "Company",
+              "twitter": "@twitter",
+              "bio": "Speaker biography"
+            }
+          ]
+        },
+        {
+          "id": 6578,
+          "title": "Why Scala.js",
+          "description": "Scala.js is a Scala to Javascript compiler that lets you write Scala\nsource code, compile it to Javascript, and run it in the browser.\nThere are several other X to Javascript compilers, for X in\n{Typescript, Dart, Clojure, Ruby, Python, C#, Java, Haskell...} and\ndozens of other languages. So, then, what's interesting about\nScala.js? In this talk, I will cover how language features (or\nmisfeatures!) such as: Type Erasure, Static Typing, Macros,\nObject-Oriented-ness, Specified-ness, An ecosystem of managed\ndependencies, A culture of tooling.  \n\n\t All contribute to make Scala.js a pretty special experience. Tiny\nexecutables, fast-turnarounds, multiple full-featured IDEs, a rich\necosystem right off the bat, together with a shallow learning curve,\nall for a minuscule amount of implementation effort compared to many\nof its alternatives.  \n\n\t In some of these dimensions, other Compile2JS languages can catch\nup, given a sufficiently large effort. In others, the advantage is\nbasically insurmountable. I will explore how the fundamentals of the\nlanguage, design decisions made years or decades ago, continue to\naffect the Compile2JS experience of several of these languages today.\nI will close with the heavy baggage weighing Scala.js down, and what\nthe Scala language could do to improve our own Compile2JS experience.",
+          "type": 2,
+          "startTime": "2015-03-18T23:50:00Z",
+          "endTime": "2015-03-18T23:50:00Z",
+          "date": "WEDNESDAY MARCH 18",
+          "track": {
+            "id": 1048,
+            "host": "",
+            "description": "",
+            "name": "Track 2 - Intermediate Wednesday",
+            "class": "TrackVO",
+            "shortdescription": ""
+          },
+          "location": {
+            "id": 590,
+            "name": "Cowell Theater",
+            "class": "LocationVO",
+            "mapUrl": ""
+          },
+          "speakers": [
+            {
+              "id": 4930,
+              "picture": "http:\/\/event.scaladays.org\/dl\/photos\/Scala%20Days%202015%20speakers\/xxxxx.png",
+              "name": "Xxxxx speaker",
+              "title": "",
+              "company": "Company",
+              "twitter": "@twitter",
+              "bio": "Speaker biography"
+            }
+          ]
+        },
+        {
+          "id": 6580,
+          "title": "Scala Puzzlers: In the Matrix, anything is possible!",
+          "description": "The Scala roadmap may have declared war on puzzlers, but there's\nstill plenty of head-scratching moments to be had for now. As\npreviously, we will present a new set of seemingly innocent examples\nof Scala code that behave in highly surprising ways, give you a chance\nto guess the result, and explain what actually happens.  \n\n\t We will also look at common patterns underlying many puzzlers, and\noutline some approaches to avoiding these pitfalls. Laugh, learn and\ntake a few steps on the fun path to deeper Scala understanding!",
+          "type": 2,
+          "startTime": "2015-03-18T23:50:00Z",
+          "endTime": "2015-03-18T23:50:00Z",
+          "date": "WEDNESDAY MARCH 18",
+          "track": {
+            "id": 1050,
+            "host": "",
+            "description": "",
+            "name": "Track 4 - Advanced Wednesday",
+            "class": "TrackVO",
+            "shortdescription": ""
+          },
+          "location": {
+            "id": 592,
+            "name": "Southside Theater",
+            "class": "LocationVO",
+            "mapUrl": ""
+          },
+          "speakers": [
+            {
+              "id": 4933,
+              "picture": "http:\/\/event.scaladays.org\/dl\/photos\/Scala%20Days%202015%20speakers\/xxxxx.png",
+              "name": "Xxxxx speaker",
+              "title": "",
+              "company": "Company",
+              "twitter": "@twitter",
+              "bio": "Speaker biography"
+            },
+            {
+              "id": 4932,
+              "picture": "http:\/\/event.scaladays.org\/dl\/photos\/Scala%20Days%202015%20speakers/xxxxx.png",
+              "name": "Xxxxx speaker",
+              "title": "",
+              "company": "Company",
+              "twitter": null,
+              "bio": "Speaker biography"
+            }
+          ]
+        },
+        {
+          "id": 6526,
+          "title": "Break",
+          "description": "",
+          "type": 3,
+          "startTime": "2015-03-19T00:35:00Z",
+          "endTime": "2015-03-19T00:35:00Z",
+          "date": "WEDNESDAY MARCH 18"
+        },
+        {
+          "id": 6581,
+          "title": "Closing Panel and Thank You",
+          "description": "",
+          "type": 2,
+          "startTime": "2015-03-19T01:00:00Z",
+          "endTime": "2015-03-19T01:00:00Z",
+          "date": "WEDNESDAY MARCH 18",
+          "location": {
+            "id": 589,
+            "name": "Herbst Pavilion",
+            "class": "LocationVO",
+            "mapUrl": ""
+          },
+          "speakers": []
+        },
+        {
+          "id": 6595,
+          "title": "Advanced Akka with Scala",
+          "description": "",
+          "type": 1,
+          "startTime": "2015-03-19T16:00:00Z",
+          "endTime": "2015-03-19T16:00:00Z",
+          "date": "THURSDAY MARCH 19"
+        },
+        {
+          "id": 6594,
+          "title": "Advanced Scala",
+          "description": "",
+          "type": 1,
+          "startTime": "2015-03-19T16:00:00Z",
+          "endTime": "2015-03-19T16:00:00Z",
+          "date": "THURSDAY MARCH 19"
+        },
+        {
+          "id": 6596,
+          "title": "Apache Spark: An Introductory Workshop for Developers",
+          "description": "",
+          "type": 1,
+          "startTime": "2015-03-19T16:00:00Z",
+          "endTime": "2015-03-19T16:00:00Z",
+          "date": "THURSDAY MARCH 19"
+        },
+        {
+          "id": 6592,
+          "title": "Fast Track to Akka with Scala",
+          "description": "This is a two-day advanced course on building distributed reactive\napplications using Akka and Scala. It is intended for developers who\nalready have a strong understanding of the fundamentals of building\napplications using Akka and Scala on a single JVM and are looking to\nlearn how to scale out to multiple nodes and 3rd party systems. This\ncourse has extensive hands-on work and successive exercises build upon\nprior lessons learned to produce a fully functional application that\nis both event-driven and resilient by the conclusion of the course.  \n\n\t Prerequisites: A basic knowledge of Akka as covered in the \"Fast\nTrack with Akka and Scala\" course as well as a basic knowledge of\nScala as covered in the \"Fast Track to Scala\" course with at least two\nmonths practical experience in developing with Akka and Scala.\nStudents should bring their own laptop with Java 6 or higher\ninstalled.  \n\n\t After having participated in this course you should  \n\n \t* know how to use Akka's remoting and clustering features\n \t* understand how to integrate 3rd party systems\n \t* know how to create a RESTful HTTP layer\n \t* be confident to start using Akka on large scale\n\n\t Program  \n\n \t* Review of Akka Basics\n \t* Akka Remoting\n \t* Akka Cluster\n \t* Cluster Aware Routers\n \t* Cluster Singleton\n \t* Cluster Sharding\n \t* Akka Persistence",
+          "type": 1,
+          "startTime": "2015-03-19T16:00:00Z",
+          "endTime": "2015-03-19T16:00:00Z",
+          "date": "THURSDAY MARCH 19"
+        },
+        {
+          "id": 6593,
+          "title": "Fast Track to Play with Scala",
+          "description": "",
+          "type": 1,
+          "startTime": "2015-03-19T16:00:00Z",
+          "endTime": "2015-03-19T16:00:00Z",
+          "date": "THURSDAY MARCH 19"
+        },
+        {
+          "id": 6591,
+          "title": "Fast Track to Scala",
+          "description": "",
+          "type": 1,
+          "startTime": "2015-03-19T16:00:00Z",
+          "endTime": "2015-03-19T16:00:00Z",
+          "date": "THURSDAY MARCH 19"
+        },
+        {
+          "id": 6595,
+          "title": "Advanced Akka with Scala",
+          "description": "",
+          "type": 1,
+          "startTime": "2015-03-20T16:00:00Z",
+          "endTime": "2015-03-20T16:00:00Z",
+          "date": "FRIDAY MARCH 20"
+        },
+        {
+          "id": 6592,
+          "title": "Fast Track to Akka with Scala",
+          "description": "This is a two-day advanced course on building distributed reactive\napplications using Akka and Scala. It is intended for developers who\nalready have a strong understanding of the fundamentals of building\napplications using Akka and Scala on a single JVM and are looking to\nlearn how to scale out to multiple nodes and 3rd party systems. This\ncourse has extensive hands-on work and successive exercises build upon\nprior lessons learned to produce a fully functional application that\nis both event-driven and resilient by the conclusion of the course.  \n\n\t Prerequisites: A basic knowledge of Akka as covered in the \"Fast\nTrack with Akka and Scala\" course as well as a basic knowledge of\nScala as covered in the \"Fast Track to Scala\" course with at least two\nmonths practical experience in developing with Akka and Scala.\nStudents should bring their own laptop with Java 6 or higher\ninstalled.  \n\n\t After having participated in this course you should  \n\n \t* know how to use Akka's remoting and clustering features\n \t* understand how to integrate 3rd party systems\n \t* know how to create a RESTful HTTP layer\n \t* be confident to start using Akka on large scale\n\n\t Program  \n\n \t* Review of Akka Basics\n \t* Akka Remoting\n \t* Akka Cluster\n \t* Cluster Aware Routers\n \t* Cluster Singleton\n \t* Cluster Sharding\n \t* Akka Persistence",
+          "type": 1,
+          "startTime": "2015-03-20T16:00:00Z",
+          "endTime": "2015-03-20T16:00:00Z",
+          "date": "FRIDAY MARCH 20"
+        },
+        {
+          "id": 6593,
+          "title": "Fast Track to Play with Scala",
+          "description": "",
+          "type": 1,
+          "startTime": "2015-03-20T16:00:00Z",
+          "endTime": "2015-03-20T16:00:00Z",
+          "date": "FRIDAY MARCH 20"
+        },
+        {
+          "id": 6591,
+          "title": "Fast Track to Scala",
+          "description": "",
+          "type": 1,
+          "startTime": "2015-03-20T16:00:00Z",
+          "endTime": "2015-03-20T16:00:00Z",
+          "date": "FRIDAY MARCH 20"
+        },
+        {
+          "id": 6594,
+          "title": "Advanced Scala",
+          "description": "",
+          "type": 1,
+          "startTime": "2015-03-20T16:00:00Z",
+          "endTime": "2015-03-20T16:00:00Z",
+          "date": "FRIDAY MARCH 20"
+        }
+      ],
+      "speakers": [
+        {
+          "id": 4886,
+          "picture": "http:\/\/event.scaladays.org\/dl\/photos\/Scala%20Days%202015%20speakers/xxxxx.png",
+          "name": "Xxxxx speaker",
+          "title": "",
+          "company": "Company",
+          "twitter": "@twitter",
+          "bio": "Speaker biography"
+        },
+        {
+          "id": 4887,
+          "picture": "http:\/\/event.scaladays.org\/dl\/photos\/Scala%20Days%202015%20speakers/xxxxx.png",
+          "name": "Xxxxx speaker",
+          "title": "",
+          "company": "Company",
+          "twitter": "@twitter",
+          "bio": "Speaker biography"
+        },
+        {
+          "id": 4884,
+          "picture": "http:\/\/event.scaladays.org\/dl\/photos\/Scala%20Days%202015%20speakers/xxxxx.png",
+          "name": "Xxxxx speaker",
+          "title": "",
+          "company": "Company",
+          "twitter": "@twitter",
+          "bio": "Speaker biography"
+        },
+        {
+          "id": 4885,
+          "picture": "http:\/\/event.scaladays.org\/dl\/photos\/Scala%20Days%202015%20speakers/xxxxx.png",
+          "name": "Xxxxx speaker",
+          "title": "",
+          "company": "Company",
+          "twitter": "@twitter",
+          "bio": "Speaker biography"
+        },
+        {
+          "id": 4882,
+          "picture": "http:\/\/event.scaladays.org\/dl\/photos\/Scala%20Days%202015%20speakers/xxxxx.png",
+          "name": "Xxxxx speaker",
+          "title": "Founder",
+          "company": "Company",
+          "twitter": "@twitter",
+          "bio": "Speaker biography"
+        },
+        {
+          "id": 4883,
+          "picture": "http:\/\/event.scaladays.org\/dl\/photos\/Scala%20Days%202015%20speakers/xxxxx.png",
+          "name": "Xxxxx speaker",
+          "title": "",
+          "company": "Company",
+          "twitter": "@twitter",
+          "bio": "Speaker biography"
+        },
+        {
+          "id": 4880,
+          "picture": "http:\/\/event.scaladays.org\/dl\/photos\/Scala%20Days%202015%20speakers/xxxxx.png",
+          "name": "Xxxxx speaker",
+          "title": "",
+          "company": "Company",
+          "twitter": "@twitter",
+          "bio": "Speaker biography"
+        },
+        {
+          "id": 4881,
+          "picture": "http:\/\/event.scaladays.org\/dl\/photos\/Scala%20Days%202015%20speakers/xxxxx.png",
+          "name": "Xxxxx speaker",
+          "title": "",
+          "company": "Company",
+          "twitter": "@twitter",
+          "bio": "Speaker biography"
+        },
+        {
+          "id": 4894,
+          "picture": "http:\/\/event.scaladays.org\/dl\/photos\/Scala%20Days%202015%20speakers/xxxxx.png",
+          "name": "Xxxxx speaker",
+          "title": "",
+          "company": "Company",
+          "twitter": "@twitter",
+          "bio": "Speaker biography"
+        },
+        {
+          "id": 4895,
+          "picture": "http:\/\/event.scaladays.org",
+          "name": "Xxxxx speaker",
+          "title": "",
+          "company": "Company",
+          "twitter": null,
+          "bio": "Speaker biography"
+        },
+        {
+          "id": 4892,
+          "picture": "http:\/\/event.scaladays.org\/dl\/photos\/Scala%20Days%202015%20speakers/xxxxx.png",
+          "name": "Xxxxx speaker",
+          "title": "",
+          "company": "Company",
+          "twitter": "@twitter",
+          "bio": "Speaker biography"
+        },
+        {
+          "id": 4893,
+          "picture": "http:\/\/event.scaladays.org\/dl\/photos\/Scala%20Days%202015%20speakers/xxxxx.png",
+          "name": "Xxxxx speaker",
+          "title": "",
+          "company": "Company",
+          "twitter": "@twitter",
+          "bio": "Speaker biography"
+        },
+        {
+          "id": 4890,
+          "picture": "http:\/\/event.scaladays.org\/dl\/photos\/Scala%20Days%202015%20speakers/xxxxx.png",
+          "name": "Xxxxx speaker",
+          "title": "",
+          "company": "Company",
+          "twitter": "@twitter",
+          "bio": "Speaker biography"
+        },
+        {
+          "id": 4891,
+          "picture": "http:\/\/event.scaladays.org",
+          "name": "Xxxxx speaker",
+          "title": "",
+          "company": "Company",
+          "twitter": "@twitter",
+          "bio": "Speaker biography"
+        },
+        {
+          "id": 4888,
+          "picture": "http:\/\/event.scaladays.org\/dl\/photos\/Scala%20Days%202015%20speakers/xxxxx.png",
+          "name": "Xxxxx speaker",
+          "title": "",
+          "company": "Company",
+          "twitter": "@twitter",
+          "bio": "Speaker biography"
+        },
+        {
+          "id": 4889,
+          "picture": "http:\/\/event.scaladays.org\/dl\/photos\/Scala%20Days%202015%20speakers/xxxxx.png",
+          "name": "Xxxxx speaker",
+          "title": "",
+          "company": "Company",
+          "twitter": "@twitter",
+          "bio": "Speaker biography"
+        },
+        {
+          "id": 4916,
+          "picture": "http:\/\/event.scaladays.org\/dl\/photos\/Scala%20Days%202015%20speakers/xxxxx.png",
+          "name": "Xxxxx speaker",
+          "title": "",
+          "company": "Company",
+          "twitter": "@twitter",
+          "bio": "Speaker biography"
+        },
+        {
+          "id": 4917,
+          "picture": "http:\/\/event.scaladays.org\/dl\/photos\/Scala%20Days%202015%20speakers/xxxxx.png",
+          "name": "Xxxxx speaker",
+          "title": "",
+          "company": "Company",
+          "twitter": "@twitter",
+          "bio": "Speaker biography"
+        },
+        {
+          "id": 4918,
+          "picture": "http:\/\/event.scaladays.org\/dl\/photos\/Scala%20Days%202015%20speakers\/xxxxx.png",
+          "name": "Xxxxx speaker",
+          "title": "",
+          "company": "Company",
+          "twitter": "@twitter",
+          "bio": "Speaker biography"
+        },
+        {
+          "id": 4919,
+          "picture": "http:\/\/event.scaladays.org\/dl\/photos\/Scala%20Days%202015%20speakers\/xxxxx.png",
+          "name": "Xxxxx speaker",
+          "title": "",
+          "company": "Company",
+          "twitter": "@twitter",
+          "bio": "Speaker biography"
+        },
+        {
+          "id": 4912,
+          "picture": "http:\/\/event.scaladays.org\/dl\/photos\/Scala%20Days%202015%20speakers/xxxxx.png",
+          "name": "Xxxxx speaker",
+          "title": "",
+          "company": "Company",
+          "twitter": "@twitter",
+          "bio": "Speaker biography"
+        },
+        {
+          "id": 4913,
+          "picture": "http:\/\/event.scaladays.org\/dl\/photos\/Scala%20Days%202015%20speakers/xxxxx.png",
+          "name": "Xxxxx speaker",
+          "title": "",
+          "company": "Company",
+          "twitter": "@twitter",
+          "bio": "Speaker biography"
+        },
+        {
+          "id": 4914,
+          "picture": "http:\/\/event.scaladays.org",
+          "name": "Xxxxx speaker",
+          "title": "",
+          "company": "Company",
+          "twitter": "@twitter",
+          "bio": "Speaker biography"
+        },
+        {
+          "id": 4915,
+          "picture": "http:\/\/event.scaladays.org\/dl\/photos\/Scala%20Days%202015%20speakers\/xxxxx.png",
+          "name": "Xxxxx speaker",
+          "title": "",
+          "company": "Company",
+          "twitter": "@twitter",
+          "bio": "Speaker biography"
+        },
+        {
+          "id": 4925,
+          "picture": "http:\/\/event.scaladays.org\/dl\/photos\/Scala%20Days%202015%20speakers/xxxxx.png",
+          "name": "Xxxxx speaker",
+          "title": "",
+          "company": "Company",
+          "twitter": "@twitter",
+          "bio": "Speaker biography"
+        },
+        {
+          "id": 4926,
+          "picture": "http:\/\/event.scaladays.org\/dl\/photos\/Scala%20Days%202015%20speakers/xxxxx.png",
+          "name": "Xxxxx speaker",
+          "title": "",
+          "company": "Company",
+          "twitter": "@twitter",
+          "bio": "Speaker biography"
+        },
+        {
+          "id": 4927,
+          "picture": "http:\/\/event.scaladays.org\/dl\/photos\/Scala%20Days%202015%20speakers\/xxxxx.png",
+          "name": "Xxxxx speaker",
+          "title": "",
+          "company": "Company",
+          "twitter": "@twitter",
+          "bio": "Speaker biography"
+        },
+        {
+          "id": 4921,
+          "picture": "http:\/\/event.scaladays.org\/dl\/photos\/Scala%20Days%202015%20speakers\/xxxxx.png",
+          "name": "Xxxxx speaker",
+          "title": "",
+          "company": "Company",
+          "twitter": "@twitter",
+          "bio": "Speaker biography"
+        },
+        {
+          "id": 4922,
+          "picture": "http:\/\/event.scaladays.org",
+          "name": "Xxxxx speaker",
+          "title": "",
+          "company": "Company",
+          "twitter": "@twitter",
+          "bio": "Speaker biography"
+        },
+        {
+          "id": 4923,
+          "picture": "http:\/\/event.scaladays.org\/dl\/photos\/Scala%20Days%202015%20speakers\/xxxxx.png",
+          "name": "Xxxxx speaker",
+          "title": "",
+          "company": "Company",
+          "twitter": "@twitter",
+          "bio": "Speaker biography"
+        },
+        {
+          "id": 4901,
+          "picture": "http:\/\/event.scaladays.org",
+          "name": "Xxxxx speaker",
+          "title": "",
+          "company": "Company",
+          "twitter": "@twitter",
+          "bio": "Speaker biography"
+        },
+        {
+          "id": 4900,
+          "picture": "http:\/\/event.scaladays.org\/dl\/photos\/Scala%20Days%202015%20speakers/xxxxx.png",
+          "name": "Xxxxx speaker",
+          "title": "",
+          "company": "Company",
+          "twitter": "@twitter",
+          "bio": "Speaker biography"
+        },
+        {
+          "id": 4903,
+          "picture": "http:\/\/event.scaladays.org\/dl\/photos\/Scala%20Days%202015%20speakers/xxxxx.png",
+          "name": "Xxxxx speaker",
+          "title": "",
+          "company": "Company",
+          "twitter": "@twitter",
+          "bio": "Speaker biography"
+        },
+        {
+          "id": 4902,
+          "picture": "http:\/\/event.scaladays.org\/dl\/photos\/Scala%20Days%202015%20speakers/xxxxx.png",
+          "name": "Xxxxx speaker",
+          "title": "",
+          "company": "Company",
+          "twitter": "@twitter",
+          "bio": "Speaker biography"
+        },
+        {
+          "id": 4897,
+          "picture": "http:\/\/event.scaladays.org\/dl\/photos\/Scala%20Days%202015%20speakers/xxxxx.png",
+          "name": "Xxxxx speaker",
+          "title": "",
+          "company": "Company",
+          "twitter": "@twitter",
+          "bio": "Speaker biography"
+        },
+        {
+          "id": 4896,
+          "picture": "http:\/\/event.scaladays.org\/dl\/photos\/Scala%20Days%202015%20speakers/xxxxx.png",
+          "name": "Xxxxx speaker",
+          "title": "",
+          "company": "Company",
+          "twitter": null,
+          "bio": "Speaker biography"
+        },
+        {
+          "id": 4899,
+          "picture": "http:\/\/event.scaladays.org\/dl\/photos\/Scala%20Days%202015%20speakers/xxxxx.png",
+          "name": "Xxxxx speaker",
+          "title": "",
+          "company": "Company",
+          "twitter": "@twitter",
+          "bio": "Speaker biography"
+        },
+        {
+          "id": 4898,
+          "picture": "http:\/\/event.scaladays.org\/dl\/photos\/Scala%20Days%202015%20speakers/xxxxx.png",
+          "name": "Xxxxx speaker",
+          "title": "",
+          "company": "Company",
+          "twitter": "@twitter",
+          "bio": "Speaker biography"
+        },
+        {
+          "id": 4909,
+          "picture": "http:\/\/event.scaladays.org\/dl\/photos\/Scala%20Days%202015%20speakers/xxxxx.png",
+          "name": "Xxxxx speaker",
+          "title": "",
+          "company": "Company",
+          "twitter": "@twitter",
+          "bio": "Speaker biography"
+        },
+        {
+          "id": 4908,
+          "picture": "http:\/\/event.scaladays.org\/dl\/photos\/Scala%20Days%202015%20speakers/xxxxx.png",
+          "name": "Xxxxx speaker",
+          "title": "",
+          "company": "Company",
+          "twitter": "@twitter",
+          "bio": ""
+        },
+        {
+          "id": 4911,
+          "picture": "http:\/\/event.scaladays.org\/dl\/photos\/Scala%20Days%202015%20speakers/xxxxx.png",
+          "name": "Xxxxx speaker",
+          "title": "",
+          "company": "Company",
+          "twitter": "@twitter",
+          "bio": "Speaker biography"
+        },
+        {
+          "id": 4910,
+          "picture": "http:\/\/event.scaladays.org\/dl\/photos\/Scala%20Days%202015%20speakers/xxxxx.png",
+          "name": "Xxxxx speaker",
+          "title": "",
+          "company": "Company",
+          "twitter": "@twitter",
+          "bio": "Speaker biography"
+        },
+        {
+          "id": 4905,
+          "picture": "http:\/\/event.scaladays.org\/dl\/photos\/Scala%20Days%202015%20speakers/xxxxx.png",
+          "name": "Xxxxx speaker",
+          "title": "",
+          "company": "Company",
+          "twitter": "@twitter",
+          "bio": "Speaker biography"
+        },
+        {
+          "id": 4904,
+          "picture": "http:\/\/event.scaladays.org\/dl\/photos\/Scala%20Days%202015%20speakers/xxxxx.png",
+          "name": "Xxxxx speaker",
+          "title": "",
+          "company": "Company",
+          "twitter": "@twitter",
+          "bio": "Speaker biography"
+        },
+        {
+          "id": 4907,
+          "picture": "http:\/\/event.scaladays.org\/dl\/photos\/Scala%20Days%202015%20speakers/xxxxx.png",
+          "name": "Xxxxx speaker",
+          "title": "",
+          "company": "Company",
+          "twitter": "@twitter",
+          "bio": "Speaker biography"
+        },
+        {
+          "id": 4906,
+          "picture": "http:\/\/event.scaladays.org\/dl\/photos\/Scala%20Days%202015%20speakers/xxxxx.png",
+          "name": "Xxxxx speaker",
+          "title": "",
+          "company": "Company",
+          "twitter": "@twitter",
+          "bio": "Speaker biography"
+        },
+        {
+          "id": 4955,
+          "picture": "http:\/\/event.scaladays.org\/dl\/photos\/Scala%20Days%202015%20speakers/xxxxx.png",
+          "name": "Xxxxx speaker",
+          "title": "",
+          "company": "Company",
+          "twitter": "@twitter",
+          "bio": "Speaker biography"
+        },
+        {
+          "id": 4931,
+          "picture": "http:\/\/event.scaladays.org\/dl\/photos\/Scala%20Days%202015%20speakers/xxxxx.png",
+          "name": "Xxxxx speaker",
+          "title": "",
+          "company": "Company",
+          "twitter": "@twitter",
+          "bio": "Speaker biography"
+        },
+        {
+          "id": 4930,
+          "picture": "http:\/\/event.scaladays.org\/dl\/photos\/Scala%20Days%202015%20speakers\/xxxxx.png",
+          "name": "Xxxxx speaker",
+          "title": "",
+          "company": "Company",
+          "twitter": "@twitter",
+          "bio": "Speaker biography"
+        },
+        {
+          "id": 4928,
+          "picture": "http:\/\/event.scaladays.org\/dl\/photos\/Scala%20Days%202015%20speakers\/xxxxx.png",
+          "name": "Xxxxx speaker",
+          "title": "",
+          "company": "Company",
+          "twitter": "@twitter",
+          "bio": ""
+        },
+        {
+          "id": 4933,
+          "picture": "http:\/\/event.scaladays.org\/dl\/photos\/Scala%20Days%202015%20speakers\/xxxxx.png",
+          "name": "Xxxxx speaker",
+          "title": "",
+          "company": "Company",
+          "twitter": "@twitter",
+          "bio": "Speaker biography"
+        },
+        {
+          "id": 4932,
+          "picture": "http:\/\/event.scaladays.org\/dl\/photos\/Scala%20Days%202015%20speakers/xxxxx.png",
+          "name": "Xxxxx speaker",
+          "title": "",
+          "company": "Company",
+          "twitter": null,
+          "bio": "Speaker biography"
+        },
+        {
+          "id": 4937,
+          "picture": "http:\/\/event.scaladays.org",
+          "name": "Xxxxx speaker",
+          "title": "",
+          "company": "Company",
+          "twitter": "@twitter",
+          "bio": ""
+        },
+        {
+          "id": 4936,
+          "picture": "http:\/\/event.scaladays.org\/dl\/photos\/Scala%20Days%202015%20speakers/xxxxx.png",
+          "name": "Xxxxx speaker",
+          "title": "",
+          "company": "Company",
+          "twitter": null,
+          "bio": "Speaker biography"
+        },
+        {
+          "id": 4977,
+          "picture": "http:\/\/event.scaladays.org\/dl\/photos\/Scala%20Days%202015%20speakers/xxxxx.png",
+          "name": "Xxxxx speaker",
+          "title": "",
+          "company": "Company",
+          "twitter": "@twitter",
+          "bio": "Speaker biography"
+        },
+        {
+          "id": 4838,
+          "picture": "http:\/\/event.scaladays.org\/dl\/photos\/Scala%20Days%202015%20speakers/xxxxx.png",
+          "name": "Xxxxx speaker",
+          "title": "",
+          "company": "Company",
+          "twitter": "@twitter",
+          "bio": "Speaker biography"
+        },
+        {
+          "id": 4861,
+          "picture": "http:\/\/event.scaladays.org\/dl\/photos\/Scala%20Days%202015%20speakers/xxxxx.png",
+          "name": "Xxxxx speaker",
+          "title": "",
+          "company": "Company",
+          "twitter": "@twitter",
+          "bio": "Speaker biography"
+        },
+        {
+          "id": 4860,
+          "picture": "http:\/\/event.scaladays.org\/dl\/photos\/Scala%20Days%202015%20speakers/xxxxx.png",
+          "name": "Xxxxx speaker",
+          "title": "",
+          "company": "",
+          "twitter": "@twitter",
+          "bio": "Speaker biography"
+        }
+      ],
+      "sponsors": [
+        {
+          "type": "Platinum",
+          "items": [
+            {
+              "url": "http:\/\/47deg.com",
+              "logo": "http:\/\/event.scaladays.org\/dl\/photos\/sponsors\/xxxxx.png"
+            }
+          ]
+        },
+        {
+          "type": "Silver",
+          "items": [
+            {
+              "url": "http:\/\/47deg.com",
+              "logo": "http:\/\/event.scaladays.org\/dl\/photos\/sponsors\/xxxxx.png"
+            },
+            {
+              "url": "http:\/\/47deg.com",
+              "logo": "http:\/\/event.scaladays.org\/dl\/photos\/sponsors\/xxxxx.png"
+            },
+            {
+              "url": "http:\/\/47deg.com",
+              "logo": "http:\/\/event.scaladays.org\/dl\/photos\/sponsors\/xxxxx.png"
+            }
+          ]
+        },
+        {
+          "type": "Hosted by",
+          "items": [
+            {
+              "url": "http:\/\/47deg.com",
+              "logo": "http:\/\/event.scaladays.org\/dl\/photos\/sponsors\/xxxxx.png"
+            },
+            {
+              "url": "http:\/\/47deg.com",
+              "logo": "http:\/\/event.scaladays.org\/dl\/Trifork%20logos\/xxxxx.png"
+            }
+          ]
+        }
+      ],
+      "venues": [
+        {
+          "name": "Venue",
+          "address": "Fort Mason Center\n\r\n2 Marina Blvd\n\r\nSan Francisco, CA 94123",
+          "website": "http:\/\/www.fortmason.org\/aboutus",
+          "map": "https:\/\/www.google.com\/maps\/place\/Fort+Mason+Center\/@37.806657,-122.43104,16z\/data=!4m2!3m1!1s0x0:0x12e3ff67705d349c"
+        },
+        {
+          "name": "Lodging & Training",
+          "address": "Hyatt Fisherman's Wharf\n\r\n555 North Pont Street\n\r\nSan Francisco, CA 94133",
+          "website": "http:\/\/fishermanswharf.hyatt.com\/en\/hotel\/home.html",
+          "map": "https:\/\/www.google.com\/maps\/place\/Hyatt+Fisherman's+Wharf\/@37.805954,-122.416108,17z\/data=!3m1!4b1!4m2!3m1!1s0x808580e4799a55a5:0x6d7309ae49b784bb"
+        }
+      ],
+      "codeOfConduct": "Our Code of Conduct is inspired by the kind folks at NE Scala, who adopted theirs from PNW Scala. We think they both nailed it.\nNobody likes a jerk, so please show respect for those around you. This applies to both in-person and online behavior.\nScala Days is dedicated to providing a harassment-free experience for everyone, regardless of gender, gender identity and expression, sexual orientation, disability, physical appearance, body size, race, or religion (or lack thereof). We do not tolerate harassment of participants in any form.\nAll communication should be appropriate for a technical audience, including people of many different backgrounds. Sexual language, innuendo, and imagery is not appropriate for any conference venue, including talks.\nParticipants violating these rules may be asked to leave without a refund at the sole discretion of the organizers.\n"
+    },
+    {
+      "info": {
+        "nameAndLocation": "GOTO Conference 2015, June 17. - 19., Amsterdam, The Netherlands",
+        "id": 110,
+        "firstDay": "2015-06-17",
+        "lastDay": "2015-06-19",
+        "utcTimezoneOffset": "Europe\/Copenhagen",
+        "name": "goto-amsterdam-2015",
+        "longName": "GOTO Amsterdam 2015",
+        "registrationSite": "https:\/\/secure.trifork.com\/amsterdam-2015\/registration\/",
+        "normalSite": "http:\/\/gotocon.com\/amsterdam-2015",
+        "utcTimezoneOffsetMillis": 7200000,
+        "hashtag": "#SDAmsterdam15",
+        "pictures": [
+          {
+            "width": 298,
+            "height": 188,
+            "url": "http:\/\/scala-days-2015.s3.amazonaws.com\/amsterdam.png"
+          },
+          {
+            "width": 596,
+            "height": 376,
+            "url": "http:\/\/scala-days-2015.s3.amazonaws.com\/amsterdam@2x.png"
+          },
+          {
+            "width": 894,
+            "height": 564,
+            "url": "http:\/\/scala-days-2015.s3.amazonaws.com\/amsterdam@3x.png"
+          }
+        ]
+      },
+      "schedule": [
+        {
+          "id": 6678,
+          "title": "MicroServices - Let's Build Some!",
+          "description": "HANDS-ON DEVELOPMENT OF ASYNCHRONOUS MICRO-SERVICES USING A BUS\nARCHITECTURE  \n\n\t It is one thing to talk about MicroServices. It is another\naltogether to have to build them.  \n\n\t After a brief introduction of MicroService principles, we will watch\nan animation of a microservice environment. We will start with a\nprebuilt skeleton microservice environment (message bus plus a couple\nof RESTful services running against it). We will then design and\nimplement additional services to broaden the overall functionality.\nThese additional services can be written in any language that will run\non the participants laptop. While pairing is strongly encouraged, it\nis not required.  \n\n\t In the final stage, different pairs will implement different\nservices, yet they will all run together implementing the animation.  \n\n\t We wrap up with the participants making observations on what they\nlearned (and how it may be different from MicroServices they are\ncurrently implementing, if any).  \n\n\t Outline\/structure of the session  \n\n \t* Introduction to MicroServices\n \t* Sample asynchronous MicroService application\n\n\t* Installation of sample MicroServices for the exercise \n\n \t* Installing RabbitMQ drivers for your language\n \t* Testing access to RabbitMQ server\n\n  \t* Implementing a new MicroService\n \t* Discussion of effort\n \t* Implementing a second MicroService\n \t* Discussion and review of code\n \t* Implementing the application (teams develop different services\nthat will work together)\n \t* Wrap up observations by participants\n\n\t LEARNING OUTCOME\n The focus of the workshop will be on: 1) Understanding how to design\nasynchronous service architectures, 2) Creating small, yet functional,\nservices rather than larger services, 3) Reducing coupling to the bare\nminimum (JSON packets with extra fields ignored), and 4) Debugging\nasynchronous systems.  \n\n\t TARGET AUDIENCE\n Developers (we will be writing code). Workshop is limited to 20\nattendees.",
+          "type": 1,
+          "startTime": "2015-06-17T07:00:00Z",
+          "endTime": "2015-06-17T07:00:00Z",
+          "date": "WEDNESDAY JUNE 17"
+        },
+        {
+          "id": 6681,
+          "title": "Data Science on Hadoop",
+          "description": "In this full day workshop on Data Science using Apache Hadoop, you\nwill learn how to work with large data sets and extract meaningful\ninformation from them as well as applying machine learning models to\nbuild data driven functionality. You will work on a real world,\nsubstantially large data set on a full blown Hadoop cluster (running\nin the cloud).  \n\n\t We will start off with an introduction of the activities of a data\nscientist and some of the concepts that are involved. During the first\npart we will get hands-on with exploratory data analysis on a large\ndata set using Apache Hadoop, Apache Spark and Python. In the second\npart we will create a full blown data science solution using a large\ndata set and machine learning models.  \n\n\t This workshop focusses on getting hands-on with these subjects and\nnot too much on theory.  \n\n\t Learning outcomes:  \n\n \t* Understand the Data Science process\n \t* Basic use of some Data Science tools for Big (and smaller) Data\n \t* Basic use of Apache Hadoop and Apache Spark\n \t* Data visualisation for exploratory analysis\n \t* Basic knowledge of machine learning models\n\n\t TARGET AUDIENCE\n Software engineers who want to get hands-on with data science. Coding\nskills are required. No prior knowledge of data science or machine\nlearning is expected. Some experience in Python is helpful, but not a\nnecessity.  \n\n\t TECHNICAL REQUIREMENTS\n You need a laptop that allows SSH access to a server and has a web\nbrowser. Additionally, a text editor can come in handy.",
+          "type": 1,
+          "startTime": "2015-06-17T07:00:00Z",
+          "endTime": "2015-06-17T07:00:00Z",
+          "date": "WEDNESDAY JUNE 17"
+        },
+        {
+          "id": 6688,
+          "title": "Continuous Delivery",
+          "description": "This tutorial will be delivered as an in-depth, interactive talk. It\nwill describe the ideas of Continuous Delivery as a practical everyday\nprocess, highlighting some of the techniques developed while working\non a complex real world CD project.  \n\n\t It will provide an overview of the key process details: describing\ndeployment pipelining as a technique to structure automation, pipeline\nmonitoring to gain insight into progress and status, approaches to\nconfiguration management, automated acceptance testing and automated\ndeployment as well as many other aspects of the CD approach to\nsoftware delivery.  \n\n\t At the end of this you should have more insight into how to tailor\nthe Continuous Delivery approach to your needs. Dave Farley is\nco-author of the book \"Continuous Delivery\" which describes the use of\nhigh levels of automation and collaboration in the delivery process to\nensure high quality software and a reduction in errors and late\nnights.",
+          "type": 1,
+          "startTime": "2015-06-17T07:00:00Z",
+          "endTime": "2015-06-17T07:00:00Z",
+          "date": "WEDNESDAY JUNE 17"
+        },
+        {
+          "id": 6692,
+          "title": "Getting more out of Agile and Lean",
+          "description": "PRACTICES FOR TEAMS AND THEIR STAKEHOLDERS TO DEVELOP THE RIGHT\nPRODUCTS, DELIVER FASTER, INCREASE QUALITY, AND CREATE HAPPY HIGH\nPERFORMING TEAMS.  \n\n\t Many organizations are going through agile transformations. They are\nimplementing Scrum and maybe an large scale agile framework like SAFe\nor DAD, hoping to better serve the IT needs of the business and to\ndevelop products that satisfy their customers.  \n\n\t Unfortunately those transformation do not always live up to the\nagile promise to deliver faster, make better products that customers\nreally like or reducing the IT costs. As a result, many organizations\nare not getting the expected business benefits out of Agile.  \n\n\t Replacing processes doesn\\'t make an organization Agile [1]. You\nneed to apply agile practices, with an agile mindset. Be able to pick\nthose practices that help your teams and stakeholders to do a better\njob. Practices that you can use in the planning game and your daily\nstand-ups, on your Scrum and Kanban boards, for your product\nreviews\/demos and in your agile retrospectives [2].  \n\n\t In this workshop you will experience agile practices for teams and\nstakeholders with advice on how to deploy them, and tips and tricks to\nbecome more agile and lean [3]. This will help you to develop the\nright products for your business and customers, reduce your delivery\ntime, increase the quality of your software, and create happy high\nperforming teams.  \n\n\t LEARNING OUTCOME  \n\n \t* Effective practices for planning games, stand-ups, demos and\nretrospectives\n \t* Ideas for improving collaboration in teams and between teams and\nstakeholders\n \t* Tips and tricks to improve your agile way of working\n \t* Advice on selecting and applying agile practices effectively\n\n\t TARGET AUDIENCE  \n\n \t* Techical (team) leaders and Scrum masters\n \t* (Senior) Developers and Tester\n \t* Product Owners and Project\/Line Managers\n \t* Agile and Lean Coaches\n \t* Anybody involved in agile transformations\n\n\t TECHNICAL REQUIREMENTS\n None \n\nLinks:\n------\n[1] http:\/\/www.benlinders.com\/2014\/we-want-agile-processes\n[2]\nhttp:\/\/www.benlinders.com\/2013\/whats-an-agile-retrospective-and-why-would-you-do-it\n[3] http:\/\/www.benlinders.com\/2013\/becoming-agile-in-an-agile-way",
+          "type": 1,
+          "startTime": "2015-06-17T07:00:00Z",
+          "endTime": "2015-06-17T07:00:00Z",
+          "date": "WEDNESDAY JUNE 17"
+        },
+        {
+          "id": 6678,
+          "title": "MicroServices - Let's Build Some!",
+          "description": "HANDS-ON DEVELOPMENT OF ASYNCHRONOUS MICRO-SERVICES USING A BUS\nARCHITECTURE  \n\n\t It is one thing to talk about MicroServices. It is another\naltogether to have to build them.  \n\n\t After a brief introduction of MicroService principles, we will watch\nan animation of a microservice environment. We will start with a\nprebuilt skeleton microservice environment (message bus plus a couple\nof RESTful services running against it). We will then design and\nimplement additional services to broaden the overall functionality.\nThese additional services can be written in any language that will run\non the participants laptop. While pairing is strongly encouraged, it\nis not required.  \n\n\t In the final stage, different pairs will implement different\nservices, yet they will all run together implementing the animation.  \n\n\t We wrap up with the participants making observations on what they\nlearned (and how it may be different from MicroServices they are\ncurrently implementing, if any).  \n\n\t Outline\/structure of the session  \n\n \t* Introduction to MicroServices\n \t* Sample asynchronous MicroService application\n\n\t* Installation of sample MicroServices for the exercise \n\n \t* Installing RabbitMQ drivers for your language\n \t* Testing access to RabbitMQ server\n\n  \t* Implementing a new MicroService\n \t* Discussion of effort\n \t* Implementing a second MicroService\n \t* Discussion and review of code\n \t* Implementing the application (teams develop different services\nthat will work together)\n \t* Wrap up observations by participants\n\n\t LEARNING OUTCOME\n The focus of the workshop will be on: 1) Understanding how to design\nasynchronous service architectures, 2) Creating small, yet functional,\nservices rather than larger services, 3) Reducing coupling to the bare\nminimum (JSON packets with extra fields ignored), and 4) Debugging\nasynchronous systems.  \n\n\t TARGET AUDIENCE\n Developers (we will be writing code). Workshop is limited to 20\nattendees.",
+          "type": 1,
+          "startTime": "2015-06-17T11:00:00Z",
+          "endTime": "2015-06-17T11:00:00Z",
+          "date": "WEDNESDAY JUNE 17"
+        },
+        {
+          "id": 6681,
+          "title": "Data Science on Hadoop",
+          "description": "In this full day workshop on Data Science using Apache Hadoop, you\nwill learn how to work with large data sets and extract meaningful\ninformation from them as well as applying machine learning models to\nbuild data driven functionality. You will work on a real world,\nsubstantially large data set on a full blown Hadoop cluster (running\nin the cloud).  \n\n\t We will start off with an introduction of the activities of a data\nscientist and some of the concepts that are involved. During the first\npart we will get hands-on with exploratory data analysis on a large\ndata set using Apache Hadoop, Apache Spark and Python. In the second\npart we will create a full blown data science solution using a large\ndata set and machine learning models.  \n\n\t This workshop focusses on getting hands-on with these subjects and\nnot too much on theory.  \n\n\t Learning outcomes:  \n\n \t* Understand the Data Science process\n \t* Basic use of some Data Science tools for Big (and smaller) Data\n \t* Basic use of Apache Hadoop and Apache Spark\n \t* Data visualisation for exploratory analysis\n \t* Basic knowledge of machine learning models\n\n\t TARGET AUDIENCE\n Software engineers who want to get hands-on with data science. Coding\nskills are required. No prior knowledge of data science or machine\nlearning is expected. Some experience in Python is helpful, but not a\nnecessity.  \n\n\t TECHNICAL REQUIREMENTS\n You need a laptop that allows SSH access to a server and has a web\nbrowser. Additionally, a text editor can come in handy.",
+          "type": 1,
+          "startTime": "2015-06-17T11:00:00Z",
+          "endTime": "2015-06-17T11:00:00Z",
+          "date": "WEDNESDAY JUNE 17"
+        },
+        {
+          "id": 6688,
+          "title": "Continuous Delivery",
+          "description": "This tutorial will be delivered as an in-depth, interactive talk. It\nwill describe the ideas of Continuous Delivery as a practical everyday\nprocess, highlighting some of the techniques developed while working\non a complex real world CD project.  \n\n\t It will provide an overview of the key process details: describing\ndeployment pipelining as a technique to structure automation, pipeline\nmonitoring to gain insight into progress and status, approaches to\nconfiguration management, automated acceptance testing and automated\ndeployment as well as many other aspects of the CD approach to\nsoftware delivery.  \n\n\t At the end of this you should have more insight into how to tailor\nthe Continuous Delivery approach to your needs. Dave Farley is\nco-author of the book \"Continuous Delivery\" which describes the use of\nhigh levels of automation and collaboration in the delivery process to\nensure high quality software and a reduction in errors and late\nnights.",
+          "type": 1,
+          "startTime": "2015-06-17T11:00:00Z",
+          "endTime": "2015-06-17T11:00:00Z",
+          "date": "WEDNESDAY JUNE 17"
+        }
+      ],
+      "speakers": [
+        {
+          "id": 5002,
+          "picture": "http:\/\/event.scaladays.org\/dl\/photos\/speakers\/xxxxx.jpg",
+          "name": "Xxxxx speaker",
+          "title": "",
+          "company": "Company",
+          "twitter": "@twitter",
+          "bio": "Speaker biography"
+        },
+        {
+          "id": 4981,
+          "picture": "http:\/\/event.scaladays.org\/dl\/photos\/speakers\/xxxxx.jpg",
+          "name": "Xxxxx speaker",
+          "title": "",
+          "company": "Company",
+          "twitter": "@twitter",
+          "bio": "Speaker biography"
+        },
+        {
+          "id": 5001,
+          "picture": "http:\/\/event.scaladays.org\/dl\/photos\/speakers\/xxxxx.jpg",
+          "name": "Xxxxx speaker",
+          "title": "",
+          "company": "Company",
+          "twitter": null,
+          "bio": "Speaker biography"
+        },
+        {
+          "id": 4998,
+          "picture": "http:\/\/event.scaladays.org",
+          "name": "Xxxxx speaker",
+          "title": "",
+          "company": "Company",
+          "twitter": null,
+          "bio": "Speaker biography"
+        },
+        {
+          "id": 4996,
+          "picture": "http:\/\/event.scaladays.org\/dl\/photos\/speakers\/xxxxx.jpg",
+          "name": "Xxxxx speaker",
+          "title": "",
+          "company": "Company",
+          "twitter": "@twitter",
+          "bio": "Speaker biography"
+        },
+        {
+          "id": 4943,
+          "picture": "http:\/\/event.scaladays.org\/dl\/photos\/speakers\/xxxxx.jpg",
+          "name": "Xxxxx speaker",
+          "title": "",
+          "company": "Company",
+          "twitter": "@twitter",
+          "bio": "Speaker biography"
+        },
+        {
+          "id": 4989,
+          "picture": "http:\/\/event.scaladays.org\/dl\/photos\/speakers\/xxxxx.jpg",
+          "name": "Xxxxx speaker",
+          "title": "",
+          "company": "Company",
+          "twitter": "@twitter",
+          "bio": "Speaker biography"
+        },
+        {
+          "id": 4940,
+          "picture": "http:\/\/event.scaladays.org\/dl\/photos\/speakers\/xxxxx.jpg",
+          "name": "Xxxxx speaker",
+          "title": "",
+          "company": "Company",
+          "twitter": "@twitter",
+          "bio": "Speaker biography"
+        }
+      ],
+      "sponsors": [],
+      "venues": [],
+      "codeOfConduct": ""
+    }
+  ]
+}

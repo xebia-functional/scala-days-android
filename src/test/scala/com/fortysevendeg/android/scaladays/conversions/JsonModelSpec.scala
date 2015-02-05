@@ -16,27 +16,27 @@
 
 package com.fortysevendeg.android.scaladays.conversions
 
-import java.util.Calendar
-
-import com.fortysevendeg.android.scaladays.modules.json.models.{ApiRoot, ApiConference}
+import com.fortysevendeg.android.scaladays.modules.json.models.ApiRoot
+import com.fortysevendeg.android.scaladays.utils.DateTimeUtils
 import org.specs2.mutable._
-import play.api.libs.json.{Json, JsValue}
+import play.api.libs.json.{JsValue, Json}
 
 class JsonModelSpec
   extends Specification
-  with TestConfig
   with JsonModelTestSupportTestSupport {
   
 
   "load and map sample json" should {
 
     "return a Conference class with the right fields" in {
-      
+
       import com.fortysevendeg.android.scaladays.conversions.JsonImplicits._
-      
-      val jsonSource = scala.io.Source.fromInputStream(JsonImplicits.getClass.getResourceAsStream("/scaladays2015.json")).mkString
+
+      val jsonSource = scala.io.Source.fromInputStream(JsonImplicits.getClass.getResourceAsStream("/conference.json")).mkString
       val json: JsValue = Json.parse(jsonSource)
       val jsonValue = json.as[ApiRoot]
+      
+      jsonValue.conferences.size shouldEqual 2
       jsonValue.conferences(0).info.id shouldEqual 111
     }
 
