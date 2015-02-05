@@ -37,7 +37,8 @@ case class Information(
   normalSite: String,
   registrationSite: String,
   utcTimezoneOffset: String,
-  utcTimezoneOffsetMillis: Long)
+  utcTimezoneOffsetMillis: Long,
+  hashTag: String)
 
 case class Event(
   id: Int,

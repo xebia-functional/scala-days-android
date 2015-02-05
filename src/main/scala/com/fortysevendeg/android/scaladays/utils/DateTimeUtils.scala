@@ -16,16 +16,21 @@
 
 package com.fortysevendeg.android.scaladays.utils
 
-import org.joda.time.format.{DateTimeFormatter, ISODateTimeFormat}
-import org.joda.time.DateTime
+import org.joda.time.format.{DateTimeFormat, DateTimeFormatter, ISODateTimeFormat}
+import org.joda.time.{DateTimeZone, DateTime}
 
 object DateTimeUtils {
 
-  val ISODateFormatterDayPrecission = ISODateTimeFormat.date.withZoneUTC
-  val ISODateFormatterMillisPrecission = ISODateTimeFormat.dateTime
   val ISODateFormatterDay = ISODateTimeFormat.date
+  val ISODateFormatterDateTime = ISODateTimeFormat.dateTimeNoMillis
 
   def parseDate(
       date: String,
-      fmt: DateTimeFormatter = ISODateFormatterMillisPrecission): DateTime = DateTime.now()
+      dateTimeFormatter: DateTimeFormatter = ISODateFormatterDateTime,
+      dateTimeZone: DateTimeZone = DateTimeZone.UTC): DateTime = 
+    DateTime.parse(date, dateTimeFormatter.withZone(dateTimeZone))
+
+  def convertTimeZone(fromDateTime: DateTime, toTimeZone: String): DateTime =
+    new DateTime(fromDateTime, DateTimeZone.forID(toTimeZone))
+
 }
