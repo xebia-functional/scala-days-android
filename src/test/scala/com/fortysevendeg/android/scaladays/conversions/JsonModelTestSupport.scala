@@ -16,20 +16,13 @@
 
 package com.fortysevendeg.android.scaladays.conversions
 
+import com.fortysevendeg.android.scaladays.BaseTestSupport
 import com.fortysevendeg.android.scaladays.modules.json.models._
-import org.specs2.execute.{Result, AsResult}
-import org.specs2.mutable.Around
-import org.specs2.specification.Scope
 
-trait BaseTestSupport extends Around with Scope {
 
-  override def around[T: AsResult](t: => T): Result = AsResult.effectively(t)
-
-}
 
 trait JsonModelTestSupportTestSupport
   extends BaseTestSupport
-  with TestConfig
 
 object JsonImplicits {
   import play.api.libs.json._

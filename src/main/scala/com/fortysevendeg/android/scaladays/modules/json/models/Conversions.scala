@@ -18,11 +18,15 @@ package com.fortysevendeg.android.scaladays.modules.json.models
 
 import com.fortysevendeg.android.scaladays.model._
 import com.fortysevendeg.android.scaladays.utils.DateTimeUtils
+import com.fortysevendeg.android.scaladays.utils.DateTimeUtils._
 
 trait ApiConversions {
 
   private def parseDate(date: String) =
-    DateTimeUtils.parseDate(date, DateTimeUtils.ISODateFormatterDayPrecission)
+    DateTimeUtils.parseDate(date, DateTimeUtils.ISODateFormatterDay)
+
+  private def parseDateTime(date: String) =
+    DateTimeUtils.parseDate(date, DateTimeUtils.ISODateFormatterDateTime)
 
   def toRoot(apiRoot: ApiRoot): Root =
     Root(apiRoot.conferences map toConference)
@@ -45,7 +49,8 @@ trait ApiConversions {
       normalSite = apiConferenceInfo.normalSite,
       registrationSite = apiConferenceInfo.registrationSite,
       utcTimezoneOffset = apiConferenceInfo.utcTimezoneOffset,
-      utcTimezoneOffsetMillis = apiConferenceInfo.utcTimezoneOffsetMillis)
+      utcTimezoneOffsetMillis = apiConferenceInfo.utcTimezoneOffsetMillis,
+      hashTag = apiConferenceInfo.hashtag)
 
   def toEvent(apiEvent: ApiEvent): Event =
     Event(
@@ -53,8 +58,8 @@ trait ApiConversions {
       title = apiEvent.title,
       description = apiEvent.description,
       eventType = apiEvent.`type`,
-      startTime = parseDate(apiEvent.startTime),
-      endTime = parseDate(apiEvent.endTime),
+      startTime = parseDateTime(apiEvent.startTime),
+      endTime = parseDateTime(apiEvent.endTime),
       date = apiEvent.date,
       track = apiEvent.track map toTrack,
       location = apiEvent.location map toLocation,
