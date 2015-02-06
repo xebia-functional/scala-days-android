@@ -31,14 +31,14 @@ class DrawerMenuAdapter(listener: RecyclerClickListener)
   val recyclerClickListener = listener
 
   val list = List(
-    DrawerMenuItem(appContext.app.getString(R.string.menuSchedule), R.drawable.menu_icon_schedule, SCHEDULE),
-    DrawerMenuItem(appContext.app.getString(R.string.menuSocial), R.drawable.menu_icon_social, SAMPLE),
-    DrawerMenuItem(appContext.app.getString(R.string.menuSpeakers), R.drawable.menu_icon_speakers, SPEAKERS),
-    DrawerMenuItem(appContext.app.getString(R.string.menuTickets), R.drawable.menu_icon_tickets, SAMPLE),
-    DrawerMenuItem(appContext.app.getString(R.string.menuContacts), R.drawable.menu_icon_contact, SAMPLE),
-    DrawerMenuItem(appContext.app.getString(R.string.menuSponsors), R.drawable.menu_icon_sponsors, SAMPLE),
-    DrawerMenuItem(appContext.app.getString(R.string.menuPlaces), R.drawable.menu_icon_places, SAMPLE),
-    DrawerMenuItem(appContext.app.getString(R.string.menuAbout), R.drawable.menu_icon_about, SAMPLE))
+    DrawerMenuItem(appContext.app.getString(R.string.schedule), R.drawable.menu_icon_schedule, SCHEDULE),
+    DrawerMenuItem(appContext.app.getString(R.string.social), R.drawable.menu_icon_social, SAMPLE),
+    DrawerMenuItem(appContext.app.getString(R.string.speakers), R.drawable.menu_icon_speakers, SPEAKERS),
+    DrawerMenuItem(appContext.app.getString(R.string.tickets), R.drawable.menu_icon_tickets, SAMPLE),
+    DrawerMenuItem(appContext.app.getString(R.string.contacts), R.drawable.menu_icon_contact, SAMPLE),
+    DrawerMenuItem(appContext.app.getString(R.string.sponsors), R.drawable.menu_icon_sponsors, SAMPLE),
+    DrawerMenuItem(appContext.app.getString(R.string.places), R.drawable.menu_icon_places, SAMPLE),
+    DrawerMenuItem(appContext.app.getString(R.string.about), R.drawable.menu_icon_about, SAMPLE))
 
   override def onCreateViewHolder(parentViewGroup: ViewGroup, i: Int): ViewHolderMenuAdapter = {
     val adapter = new MenuAdapter()

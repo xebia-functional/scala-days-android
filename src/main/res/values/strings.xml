@@ -19,14 +19,14 @@
 
     <string name="app_name">ScalaDays</string>
 
-    <string name="menuSchedule">Schedule</string>
-    <string name="menuSocial">Social</string>
-    <string name="menuSpeakers">Speakers</string>
-    <string name="menuTickets">Tickets</string>
-    <string name="menuContacts">Contacts</string>
-    <string name="menuSponsors">Sponsors</string>
-    <string name="menuPlaces">Places</string>
-    <string name="menuAbout">About</string>
+    <string name="schedule">Schedule</string>
+    <string name="social">Social</string>
+    <string name="speakers">Speakers</string>
+    <string name="tickets">Tickets</string>
+    <string name="contacts">Contacts</string>
+    <string name="sponsors">Sponsors</string>
+    <string name="places">Places</string>
+    <string name="about">About</string>
 
     <string name="openMenu">Open</string>
     <string name="clodeMenu">Close</string>

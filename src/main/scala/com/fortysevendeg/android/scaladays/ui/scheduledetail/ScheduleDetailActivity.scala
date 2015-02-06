@@ -21,6 +21,8 @@ import android.support.v4.app.FragmentActivity
 import android.support.v7.app.ActionBarActivity
 import android.view.MenuItem
 import com.fortysevendeg.android.scaladays.model.Event
+import com.fortysevendeg.android.scaladays.ui.schedule.SpeakersLayout
+import com.fortysevendeg.macroid.extras.ViewGroupTweaks._
 import macroid.Contexts
 import macroid.FullDsl._
 import com.fortysevendeg.macroid.extras.TextTweaks._
@@ -60,6 +62,17 @@ class ScheduleDetailActivity
             (room <~ event.track.map(track => tvText(track.name) + vVisible).getOrElse(vGone)) ~
             (description <~ tvText(event.description))
       )
+      if (event.speakers.size == 0) {
+        runUi(speakersContent <~ vGone)
+      } else {
+        runUi(speakersContent <~ vVisible <~ vgRemoveAllViews)
+        event.speakers.map(
+          speaker => {
+            val speakerLayout = new SpeakersDetailLayout(speaker)
+            runUi((speakersContent <~ vgAddView(speakerLayout.content)))
+          }
+        )
+      }
     }).getOrElse(finish())
 
   }

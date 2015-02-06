@@ -17,6 +17,7 @@
 package com.fortysevendeg.android.scaladays.ui.scheduledetail
 
 import android.widget._
+import com.fortysevendeg.android.scaladays.model.Speaker
 import com.fortysevendeg.android.scaladays.ui.commons.ToolbarLayout
 import macroid.FullDsl._
 import macroid.{ActivityContext, AppContext}
@@ -35,6 +36,8 @@ trait Layout
 
   var description = slot[TextView]
 
+  var speakersContent = slot[LinearLayout]
+
   def layout(implicit appContext: AppContext, context: ActivityContext) = {
     getUi(
       l[FrameLayout](
@@ -45,9 +48,12 @@ trait Layout
               l[LinearLayout](
                 w[TextView] <~ wire(date) <~ dateStyle,
                 w[TextView] <~ wire(room) <~ roomStyle,
-                w[TextView] <~ wire(description) <~ descriptionStyle
+                w[TextView] <~ wire(description) <~ descriptionStyle,
+                w[ImageView] <~ lineStyle,
+                w[TextView] <~ speakerTitleStyle
               ) <~ verticalLayoutStyle
-            ) <~ horizontalLayoutStyle
+            ) <~ descriptionContentLayoutStyle,
+            l[LinearLayout]() <~ wire(speakersContent) <~ speakersContentLayoutStyle
           ) <~ contentStyle
         ) <~ scrollContentStyle,
         expandedToolBarLayout(
@@ -59,3 +65,21 @@ trait Layout
 
 }
 
+class SpeakersDetailLayout(speaker: Speaker)(implicit context: ActivityContext, appContext: AppContext)
+    extends Styles {
+
+  val content = layout
+
+  private def layout(implicit appContext: AppContext, context: ActivityContext) = getUi(
+    l[LinearLayout](
+      w[ImageView] <~ speakerAvatarStyle(speaker.picture),
+      l[LinearLayout](
+        w[TextView] <~ speakerNameItemStyle(speaker.name),
+        w[TextView] <~ speakerCompanyItemStyle(speaker.company),
+        w[TextView] <~ speakerTwitterItemStyle(speaker.twitter),
+        w[TextView] <~ speakerBioItemStyle(speaker.bio)
+      ) <~ verticalLayoutStyle
+    ) <~ itemSpeakerContentStyle
+  )
+
+}
