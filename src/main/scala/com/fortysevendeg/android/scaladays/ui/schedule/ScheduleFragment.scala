@@ -16,6 +16,7 @@
 
 package com.fortysevendeg.android.scaladays.ui.schedule
 
+import android.content.Intent
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v7.widget.LinearLayoutManager
@@ -24,6 +25,7 @@ import com.fortysevendeg.android.scaladays.model.Event
 import com.fortysevendeg.android.scaladays.modules.ComponentRegistryImpl
 import com.fortysevendeg.android.scaladays.modules.json.JsonRequest
 import com.fortysevendeg.android.scaladays.modules.net.NetRequest
+import com.fortysevendeg.android.scaladays.ui.scheduledetail.ScheduleDetailActivity
 import com.fortysevendeg.macroid.extras.ActionsExtras._
 import com.fortysevendeg.macroid.extras.RecyclerViewTweaks._
 import com.fortysevendeg.macroid.extras.ViewTweaks._
@@ -60,7 +62,7 @@ class ScheduleFragment
     } yield {
       jsonResponse.apiResponse
     }).map(_ map (api => reloadList(api.conferences(0).info.utcTimezoneOffset, api.conferences(0).schedule))).recover {
-      case _ => aShortToast("error")
+      case _ => aShortToast("error") // TODO show failed screen
     }
   }
 
@@ -72,7 +74,14 @@ class ScheduleFragment
     } yield {
       val adapter = new ScheduleAdapter(timeZone, scheduleItems, new RecyclerClickListener {
         override def onClick(scheduleItem: ScheduleItem): Unit = {
-
+          if (!scheduleItem.isHeader) {
+            scheduleItem.event.map {
+              event =>
+                val intent = new Intent(fragmentActivityContext.get, classOf[ScheduleDetailActivity])
+                intent.putExtra(ScheduleDetailActivity.scheduleItem, event)
+                fragmentActivityContext.get.startActivity(intent)
+            }
+          }
         }
       })
       runUi(

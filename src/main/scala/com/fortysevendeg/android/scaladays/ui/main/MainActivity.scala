@@ -35,10 +35,10 @@ import macroid._
 
 
 class MainActivity
-  extends ActionBarActivity
-  with Contexts[FragmentActivity]
-  with Layout
-  with IdGeneration {
+    extends ActionBarActivity
+    with Contexts[FragmentActivity]
+    with Layout
+    with IdGeneration {
 
   var actionBarDrawerToggle: Option[ActionBarDrawerToggle] = None
 
@@ -69,7 +69,6 @@ class MainActivity
 
     val adapter = new DrawerMenuAdapter(new RecyclerClickListener {
       override def onClick(info: DrawerMenuItem): Unit = {
-        runUi((toolBar <~ tbTitle(info.name)) ~ (drawerLayout <~ dlCloseDrawer(drawerMenuLayout)))
         itemSelected(info)
       }
     })
@@ -89,10 +88,13 @@ class MainActivity
       case SCHEDULE => f[ScheduleFragment]
       case _ => f[SampleFragment].pass(SampleFragment.titleArg → info.name)
     }
-    runUi(replaceFragment(
-          builder = builder,
-          id = Id.mainFragment,
-          tag = Some(Tag.mainFragment))
+    runUi(
+      (toolBar <~ tbTitle(info.name)) ~
+          (drawerLayout <~ dlCloseDrawer(drawerMenuLayout)) ~
+          (replaceFragment(
+            builder = builder,
+            id = Id.mainFragment,
+            tag = Some(Tag.mainFragment)))
     )
   }
 

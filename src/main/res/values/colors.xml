@@ -22,6 +22,7 @@
     <color name="primary_dark">#2F3C46</color>
     <color name="color_control_highlight">#2F3C46</color>
     <color name="accent">#ff19232c</color>
+    <color name="toolbar_title">#ffffff</color>
 
     <!-- Menu -->
     <color name="background_menu">#364550</color>

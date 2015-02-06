@@ -24,6 +24,7 @@ import scala.language.postfixOps
 
 trait CommonsStyles {
 
-  def toolbarStyle(implicit appContext: AppContext) = vContentSizeMatchWidth(56 dp) + vBackground(R.color.primary)
+  def toolbarStyle(height: Int)(implicit appContext: AppContext) = vContentSizeMatchWidth(height) +
+      vBackground(R.color.primary)
 
 }
