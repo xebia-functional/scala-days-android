@@ -25,6 +25,7 @@ import macroid.Contexts
 import macroid.FullDsl._
 import com.fortysevendeg.macroid.extras.TextTweaks._
 import com.fortysevendeg.macroid.extras.ViewTweaks._
+import com.fortysevendeg.android.scaladays.ui.commons.DateTimeTextViewTweaks._
 
 class ScheduleDetailActivity
     extends ActionBarActivity
@@ -35,16 +36,31 @@ class ScheduleDetailActivity
     super.onCreate(savedInstanceState)
     setContentView(layout)
 
-    val scheduleItem = Option(getIntent.getExtras).flatMap {
+    val (maybeScheduleItem, maybeTimeZone) = Option(getIntent.getExtras).map {
       extras =>
-        if (extras.containsKey(ScheduleDetailActivity.scheduleItem))
-          Some(extras.getSerializable(ScheduleDetailActivity.scheduleItem).asInstanceOf[Event]) else None
-    }
+        val scheduleItem: Option[Event] = if (extras.containsKey(ScheduleDetailActivity.scheduleItemKey))
+          Some(extras.getSerializable(ScheduleDetailActivity.scheduleItemKey).asInstanceOf[Event])
+        else None
+        val timeZone: Option[String] = if (extras.containsKey(ScheduleDetailActivity.timeZoneKey))
+          Some(extras.getString(ScheduleDetailActivity.timeZoneKey))
+        else None
+        (scheduleItem, timeZone)
+    }.getOrElse(None, None)
 
     toolBar map setSupportActionBar
     getSupportActionBar.setDisplayHomeAsUpEnabled(true)
 
-    runUi(titleToolbar <~ scheduleItem.map(t => tvText(t.title)).getOrElse(vInvisible))
+    (for {
+      event <- maybeScheduleItem
+      timeZone <- maybeTimeZone
+    } yield {
+      runUi(
+        (titleToolbar <~ tvText(event.title)) ~
+            (date <~ tvDateDateTime(event.startTime, timeZone)) ~
+            (room <~ event.track.map(track => tvText(track.name) + vVisible).getOrElse(vGone)) ~
+            (description <~ tvText(event.description))
+      )
+    }).getOrElse(finish())
 
   }
 
@@ -60,5 +76,6 @@ class ScheduleDetailActivity
 }
 
 object ScheduleDetailActivity {
-  val scheduleItem = "schedule_item"
+  val scheduleItemKey = "schedule_item_key"
+  val timeZoneKey = "time_zone_key"
 }

@@ -16,7 +16,7 @@
 
 package com.fortysevendeg.android.scaladays.ui.scheduledetail
 
-import android.widget.{FrameLayout, LinearLayout, TextView}
+import android.widget._
 import com.fortysevendeg.android.scaladays.ui.commons.ToolbarLayout
 import macroid.FullDsl._
 import macroid.{ActivityContext, AppContext}
@@ -29,12 +29,27 @@ trait Layout
 
   var titleToolbar = slot[TextView]
 
+  var date = slot[TextView]
+
+  var room = slot[TextView]
+
+  var description = slot[TextView]
+
   def layout(implicit appContext: AppContext, context: ActivityContext) = {
     getUi(
       l[FrameLayout](
-        l[LinearLayout](
-          w[TextView] <~ text("test")
-        ) <~ contentStyle,
+        l[ScrollView](
+          l[LinearLayout](
+            l[LinearLayout](
+              w[ImageView] <~ iconCalendarStyle,
+              l[LinearLayout](
+                w[TextView] <~ wire(date) <~ dateStyle,
+                w[TextView] <~ wire(room) <~ roomStyle,
+                w[TextView] <~ wire(description) <~ descriptionStyle
+              ) <~ verticalLayoutStyle
+            ) <~ horizontalLayoutStyle
+          ) <~ contentStyle
+        ) <~ scrollContentStyle,
         expandedToolBarLayout(
           w[TextView] <~ wire(titleToolbar) <~ toolBarTitleStyle
         )(124 dp)

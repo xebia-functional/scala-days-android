@@ -59,4 +59,10 @@ object DateTimeTextViewTweaks {
   def tvDateTimeHourMinute(dateTime: DateTime, timeZone: String = "UTC"): Tweak[W] =
     Tweak[W](_.setText(DateTimeUtils.convertTimeZone(dateTime, timeZone).toString(DateTimeUtils.ISODateFormatterTime)))
 
+  def tvDateDay(dateTime: DateTime, timeZone: String = "UTC")(implicit appContext: AppContext): Tweak[W] =
+    Tweak[W](_.setText(DateTimeUtils.parseDateSchedule(dateTime, timeZone)))
+
+  def tvDateDateTime(dateTime: DateTime, timeZone: String = "UTC")(implicit appContext: AppContext): Tweak[W] =
+    Tweak[W](_.setText(DateTimeUtils.parseDateScheduleTime(dateTime, timeZone)))
+
 }

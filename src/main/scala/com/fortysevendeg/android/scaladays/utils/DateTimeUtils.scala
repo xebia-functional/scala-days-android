@@ -16,6 +16,8 @@
 
 package com.fortysevendeg.android.scaladays.utils
 
+import com.fortysevendeg.macroid.extras.ResourcesExtras._
+import macroid.AppContext
 import org.joda.time.format.{DateTimeFormatterBuilder, DateTimeFormatter, ISODateTimeFormat}
 import org.joda.time.{DateTimeFieldType, DateTime, DateTimeZone}
 
@@ -42,5 +44,22 @@ object DateTimeUtils {
 
   def convertTimeZone(fromDateTime: DateTime, toTimeZone: String): DateTime =
     new DateTime(fromDateTime, DateTimeZone.forID(toTimeZone))
+
+  def parseDateSchedule(dateTime: DateTime, timeZone: String)(implicit appContext: AppContext) = {
+    val dateTimeZone = convertTimeZone(dateTime, timeZone)
+    val dayOfMonth = dateTimeZone.toString(ISODateFormatterDayOfMonth)
+    val monthOfYear = resGetString("monthOfYear%s".format(dateTimeZone.toString(ISODateFormatterMonthOfYear))).getOrElse("")
+    val dayOfWeek = resGetString("dayOfWeek%s".format(dateTimeZone.toString(ISODateFormatterDayOfWeek))).getOrElse("")
+    "%s (%s %s)".format(dayOfWeek, dayOfMonth, monthOfYear)
+  }
+
+  def parseDateScheduleTime(dateTime: DateTime, timeZone: String)(implicit appContext: AppContext) = {
+    val dateTimeZone = convertTimeZone(dateTime, timeZone)
+    val dayOfMonth = dateTimeZone.toString(ISODateFormatterDayOfMonth)
+    val monthOfYear = resGetString("monthOfYear%s".format(dateTimeZone.toString(ISODateFormatterMonthOfYear))).getOrElse("")
+    val dayOfWeek = resGetString("dayOfWeek%s".format(dateTimeZone.toString(ISODateFormatterDayOfWeek))).getOrElse("")
+    val hour = dateTimeZone.toString(DateTimeUtils.ISODateFormatterTime)
+    "%s (%s %s) %s".format(dayOfWeek, dayOfMonth, monthOfYear, hour)
+  }
 
 }

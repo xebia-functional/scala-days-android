@@ -16,12 +16,16 @@
 
 package com.fortysevendeg.android.scaladays.ui.scheduledetail
 
-import android.graphics.Color
 import android.view.Gravity
+import android.view.ViewGroup.LayoutParams._
+import android.widget.ImageView.ScaleType
+import android.widget.LinearLayout
 import com.fortysevendeg.android.scaladays.R
 import com.fortysevendeg.macroid.extras.LinearLayoutTweaks._
 import com.fortysevendeg.macroid.extras.TextTweaks._
 import com.fortysevendeg.macroid.extras.ViewTweaks._
+import com.fortysevendeg.macroid.extras.ImageViewTweaks._
+import com.fortysevendeg.macroid.extras.ScrollViewTweaks._
 import macroid.AppContext
 import macroid.FullDsl._
 
@@ -31,9 +35,28 @@ trait Styles {
 
   val rootStyle = vMatchParent
 
-  def contentStyle(implicit appContext: AppContext) = vMatchParent + llVertical + vPadding(0, 124 dp, 0, 0)
+  def scrollContentStyle(implicit appContext: AppContext) = vMatchParent + vPadding(16 dp, 124 dp, 16 dp, 0) +
+      svRemoveVerticalScrollBar
+
+  val contentStyle = vMatchParent + llVertical
+
+  def horizontalLayoutStyle(implicit appContext: AppContext) = vMatchWidth + llHorizontal + vPadding(0, 36 dp, 0, 0)
+
+  val verticalLayoutStyle = llWrapWeightHorizontal + llVertical
 
   def toolBarTitleStyle(implicit appContext: AppContext) = vMatchHeight + tvGravity(Gravity.BOTTOM) +
-      tvColorResource(R.color.toolbar_title) + tvSize(24) + vPadding(0, 0, 16 dp, 16 dp)
+      tvColorResource(R.color.toolbar_title) + tvSize(24) + vPadding(16 dp, 0, 16 dp, 16 dp)
+
+  def iconCalendarStyle(implicit appContext: AppContext) = lp[LinearLayout](54 dp, WRAP_CONTENT) +
+      ivSrc(R.drawable.detail_icon_schedule) + ivScaleType(ScaleType.FIT_START)
+
+  def dateStyle(implicit appContext: AppContext) = vWrapContent + tvSize(16) +
+      tvColor(appContext.get.getResources.getColor(R.color.primary)) + vPadding(0, 0, 0, 4 dp)
+
+  def roomStyle(implicit appContext: AppContext) = vWrapContent + tvSize(14) +
+      tvColor(appContext.get.getResources.getColor(R.color.text_schedule_detail_room)) + vPadding(0, 0, 0, 12 dp)
+
+  def descriptionStyle(implicit appContext: AppContext) = vWrapContent + tvSize(14) +
+      tvColor(appContext.get.getResources.getColor(R.color.primary)) + vPadding(0, 0, 0, 16 dp)
 
 }

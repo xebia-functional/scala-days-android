@@ -78,7 +78,8 @@ class ScheduleFragment
             scheduleItem.event.map {
               event =>
                 val intent = new Intent(fragmentActivityContext.get, classOf[ScheduleDetailActivity])
-                intent.putExtra(ScheduleDetailActivity.scheduleItem, event)
+                intent.putExtra(ScheduleDetailActivity.scheduleItemKey, event)
+                intent.putExtra(ScheduleDetailActivity.timeZoneKey, timeZone)
                 fragmentActivityContext.get.startActivity(intent)
             }
           }

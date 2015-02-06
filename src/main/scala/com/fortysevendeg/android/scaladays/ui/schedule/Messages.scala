@@ -33,11 +33,7 @@ object ScheduleConversion {
     var list: Seq[ScheduleItem] = Seq.empty
     var date = ""
     for (event <- events) {
-      val dateTimeZone = DateTimeUtils.convertTimeZone(event.startTime, timeZone)
-      val dayOfMonth = dateTimeZone.toString(DateTimeUtils.ISODateFormatterDayOfMonth)
-      val monthOfYear = resGetString("monthOfYear%s".format(dateTimeZone.toString(DateTimeUtils.ISODateFormatterMonthOfYear))).getOrElse("")
-      val dayOfWeek = resGetString("dayOfWeek%s".format(dateTimeZone.toString(DateTimeUtils.ISODateFormatterDayOfWeek))).getOrElse("")
-      val dayStr = dayOfWeek + " (" + dayOfMonth + " " + monthOfYear + ")"
+      val dayStr = DateTimeUtils.parseDateSchedule(event.startTime, timeZone)
       if (date != dayStr) {
         date = dayStr
         list = list :+ new ScheduleItem(true, Some(dayStr), None)

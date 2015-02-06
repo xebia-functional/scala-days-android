@@ -46,4 +46,7 @@
     <color name="text_schedule_twitter">#364550</color>
     <color name="list_line_schedule">#6CCFE9</color>
 
+    <!-- Schedule Detail -->
+    <color name="text_schedule_detail_room">#ad364550</color>
+
 </resources>
