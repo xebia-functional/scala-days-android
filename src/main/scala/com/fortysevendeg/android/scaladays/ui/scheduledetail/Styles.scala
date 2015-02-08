@@ -16,12 +16,14 @@
 
 package com.fortysevendeg.android.scaladays.ui.scheduledetail
 
+import android.graphics.Color
 import android.view.Gravity
 import android.view.ViewGroup.LayoutParams._
 import android.widget.ImageView.ScaleType
-import android.widget.LinearLayout
+import android.widget.{FrameLayout, LinearLayout}
 import com.fortysevendeg.android.scaladays.R
 import com.fortysevendeg.android.scaladays.ui.commons.GlideTweaks._
+import com.fortysevendeg.android.scaladays.ui.components.{TypeIcons, PathMorphDrawable}
 import com.fortysevendeg.macroid.extras.LinearLayoutTweaks._
 import com.fortysevendeg.macroid.extras.TextTweaks._
 import com.fortysevendeg.macroid.extras.ViewTweaks._
@@ -36,7 +38,7 @@ trait Styles {
 
   val rootStyle = vMatchParent
 
-  def scrollContentStyle(implicit appContext: AppContext) = vMatchParent + vPadding(16 dp, 124 dp, 16 dp, 16 dp) +
+  def scrollContentStyle(implicit appContext: AppContext) = vMatchParent + vPadding(16 dp, 124 dp, 16 dp, 0) +
       svRemoveVerticalScrollBar
 
   val contentStyle = vMatchParent + llVertical
@@ -49,6 +51,14 @@ trait Styles {
 
   def toolBarTitleStyle(implicit appContext: AppContext) = vMatchHeight + tvGravity(Gravity.BOTTOM) +
       tvColorResource(R.color.toolbar_title) + tvSize(24) + vPadding(16 dp, 0, 16 dp, 16 dp)
+
+  def fabStyle(implicit appContext: AppContext) = lp[FrameLayout](44 dp, 44 dp) + vMargin(12 dp, 102 dp, 0, 0) +
+      vBackground(R.drawable.fab_button_no_check) + vPaddings(10 dp) +
+      ivSrc(new PathMorphDrawable(
+        defaultIcon = TypeIcons.ADD,
+        defaultStroke = 2 dp,
+        defaultColor = Color.WHITE
+      ))
 
   def iconCalendarStyle(implicit appContext: AppContext) = lp[LinearLayout](54 dp, WRAP_CONTENT) +
       ivSrc(R.drawable.detail_icon_schedule) + ivScaleType(ScaleType.FIT_START)
@@ -70,7 +80,7 @@ trait Styles {
 
   // Speaker layout
 
-  def itemSpeakerContentStyle(implicit appContext: AppContext) = vMatchWidth + llHorizontal + vPadding(0, 16 dp, 0, 0)
+  def itemSpeakerContentStyle(implicit appContext: AppContext) = vMatchWidth + llHorizontal + vPadding(0, 16 dp, 0, 8 dp)
 
   def speakerAvatarStyle(picture: Option[String])(implicit appContext: AppContext) = lp[LinearLayout](40 dp, 40 dp) +
       ivScaleType(ScaleType.CENTER_CROP) + vMargin(0, 0, 15 dp, 0) +

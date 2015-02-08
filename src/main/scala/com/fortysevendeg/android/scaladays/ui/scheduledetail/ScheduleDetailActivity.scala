@@ -20,19 +20,25 @@ import android.os.Bundle
 import android.support.v4.app.FragmentActivity
 import android.support.v7.app.ActionBarActivity
 import android.view.MenuItem
+import com.fortysevendeg.android.scaladays.R
 import com.fortysevendeg.android.scaladays.model.Event
-import com.fortysevendeg.android.scaladays.ui.schedule.SpeakersLayout
+import com.fortysevendeg.android.scaladays.ui.components.TypeIcons
 import com.fortysevendeg.macroid.extras.ViewGroupTweaks._
 import macroid.Contexts
 import macroid.FullDsl._
 import com.fortysevendeg.macroid.extras.TextTweaks._
-import com.fortysevendeg.macroid.extras.ViewTweaks._
 import com.fortysevendeg.android.scaladays.ui.commons.DateTimeTextViewTweaks._
+import com.fortysevendeg.android.scaladays.ui.components.PathMorphDrawableTweaks._
+import com.fortysevendeg.macroid.extras.ViewTweaks._
 
 class ScheduleDetailActivity
     extends ActionBarActivity
     with Contexts[FragmentActivity]
     with Layout {
+
+  // TODO We should create a PersistentService and save the favorite items in this service
+  // For now is only for testing design
+  var isFavorite = false
 
   override def onCreate(savedInstanceState: Bundle) = {
     super.onCreate(savedInstanceState)
@@ -74,6 +80,16 @@ class ScheduleDetailActivity
         )
       }
     }).getOrElse(finish())
+
+    runUi(fabFavorite <~ On.click{
+      if (isFavorite) {
+        isFavorite = false
+        fabFavorite <~ pmdAnimIcon(TypeIcons.ADD) <~ vBackground(R.drawable.fab_button_no_check)
+      } else {
+        isFavorite = true
+        fabFavorite <~ pmdAnimIcon(TypeIcons.CHECK) <~ vBackground(R.drawable.fab_button_check)
+      }
+    })
 
   }
 

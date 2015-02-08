@@ -48,5 +48,8 @@
 
     <!-- Schedule Detail -->
     <color name="text_schedule_detail_secondary">#ad364550</color>
+    <color name="fab_no_check_color">#E05F5E</color>
+    <color name="fab_check_color">#ff52e0a3</color>
+    <color name="fab_shadow_color">#46000000</color>
 
 </resources>

@@ -38,6 +38,8 @@ trait Layout
 
   var speakersContent = slot[LinearLayout]
 
+  var fabFavorite = slot[ImageView]
+
   def layout(implicit appContext: AppContext, context: ActivityContext) = {
     getUi(
       l[FrameLayout](
@@ -58,7 +60,8 @@ trait Layout
         ) <~ scrollContentStyle,
         expandedToolBarLayout(
           w[TextView] <~ wire(titleToolbar) <~ toolBarTitleStyle
-        )(124 dp)
+        )(124 dp),
+        w[ImageView] <~ fabStyle <~ wire(fabFavorite)
       ) <~ rootStyle
     )
   }
