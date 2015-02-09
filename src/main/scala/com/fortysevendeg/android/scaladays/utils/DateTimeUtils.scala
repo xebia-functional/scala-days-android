@@ -16,21 +16,50 @@
 
 package com.fortysevendeg.android.scaladays.utils
 
-import org.joda.time.format.{DateTimeFormat, DateTimeFormatter, ISODateTimeFormat}
-import org.joda.time.{DateTimeZone, DateTime}
+import com.fortysevendeg.macroid.extras.ResourcesExtras._
+import macroid.AppContext
+import org.joda.time.format.{DateTimeFormatterBuilder, DateTimeFormatter, ISODateTimeFormat}
+import org.joda.time.{DateTimeFieldType, DateTime, DateTimeZone}
 
 object DateTimeUtils {
 
   val ISODateFormatterDay = ISODateTimeFormat.date
   val ISODateFormatterDateTime = ISODateTimeFormat.dateTimeNoMillis
+  val ISODateFormatterTime = ISODateTimeFormat.hourMinute
+  val ISODateFormatterDayOfMonth = new DateTimeFormatterBuilder()
+      .appendDecimal(DateTimeFieldType.dayOfMonth(), 1, 2)
+      .toFormatter()
+  val ISODateFormatterMonthOfYear = new DateTimeFormatterBuilder()
+      .appendDecimal(DateTimeFieldType.monthOfYear(), 1, 2)
+      .toFormatter()
+  val ISODateFormatterDayOfWeek = new DateTimeFormatterBuilder()
+      .appendDecimal(DateTimeFieldType.dayOfWeek(), 1, 2)
+      .toFormatter()
 
   def parseDate(
       date: String,
       dateTimeFormatter: DateTimeFormatter = ISODateFormatterDateTime,
-      dateTimeZone: DateTimeZone = DateTimeZone.UTC): DateTime = 
+      dateTimeZone: DateTimeZone = DateTimeZone.UTC): DateTime =
     DateTime.parse(date, dateTimeFormatter.withZone(dateTimeZone))
 
   def convertTimeZone(fromDateTime: DateTime, toTimeZone: String): DateTime =
     new DateTime(fromDateTime, DateTimeZone.forID(toTimeZone))
+
+  def parseDateSchedule(dateTime: DateTime, timeZone: String)(implicit appContext: AppContext) = {
+    val dateTimeZone = convertTimeZone(dateTime, timeZone)
+    val dayOfMonth = dateTimeZone.toString(ISODateFormatterDayOfMonth)
+    val monthOfYear = resGetString("monthOfYear%s".format(dateTimeZone.toString(ISODateFormatterMonthOfYear))).getOrElse("")
+    val dayOfWeek = resGetString("dayOfWeek%s".format(dateTimeZone.toString(ISODateFormatterDayOfWeek))).getOrElse("")
+    "%s (%s %s)".format(dayOfWeek, dayOfMonth, monthOfYear)
+  }
+
+  def parseDateScheduleTime(dateTime: DateTime, timeZone: String)(implicit appContext: AppContext) = {
+    val dateTimeZone = convertTimeZone(dateTime, timeZone)
+    val dayOfMonth = dateTimeZone.toString(ISODateFormatterDayOfMonth)
+    val monthOfYear = resGetString("monthOfYear%s".format(dateTimeZone.toString(ISODateFormatterMonthOfYear))).getOrElse("")
+    val dayOfWeek = resGetString("dayOfWeek%s".format(dateTimeZone.toString(ISODateFormatterDayOfWeek))).getOrElse("")
+    val hour = dateTimeZone.toString(DateTimeUtils.ISODateFormatterTime)
+    "%s (%s %s) %s".format(dayOfWeek, dayOfMonth, monthOfYear, hour)
+  }
 
 }

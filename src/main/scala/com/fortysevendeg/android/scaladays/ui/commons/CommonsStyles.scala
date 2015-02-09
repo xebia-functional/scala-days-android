@@ -18,12 +18,14 @@ package com.fortysevendeg.android.scaladays.ui.commons
 
 import com.fortysevendeg.android.scaladays.R
 import com.fortysevendeg.macroid.extras.ViewTweaks._
-import macroid.AppContext
+import macroid.{Tweak, AppContext}
 import macroid.FullDsl._
 import scala.language.postfixOps
 
 trait CommonsStyles {
 
-  def toolbarStyle(implicit appContext: AppContext) = vContentSizeMatchWidth(56 dp) + vBackground(R.color.primary)
+  def toolbarStyle(height: Int)(implicit appContext: AppContext): Tweak[W] =
+    vContentSizeMatchWidth(height) +
+        vBackground(R.color.primary)
 
 }

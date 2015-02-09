@@ -167,21 +167,25 @@
 # view res/layout/abc_search_view.xml #generated:78
 -keep class android.support.v7.widget.SearchView$SearchAutoComplete { <init>(...); }
 
-# view AndroidManifest.xml #generated:18
+# view AndroidManifest.xml #generated:19
 -keep class android.support.v7.widget.TestActivity { <init>(...); }
 
 # view res/layout/abc_screen_toolbar.xml #generated:36
 -keep class android.support.v7.widget.Toolbar { <init>(...); }
 
-# view AndroidManifest.xml #generated:21
+# view AndroidManifest.xml #generated:22
 -keep class android.test.InstrumentationTestRunner { <init>(...); }
 
 # view AndroidManifest.xml #generated:11
 -keep class com.fortysevendeg.android.scaladays.ui.main.MainActivity { <init>(...); }
 
+# view AndroidManifest.xml #generated:18
+-keep class com.fortysevendeg.android.scaladays.ui.scheduledetail.ScheduleDetailActivity { <init>(...); }
+
 -ignorewarnings
 -keep class scala.Dynamic
 -keep class com.fortysevendeg.** { *; }
+-keep class org.joda.** { *; }
 -keep class macroid.** { *; }
 -keep class android.** { *; }
 -keep class com.google.** { *; }

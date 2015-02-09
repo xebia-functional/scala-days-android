@@ -35,7 +35,7 @@ class LineItemDecorator(implicit appContext: AppContext) extends RecyclerView.It
     val right = parent.getWidth - parent.getPaddingRight
 
     val childCount = parent.getChildCount
-    for (i <- 0 to childCount - 1) {
+    (0 until childCount) foreach { i =>
       val child = parent.getChildAt(i)
       val params = child.getLayoutParams.asInstanceOf[RecyclerView.LayoutParams]
       val top = child.getBottom + params.bottomMargin

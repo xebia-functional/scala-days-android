@@ -16,19 +16,17 @@
 
 package com.fortysevendeg.android.scaladays.ui.speakers
 
-import android.graphics.Color
-import android.graphics.drawable.ColorDrawable
 import android.support.v7.widget.RecyclerView
 import android.view.View.OnClickListener
 import android.view.{View, ViewGroup}
 import com.fortysevendeg.android.scaladays.R
 import com.fortysevendeg.android.scaladays.model.Speaker
-import macroid.{ActivityContext, AppContext}
+import com.fortysevendeg.android.scaladays.ui.commons.GlideTweaks._
+import com.fortysevendeg.macroid.extras.ImageViewTweaks._
 import com.fortysevendeg.macroid.extras.TextTweaks._
 import com.fortysevendeg.macroid.extras.ViewTweaks._
-import com.fortysevendeg.macroid.extras.ImageViewTweaks._
-import com.fortysevendeg.android.scaladays.ui.commons.GlideTweaks._
 import macroid.FullDsl._
+import macroid.{ActivityContext, AppContext}
 
 class SpeakersAdapter(speakers: Seq[Speaker], listener: RecyclerClickListener)
     (implicit context: ActivityContext, appContext: AppContext)
@@ -50,7 +48,7 @@ class SpeakersAdapter(speakers: Seq[Speaker], listener: RecyclerClickListener)
     val speaker = speakers(position)
     viewHolder.content.setTag(position)
     runUi(
-      (viewHolder.avatar <~ speaker.picture.map(glideRoundedImage(_, R.drawable.placeholder_circle)).getOrElse(ivSrc(R.drawable.ic_launcher))) ~
+      (viewHolder.avatar <~ speaker.picture.map(glideRoundedImage(_, R.drawable.placeholder_circle)).getOrElse(ivSrc(R.drawable.placeholder_avatar_failed))) ~
           (viewHolder.name <~ tvText(speaker.name)) ~
           (viewHolder.twitter <~ speaker.twitter.map(tvText(_) + vVisible).getOrElse(vGone)) ~
           (viewHolder.bio <~ tvText(speaker.bio))

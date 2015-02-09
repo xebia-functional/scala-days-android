@@ -17,23 +17,42 @@
 package com.fortysevendeg.android.scaladays.ui.commons
 
 import android.support.v7.widget.Toolbar
-import android.view.ContextThemeWrapper
+import android.view.{View, ViewGroup, ContextThemeWrapper}
 import com.fortysevendeg.android.scaladays.R
 import macroid.FullDsl._
+import macroid.LayoutBuildingMacros._
 import macroid.{ActivityContext, AppContext, Ui}
+import scala.language.postfixOps
 
 trait ToolbarLayout
     extends CommonsStyles {
 
   var toolBar = slot[Toolbar]
 
-  def toolBarLayout(implicit appContext: AppContext, activityContext: ActivityContext) =
+  def toolBarLayout(children: Ui[View]*)(implicit appContext: AppContext, activityContext: ActivityContext) =
     Ui {
-      val contextTheme = new ContextThemeWrapper(activityContext.get, R.style.ThemeOverlay_AppCompat_Dark_ActionBar)
-      val darkToolBar = new Toolbar(contextTheme)
-      darkToolBar.setPopupTheme(R.style.ThemeOverlay_AppCompat_Light)
+      val darkToolBar = getToolbarThemeDarkActionBar
+      children foreach (uiView => darkToolBar.addView(uiView.get))
       toolBar = Some(darkToolBar)
       darkToolBar
-    } <~ toolbarStyle
+    } <~ toolbarStyle(56 dp)
+
+  def expandedToolBarLayout(children: Ui[View]*)
+      (height: Int)
+      (implicit appContext: AppContext, activityContext: ActivityContext) =
+    Ui {
+      val darkToolBar = getToolbarThemeDarkActionBar
+      children foreach (uiView => darkToolBar.addView(uiView.get))
+      toolBar = Some(darkToolBar)
+      darkToolBar
+    } <~ toolbarStyle(height)
+
+
+  private def getToolbarThemeDarkActionBar(implicit activityContext: ActivityContext) = {
+    val contextTheme = new ContextThemeWrapper(activityContext.get, R.style.ThemeOverlay_AppCompat_Dark_ActionBar)
+    val darkToolBar = new Toolbar(contextTheme)
+    darkToolBar.setPopupTheme(R.style.ThemeOverlay_AppCompat_Light)
+    darkToolBar
+  }
 
 }

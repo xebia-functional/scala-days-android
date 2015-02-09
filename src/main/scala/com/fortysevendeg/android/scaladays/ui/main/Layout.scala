@@ -40,7 +40,7 @@ trait Layout
     getUi(
       l[DrawerLayout](
         l[LinearLayout](
-          toolBarLayout,
+          toolBarLayout(),
           l[FrameLayout]() <~ wire(fragmentContent) <~ id(Id.mainFragment) <~ fragmentContentStyle
         ) <~ contentStyle,
         l[LinearLayout](

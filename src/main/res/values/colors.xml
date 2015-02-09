@@ -22,6 +22,7 @@
     <color name="primary_dark">#2F3C46</color>
     <color name="color_control_highlight">#2F3C46</color>
     <color name="accent">#ff19232c</color>
+    <color name="toolbar_title">#ffffff</color>
 
     <!-- Menu -->
     <color name="background_menu">#364550</color>
@@ -31,9 +32,24 @@
     <color name="speakers_text">#364550</color>
     <color name="speakers_twitter">#E05F5E</color>
     <color name="list_line_default">#50364550</color>
-    <color name="placeholder_default">#50364550</color>
+    <color name="placeholder_default">#E4E9EB</color>
 
     <color name="background_list_pressed_default">#dddddd</color>
     <color name="background_list_pressed_accent">#bbbbbb</color>
+
+    <!-- Schedule -->
+    <color name="background_list_schedule_header">#6CCFE9</color>
+    <color name="background_list_schedule_hour">#4695AE</color>
+    <color name="background_list_schedule_info">#55B2CE</color>
+    <color name="text_schedule_room">#427E91</color>
+    <color name="text_schedule_name">#ffffff</color>
+    <color name="text_schedule_twitter">#364550</color>
+    <color name="list_line_schedule">#6CCFE9</color>
+
+    <!-- Schedule Detail -->
+    <color name="text_schedule_detail_secondary">#ad364550</color>
+    <color name="fab_no_check_color">#E05F5E</color>
+    <color name="fab_check_color">#ff52e0a3</color>
+    <color name="fab_shadow_color">#46000000</color>
 
 </resources>

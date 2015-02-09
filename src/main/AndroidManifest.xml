@@ -34,6 +34,10 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
+        <activity
+                android:name=".ui.scheduledetail.ScheduleDetailActivity"
+                android:label=""
+                />
     </application>
 
     <uses-permission android:name="android.permission.INTERNET"/>
