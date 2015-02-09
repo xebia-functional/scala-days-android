@@ -16,8 +16,7 @@
 
 package com.fortysevendeg.android.scaladays.ui.speakers
 
-import android.view.ViewGroup.LayoutParams._
-import android.view.{ViewGroup, View, Gravity}
+import android.view.Gravity
 import android.widget.ImageView.ScaleType
 import android.widget.LinearLayout
 import com.fortysevendeg.android.scaladays.R
@@ -27,7 +26,7 @@ import com.fortysevendeg.macroid.extras.LinearLayoutTweaks._
 import com.fortysevendeg.macroid.extras.RecyclerViewTweaks._
 import com.fortysevendeg.macroid.extras.TextTweaks._
 import com.fortysevendeg.macroid.extras.ViewTweaks._
-import macroid.{Tweak, AppContext}
+import macroid.AppContext
 import macroid.FullDsl._
 
 import scala.language.postfixOps
@@ -71,27 +70,3 @@ trait Styles {
       vPadding(0, 4 dp, 0, 0)
 
 }
-
-//object AppCompactTweaks {
-//
-//  type W = View
-//
-//  def back(implicit appContext: AppContext): Tweak[View] = {
-//    view =>
-//      // Obtain the styled attributes. 'themedContext' is a context with a
-//      // theme, typically the current Activity (i.e. 'this')
-//      val ta = appContext.get.obtainStyledAttributes(List(android.support.v7.appcompat.R.attr.selectableItemBackground).toArray)
-//
-//      // To get the value of the 'listItemBackground' attribute that was
-//      // set in the theme used in 'themedContext'. The parameter is the index
-//      // of the attribute in the 'attrs' array. The returned Drawable
-//      // is what you are after
-//      val drawableFromTheme = ta.getDrawable(0 /* index */);
-//
-//      // Finally, free the resources used by TypedArray
-//      ta.recycle();
-//  }
-//
-//
-//
-//}

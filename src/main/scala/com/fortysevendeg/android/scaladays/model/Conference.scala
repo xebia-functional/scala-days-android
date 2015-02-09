@@ -38,7 +38,13 @@ case class Information(
   registrationSite: String,
   utcTimezoneOffset: String,
   utcTimezoneOffsetMillis: Long,
-  hashTag: String)
+  hashTag: String,
+  pictures: Seq[Picture])
+
+case class Picture(
+  width: Int,
+  height: Int,
+  url: String)
 
 case class Event(
   id: Int,

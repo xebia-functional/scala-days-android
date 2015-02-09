@@ -30,11 +30,9 @@ trait Layout
 
   var drawerLayout = slot[DrawerLayout]
 
-  var drawerMenuLayout = slot[LinearLayout]
+  var fragmentMenu = slot[FrameLayout]
 
   var fragmentContent = slot[FrameLayout]
-
-  var recyclerView = slot[RecyclerView]
 
   def layout(implicit appContext: AppContext, context: ActivityContext) = {
     getUi(
@@ -43,38 +41,14 @@ trait Layout
           toolBarLayout(),
           l[FrameLayout]() <~ wire(fragmentContent) <~ id(Id.mainFragment) <~ fragmentContentStyle
         ) <~ contentStyle,
-        l[LinearLayout](
-          l[FrameLayout]() <~ imageMenuStyle,
-          w[RecyclerView] <~ wire(recyclerView) <~ drawerMenuStyle
-        ) <~ wire(drawerMenuLayout) <~ drawerLayoutStyle
+        l[FrameLayout]() <~ wire(fragmentMenu) <~ id(Id.menuFragment) <~ drawerLayoutStyle
       ) <~ wire(drawerLayout) <~ drawerStyle
     )
   }
 
 }
 
-class MenuAdapter(implicit context: ActivityContext, appContext: AppContext)
-    extends Styles {
-
-  var menuItem = slot[TextView]
-
-  val content = layout
-
-  private def layout(implicit appContext: AppContext, context: ActivityContext) = getUi(
-    w[TextView] <~ wire(menuItem) <~ menuItemStyle
-  )
-}
-
-class ViewHolderMenuAdapter(adapter: MenuAdapter)(implicit context: ActivityContext, appContext: AppContext)
-    extends RecyclerView.ViewHolder(adapter.content) {
-
-  var content = adapter.content
-
-  var title = adapter.menuItem
-
-}
-
-class ScheduleLayout(implicit appContext: AppContext, context: ActivityContext)
+class SampleLayout(implicit appContext: AppContext, context: ActivityContext)
     extends Styles {
 
   var textView = slot[TextView]

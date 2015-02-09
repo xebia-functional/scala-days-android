@@ -14,14 +14,13 @@
  * limitations under the License.
  */
 
-package com.fortysevendeg.android.scaladays.ui.main
+package com.fortysevendeg.android.scaladays.ui.drawer
 
 import android.support.v7.widget.RecyclerView
 import android.view.View.OnClickListener
 import android.view.{View, ViewGroup}
 import com.fortysevendeg.android.scaladays.R
-import com.fortysevendeg.android.scaladays.utils.MenuSection._
-import com.fortysevendeg.android.scaladays.utils.MenuSection.MenuSection
+import com.fortysevendeg.android.scaladays.utils.MenuSection.{MenuSection, _}
 import macroid.{ActivityContext, AppContext}
 
 class DrawerMenuAdapter(listener: RecyclerClickListener)

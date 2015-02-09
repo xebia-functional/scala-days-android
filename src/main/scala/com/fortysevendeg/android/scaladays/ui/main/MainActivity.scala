@@ -23,6 +23,7 @@ import android.support.v7.app.{ActionBarActivity, ActionBarDrawerToggle}
 import android.support.v7.widget.LinearLayoutManager
 import android.view.{MenuItem, View}
 import com.fortysevendeg.android.scaladays.R
+import com.fortysevendeg.android.scaladays.ui.drawer.{DrawerMenuItem, RecyclerClickListener, DrawerMenuAdapter, MenuFragment}
 import com.fortysevendeg.android.scaladays.ui.schedule.ScheduleFragment
 import com.fortysevendeg.android.scaladays.ui.speakers.SpeakersFragment
 import com.fortysevendeg.android.scaladays.utils.MenuSection._
@@ -67,34 +68,29 @@ class MainActivity
       drawerLayout.setDrawerListener(drawerToggle)
     }
 
-    val adapter = new DrawerMenuAdapter(new RecyclerClickListener {
-      override def onClick(info: DrawerMenuItem): Unit = {
-        itemSelected(info)
-      }
-    })
-
-    runUi(
-      recyclerView <~ rvLayoutManager(new LinearLayoutManager(this)) <~ rvAdapter(adapter)
-    )
-
     if (savedInstanceState == null) {
-      itemSelected(adapter.list.head)
+      runUi(
+        replaceFragment(
+          builder = f[MenuFragment],
+          id = Id.menuFragment,
+          tag = Some(Tag.menuFragment)))
+//      itemSelected(adapter.list.head)
     }
   }
 
-  private def itemSelected(info: DrawerMenuItem) {
-    val builder = info.section match {
+  def itemSelected(menuSection: MenuSection, title: String) {
+    val builder = menuSection match {
       case SPEAKERS => f[SpeakersFragment]
       case SCHEDULE => f[ScheduleFragment]
-      case _ => f[SampleFragment].pass(SampleFragment.titleArg → info.name)
+      case _ => f[SampleFragment].pass(SampleFragment.titleArg → title)
     }
     runUi(
-      (toolBar <~ tbTitle(info.name)) ~
-          (drawerLayout <~ dlCloseDrawer(drawerMenuLayout)) ~
-          (replaceFragment(
+      (toolBar <~ tbTitle(title)) ~
+          (drawerLayout <~ dlCloseDrawer(fragmentMenu)) ~
+          replaceFragment(
             builder = builder,
             id = Id.mainFragment,
-            tag = Some(Tag.mainFragment)))
+            tag = Some(Tag.mainFragment))
     )
   }
 

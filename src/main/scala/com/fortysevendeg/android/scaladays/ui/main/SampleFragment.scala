@@ -26,11 +26,11 @@ class SampleFragment
     extends Fragment
     with Contexts[Fragment] {
 
-  private var fragmentLayout: Option[ScheduleLayout] = None
+  private var fragmentLayout: Option[SampleLayout] = None
 
   override def onCreateView(inflater: LayoutInflater, container: ViewGroup, savedInstanceState: Bundle): View = {
 
-    val fLayout = new ScheduleLayout
+    val fLayout = new SampleLayout
 
     fLayout.textView map (_.setText(getArguments.getString(SampleFragment.titleArg)))
 
