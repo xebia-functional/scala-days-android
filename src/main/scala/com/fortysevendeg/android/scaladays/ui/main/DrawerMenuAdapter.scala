@@ -32,7 +32,7 @@ class DrawerMenuAdapter(listener: RecyclerClickListener)
 
   val list = List(
     DrawerMenuItem(appContext.app.getString(R.string.schedule), R.drawable.menu_icon_schedule, SCHEDULE),
-    DrawerMenuItem(appContext.app.getString(R.string.social), R.drawable.menu_icon_social, SAMPLE),
+    DrawerMenuItem(appContext.app.getString(R.string.social), R.drawable.menu_icon_social, SOCIAL),
     DrawerMenuItem(appContext.app.getString(R.string.speakers), R.drawable.menu_icon_speakers, SPEAKERS),
     DrawerMenuItem(appContext.app.getString(R.string.tickets), R.drawable.menu_icon_tickets, SAMPLE),
     DrawerMenuItem(appContext.app.getString(R.string.contacts), R.drawable.menu_icon_contact, SAMPLE),
