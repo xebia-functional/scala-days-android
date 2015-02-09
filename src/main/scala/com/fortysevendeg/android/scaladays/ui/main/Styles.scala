@@ -34,33 +34,33 @@ trait Styles {
 
   val drawerStyle = vMatchParent
 
-  def drawerLayoutStyle(implicit appContext: AppContext) =
-    llVertical +
-    lp[LinearLayout](304 dp, MATCH_PARENT) +
-    dlLayoutGravity(Gravity.START)
+  def drawerLayoutStyle(implicit appContext: AppContext) = llVertical +
+      lp[LinearLayout](304 dp, MATCH_PARENT) +
+      dlLayoutGravity(Gravity.START)
 
-  val contentStyle = vMatchParent + llVertical
+  val contentStyle = vMatchParent +
+      llVertical
 
   val fragmentContentStyle = vMatchParent
 
-  def drawerMenuStyle(implicit appContext: AppContext) =
-    lp[AbsListView](MATCH_PARENT, MATCH_PARENT) +
-    vBackgroundColor(appContext.app.getResources.getColor(R.color.background_menu))
+  def drawerMenuStyle(implicit appContext: AppContext) = lp[AbsListView](MATCH_PARENT, MATCH_PARENT) +
+      vBackgroundColorResource(R.color.background_menu)
 
-  def imageMenuStyle(implicit appContext: AppContext) =
-    lp[LinearLayout](MATCH_PARENT, 150 dp) +
-    vBackgroundColor(appContext.app.getResources.getColor(R.color.background_header_menu))
+  def imageMenuStyle(implicit appContext: AppContext) = lp[LinearLayout](MATCH_PARENT, 150 dp) +
+      vBackgroundColorResource(R.color.background_header_menu)
 
-  def menuItemStyle(implicit appContext: AppContext) =
-    lp[AbsListView](MATCH_PARENT, 50 dp) +
-    tvSize(18) +
-    tvColor(Color.WHITE) +
-    tvGravity(Gravity.CENTER_VERTICAL) +
-    vPaddings(10 dp) +
-    tvDrawablePadding(10 dp)
+  def menuItemStyle(implicit appContext: AppContext) = lp[AbsListView](MATCH_PARENT, 50 dp) +
+      tvSize(18) +
+      tvColor(Color.WHITE) +
+      tvGravity(Gravity.CENTER_VERTICAL) +
+      vPaddings(10 dp) +
+      tvDrawablePadding(10 dp)
 
-  val sampleStyle = vMatchParent + llGravity(Gravity.CENTER)
+  val sampleStyle = vMatchParent +
+      llGravity(Gravity.CENTER)
 
-  val sampleTextStyle = tvText(R.string.sampleText) + tvSize(24) + tvColor(Color.BLACK)
+  val sampleTextStyle = tvText(R.string.sampleText) +
+      tvSize(24) +
+      tvColor(Color.BLACK)
 
 }

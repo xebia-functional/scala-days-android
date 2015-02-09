@@ -38,45 +38,69 @@ trait Styles {
 
   val rootStyle = vMatchParent
 
-  val recyclerViewStyle = vMatchParent + rvNoFixedSize
+  val recyclerViewStyle = vMatchParent +
+      rvNoFixedSize
 
-  val progressBarStyle = vWrapContent + flLayoutGravity(Gravity.CENTER)
+  val progressBarStyle = vWrapContent +
+      flLayoutGravity(Gravity.CENTER)
 
   // Styles for Header Adapter
 
-  def headerContentStyle(implicit appContext: AppContext) = lp[ViewGroup](MATCH_PARENT, 44 dp) + llHorizontal +
+  def headerContentStyle(implicit appContext: AppContext) = lp[ViewGroup](MATCH_PARENT, 44 dp) +
+      llHorizontal +
       vBackgroundColorResource(R.color.background_list_schedule_header)
 
-  def headerNameStyle(implicit appContext: AppContext) = vWrapContent + tvSize(14) +
-      llLayoutGravity(Gravity.CENTER_VERTICAL) + tvColorResource(R.color.text_schedule_name) +
-      tvBold + tvAllCaps + vPadding(16 dp, 0, 0, 0)
+  def headerNameStyle(implicit appContext: AppContext) = vWrapContent +
+      tvSize(14) +
+      llLayoutGravity(Gravity.CENTER_VERTICAL) +
+      tvColorResource(R.color.text_schedule_name) +
+      tvBold +
+      tvAllCaps +
+      vPadding(16 dp, 0, 0, 0)
 
   // Styles for Schedule Adapter
 
-  def itemContentStyle(implicit appContext: AppContext) =
-    vMatchParent + llHorizontal
+  def itemContentStyle(implicit appContext: AppContext) = vMatchParent +
+      llHorizontal
 
-  def hourStyle(implicit appContext: AppContext) = lp[LinearLayout](70 dp, MATCH_PARENT) + tvSize(14) +
-      vPadding(0, 12 dp, 0, 0) + vBackgroundColorResource(R.color.background_list_schedule_hour) +
-      tvGravity(Gravity.CENTER_HORIZONTAL) + tvColorResource(R.color.text_schedule_name) + tvBold
+  def hourStyle(implicit appContext: AppContext) = lp[LinearLayout](70 dp, MATCH_PARENT) +
+      tvSize(14) +
+      vPadding(0, 12 dp, 0, 0) +
+      vBackgroundColorResource(R.color.background_list_schedule_hour) +
+      tvGravity(Gravity.CENTER_HORIZONTAL) +
+      tvColorResource(R.color.text_schedule_name) +
+      tvBold
 
-  def itemInfoContentStyle(implicit appContext: AppContext) = vMatchWidth + llVertical +
-      vPadding(16 dp, 12 dp, 16 dp, 12 dp) + vBackgroundColorResource(R.color.background_list_schedule_info)
+  def itemInfoContentStyle(implicit appContext: AppContext) = vMatchWidth +
+      llVertical +
+      vPadding(16 dp, 12 dp, 16 dp, 12 dp) +
+      vBackgroundColorResource(R.color.background_list_schedule_info)
 
-  val itemSpeakersContentStyle = vMatchWidth + llVertical
+  val itemSpeakersContentStyle = vMatchWidth +
+      llVertical
 
-  def itemSpeakerContentStyle(implicit appContext: AppContext) = vMatchWidth + llHorizontal + vPadding(0, 4 dp, 0, 0)
+  def itemSpeakerContentStyle(implicit appContext: AppContext) = vMatchWidth +
+      llHorizontal +
+      vPadding(0, 4 dp, 0, 0)
 
   def roomItemStyle(implicit appContext: AppContext) = vWrapContent + tvSize(12) +
-      tvColorResource(R.color.text_schedule_room) + vPadding(0, 0, 0, 4 dp)
+      tvColorResource(R.color.text_schedule_room) +
+      vPadding(0, 0, 0, 4 dp)
 
-  def nameItemStyle(implicit appContext: AppContext) = vWrapContent + tvSize(14) +
-      tvColorResource(R.color.text_schedule_name) + tvBold
+  def nameItemStyle(implicit appContext: AppContext) = vWrapContent +
+      tvSize(14) +
+      tvColorResource(R.color.text_schedule_name) +
+      tvBold
 
-  def speakerNameItemStyle(name: String)(implicit appContext: AppContext) = vWrapContent + tvSize(14) +
-      vPadding(0, 0, 4 dp, 0) + tvColorResource(R.color.text_schedule_name) + tvText(name)
+  def speakerNameItemStyle(name: String)(implicit appContext: AppContext) = vWrapContent +
+      tvSize(14) +
+      vPadding(0, 0, 4 dp, 0) +
+      tvColorResource(R.color.text_schedule_name) +
+      tvText(name)
 
-  def speakerTwitterItemStyle(twitter: Option[String])(implicit appContext: AppContext) = vWrapContent + tvSize(14) +
-      tvColorResource(R.color.text_schedule_twitter) + twitter.map(tvText(_) + vVisible).getOrElse(vGone)
+  def speakerTwitterItemStyle(twitter: Option[String])(implicit appContext: AppContext) = vWrapContent +
+      tvSize(14) +
+      tvColorResource(R.color.text_schedule_twitter) +
+      twitter.map(tvText(_) + vVisible).getOrElse(vGone)
 
 }

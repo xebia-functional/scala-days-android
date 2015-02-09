@@ -84,13 +84,10 @@ class ScheduleAdapter(timeZone: String, scheduleItems: Seq[ScheduleItem], listen
           vh.headerName <~ scheduleItem.header.map(tvText(_) + vVisible).getOrElse(vGone)
         )
     }
-
-
-
   }
-  override def getItemViewType(position: Int): Int = {
-    if (scheduleItems(position).isHeader) itemViewTypeHeader else itemViewTypeTalk
-  }
+
+  override def getItemViewType(position: Int): Int = if (scheduleItems(position).isHeader) itemViewTypeHeader else itemViewTypeTalk
+
 
 }
 

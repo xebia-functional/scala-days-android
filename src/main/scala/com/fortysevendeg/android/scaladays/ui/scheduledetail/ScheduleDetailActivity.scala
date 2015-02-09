@@ -22,7 +22,7 @@ import android.support.v7.app.ActionBarActivity
 import android.view.MenuItem
 import com.fortysevendeg.android.scaladays.R
 import com.fortysevendeg.android.scaladays.model.Event
-import com.fortysevendeg.android.scaladays.ui.components.TypeIcons
+import com.fortysevendeg.android.scaladays.ui.components.IconTypes
 import com.fortysevendeg.macroid.extras.ViewGroupTweaks._
 import macroid.Contexts
 import macroid.FullDsl._
@@ -84,10 +84,10 @@ class ScheduleDetailActivity
     runUi(fabFavorite <~ On.click{
       if (isFavorite) {
         isFavorite = false
-        fabFavorite <~ pmdAnimIcon(TypeIcons.ADD) <~ vBackground(R.drawable.fab_button_no_check)
+        fabFavorite <~ pmdAnimIcon(IconTypes.ADD) <~ vBackground(R.drawable.fab_button_no_check)
       } else {
         isFavorite = true
-        fabFavorite <~ pmdAnimIcon(TypeIcons.CHECK) <~ vBackground(R.drawable.fab_button_check)
+        fabFavorite <~ pmdAnimIcon(IconTypes.CHECK) <~ vBackground(R.drawable.fab_button_check)
       }
     })
 

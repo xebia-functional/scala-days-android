@@ -38,28 +38,37 @@ trait Styles {
 
   val rootStyle = vMatchParent
 
-  val recyclerViewStyle = vMatchParent + rvNoFixedSize
+  val recyclerViewStyle = vMatchParent +
+      rvNoFixedSize
 
-  val progressBarStyle = vWrapContent + flLayoutGravity(Gravity.CENTER)
+  val progressBarStyle = vWrapContent +
+      flLayoutGravity(Gravity.CENTER)
 
   // Styles for Adapter
 
-  def itemContentStyle(implicit appContext: AppContext) =
-    vMatchParent + llHorizontal + vPaddings(16 dp)
+  def itemContentStyle(implicit appContext: AppContext) = vMatchParent +
+      llHorizontal +
+      vPaddings(16 dp)
 
   def avatarStyle(implicit appContext: AppContext) = lp[LinearLayout](40 dp, 40 dp) +
       ivScaleType(ScaleType.CENTER_CROP)
 
-  def itemNoAvatarContentStyle(implicit appContext: AppContext) = vMatchWidth + llVertical + vPadding(16 dp, 0, 0, 0)
+  def itemNoAvatarContentStyle(implicit appContext: AppContext) = vMatchWidth +
+      llVertical +
+      vPadding(16 dp, 0, 0, 0)
 
-  def nameItemStyle(implicit appContext: AppContext) = vWrapContent + tvSize(16) +
-      tvColor(appContext.get.getResources.getColor(R.color.speakers_text))
+  def nameItemStyle(implicit appContext: AppContext) = vWrapContent +
+      tvSize(16) +
+      tvColorResource(R.color.speakers_text)
 
-  def twitterItemStyle(implicit appContext: AppContext) = vWrapContent + tvSize(12) +
-      tvColor(appContext.get.getResources.getColor(R.color.speakers_twitter))
+  def twitterItemStyle(implicit appContext: AppContext) = vWrapContent +
+      tvSize(12) +
+      tvColorResource(R.color.speakers_twitter)
 
-  def bioItemStyle(implicit appContext: AppContext) = vWrapContent + tvSize(14) +
-      tvColor(appContext.get.getResources.getColor(R.color.speakers_text)) + vPadding(0, 4 dp, 0, 0)
+  def bioItemStyle(implicit appContext: AppContext) = vWrapContent +
+      tvSize(14) +
+      tvColorResource(R.color.speakers_text) +
+      vPadding(0, 4 dp, 0, 0)
 
 }
 

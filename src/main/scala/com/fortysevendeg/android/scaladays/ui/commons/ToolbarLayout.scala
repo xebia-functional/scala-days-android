@@ -32,15 +32,17 @@ trait ToolbarLayout
   def toolBarLayout(children: Ui[View]*)(implicit appContext: AppContext, activityContext: ActivityContext) =
     Ui {
       val darkToolBar = getToolbarThemeDarkActionBar
-      children.foreach(uiView => darkToolBar.addView(uiView.get))
+      children foreach (uiView => darkToolBar.addView(uiView.get))
       toolBar = Some(darkToolBar)
       darkToolBar
     } <~ toolbarStyle(56 dp)
 
-  def expandedToolBarLayout(children: Ui[View]*)(height: Int)(implicit appContext: AppContext, activityContext: ActivityContext) =
+  def expandedToolBarLayout(children: Ui[View]*)
+      (height: Int)
+      (implicit appContext: AppContext, activityContext: ActivityContext) =
     Ui {
       val darkToolBar = getToolbarThemeDarkActionBar
-      children.foreach(uiView => darkToolBar.addView(uiView.get))
+      children foreach (uiView => darkToolBar.addView(uiView.get))
       toolBar = Some(darkToolBar)
       darkToolBar
     } <~ toolbarStyle(height)

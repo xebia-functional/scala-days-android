@@ -21,16 +21,17 @@ import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v7.widget.LinearLayoutManager
 import android.view.{LayoutInflater, View, ViewGroup}
-import com.fortysevendeg.android.scaladays.model.Event
+import com.fortysevendeg.android.scaladays.model.{Root, Event}
 import com.fortysevendeg.android.scaladays.modules.ComponentRegistryImpl
 import com.fortysevendeg.android.scaladays.modules.json.JsonRequest
+import com.fortysevendeg.android.scaladays.modules.json.models.ApiRoot
 import com.fortysevendeg.android.scaladays.modules.net.NetRequest
 import com.fortysevendeg.android.scaladays.ui.scheduledetail.ScheduleDetailActivity
 import com.fortysevendeg.macroid.extras.ActionsExtras._
 import com.fortysevendeg.macroid.extras.RecyclerViewTweaks._
 import com.fortysevendeg.macroid.extras.ViewTweaks._
 import macroid.FullDsl._
-import macroid.{AppContext, Contexts}
+import macroid.{Ui, AppContext, Contexts}
 
 import scala.concurrent.ExecutionContext.Implicits.global
 
@@ -56,15 +57,33 @@ class ScheduleFragment
 
   override def onViewCreated(view: View, savedInstanceState: Bundle): Unit = {
     super.onViewCreated(view, savedInstanceState)
-    (for {
+
+    val conferenceSelected = 0 // TODO Use PersistentService
+
+    val saveJsonOp = for {
       _ <- netServices.saveJsonInLocal(NetRequest(false))
       jsonResponse <- jsonServices.loadJson(JsonRequest())
     } yield {
       jsonResponse.apiResponse
-    }).map(_ map (api => reloadList(api.conferences(0).info.utcTimezoneOffset, api.conferences(0).schedule))).recover {
-      case _ => aShortToast("error") // TODO show failed screen
     }
+
+    saveJsonOp map {
+      case Some(Root(list)) if list.length > conferenceSelected =>
+        val conference = list(conferenceSelected)
+        reloadList(conference.info.utcTimezoneOffset, conference.schedule)
+      case None => failed()
+    } recover {
+      case _ => failed()
+    }
+
   }
+
+  def failed() = {
+    for {
+      layout <- fragmentLayout
+    } yield runUi(layout.progressBar <~ vGone)
+    runUi(Ui(aShortToast("error")))
+  } // TODO show failed screen
 
   def reloadList(timeZone: String, events: Seq[Event]) = {
     val scheduleItems = ScheduleConversion.toScheduleItem(timeZone, events)
@@ -75,7 +94,7 @@ class ScheduleFragment
       val adapter = new ScheduleAdapter(timeZone, scheduleItems, new RecyclerClickListener {
         override def onClick(scheduleItem: ScheduleItem): Unit = {
           if (!scheduleItem.isHeader) {
-            scheduleItem.event.map {
+            scheduleItem.event map {
               event =>
                 val intent = new Intent(fragmentActivityContext.get, classOf[ScheduleDetailActivity])
                 intent.putExtra(ScheduleDetailActivity.scheduleItemKey, event)
@@ -86,7 +105,7 @@ class ScheduleFragment
         }
       })
       runUi(
-        (layout.progressBar <~ vInvisible) ~
+        (layout.progressBar <~ vGone) ~
             (layout.recyclerView <~ rvAdapter(adapter))
       )
     }

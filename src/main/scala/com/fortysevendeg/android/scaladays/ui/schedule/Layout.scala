@@ -86,15 +86,15 @@ class ScheduleLayoutAdapter(implicit context: ActivityContext, appContext: AppCo
 class ViewHolderScheduleAdapter(adapter: ScheduleLayoutAdapter)(implicit context: ActivityContext, appContext: AppContext)
     extends RecyclerView.ViewHolder(adapter.content) {
 
-  var content = adapter.content
+  val content = adapter.content
 
-  var hour = adapter.hour
+  val hour = adapter.hour
 
-  var room = adapter.room
+  val room = adapter.room
 
-  var name = adapter.name
+  val name = adapter.name
 
-  var speakerContent = adapter.speakerContent
+  val speakerContent = adapter.speakerContent
 
 }
 

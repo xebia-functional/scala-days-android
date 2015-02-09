@@ -56,13 +56,17 @@ object GlideTweaks {
 object DateTimeTextViewTweaks {
   type W = TextView
 
-  def tvDateTimeHourMinute(dateTime: DateTime, timeZone: String = "UTC"): Tweak[W] =
-    Tweak[W](_.setText(DateTimeUtils.convertTimeZone(dateTime, timeZone).toString(DateTimeUtils.ISODateFormatterTime)))
+  val defaultTimeZone = "UTC"
 
-  def tvDateDay(dateTime: DateTime, timeZone: String = "UTC")(implicit appContext: AppContext): Tweak[W] =
-    Tweak[W](_.setText(DateTimeUtils.parseDateSchedule(dateTime, timeZone)))
+  import DateTimeUtils._
 
-  def tvDateDateTime(dateTime: DateTime, timeZone: String = "UTC")(implicit appContext: AppContext): Tweak[W] =
-    Tweak[W](_.setText(DateTimeUtils.parseDateScheduleTime(dateTime, timeZone)))
+  def tvDateTimeHourMinute(dateTime: DateTime, timeZone: String = defaultTimeZone): Tweak[W] =
+    Tweak[W](_.setText(convertTimeZone(dateTime, timeZone).toString(ISODateFormatterTime)))
+
+  def tvDateDay(dateTime: DateTime, timeZone: String = defaultTimeZone)(implicit appContext: AppContext): Tweak[W] =
+    Tweak[W](_.setText(parseDateSchedule(dateTime, timeZone)))
+
+  def tvDateDateTime(dateTime: DateTime, timeZone: String = defaultTimeZone)(implicit appContext: AppContext): Tweak[W] =
+    Tweak[W](_.setText(parseDateScheduleTime(dateTime, timeZone)))
 
 }

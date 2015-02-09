@@ -19,28 +19,34 @@ package com.fortysevendeg.android.scaladays.ui.schedule
 import com.fortysevendeg.android.scaladays.model.Event
 import com.fortysevendeg.android.scaladays.utils.DateTimeUtils
 import macroid.AppContext
-import com.fortysevendeg.macroid.extras.ResourcesExtras._
+
+import scala.annotation.tailrec
 
 case class ScheduleItem(
     isHeader: Boolean,
     header: Option[String],
-    event: Option[Event]
-    )
+    event: Option[Event])
 
 object ScheduleConversion {
 
   def toScheduleItem(timeZone: String, events: Seq[Event])(implicit appContext: AppContext): Seq[ScheduleItem] = {
-    var list: Seq[ScheduleItem] = Seq.empty
-    var date = ""
-    for (event <- events) {
-      val dayStr = DateTimeUtils.parseDateSchedule(event.startTime, timeZone)
-      if (date != dayStr) {
-        date = dayStr
-        list = list :+ new ScheduleItem(true, Some(dayStr), None)
+
+    @tailrec
+    def loop(events: Seq[Event], date: String = "", acc: Seq[ScheduleItem] = Nil): Seq[ScheduleItem] =
+      events match {
+        case Nil => acc
+        case h :: t =>
+          val dayStr = DateTimeUtils.parseDateSchedule(h.startTime, timeZone)
+          val newAcc = if (date != dayStr) {
+            acc :+ new ScheduleItem(isHeader = true, header = Some(dayStr), event = None)
+          } else {
+            acc
+          }
+          loop(t, dayStr, newAcc :+ ScheduleItem(isHeader = false, None, Some(h)))
       }
-      list = list :+ new ScheduleItem(false, None, Some(event))
-    }
-    list
+
+    loop(events)
+
   }
 
 }
