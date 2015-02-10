@@ -17,6 +17,7 @@
 package com.fortysevendeg.android.scaladays.ui.social
 
 import android.view.Gravity
+import android.view.ViewGroup.LayoutParams._
 import android.widget.ImageView.ScaleType
 import android.widget.LinearLayout
 import com.fortysevendeg.android.scaladays.R
@@ -56,17 +57,25 @@ trait Styles {
       llVertical +
       vPadding(16 dp, 0, 0, 0)
 
-  def nameItemStyle(implicit appContext: AppContext) = vWrapContent +
+  def titlesContentStyle(implicit appContext: AppContext) = vMatchWidth +
+      llHorizontal +
+      vPadding(0, 0, 0, 4 dp)
+
+  def nameItemStyle(implicit appContext: AppContext) = lp[LinearLayout](0, WRAP_CONTENT, 1) +
       tvSize(16) +
-      tvColorResource(R.color.speakers_text)
+      tvColorResource(R.color.text_title_default)
+
+  def dateItemStyle(implicit appContext: AppContext) = vWrapContent +
+      tvSize(12) +
+      tvColorResource(R.color.text_date_default)
 
   def twitterItemStyle(implicit appContext: AppContext) = vWrapContent +
       tvSize(12) +
-      tvColorResource(R.color.speakers_twitter)
+      tvColorResource(R.color.text_twitter_default)
 
   def messageItemStyle(implicit appContext: AppContext) = vWrapContent +
       tvSize(14) +
-      tvColorResource(R.color.speakers_text) +
+      tvColorResource(R.color.text_title_default) +
       vPadding(0, 4 dp, 0, 0)
 
   // Styles for Authorization Layout

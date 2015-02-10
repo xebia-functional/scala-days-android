@@ -53,6 +53,8 @@ class SocialLayoutAdapter(implicit context: ActivityContext, appContext: AppCont
 
   var name = slot[TextView]
 
+  var date = slot[TextView]
+
   var twitter = slot[TextView]
 
   var message = slot[TextView]
@@ -63,7 +65,10 @@ class SocialLayoutAdapter(implicit context: ActivityContext, appContext: AppCont
     l[LinearLayout](
       w[ImageView] <~ wire(avatar) <~ avatarStyle,
       l[LinearLayout](
-        w[TextView] <~ wire(name) <~ nameItemStyle,
+        l[LinearLayout](
+          w[TextView] <~ wire(name) <~ nameItemStyle,
+          w[TextView] <~ wire(date) <~ dateItemStyle
+        ) <~ titlesContentStyle,
         w[TextView] <~ wire(twitter) <~ twitterItemStyle,
         w[TextView] <~ wire(message) <~ messageItemStyle
       ) <~ itemNoAvatarContentStyle
@@ -79,6 +84,8 @@ class ViewHolderSocialAdapter(adapter: SocialLayoutAdapter)(implicit context: Ac
   val avatar = adapter.avatar
 
   val name = adapter.name
+
+  val date = adapter.date
 
   val twitter = adapter.twitter
 

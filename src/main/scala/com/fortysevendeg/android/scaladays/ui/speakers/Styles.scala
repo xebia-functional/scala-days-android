@@ -59,15 +59,15 @@ trait Styles {
 
   def nameItemStyle(implicit appContext: AppContext) = vWrapContent +
       tvSize(16) +
-      tvColorResource(R.color.speakers_text)
+      tvColorResource(R.color.text_title_default)
 
   def twitterItemStyle(implicit appContext: AppContext) = vWrapContent +
       tvSize(12) +
-      tvColorResource(R.color.speakers_twitter)
+      tvColorResource(R.color.text_twitter_default)
 
   def bioItemStyle(implicit appContext: AppContext) = vWrapContent +
       tvSize(14) +
-      tvColorResource(R.color.speakers_text) +
+      tvColorResource(R.color.text_title_default) +
       vPadding(0, 4 dp, 0, 0)
 
 }

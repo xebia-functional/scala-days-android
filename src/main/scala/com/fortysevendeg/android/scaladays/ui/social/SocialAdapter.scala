@@ -21,11 +21,10 @@ import android.text.Html
 import android.view.View.OnClickListener
 import android.view.{View, ViewGroup}
 import com.fortysevendeg.android.scaladays.R
-import com.fortysevendeg.android.scaladays.model.{TwitterMessage, Speaker}
+import com.fortysevendeg.android.scaladays.model.TwitterMessage
+import com.fortysevendeg.android.scaladays.ui.commons.DateTimeTextViewTweaks._
 import com.fortysevendeg.android.scaladays.ui.commons.GlideTweaks._
-import com.fortysevendeg.macroid.extras.ImageViewTweaks._
 import com.fortysevendeg.macroid.extras.TextTweaks._
-import com.fortysevendeg.macroid.extras.ViewTweaks._
 import macroid.FullDsl._
 import macroid.{ActivityContext, AppContext}
 
@@ -51,6 +50,7 @@ class SocialAdapter(messages: Seq[TwitterMessage], listener: RecyclerClickListen
     runUi(
       (viewHolder.avatar <~ glideRoundedImage(message.avatar, R.drawable.placeholder_circle)) ~
           (viewHolder.name <~ tvText(message.fullName)) ~
+          (viewHolder.date <~ tvPrettyTime(message.date)) ~
           (viewHolder.twitter <~ tvText("@%s".format(message.screenName))) ~
           (viewHolder.message <~ tvText(Html.fromHtml(message.message)))
     )

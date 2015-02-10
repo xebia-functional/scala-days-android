@@ -23,17 +23,16 @@ import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v7.widget.LinearLayoutManager
 import android.view.{LayoutInflater, View, ViewGroup}
-import com.fortysevendeg.android.scaladays.model.{Root, TwitterMessage, Speaker}
+import com.fortysevendeg.android.scaladays.model.{Root, TwitterMessage}
 import com.fortysevendeg.android.scaladays.modules.ComponentRegistryImpl
 import com.fortysevendeg.android.scaladays.modules.json.JsonRequest
 import com.fortysevendeg.android.scaladays.modules.net.NetRequest
-import com.fortysevendeg.android.scaladays.modules.twitter.{SearchResponse, SearchRequest}
-import com.fortysevendeg.android.scaladays.ui.commons.{InvalidJsonConferenceException, ConferenceSelectedNotFoundException, LineItemDecorator}
-import com.fortysevendeg.macroid.extras.ActionsExtras._
+import com.fortysevendeg.android.scaladays.modules.twitter.SearchRequest
+import com.fortysevendeg.android.scaladays.ui.commons.{ConferenceSelectedNotFoundException, InvalidJsonConferenceException, LineItemDecorator}
 import com.fortysevendeg.macroid.extras.RecyclerViewTweaks._
 import com.fortysevendeg.macroid.extras.ViewTweaks._
 import macroid.FullDsl._
-import macroid.{Ui, AppContext, Contexts}
+import macroid.{AppContext, Contexts, Ui}
 
 import scala.concurrent.ExecutionContext.Implicits.global
 
@@ -101,12 +100,12 @@ class SocialFragment
 
     val response = (for {
       json <- saveJsonOp
-      searchResponse <- (json.map {
+      searchResponse <- json.map {
         case Root(list) if list.length > conferenceSelected =>
           val conference = list(conferenceSelected)
           twitterServices.search(SearchRequest(conference.info.hashTag))
         case _ => throw ConferenceSelectedNotFoundException(conferenceSelected)
-      }).getOrElse(throw InvalidJsonConferenceException(conferenceSelected))
+      }.getOrElse(throw InvalidJsonConferenceException(conferenceSelected))
     } yield reloadList(searchResponse.messages)) recover {
       case _ => failed()
     }
