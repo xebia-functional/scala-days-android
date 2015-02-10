@@ -14,7 +14,7 @@
  *  limitations under the License.
  */
 
-package com.fortysevendeg.android.scaladays.utils
+package com.fortysevendeg.android.scaladays.ui.menu
 
 object MenuSection extends Enumeration {
 

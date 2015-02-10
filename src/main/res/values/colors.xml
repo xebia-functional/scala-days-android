@@ -26,11 +26,12 @@
     <color name="menu_conference_title">#ffffff</color>
 
     <!-- Menu -->
-    <color name="background_menu">#364550</color>
+    <color name="background_main_menu">#364550</color>
+    <color name="background_conference_menu">#ffffff</color>
+    <color name="background_menu_header_selected">#44c2c2c2</color>
     <color name="background_menu_item">#00000000</color>
     <color name="background_menu_item_pressed">#2F3C46</color>
     <color name="background_menu_item_selected">#2F3C46</color>
-    <color name="background_header_menu">#FFFFFF</color>
 
     <!-- Lists -->
     <color name="speakers_text">#364550</color>

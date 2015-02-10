@@ -22,7 +22,7 @@
         android:drawable="@drawable/background_list_menu_pressed" />
     <item
         android:state_checked="true"
-        android:drawable="@drawable/background_list_menu_selected" />
+        android:drawable="@color/background_menu_item_selected" />
     <item 
         android:drawable="@android:color/transparent" />
 </selector>

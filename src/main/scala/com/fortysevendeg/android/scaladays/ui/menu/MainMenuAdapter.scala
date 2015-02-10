@@ -14,19 +14,20 @@
  * limitations under the License.
  */
 
-package com.fortysevendeg.android.scaladays.ui.drawer
+package com.fortysevendeg.android.scaladays.ui.menu
 
-import android.graphics.Color
 import android.support.v7.widget.RecyclerView
 import android.view.View.OnClickListener
 import android.view.{View, ViewGroup}
 import com.fortysevendeg.android.scaladays.R
-import com.fortysevendeg.android.scaladays.utils.MenuSection.{MenuSection, _}
+import MenuSection._
 import macroid.{IdGeneration, ActivityContext, AppContext}
+import com.fortysevendeg.macroid.extras.TextTweaks._
+import macroid.FullDsl._
 
-class DrawerMenuAdapter(listener: RecyclerClickListener)
+class MainMenuAdapter(listener: MainMenuClickListener)
     (implicit context: ActivityContext, appContext: AppContext)
-    extends RecyclerView.Adapter[ViewHolderMenuAdapter]
+    extends RecyclerView.Adapter[ViewHolderMainMenuAdapter]
     with IdGeneration {
   
   var selectedItem: Option[Int] = None
@@ -34,51 +35,50 @@ class DrawerMenuAdapter(listener: RecyclerClickListener)
   val recyclerClickListener = listener
 
   val list = List(
-    DrawerMenuItem(Id.schedule, 
+    MainMenuItem(Id.schedule,
       appContext.app.getString(R.string.schedule), 
       R.drawable.menu_icon_schedule, SCHEDULE),
-    DrawerMenuItem(Id.social, 
+    MainMenuItem(Id.social,
       appContext.app.getString(R.string.social), 
       R.drawable.menu_icon_social, SAMPLE),
-    DrawerMenuItem(Id.speaker, 
+    MainMenuItem(Id.speaker,
       appContext.app.getString(R.string.speakers), 
       R.drawable.menu_icon_speakers, SPEAKERS),
-    DrawerMenuItem(Id.tickets, 
+    MainMenuItem(Id.tickets,
       appContext.app.getString(R.string.tickets), 
       R.drawable.menu_icon_tickets, SAMPLE),
-    DrawerMenuItem(Id.contacts, 
+    MainMenuItem(Id.contacts,
       appContext.app.getString(R.string.contacts), 
       R.drawable.menu_icon_contact, SAMPLE),
-    DrawerMenuItem(Id.sponsors, 
+    MainMenuItem(Id.sponsors,
       appContext.app.getString(R.string.sponsors), 
       R.drawable.menu_icon_sponsors, SAMPLE),
-    DrawerMenuItem(Id.places, 
+    MainMenuItem(Id.places,
       appContext.app.getString(R.string.places), 
       R.drawable.menu_icon_places, SAMPLE),
-    DrawerMenuItem(Id.about, 
+    MainMenuItem(Id.about,
       appContext.app.getString(R.string.about), 
       R.drawable.menu_icon_about, SAMPLE))
 
-  override def onCreateViewHolder(parentViewGroup: ViewGroup, i: Int): ViewHolderMenuAdapter = {
-    val adapter = new MenuAdapter()
+  override def onCreateViewHolder(parentViewGroup: ViewGroup, i: Int): ViewHolderMainMenuAdapter = {
+    val adapter = new MainMenuAdapterLayout()
     adapter.content.setOnClickListener(new OnClickListener {
       override def onClick(v: View): Unit = recyclerClickListener.onClick(list(v.getTag.asInstanceOf[Int]))
     })
-    new ViewHolderMenuAdapter(adapter)
+    new ViewHolderMainMenuAdapter(adapter)
   }
 
   override def getItemCount: Int = list.size
 
-  override def onBindViewHolder(viewHolder: ViewHolderMenuAdapter, position: Int): Unit = {
-    val demoInfo = list(position)
+  override def onBindViewHolder(viewHolder: ViewHolderMainMenuAdapter, position: Int): Unit = {
+    val mainMenuItem = list(position)
     viewHolder.content.setTag(position)
-    viewHolder.title.map { textView =>
-      textView.setText(demoInfo.name)
-      textView.setCompoundDrawablesWithIntrinsicBounds(demoInfo.icon, 0, 0, 0)      
-    }
+    runUi(
+      viewHolder.title <~ tvText(mainMenuItem.name) <~ tvCompoundDrawablesWithIntrinsicBounds(mainMenuItem.icon, 0, 0, 0)
+    )
     
     selectedItem match {
-      case Some(p) if p == demoInfo.id => viewHolder.content.setChecked(true)
+      case Some(p) if p == mainMenuItem.id => viewHolder.content.setChecked(true)
       case _ => viewHolder.content.setChecked(false)
     }
   }
@@ -89,8 +89,8 @@ class DrawerMenuAdapter(listener: RecyclerClickListener)
   }
 }
 
-trait RecyclerClickListener {
-  def onClick(info: DrawerMenuItem)
+trait MainMenuClickListener {
+  def onClick(info: MainMenuItem)
 }
 
-case class DrawerMenuItem(id: Int, name: String, icon: Int, section: MenuSection)
+case class MainMenuItem(id: Int, name: String, icon: Int, section: MenuSection)

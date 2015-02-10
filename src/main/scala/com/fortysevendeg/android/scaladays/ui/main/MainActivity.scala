@@ -23,10 +23,10 @@ import android.support.v7.app.{ActionBarActivity, ActionBarDrawerToggle}
 import android.support.v7.widget.LinearLayoutManager
 import android.view.{MenuItem, View}
 import com.fortysevendeg.android.scaladays.R
-import com.fortysevendeg.android.scaladays.ui.drawer.{DrawerMenuItem, RecyclerClickListener, DrawerMenuAdapter, MenuFragment}
+import com.fortysevendeg.android.scaladays.ui.menu._
 import com.fortysevendeg.android.scaladays.ui.schedule.ScheduleFragment
 import com.fortysevendeg.android.scaladays.ui.speakers.SpeakersFragment
-import com.fortysevendeg.android.scaladays.utils.MenuSection._
+import MenuSection._
 import com.fortysevendeg.macroid.extras.DrawerLayoutTweaks._
 import com.fortysevendeg.macroid.extras.FragmentExtras._
 import com.fortysevendeg.macroid.extras.ToolbarTweaks._
