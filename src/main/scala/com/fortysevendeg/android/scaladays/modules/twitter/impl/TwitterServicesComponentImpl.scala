@@ -21,7 +21,7 @@ import android.provider.SyncStateContract.Constants
 import com.fortysevendeg.android.scaladays.R
 import com.fortysevendeg.android.scaladays.scaladays.Service
 import com.fortysevendeg.macroid.extras.AppContextProvider
-import twitter4j.TwitterFactory
+import twitter4j.{Twitter, Query, TwitterFactory}
 import com.fortysevendeg.android.scaladays.modules.twitter._
 import twitter4j.auth.AccessToken
 import twitter4j.conf.ConfigurationBuilder
@@ -29,9 +29,11 @@ import scala.concurrent.ExecutionContext.Implicits.global
 
 import scala.concurrent.Future
 import scala.util.{Failure, Success, Try}
+import scala.collection.JavaConverters._
 
 trait TwitterServicesComponentImpl
-    extends TwitterServicesComponent {
+    extends TwitterServicesComponent
+    with TwitterConversions {
 
   self: AppContextProvider =>
 
@@ -62,13 +64,23 @@ trait TwitterServicesComponentImpl
       configurationBuilder.build()
     }
 
+    private def getTwitter: Option[Twitter] = {
+      for {
+        authKey <- getAuthKey()
+        auchSecret <- getAuthSecretKey()
+      } yield {
+        val at: AccessToken = new AccessToken(authKey, auchSecret)
+        new TwitterFactory(getConfiguration).getInstance(at)
+      }
+    }
+
     private def setAuthKey(auth: String): Unit = sharedPreferences.edit().putString(authKey, auth).commit()
 
     private def getAuthKey(): Option[String] = Option(sharedPreferences.getString(authKey, null))
 
     private def setAuthSecretKey(auth: String): Unit = sharedPreferences.edit().putString(authSecretKey, auth).commit()
 
-    private def getAuthSecretKey(): String = sharedPreferences.getString(authSecretKey, "")
+    private def getAuthSecretKey(): Option[String] = Option(sharedPreferences.getString(authSecretKey, null))
 
     override def getAuthenticationURL: Service[GetAuthenticationURLRequest, GetAuthenticationURLResponse] =
       request =>
@@ -95,6 +107,21 @@ trait TwitterServicesComponentImpl
     override def isConnected(): Boolean = getAuthKey().isDefined
 
     override def disconnected(): Unit = setAuthKey(null)
+
+    override def search: Service[SearchRequest, SearchResponse] =
+      request =>
+          Future {
+            val query: Query = new Query
+            query.setQuery(request.search)
+            query.setCount(100)
+
+            (getTwitter map {
+              twitter =>
+                val statuses = twitter.search(query).getTweets().asScala.toList
+                SearchResponse(toSeqTwitterMessage(statuses))
+            }).getOrElse(SearchResponse(Seq.empty))
+
+          }
   }
 
 }

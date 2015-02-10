@@ -24,6 +24,7 @@ trait TwitterServices {
   def disconnected(): Unit
   def getAuthenticationURL: Service[GetAuthenticationURLRequest, GetAuthenticationURLResponse]
   def finalizeAuthentication: Service[FinalizeAuthenticationRequest, FinalizeAuthenticationResponse]
+  def search: Service[SearchRequest, SearchResponse]
 }
 
 trait TwitterServicesComponent {

@@ -23,11 +23,12 @@ import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v7.widget.LinearLayoutManager
 import android.view.{LayoutInflater, View, ViewGroup}
-import com.fortysevendeg.android.scaladays.model.Speaker
+import com.fortysevendeg.android.scaladays.model.{Root, TwitterMessage, Speaker}
 import com.fortysevendeg.android.scaladays.modules.ComponentRegistryImpl
 import com.fortysevendeg.android.scaladays.modules.json.JsonRequest
 import com.fortysevendeg.android.scaladays.modules.net.NetRequest
-import com.fortysevendeg.android.scaladays.ui.commons.LineItemDecorator
+import com.fortysevendeg.android.scaladays.modules.twitter.{SearchResponse, SearchRequest}
+import com.fortysevendeg.android.scaladays.ui.commons.{InvalidJsonConferenceException, ConferenceSelectedNotFoundException, LineItemDecorator}
 import com.fortysevendeg.macroid.extras.ActionsExtras._
 import com.fortysevendeg.macroid.extras.RecyclerViewTweaks._
 import com.fortysevendeg.macroid.extras.ViewTweaks._
@@ -51,15 +52,19 @@ class SocialFragment
     val fLayout = new Layout
     fragmentLayout = Some(fLayout)
     runUi(
-      fLayout.recyclerView
+      (fLayout.recyclerView
           <~ rvLayoutManager(new LinearLayoutManager(appContextProvider.get))
-          <~ rvAddItemDecoration(new LineItemDecorator())
+          <~ rvAddItemDecoration(new LineItemDecorator())) ~
+          (fLayout.reloadButton <~ On.click(Ui {
+            search()
+          }))
     )
     fLayout.content
   }
 
   override def onViewCreated(view: View, savedInstanceState: Bundle): Unit = {
     super.onViewCreated(view, savedInstanceState)
+
     if (twitterServices.isConnected()) {
       search()
     } else {
@@ -82,38 +87,74 @@ class SocialFragment
   }
 
   def search() = {
-    runUi(Ui {
-      aShortToast("Vamos!!")
-    })
-    // TODO
+
+    showLoading()
+
+    val conferenceSelected = 0 // TODO Use PersistentService
+
+    val saveJsonOp = for {
+      _ <- netServices.saveJsonInLocal(NetRequest(false))
+      jsonResponse <- jsonServices.loadJson(JsonRequest())
+    } yield {
+      jsonResponse.apiResponse
+    }
+
+    val response = (for {
+      json <- saveJsonOp
+      searchResponse <- (json.map {
+        case Root(list) if list.length > conferenceSelected =>
+          val conference = list(conferenceSelected)
+          twitterServices.search(SearchRequest(conference.info.hashTag))
+        case _ => throw ConferenceSelectedNotFoundException(conferenceSelected)
+      }).getOrElse(throw InvalidJsonConferenceException(conferenceSelected))
+    } yield reloadList(searchResponse.messages)) recover {
+      case _ => failed()
+    }
+  }
+
+  def showLoading() = {
+    fragmentLayout map {
+      layout =>
+        runUi(
+          (layout.progressBar <~ vVisible) ~
+              (layout.recyclerView <~ vGone) ~
+              (layout.failedContent <~ vGone)
+        )
+    }
   }
 
   def failed() = {
-    runUi(Ui {
-      aShortToast("failed :<((")
-    })
-    // TODO
+    fragmentLayout map {
+      layout =>
+        runUi(
+          (layout.progressBar <~ vGone) ~
+              (layout.recyclerView <~ vGone) ~
+              (layout.failedContent <~ vVisible)
+        )
+    }
   }
 
-  def reloadList(speakers: Seq[Speaker]) = {
-    for {
-      layout <- fragmentLayout
-      recyclerView <- layout.recyclerView
-    } yield {
-      val adapter = new SocialAdapter(speakers, new RecyclerClickListener {
-        override def onClick(speaker: Speaker): Unit = {
-          speaker.twitter map {
-            twitterName =>
-              val intent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://twitter.com/%s".format(twitterName)))
+  def reloadList(messages: Seq[TwitterMessage]) = {
+    messages.length match {
+      case 0 => failed()
+      case _ =>
+        for {
+          layout <- fragmentLayout
+          recyclerView <- layout.recyclerView
+        } yield {
+          val adapter = new SocialAdapter(messages, new RecyclerClickListener {
+            override def onClick(message: TwitterMessage): Unit = {
+              val intent = new Intent(Intent.ACTION_VIEW,
+                Uri.parse("https://twitter.com/%s/status/%s".format(message.screenName, message.id)))
               startActivity(intent)
-          }
-
+            }
+          })
+          runUi(
+            (layout.progressBar <~ vGone) ~
+                (layout.failedContent <~ vGone) ~
+                (layout.recyclerView <~ vVisible <~ rvAdapter(adapter))
+          )
         }
-      })
-      runUi(
-        (layout.progressBar <~ vInvisible) ~
-            (layout.recyclerView <~ rvAdapter(adapter))
-      )
     }
   }
 

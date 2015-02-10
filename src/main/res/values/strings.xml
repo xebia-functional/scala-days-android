@@ -33,6 +33,9 @@
 
     <string name="sampleText">Sample Text</string>
 
+    <string name="generalMessageError">There was an error. Try again</string>
+    <string name="reload">Reload</string>
+
     <string name="dayOfWeek0">Sunday</string>
     <string name="dayOfWeek1">Monday</string>
     <string name="dayOfWeek2">Tuesday</string>

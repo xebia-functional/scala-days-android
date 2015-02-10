@@ -17,10 +17,11 @@
 package com.fortysevendeg.android.scaladays.ui.social
 
 import android.support.v7.widget.RecyclerView
+import android.text.Html
 import android.view.View.OnClickListener
 import android.view.{View, ViewGroup}
 import com.fortysevendeg.android.scaladays.R
-import com.fortysevendeg.android.scaladays.model.Speaker
+import com.fortysevendeg.android.scaladays.model.{TwitterMessage, Speaker}
 import com.fortysevendeg.android.scaladays.ui.commons.GlideTweaks._
 import com.fortysevendeg.macroid.extras.ImageViewTweaks._
 import com.fortysevendeg.macroid.extras.TextTweaks._
@@ -28,7 +29,7 @@ import com.fortysevendeg.macroid.extras.ViewTweaks._
 import macroid.FullDsl._
 import macroid.{ActivityContext, AppContext}
 
-class SocialAdapter(speakers: Seq[Speaker], listener: RecyclerClickListener)
+class SocialAdapter(messages: Seq[TwitterMessage], listener: RecyclerClickListener)
     (implicit context: ActivityContext, appContext: AppContext)
     extends RecyclerView.Adapter[ViewHolderSocialAdapter] {
 
@@ -37,26 +38,26 @@ class SocialAdapter(speakers: Seq[Speaker], listener: RecyclerClickListener)
   override def onCreateViewHolder(parentViewGroup: ViewGroup, i: Int): ViewHolderSocialAdapter = {
     val adapter = new SocialLayoutAdapter()
     adapter.content.setOnClickListener(new OnClickListener {
-      override def onClick(v: View): Unit = recyclerClickListener.onClick(speakers(v.getTag.asInstanceOf[Int]))
+      override def onClick(v: View): Unit = recyclerClickListener.onClick(messages(v.getTag.asInstanceOf[Int]))
     })
     new ViewHolderSocialAdapter(adapter)
   }
 
-  override def getItemCount: Int = speakers.size
+  override def getItemCount: Int = messages.size
 
   override def onBindViewHolder(viewHolder: ViewHolderSocialAdapter, position: Int): Unit = {
-    val speaker = speakers(position)
+    val message = messages(position)
     viewHolder.content.setTag(position)
     runUi(
-      (viewHolder.avatar <~ speaker.picture.map(glideRoundedImage(_, R.drawable.placeholder_circle)).getOrElse(ivSrc(R.drawable.placeholder_avatar_failed))) ~
-          (viewHolder.name <~ tvText(speaker.name)) ~
-          (viewHolder.twitter <~ speaker.twitter.map(tvText(_) + vVisible).getOrElse(vGone)) ~
-          (viewHolder.message <~ tvText(speaker.bio))
+      (viewHolder.avatar <~ glideRoundedImage(message.avatar, R.drawable.placeholder_circle)) ~
+          (viewHolder.name <~ tvText(message.fullName)) ~
+          (viewHolder.twitter <~ tvText("@%s".format(message.screenName))) ~
+          (viewHolder.message <~ tvText(Html.fromHtml(message.message)))
     )
   }
 }
 
 trait RecyclerClickListener {
-  def onClick(speaker: Speaker)
+  def onClick(message: TwitterMessage)
 }
 

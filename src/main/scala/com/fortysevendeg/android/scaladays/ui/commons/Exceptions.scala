@@ -14,19 +14,10 @@
  *  limitations under the License.
  */
 
-package com.fortysevendeg.android.scaladays.modules.twitter
+package com.fortysevendeg.android.scaladays.ui.commons
 
-import android.net.Uri
-import com.fortysevendeg.android.scaladays.model.TwitterMessage
+case class ConferenceSelectedNotFoundException(conferenceId: Int)
+    extends RuntimeException("Conference %d not found".format(conferenceId))
 
-case class GetAuthenticationURLRequest()
-
-case class GetAuthenticationURLResponse(url: Option[String])
-
-case class FinalizeAuthenticationRequest(uri: Uri)
-
-case class FinalizeAuthenticationResponse()
-
-case class SearchRequest(search: String)
-
-case class SearchResponse(messages: Seq[TwitterMessage])
+case class InvalidJsonConferenceException(conferenceId: Int)
+    extends RuntimeException("Json for conference %d invalid".format(conferenceId))

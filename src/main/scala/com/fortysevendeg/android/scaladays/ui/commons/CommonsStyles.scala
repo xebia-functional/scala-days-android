@@ -16,16 +16,45 @@
 
 package com.fortysevendeg.android.scaladays.ui.commons
 
+import android.view.Gravity
 import com.fortysevendeg.android.scaladays.R
+import com.fortysevendeg.macroid.extras.FrameLayoutTweaks._
+import com.fortysevendeg.macroid.extras.LinearLayoutTweaks._
 import com.fortysevendeg.macroid.extras.ViewTweaks._
-import macroid.{Tweak, AppContext}
+import com.fortysevendeg.macroid.extras.ImageViewTweaks._
+import com.fortysevendeg.macroid.extras.TextTweaks._
+import macroid.AppContext
 import macroid.FullDsl._
+
 import scala.language.postfixOps
 
 trait CommonsStyles {
 
-  def toolbarStyle(height: Int)(implicit appContext: AppContext): Tweak[W] =
-    vContentSizeMatchWidth(height) +
-        vBackground(R.color.primary)
+  def toolbarStyle(height: Int)(implicit appContext: AppContext) = vContentSizeMatchWidth(height) +
+      vBackground(R.color.primary)
+
+  val failedContentStyle = vWrapContent +
+      flLayoutGravity(Gravity.CENTER) +
+      llGravity(Gravity.CENTER_HORIZONTAL) +
+      llVertical
+
+  val failedImageStyle = vWrapContent +
+      ivSrc(R.drawable.placeholder_error)
+
+  def failedMessageStyle(text: Int)(implicit appContext: AppContext) = vWrapContent +
+      tvText(text) +
+      tvGravity(Gravity.CENTER) +
+      tvColorResource(R.color.text_error_message) +
+      tvSize(16) +
+      vPaddings(30 dp)
+
+  def failedButtonStyle(implicit appContext: AppContext) = vWrapContent +
+      vMinWidth(160 dp) +
+      tvText(R.string.reload) +
+      tvColorResource(R.color.text_error_button) +
+      vBackground(R.drawable.background_error_button) +
+      tvAllCaps +
+      tvSize(14) +
+      tvGravity(Gravity.CENTER)
 
 }

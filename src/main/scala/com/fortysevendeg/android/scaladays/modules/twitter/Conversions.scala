@@ -16,17 +16,23 @@
 
 package com.fortysevendeg.android.scaladays.modules.twitter
 
-import android.net.Uri
 import com.fortysevendeg.android.scaladays.model.TwitterMessage
+import org.joda.time.DateTime
+import twitter4j.Status
 
-case class GetAuthenticationURLRequest()
+trait TwitterConversions {
 
-case class GetAuthenticationURLResponse(url: Option[String])
+  def toSeqTwitterMessage(statuses: List[Status]) =
+    statuses map toTwitterMessage
 
-case class FinalizeAuthenticationRequest(uri: Uri)
+  def toTwitterMessage(status: Status) =
+    TwitterMessage(
+      id = status.getId,
+      fullName = status.getUser.getName,
+      screenName = status.getUser.getScreenName,
+      date = new DateTime(status.getCreatedAt),
+      message = status.getText,
+      avatar = status.getUser.getBiggerProfileImageURL
+    )
 
-case class FinalizeAuthenticationResponse()
-
-case class SearchRequest(search: String)
-
-case class SearchResponse(messages: Seq[TwitterMessage])
+}

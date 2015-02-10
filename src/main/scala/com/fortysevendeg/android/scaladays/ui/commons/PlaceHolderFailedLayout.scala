@@ -14,19 +14,23 @@
  *  limitations under the License.
  */
 
-package com.fortysevendeg.android.scaladays.modules.twitter
+package com.fortysevendeg.android.scaladays.ui.commons
 
-import android.net.Uri
-import com.fortysevendeg.android.scaladays.model.TwitterMessage
+import android.widget.{Button, ImageView, LinearLayout, TextView}
+import macroid.{ActivityContext, AppContext}
+import macroid.FullDsl._
 
-case class GetAuthenticationURLRequest()
+trait PlaceHolderFailedLayout
+    extends CommonsStyles {
 
-case class GetAuthenticationURLResponse(url: Option[String])
+  var reloadButton = slot[Button]
 
-case class FinalizeAuthenticationRequest(uri: Uri)
+  def placeholderFailed(message: Int)(implicit appContext: AppContext, context: ActivityContext) = {
+    l[LinearLayout](
+      w[ImageView] <~ failedImageStyle,
+      w[TextView] <~ failedMessageStyle(message),
+      w[Button] <~ failedButtonStyle <~ wire(reloadButton)
+    ) <~ failedContentStyle
+  }
 
-case class FinalizeAuthenticationResponse()
-
-case class SearchRequest(search: String)
-
-case class SearchResponse(messages: Seq[TwitterMessage])
+}

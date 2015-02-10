@@ -24,6 +24,12 @@
     <color name="accent">#ff19232c</color>
     <color name="toolbar_title">#ffffff</color>
 
+    <!-- Placeholder -->
+    <color name="text_error_message">#87364550</color>
+    <color name="text_error_button">#ffffff</color>
+    <color name="background_error_button_default">#E05F5E</color>
+    <color name="background_error_button_pressed">#ffc45453</color>
+
     <!-- Menu -->
     <color name="background_menu">#364550</color>
     <color name="background_header_menu">#FFFFFF</color>
