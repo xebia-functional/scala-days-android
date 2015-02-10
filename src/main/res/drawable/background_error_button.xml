@@ -15,13 +15,8 @@
   ~  limitations under the License.
   -->
 
-<resources>
-
-    <string name="url_json_conference">http://scala-days-2015.s3.amazonaws.com/conferences.json</string>
-
-    <!-- Twitter Api -->
-    <string name="twitter_app_key">***REMOVED***</string>
-    <string name="twitter_app_secret">***REMOVED***</string>
-    <string name="twitter_app_callback_host">47deg.com</string>
-
-</resources>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:state_pressed="true"
+          android:drawable="@color/background_error_button_pressed" />
+    <item android:drawable="@color/background_error_button_default" />
+</selector>

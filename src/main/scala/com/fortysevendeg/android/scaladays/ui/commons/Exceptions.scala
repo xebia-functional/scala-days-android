@@ -14,12 +14,10 @@
  *  limitations under the License.
  */
 
-package com.fortysevendeg.android.scaladays.ui.menu
+package com.fortysevendeg.android.scaladays.ui.commons
 
-object MenuSection extends Enumeration {
+case class ConferenceSelectedNotFoundException(conferenceId: Int)
+    extends RuntimeException("Conference %d not found".format(conferenceId))
 
-  type MenuSection = Value
-
-  val SAMPLE, SPEAKERS, SCHEDULE, SOCIAL = Value
-
-}
+case class InvalidJsonConferenceException(conferenceId: Int)
+    extends RuntimeException("Json for conference %d invalid".format(conferenceId))

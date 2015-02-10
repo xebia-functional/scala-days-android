@@ -18,7 +18,9 @@ package com.fortysevendeg.android.scaladays.modules
 
 import com.fortysevendeg.android.scaladays.modules.json.JsonServicesComponent
 import com.fortysevendeg.android.scaladays.modules.net.NetServicesComponent
+import com.fortysevendeg.android.scaladays.modules.twitter.TwitterServicesComponent
 
 trait ComponentRegistry
     extends JsonServicesComponent
     with NetServicesComponent
+    with TwitterServicesComponent

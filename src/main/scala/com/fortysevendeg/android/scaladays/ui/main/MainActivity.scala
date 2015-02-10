@@ -16,6 +16,7 @@
 
 package com.fortysevendeg.android.scaladays.ui.main
 
+import android.content.Intent
 import android.content.res.Configuration
 import android.os.Bundle
 import android.support.v4.app.FragmentActivity
@@ -25,6 +26,7 @@ import com.fortysevendeg.android.scaladays.R
 import com.fortysevendeg.android.scaladays.ui.menu.MenuSection._
 import com.fortysevendeg.android.scaladays.ui.menu._
 import com.fortysevendeg.android.scaladays.ui.schedule.ScheduleFragment
+import com.fortysevendeg.android.scaladays.ui.social.SocialFragment
 import com.fortysevendeg.android.scaladays.ui.speakers.SpeakersFragment
 import com.fortysevendeg.macroid.extras.DrawerLayoutTweaks._
 import com.fortysevendeg.macroid.extras.FragmentExtras._
@@ -75,11 +77,15 @@ class MainActivity
     }
   }
 
-  def itemSelected(menuSection: MenuSection, title: String) {
-    val builder = menuSection match {
+  override def onActivityResult(requestCode: Int, resultCode: Int, data: Intent): Unit =
+    super.onActivityResult(requestCode, resultCode, data)
+
+  private def itemSelected(info: DrawerMenuItem) {
+    val builder = info.section match {
       case SPEAKERS => f[SpeakersFragment]
       case SCHEDULE => f[ScheduleFragment]
-      case _ => f[SampleFragment].pass(SampleFragment.titleArg → title)
+      case SOCIAL => f[SocialFragment]
+      case _ => f[SampleFragment].pass(SampleFragment.titleArg → info.name)
     }
     runUi(
       (toolBar <~ tbTitle(title)) ~

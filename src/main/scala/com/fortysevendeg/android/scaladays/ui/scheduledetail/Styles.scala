@@ -125,7 +125,7 @@ trait Styles {
 
   def speakerTwitterItemStyle(twitter: Option[String])(implicit appContext: AppContext) = vWrapContent +
       tvSize(12) +
-      tvColorResource(R.color.speakers_twitter) +
+      tvColorResource(R.color.text_twitter_default) +
       twitter.map(tvText(_) + vVisible).getOrElse(vGone)
 
   def speakerBioItemStyle(bio: String)(implicit appContext: AppContext) = vWrapContent +

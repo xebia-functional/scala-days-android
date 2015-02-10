@@ -14,12 +14,24 @@
  *  limitations under the License.
  */
 
-package com.fortysevendeg.android.scaladays.ui.menu
+package com.fortysevendeg.android.scaladays.modules.twitter
 
-object MenuSection extends Enumeration {
+import com.fortysevendeg.android.scaladays.model.TwitterMessage
+import org.joda.time.DateTime
+import twitter4j.Status
 
-  type MenuSection = Value
+trait TwitterConversions {
 
-  val SAMPLE, SPEAKERS, SCHEDULE, SOCIAL = Value
+  def toSeqTwitterMessage(statuses: List[Status]) =
+    statuses map toTwitterMessage
+
+  def toTwitterMessage(status: Status) =
+    TwitterMessage(
+      id = status.getId,
+      fullName = status.getUser.getName,
+      screenName = status.getUser.getScreenName,
+      date = new DateTime(status.getCreatedAt),
+      message = status.getText,
+      avatar = status.getUser.getBiggerProfileImageURL)
 
 }

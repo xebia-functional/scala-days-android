@@ -14,9 +14,10 @@
  *  limitations under the License.
  */
 
-package com.fortysevendeg.android.scaladays.ui.speakers
+package com.fortysevendeg.android.scaladays.ui.social
 
 import android.view.Gravity
+import android.view.ViewGroup.LayoutParams._
 import android.widget.ImageView.ScaleType
 import android.widget.LinearLayout
 import com.fortysevendeg.android.scaladays.R
@@ -31,9 +32,9 @@ import macroid.FullDsl._
 
 import scala.language.postfixOps
 
-trait Styles {
+trait Styles extends FragmentStyles with AdapterStyles with AuthorizationStyles
 
-  // Styles for Fragment
+trait FragmentStyles {
 
   val rootStyle = vMatchParent
 
@@ -43,7 +44,9 @@ trait Styles {
   val progressBarStyle = vWrapContent +
       flLayoutGravity(Gravity.CENTER)
 
-  // Styles for Adapter
+}
+
+trait AdapterStyles {
 
   def itemContentStyle(implicit appContext: AppContext) = vMatchParent +
       llHorizontal +
@@ -56,17 +59,38 @@ trait Styles {
       llVertical +
       vPadding(16 dp, 0, 0, 0)
 
-  def nameItemStyle(implicit appContext: AppContext) = vWrapContent +
+  def titlesContentStyle(implicit appContext: AppContext) = vMatchWidth +
+      llHorizontal +
+      vPadding(0, 0, 0, 4 dp)
+
+  def nameItemStyle(implicit appContext: AppContext) = lp[LinearLayout](0, WRAP_CONTENT, 1) +
       tvSize(16) +
       tvColorResource(R.color.text_title_default)
+
+  def dateItemStyle(implicit appContext: AppContext) = vWrapContent +
+      tvSize(12) +
+      tvColorResource(R.color.text_date_default)
 
   def twitterItemStyle(implicit appContext: AppContext) = vWrapContent +
       tvSize(12) +
       tvColorResource(R.color.text_twitter_default)
 
-  def bioItemStyle(implicit appContext: AppContext) = vWrapContent +
+  def messageItemStyle(implicit appContext: AppContext) = vWrapContent +
       tvSize(14) +
       tvColorResource(R.color.text_title_default) +
       vPadding(0, 4 dp, 0, 0)
 
 }
+
+trait AuthorizationStyles {
+
+  val rootAuthStyle = vMatchParent
+
+  val webViewAuthStyle = vMatchParent
+
+  val progressBarAuthStyle = vWrapContent +
+      flLayoutGravity(Gravity.CENTER) +
+      vGone
+
+}
+

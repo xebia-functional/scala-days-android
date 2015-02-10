@@ -14,12 +14,19 @@
  *  limitations under the License.
  */
 
-package com.fortysevendeg.android.scaladays.ui.menu
+package com.fortysevendeg.android.scaladays.modules.twitter
+import com.fortysevendeg.android.scaladays.scaladays.Service
 
-object MenuSection extends Enumeration {
+import scala.util.Try
 
-  type MenuSection = Value
+trait TwitterServices {
+  def isConnected(): Boolean
+  def disconnected(): Unit
+  def getAuthenticationURL: Service[GetAuthenticationURLRequest, GetAuthenticationURLResponse]
+  def finalizeAuthentication: Service[FinalizeAuthenticationRequest, FinalizeAuthenticationResponse]
+  def search: Service[SearchRequest, SearchResponse]
+}
 
-  val SAMPLE, SPEAKERS, SCHEDULE, SOCIAL = Value
-
+trait TwitterServicesComponent {
+  val twitterServices: TwitterServices
 }

@@ -69,4 +69,7 @@ object DateTimeTextViewTweaks {
   def tvDateDateTime(dateTime: DateTime, timeZone: String = defaultTimeZone)(implicit appContext: AppContext): Tweak[W] =
     Tweak[W](_.setText(parseDateScheduleTime(dateTime, timeZone)))
 
+  def tvPrettyTime(dateTime: DateTime): Tweak[W] =
+    Tweak[W](_.setText(parsePrettyTime(dateTime)))
+
 }

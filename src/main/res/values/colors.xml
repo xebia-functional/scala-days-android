@@ -25,6 +25,12 @@
     <color name="toolbar_title">#ffffff</color>
     <color name="menu_conference_title">#ffffff</color>
 
+    <!-- Placeholder -->
+    <color name="text_error_message">#87364550</color>
+    <color name="text_error_button">#ffffff</color>
+    <color name="background_error_button_default">#E05F5E</color>
+    <color name="background_error_button_pressed">#ffc45453</color>
+
     <!-- Menu -->
     <color name="background_main_menu">#364550</color>
     <color name="background_conference_menu">#ffffff</color>
@@ -34,8 +40,9 @@
     <color name="background_menu_item_selected">#2F3C46</color>
 
     <!-- Lists -->
-    <color name="speakers_text">#364550</color>
-    <color name="speakers_twitter">#E05F5E</color>
+    <color name="text_title_default">#364550</color>
+    <color name="text_twitter_default">#E05F5E</color>
+    <color name="text_date_default">#96364550</color>
     <color name="list_line_default">#50364550</color>
     <color name="placeholder_default">#E4E9EB</color>
 

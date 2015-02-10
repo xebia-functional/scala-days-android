@@ -14,12 +14,19 @@
  *  limitations under the License.
  */
 
-package com.fortysevendeg.android.scaladays.ui.menu
+package com.fortysevendeg.android.scaladays.modules.twitter
 
-object MenuSection extends Enumeration {
+import android.net.Uri
+import com.fortysevendeg.android.scaladays.model.TwitterMessage
 
-  type MenuSection = Value
+case class GetAuthenticationURLRequest()
 
-  val SAMPLE, SPEAKERS, SCHEDULE, SOCIAL = Value
+case class GetAuthenticationURLResponse(url: Option[String])
 
-}
+case class FinalizeAuthenticationRequest(uri: Uri)
+
+case class FinalizeAuthenticationResponse()
+
+case class SearchRequest(search: String)
+
+case class SearchResponse(messages: Seq[TwitterMessage])

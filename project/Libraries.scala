@@ -45,4 +45,13 @@ object Libraries {
   object graphics {
     lazy val glide = "com.github.bumptech.glide" % "glide" % Versions.glideV
   }
+
+  object social {
+    lazy val twitter4j = "org.twitter4j" % "twitter4j-core" % Versions.twitter4jV
+  }
+
+  object date {
+    lazy val prettytime = "org.ocpsoft.prettytime" % "prettytime" % Versions.prettytimeV
+  }
+
 }

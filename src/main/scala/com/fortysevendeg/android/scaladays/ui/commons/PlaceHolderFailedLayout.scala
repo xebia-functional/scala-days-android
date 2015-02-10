@@ -14,12 +14,23 @@
  *  limitations under the License.
  */
 
-package com.fortysevendeg.android.scaladays.ui.menu
+package com.fortysevendeg.android.scaladays.ui.commons
 
-object MenuSection extends Enumeration {
+import android.widget.{Button, ImageView, LinearLayout, TextView}
+import macroid.{ActivityContext, AppContext}
+import macroid.FullDsl._
 
-  type MenuSection = Value
+trait PlaceHolderFailedLayout
+    extends CommonsStyles {
 
-  val SAMPLE, SPEAKERS, SCHEDULE, SOCIAL = Value
+  var reloadButton = slot[Button]
+
+  def placeholderFailed(message: Int)(implicit appContext: AppContext, context: ActivityContext) = {
+    l[LinearLayout](
+      w[ImageView] <~ failedImageStyle,
+      w[TextView] <~ failedMessageStyle(message),
+      w[Button] <~ failedButtonStyle <~ wire(reloadButton)
+    ) <~ failedContentStyle
+  }
 
 }
