@@ -90,7 +90,7 @@ class MainMenuAdapter(listener: MainMenuClickListener)
 }
 
 trait MainMenuClickListener {
-  def onClick(info: MainMenuItem)
+  def onClick(mainMenuItem: MainMenuItem)
 }
 
 case class MainMenuItem(id: Int, name: String, icon: Int, section: MenuSection)

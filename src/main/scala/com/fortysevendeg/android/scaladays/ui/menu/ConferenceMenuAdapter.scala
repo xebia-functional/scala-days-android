@@ -27,16 +27,15 @@ import com.fortysevendeg.macroid.extras.TextTweaks._
 import macroid.{ActivityContext, AppContext}
 import macroid.FullDsl._
 
-class ConferenceMenuAdapter(conferences: Seq[Information], listener: ConferenceMenuClickListener)
+class ConferenceMenuAdapter(listener: ConferenceMenuClickListener)
     (implicit context: ActivityContext, appContext: AppContext)
     extends RecyclerView.Adapter[ViewHolderConferenceMenuAdapter] {
 
   val recyclerClickListener = listener
 
-  val list = conferences map { conference =>
-    ConferenceMenuItem(conference.id, conference.longName, findIconImage(conference.pictures))
-  }
+  var list = Seq.empty[ConferenceMenuItem]
   
+  // TODO - Add logic to find the smallest picture
   def findIconImage(pictures: Seq[Picture]): Option[String] =
     pictures.headOption map (_.url)
 
@@ -59,10 +58,17 @@ class ConferenceMenuAdapter(conferences: Seq[Information], listener: ConferenceM
     )
   }
   
+  def loadConferences(conferences: Seq[Information]) = {
+    list = conferences map { conference =>
+      ConferenceMenuItem(conference.id, conference.longName, findIconImage(conference.pictures), conference)
+    }
+    notifyDataSetChanged()
+  }
+  
 }
 
 trait ConferenceMenuClickListener {
-  def onClick(info: ConferenceMenuItem)
+  def onClick(conferenceMenuItem: ConferenceMenuItem)
 }
 
-case class ConferenceMenuItem(id: Int, name: String, icon: Option[String])
+case class ConferenceMenuItem(id: Int, name: String, icon: Option[String], information: Information)

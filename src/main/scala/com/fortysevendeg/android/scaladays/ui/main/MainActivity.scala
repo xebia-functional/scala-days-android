@@ -20,17 +20,15 @@ import android.content.res.Configuration
 import android.os.Bundle
 import android.support.v4.app.FragmentActivity
 import android.support.v7.app.{ActionBarActivity, ActionBarDrawerToggle}
-import android.support.v7.widget.LinearLayoutManager
 import android.view.{MenuItem, View}
 import com.fortysevendeg.android.scaladays.R
+import com.fortysevendeg.android.scaladays.ui.menu.MenuSection._
 import com.fortysevendeg.android.scaladays.ui.menu._
 import com.fortysevendeg.android.scaladays.ui.schedule.ScheduleFragment
 import com.fortysevendeg.android.scaladays.ui.speakers.SpeakersFragment
-import MenuSection._
 import com.fortysevendeg.macroid.extras.DrawerLayoutTweaks._
 import com.fortysevendeg.macroid.extras.FragmentExtras._
 import com.fortysevendeg.macroid.extras.ToolbarTweaks._
-import com.fortysevendeg.macroid.extras.RecyclerViewTweaks._
 import macroid.FullDsl._
 import macroid._
 
@@ -74,7 +72,6 @@ class MainActivity
           builder = f[MenuFragment],
           id = Id.menuFragment,
           tag = Some(Tag.menuFragment)))
-//      itemSelected(adapter.list.head)
     }
   }
 

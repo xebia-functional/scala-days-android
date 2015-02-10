@@ -3,13 +3,13 @@ package com.fortysevendeg.android.scaladays.ui.menu
 import android.app.Activity
 import android.os.Bundle
 import android.support.v4.app.Fragment
-import android.support.v7.widget.{RecyclerView, LinearLayoutManager}
+import android.support.v7.widget.LinearLayoutManager
 import android.view.{LayoutInflater, View, ViewGroup}
 import com.fortysevendeg.android.scaladays.R
-import com.fortysevendeg.android.scaladays.model.{Conference, Information}
+import com.fortysevendeg.android.scaladays.model.{Information, Conference}
 import com.fortysevendeg.android.scaladays.modules.ComponentRegistryImpl
 import com.fortysevendeg.android.scaladays.ui.commons.GlideTweaks._
-import com.fortysevendeg.android.scaladays.ui.commons.{EmptyAdapter, UiServices}
+import com.fortysevendeg.android.scaladays.ui.commons.UiServices
 import com.fortysevendeg.android.scaladays.ui.main.MainActivity
 import com.fortysevendeg.macroid.extras.RecyclerViewTweaks._
 import com.fortysevendeg.macroid.extras.TextTweaks._
@@ -30,17 +30,20 @@ class MenuFragment
   private var mainActivity: Option[MainActivity] = None
   
   lazy val mainMenuAdapter: MainMenuAdapter = new MainMenuAdapter(new MainMenuClickListener {
-    override def onClick(menuItem: MainMenuItem) =
-      itemSelected(menuItem)
+    override def onClick(mainMenuItem: MainMenuItem) =
+      itemSelected(mainMenuItem)
   })
   
-  private var conferenceMenuAdapter: Option[ConferenceMenuAdapter] = None
+  lazy val conferenceMenuAdapter: ConferenceMenuAdapter = new ConferenceMenuAdapter(new ConferenceMenuClickListener {
+    override def onClick(conferenceMenuItem: ConferenceMenuItem) =
+      conferenceSelected(conferenceMenuItem)
+  })
 
   private var mainMenuVisible: Boolean = true
   
-  private val emptyAdapter: RecyclerView.Adapter[RecyclerView.ViewHolder] = new EmptyAdapter
+  val colorTransitionTime = 400
 
-  override def onAttach(activity: Activity): Unit = {
+  override def onAttach(activity: Activity) = {
     super.onAttach(activity)
     mainActivity = Some(activity.asInstanceOf[MainActivity])
   }
@@ -54,7 +57,7 @@ class MenuFragment
     fLayout.content
   }
 
-  override def onViewCreated(view: View, savedInstanceState: Bundle): Unit = {
+  override def onViewCreated(view: View, savedInstanceState: Bundle) = {
     super.onViewCreated(view, savedInstanceState)
 
     for {
@@ -73,11 +76,14 @@ class MenuFragment
       )
     }
 
-    val conferenceSelected = 0 // TODO Use PersistentService
+    val conferenceId = 0 // TODO Use PersistentService
     
     loadConferences(
-      success = { root =>        
-        conferencesLoaded(root.conferences, if (root.conferences.length > conferenceSelected) conferenceSelected else 0)
+      success = { root =>
+        conferenceMenuAdapter.loadConferences(root.conferences map (_.info))
+        root.conferences find (_.info.id == conferenceId || conferenceId == 0) map { conf =>
+          showConference(conf.info)
+        }
       }
     )
   }
@@ -94,16 +100,12 @@ class MenuFragment
     } yield {
       mainMenuVisible = !mainMenuVisible
       if (mainMenuVisible) runUi(
-        (recyclerView <~ vBackgroundTransition(200, true)) ~
+        (recyclerView <~ vBackgroundTransition(durationMilis = colorTransitionTime, reverse = true)) ~
           (recyclerView <~ rvAdapter(mainMenuAdapter)))
       else runUi(
-        (recyclerView <~ vBackgroundTransition(200, false)) ~
-          (recyclerView <~ rvAdapter(conferenceMenuAdapter getOrElse emptyAdapter)))
+        (recyclerView <~ vBackgroundTransition(durationMilis = colorTransitionTime, reverse = false)) ~
+          (recyclerView <~ rvAdapter(conferenceMenuAdapter)))
     }
-  }
-
-  def getColor: (Int) => Int = {
-    appContextProvider.get.getResources.getColor
   }
 
   def itemSelected(menuItem: MainMenuItem) = {
@@ -111,21 +113,19 @@ class MenuFragment
     mainActivity map (_.itemSelected(menuItem.section, menuItem.name))
   }
   
-  def conferenceSelected(menuItem: ConferenceMenuItem) = {}
+  def conferenceSelected(menuItem: ConferenceMenuItem) = {
+    showConference(menuItem.information)
+  }
   
-  def conferencesLoaded(conferences: Seq[Conference], selected: Int) = {
+  def showConference(information: Information) = {
     for {
       layout <- fragmentLayout
       imageView <- layout.bigImage
       textView <- layout.conferenceTitle
     } yield {
-      conferenceMenuAdapter = Some(new ConferenceMenuAdapter(conferences map (_.info), new ConferenceMenuClickListener {
-        override def onClick(info: ConferenceMenuItem) = 
-          conferenceSelected(info)
-      }))
       runUi(
-        (imageView <~ glideCenterCrop(conferences(selected).info.pictures(0).url, R.drawable.placeholder_error)) ~
-          (textView <~ tvText(conferences(selected).info.longName))
+        (imageView <~ glideCenterCrop(information.pictures(0).url, R.drawable.placeholder_error)) ~
+          (textView <~ tvText(information.longName))
       )
     }
   }
