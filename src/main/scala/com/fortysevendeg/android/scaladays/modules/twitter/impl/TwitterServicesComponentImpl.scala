@@ -17,7 +17,6 @@
 package com.fortysevendeg.android.scaladays.modules.twitter.impl
 
 import android.content.{Context, SharedPreferences}
-import android.provider.SyncStateContract.Constants
 import com.fortysevendeg.android.scaladays.R
 import com.fortysevendeg.android.scaladays.scaladays.Service
 import com.fortysevendeg.macroid.extras.AppContextProvider
@@ -84,7 +83,7 @@ trait TwitterServicesComponentImpl
 
     override def getAuthenticationURL: Service[GetAuthenticationURLRequest, GetAuthenticationURLResponse] =
       request =>
-        Future.successful {
+        Future {
           Try {
             requestTokenOAuth.getAuthorizationURL
           } match {
@@ -95,7 +94,7 @@ trait TwitterServicesComponentImpl
 
     override def finalizeAuthentication: Service[FinalizeAuthenticationRequest, FinalizeAuthenticationResponse] =
       request =>
-        Future.successful {
+        Future {
           val verifier: String = request.uri.getQueryParameter("oauth_verifier")
           val accessTokenOAuth: AccessToken = twitterOAuth.getOAuthAccessToken(requestTokenOAuth, verifier)
           setAuthKey(accessTokenOAuth.getToken)
@@ -110,7 +109,7 @@ trait TwitterServicesComponentImpl
 
     override def search: Service[SearchRequest, SearchResponse] =
       request =>
-          Future.successful {
+          Future {
             val query: Query = new Query
             query.setQuery(request.search)
             query.setCount(100)

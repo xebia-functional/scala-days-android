@@ -36,7 +36,8 @@ trait CommonsStyles {
   val failedContentStyle = vWrapContent +
       flLayoutGravity(Gravity.CENTER) +
       llGravity(Gravity.CENTER_HORIZONTAL) +
-      llVertical
+      llVertical +
+      vGone
 
   val failedImageStyle = vWrapContent +
       ivSrc(R.drawable.placeholder_error)
