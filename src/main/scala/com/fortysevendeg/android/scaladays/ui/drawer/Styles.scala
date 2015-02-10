@@ -21,7 +21,7 @@ trait Styles {
   def drawerMenuStyle(implicit appContext: AppContext) = lp[AbsListView](MATCH_PARENT, MATCH_PARENT) +
     vBackgroundColorResource(R.color.background_menu)
 
-  def bigImageLayoutStyle(implicit appContext: AppContext) = lp[LinearLayout](MATCH_PARENT, 150 dp) +
+  def bigImageLayoutStyle(implicit appContext: AppContext) = lp[LinearLayout](MATCH_PARENT, 169 dp) +
     vBackgroundColorResource(R.color.background_header_menu)
   
   val bigImageStyle = vMatchParent
@@ -29,20 +29,23 @@ trait Styles {
   def bigImageActionLayout(implicit appContext: AppContext) = vMatchWidth +
     llGravity(Gravity.CENTER_VERTICAL) +
     flLayoutGravity(Gravity.BOTTOM) +
-    vPaddings(10 dp)
+    vPadding(16 dp, 15 dp, 16 dp, 15 dp)
   
   def conferenceTitleStyle(implicit appContext: AppContext) = llWrapWeightHorizontal +
-    tvSize(18) +
-    tvColor(Color.WHITE)
+    tvSize(14) +
+    tvColor(Color.WHITE) + 
+    tvBoldLight
 
   val conferenceSelectorStyle = vWrapContent +
     ivSrc(R.drawable.menu_header_select_arrow)
 
-  def menuItemStyle(implicit appContext: AppContext) = lp[AbsListView](MATCH_PARENT, 50 dp) +
-    tvSize(18) +
+  def menuItemStyle(implicit appContext: AppContext) = lp[AbsListView](MATCH_PARENT, 48 dp) +
+    tvSize(14) +
     tvColor(Color.WHITE) +
     tvGravity(Gravity.CENTER_VERTICAL) +
-    vPaddings(10 dp) +
-    tvDrawablePadding(10 dp)
+    vPadding(18 dp, 14 dp, 18 dp, 14 dp) +
+    tvDrawablePadding(34 dp) +
+    tvBoldLight +
+    vBackground(R.drawable.background_list_menu)
 
 }

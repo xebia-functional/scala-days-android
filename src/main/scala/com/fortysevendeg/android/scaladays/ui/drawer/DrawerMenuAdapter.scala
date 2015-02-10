@@ -16,28 +16,48 @@
 
 package com.fortysevendeg.android.scaladays.ui.drawer
 
+import android.graphics.Color
 import android.support.v7.widget.RecyclerView
 import android.view.View.OnClickListener
 import android.view.{View, ViewGroup}
 import com.fortysevendeg.android.scaladays.R
 import com.fortysevendeg.android.scaladays.utils.MenuSection.{MenuSection, _}
-import macroid.{ActivityContext, AppContext}
+import macroid.{IdGeneration, ActivityContext, AppContext}
 
 class DrawerMenuAdapter(listener: RecyclerClickListener)
     (implicit context: ActivityContext, appContext: AppContext)
-    extends RecyclerView.Adapter[ViewHolderMenuAdapter] {
+    extends RecyclerView.Adapter[ViewHolderMenuAdapter]
+    with IdGeneration {
+  
+  var selectedItem: Option[Int] = None
 
   val recyclerClickListener = listener
 
   val list = List(
-    DrawerMenuItem(appContext.app.getString(R.string.schedule), R.drawable.menu_icon_schedule, SCHEDULE),
-    DrawerMenuItem(appContext.app.getString(R.string.social), R.drawable.menu_icon_social, SAMPLE),
-    DrawerMenuItem(appContext.app.getString(R.string.speakers), R.drawable.menu_icon_speakers, SPEAKERS),
-    DrawerMenuItem(appContext.app.getString(R.string.tickets), R.drawable.menu_icon_tickets, SAMPLE),
-    DrawerMenuItem(appContext.app.getString(R.string.contacts), R.drawable.menu_icon_contact, SAMPLE),
-    DrawerMenuItem(appContext.app.getString(R.string.sponsors), R.drawable.menu_icon_sponsors, SAMPLE),
-    DrawerMenuItem(appContext.app.getString(R.string.places), R.drawable.menu_icon_places, SAMPLE),
-    DrawerMenuItem(appContext.app.getString(R.string.about), R.drawable.menu_icon_about, SAMPLE))
+    DrawerMenuItem(Id.schedule, 
+      appContext.app.getString(R.string.schedule), 
+      R.drawable.menu_icon_schedule, SCHEDULE),
+    DrawerMenuItem(Id.social, 
+      appContext.app.getString(R.string.social), 
+      R.drawable.menu_icon_social, SAMPLE),
+    DrawerMenuItem(Id.speaker, 
+      appContext.app.getString(R.string.speakers), 
+      R.drawable.menu_icon_speakers, SPEAKERS),
+    DrawerMenuItem(Id.tickets, 
+      appContext.app.getString(R.string.tickets), 
+      R.drawable.menu_icon_tickets, SAMPLE),
+    DrawerMenuItem(Id.contacts, 
+      appContext.app.getString(R.string.contacts), 
+      R.drawable.menu_icon_contact, SAMPLE),
+    DrawerMenuItem(Id.sponsors, 
+      appContext.app.getString(R.string.sponsors), 
+      R.drawable.menu_icon_sponsors, SAMPLE),
+    DrawerMenuItem(Id.places, 
+      appContext.app.getString(R.string.places), 
+      R.drawable.menu_icon_places, SAMPLE),
+    DrawerMenuItem(Id.about, 
+      appContext.app.getString(R.string.about), 
+      R.drawable.menu_icon_about, SAMPLE))
 
   override def onCreateViewHolder(parentViewGroup: ViewGroup, i: Int): ViewHolderMenuAdapter = {
     val adapter = new MenuAdapter()
@@ -54,8 +74,18 @@ class DrawerMenuAdapter(listener: RecyclerClickListener)
     viewHolder.content.setTag(position)
     viewHolder.title.map { textView =>
       textView.setText(demoInfo.name)
-      textView.setCompoundDrawablesWithIntrinsicBounds(demoInfo.icon, 0, 0, 0)
+      textView.setCompoundDrawablesWithIntrinsicBounds(demoInfo.icon, 0, 0, 0)      
     }
+    
+    selectedItem match {
+      case Some(p) if p == demoInfo.id => viewHolder.content.setChecked(true)
+      case _ => viewHolder.content.setChecked(false)
+    }
+  }
+  
+  def selectItem(itemId: Option[Int]) {
+    selectedItem = itemId
+    notifyDataSetChanged()
   }
 }
 
@@ -63,4 +93,4 @@ trait RecyclerClickListener {
   def onClick(info: DrawerMenuItem)
 }
 
-case class DrawerMenuItem(name: String, icon: Int, section: MenuSection)
+case class DrawerMenuItem(id: Int, name: String, icon: Int, section: MenuSection)

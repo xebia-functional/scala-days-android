@@ -1,7 +1,7 @@
 package com.fortysevendeg.android.scaladays.ui.drawer
 
 import android.support.v7.widget.RecyclerView
-import android.widget.{ImageView, TextView, FrameLayout, LinearLayout}
+import android.widget._
 import macroid.FullDsl._
 import macroid.{ActivityContext, AppContext}
 
@@ -34,15 +34,14 @@ class Layout(implicit appContext: AppContext, context: ActivityContext)
   def layout = content
 }
 
-class MenuAdapter(implicit context: ActivityContext, appContext: AppContext)
-  extends Styles {
+class MenuAdapter(implicit context: ActivityContext, appContext: AppContext) extends Styles {
 
   var menuItem = slot[TextView]
 
   val content = layout
 
   private def layout(implicit appContext: AppContext, context: ActivityContext) = getUi(
-    w[TextView] <~ wire(menuItem) <~ menuItemStyle)
+    w[CheckedTextView] <~ wire(menuItem) <~ menuItemStyle)
 }
 
 class ViewHolderMenuAdapter(adapter: MenuAdapter)(implicit context: ActivityContext, appContext: AppContext)

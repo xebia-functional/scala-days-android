@@ -28,6 +28,8 @@ class MenuFragment
   private var fragmentLayout: Option[Layout] = None
   
   private var mainActivity: Option[MainActivity] = None
+  
+  private var drawerMenuAdapter: Option[DrawerMenuAdapter] = None
 
   override def onAttach(activity: Activity): Unit = {
     super.onAttach(activity)
@@ -50,15 +52,16 @@ class MenuFragment
       layout <- fragmentLayout
       recyclerView <- layout.recyclerView
     } yield {
-      val adapter = new DrawerMenuAdapter(new RecyclerClickListener {
-        override def onClick(info: DrawerMenuItem): Unit = {
-          mainActivity map (_.itemSelected(info.section, info.name))
+      val adapter: DrawerMenuAdapter = new DrawerMenuAdapter(new RecyclerClickListener {
+        override def onClick(menuItem: DrawerMenuItem): Unit = {
+          itemSelected(menuItem)
         }
       })
-      val defaultSection = adapter.list(0)
+      drawerMenuAdapter = Some(adapter)
+      val defaultSection = 0
       runUi(        
         (layout.recyclerView <~ rvAdapter(adapter)) ~
-        Ui { mainActivity map (_.itemSelected(defaultSection.section, defaultSection.name)) }
+        Ui { itemSelected(adapter.list(defaultSection)) }
       )
     }
 
@@ -84,6 +87,11 @@ class MenuFragment
   override def onDetach(): Unit = {
     mainActivity = None
     super.onDetach()
+  }
+  
+  def itemSelected(menuItem: DrawerMenuItem) = {
+    drawerMenuAdapter map (_.selectItem(Some(menuItem.id)))
+    mainActivity map (_.itemSelected(menuItem.section, menuItem.name))
   }
 
   def failed() = {}

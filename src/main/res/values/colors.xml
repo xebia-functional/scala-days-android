@@ -27,6 +27,9 @@
 
     <!-- Menu -->
     <color name="background_menu">#364550</color>
+    <color name="background_menu_item">#00000000</color>
+    <color name="background_menu_item_pressed">#2F3C46</color>
+    <color name="background_menu_item_selected">#2F3C46</color>
     <color name="background_header_menu">#FFFFFF</color>
 
     <!-- Lists -->
