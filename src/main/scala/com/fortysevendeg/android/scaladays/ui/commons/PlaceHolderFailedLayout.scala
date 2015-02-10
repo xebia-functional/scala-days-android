@@ -14,13 +14,23 @@
  *  limitations under the License.
  */
 
-package com.fortysevendeg.android.scaladays.modules
+package com.fortysevendeg.android.scaladays.ui.commons
 
-import com.fortysevendeg.android.scaladays.modules.json.JsonServicesComponent
-import com.fortysevendeg.android.scaladays.modules.net.NetServicesComponent
-import com.fortysevendeg.android.scaladays.modules.twitter.TwitterServicesComponent
+import android.widget.{Button, ImageView, LinearLayout, TextView}
+import macroid.{ActivityContext, AppContext}
+import macroid.FullDsl._
 
-trait ComponentRegistry
-    extends JsonServicesComponent
-    with NetServicesComponent
-    with TwitterServicesComponent
+trait PlaceHolderFailedLayout
+    extends CommonsStyles {
+
+  var reloadButton = slot[Button]
+
+  def placeholderFailed(message: Int)(implicit appContext: AppContext, context: ActivityContext) = {
+    l[LinearLayout](
+      w[ImageView] <~ failedImageStyle,
+      w[TextView] <~ failedMessageStyle(message),
+      w[Button] <~ failedButtonStyle <~ wire(reloadButton)
+    ) <~ failedContentStyle
+  }
+
+}

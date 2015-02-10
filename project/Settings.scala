@@ -21,7 +21,9 @@ object Settings {
     "-ignorewarnings",
     "-keep class scala.Dynamic",
     "-keep class com.fortysevendeg.** { *; }",
+    "-keep class twitter4j.** { *; }",
     "-keep class org.joda.** { *; }",
+    "-keep class org.ocpsoft.prettytime.i18n.**",
     "-keep class macroid.** { *; }",
     "-keep class android.** { *; }",
     "-keep class com.google.** { *; }")

@@ -90,5 +90,4 @@ case class ApiSpeaker(
 case class ApiVenues(
   name: String,
   address: String,
-  website: String,
-  map: String)
+  website: String)

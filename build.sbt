@@ -3,6 +3,8 @@ import Libraries.macroid._
 import Libraries.json._
 import Libraries.test._
 import Libraries.graphics._
+import Libraries.social._
+import Libraries.date._
 
 android.Plugin.androidBuild
 
@@ -35,6 +37,8 @@ libraryDependencies ++= Seq(
   playJson,
   specs2,
   glide,
+  twitter4j,
+  prettytime,
   compilerPlugin(Libraries.wartRemover))
 
 run <<= run in Android

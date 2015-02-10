@@ -14,13 +14,19 @@
  *  limitations under the License.
  */
 
-package com.fortysevendeg.android.scaladays.modules
+package com.fortysevendeg.android.scaladays.modules.twitter
 
-import com.fortysevendeg.android.scaladays.modules.json.JsonServicesComponent
-import com.fortysevendeg.android.scaladays.modules.net.NetServicesComponent
-import com.fortysevendeg.android.scaladays.modules.twitter.TwitterServicesComponent
+import android.net.Uri
+import com.fortysevendeg.android.scaladays.model.TwitterMessage
 
-trait ComponentRegistry
-    extends JsonServicesComponent
-    with NetServicesComponent
-    with TwitterServicesComponent
+case class GetAuthenticationURLRequest()
+
+case class GetAuthenticationURLResponse(url: Option[String])
+
+case class FinalizeAuthenticationRequest(uri: Uri)
+
+case class FinalizeAuthenticationResponse()
+
+case class SearchRequest(search: String)
+
+case class SearchResponse(messages: Seq[TwitterMessage])

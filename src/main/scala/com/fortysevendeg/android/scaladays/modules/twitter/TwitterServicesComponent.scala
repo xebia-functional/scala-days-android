@@ -14,13 +14,19 @@
  *  limitations under the License.
  */
 
-package com.fortysevendeg.android.scaladays.modules
+package com.fortysevendeg.android.scaladays.modules.twitter
+import com.fortysevendeg.android.scaladays.scaladays.Service
 
-import com.fortysevendeg.android.scaladays.modules.json.JsonServicesComponent
-import com.fortysevendeg.android.scaladays.modules.net.NetServicesComponent
-import com.fortysevendeg.android.scaladays.modules.twitter.TwitterServicesComponent
+import scala.util.Try
 
-trait ComponentRegistry
-    extends JsonServicesComponent
-    with NetServicesComponent
-    with TwitterServicesComponent
+trait TwitterServices {
+  def isConnected(): Boolean
+  def disconnected(): Unit
+  def getAuthenticationURL: Service[GetAuthenticationURLRequest, GetAuthenticationURLResponse]
+  def finalizeAuthentication: Service[FinalizeAuthenticationRequest, FinalizeAuthenticationResponse]
+  def search: Service[SearchRequest, SearchResponse]
+}
+
+trait TwitterServicesComponent {
+  val twitterServices: TwitterServices
+}

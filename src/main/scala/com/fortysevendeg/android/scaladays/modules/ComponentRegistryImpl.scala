@@ -18,6 +18,7 @@ package com.fortysevendeg.android.scaladays.modules
 
 import com.fortysevendeg.android.scaladays.modules.json.impl.JsonServicesComponentImpl
 import com.fortysevendeg.android.scaladays.modules.net.impl.NetServicesComponentImpl
+import com.fortysevendeg.android.scaladays.modules.twitter.impl.TwitterServicesComponentImpl
 import com.fortysevendeg.macroid.extras.AppContextProvider
 
 trait ComponentRegistryImpl
@@ -25,3 +26,4 @@ trait ComponentRegistryImpl
     with AppContextProvider
     with NetServicesComponentImpl
     with JsonServicesComponentImpl
+    with TwitterServicesComponentImpl

@@ -14,13 +14,24 @@
  *  limitations under the License.
  */
 
-package com.fortysevendeg.android.scaladays.modules
+package com.fortysevendeg.android.scaladays.modules.twitter
 
-import com.fortysevendeg.android.scaladays.modules.json.JsonServicesComponent
-import com.fortysevendeg.android.scaladays.modules.net.NetServicesComponent
-import com.fortysevendeg.android.scaladays.modules.twitter.TwitterServicesComponent
+import com.fortysevendeg.android.scaladays.model.TwitterMessage
+import org.joda.time.DateTime
+import twitter4j.Status
 
-trait ComponentRegistry
-    extends JsonServicesComponent
-    with NetServicesComponent
-    with TwitterServicesComponent
+trait TwitterConversions {
+
+  def toSeqTwitterMessage(statuses: List[Status]) =
+    statuses map toTwitterMessage
+
+  def toTwitterMessage(status: Status) =
+    TwitterMessage(
+      id = status.getId,
+      fullName = status.getUser.getName,
+      screenName = status.getUser.getScreenName,
+      date = new DateTime(status.getCreatedAt),
+      message = status.getText,
+      avatar = status.getUser.getBiggerProfileImageURL)
+
+}

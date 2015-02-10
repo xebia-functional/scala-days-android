@@ -80,3 +80,11 @@ case class Speaker(
   twitter: Option[String],
   picture: Option[String],
   bio: String)
+
+case class TwitterMessage(
+    id: Long,
+    fullName: String,
+    screenName: String,
+    date: DateTime,
+    message: String,
+    avatar: String)

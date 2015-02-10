@@ -14,13 +14,10 @@
  *  limitations under the License.
  */
 
-package com.fortysevendeg.android.scaladays.modules
+package com.fortysevendeg.android.scaladays.ui.commons
 
-import com.fortysevendeg.android.scaladays.modules.json.JsonServicesComponent
-import com.fortysevendeg.android.scaladays.modules.net.NetServicesComponent
-import com.fortysevendeg.android.scaladays.modules.twitter.TwitterServicesComponent
+case class ConferenceSelectedNotFoundException(conferenceId: Int)
+    extends RuntimeException("Conference %d not found".format(conferenceId))
 
-trait ComponentRegistry
-    extends JsonServicesComponent
-    with NetServicesComponent
-    with TwitterServicesComponent
+case class InvalidJsonConferenceException(conferenceId: Int)
+    extends RuntimeException("Json for conference %d invalid".format(conferenceId))

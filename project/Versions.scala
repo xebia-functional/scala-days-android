@@ -11,4 +11,6 @@ object Versions {
   val playJsonV = "2.3.4"
   val specs2V = "2.4.15"
   val glideV = "3.5.1"
+  val twitter4jV = "4.0.2"
+  val prettytimeV = "3.2.7.Final"
 }
