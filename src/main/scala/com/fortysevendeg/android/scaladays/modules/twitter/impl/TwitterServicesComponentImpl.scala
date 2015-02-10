@@ -84,7 +84,7 @@ trait TwitterServicesComponentImpl
 
     override def getAuthenticationURL: Service[GetAuthenticationURLRequest, GetAuthenticationURLResponse] =
       request =>
-        Future {
+        Future.successful {
           Try {
             requestTokenOAuth.getAuthorizationURL
           } match {
@@ -95,7 +95,7 @@ trait TwitterServicesComponentImpl
 
     override def finalizeAuthentication: Service[FinalizeAuthenticationRequest, FinalizeAuthenticationResponse] =
       request =>
-        Future {
+        Future.successful {
           val verifier: String = request.uri.getQueryParameter("oauth_verifier")
           val accessTokenOAuth: AccessToken = twitterOAuth.getOAuthAccessToken(requestTokenOAuth, verifier)
           setAuthKey(accessTokenOAuth.getToken)
@@ -110,7 +110,7 @@ trait TwitterServicesComponentImpl
 
     override def search: Service[SearchRequest, SearchResponse] =
       request =>
-          Future {
+          Future.successful {
             val query: Query = new Query
             query.setQuery(request.search)
             query.setCount(100)
@@ -120,7 +120,6 @@ trait TwitterServicesComponentImpl
                 val statuses = twitter.search(query).getTweets().asScala.toList
                 SearchResponse(toSeqTwitterMessage(statuses))
             }).getOrElse(SearchResponse(Seq.empty))
-
           }
   }
 

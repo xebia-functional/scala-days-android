@@ -32,7 +32,6 @@ trait TwitterConversions {
       screenName = status.getUser.getScreenName,
       date = new DateTime(status.getCreatedAt),
       message = status.getText,
-      avatar = status.getUser.getBiggerProfileImageURL
-    )
+      avatar = status.getUser.getBiggerProfileImageURL)
 
 }

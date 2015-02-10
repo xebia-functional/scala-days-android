@@ -46,19 +46,19 @@ class AuthorizationActivity
 
   val webViewClient: WebViewClient = new WebViewClient {
     override def onLoadResource(view: WebView, url: String) {
-      val uri: Uri = Uri.parse(url)
-      if (uri != null && (uri.getHost == twitterHost)) {
-        val token: String = uri.getQueryParameter("oauth_token")
-        if (null != token) {
-          showRedirecting
-          twitterServices.finalizeAuthentication(FinalizeAuthenticationRequest(uri)) map {
-            case FinalizeAuthenticationResponse() => success()
-            case _ => failed()
+      Option(Uri.parse(url)) map {
+        case uri if uri.getHost == twitterHost =>
+          val token: String = uri.getQueryParameter("oauth_token")
+          if (null != token) {
+            showRedirecting
+            twitterServices.finalizeAuthentication(FinalizeAuthenticationRequest(uri)) map {
+              case FinalizeAuthenticationResponse() => success()
+              case _ => failed()
+            }
           }
-        }
-      } else {
-        super.onLoadResource(view, url)
+        case _ => super.onLoadResource(view, url)
       }
+
     }
     override def onReceivedSslError(view: WebView, handler: SslErrorHandler, error: SslError) {
       handler.proceed
@@ -109,8 +109,7 @@ class AuthorizationActivity
   def showRedirecting = {
     runUi(
       (progressBar <~ vVisible) ~
-          (webView <~ vGone)
-    )
+          (webView <~ vGone))
   }
 
 }

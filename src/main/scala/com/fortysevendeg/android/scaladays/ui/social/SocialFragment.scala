@@ -56,8 +56,7 @@ class SocialFragment
           <~ rvAddItemDecoration(new LineItemDecorator())) ~
           (fLayout.reloadButton <~ On.click(Ui {
             search()
-          }))
-    )
+          })))
     fLayout.content
   }
 
@@ -77,9 +76,9 @@ class SocialFragment
     requestCode match {
       case request if request == authResult =>
         resultCode match {
-          case result if result == Activity.RESULT_OK =>
+          case Activity.RESULT_OK =>
             search()
-          case result if result == Activity.RESULT_CANCELED =>
+          case Activity.RESULT_CANCELED =>
             failed()
         }
     }
@@ -100,12 +99,12 @@ class SocialFragment
 
     val response = (for {
       json <- saveJsonOp
-      searchResponse <- json.map {
+      searchResponse <- (json map {
         case Root(list) if list.length > conferenceSelected =>
           val conference = list(conferenceSelected)
           twitterServices.search(SearchRequest(conference.info.hashTag))
         case _ => throw ConferenceSelectedNotFoundException(conferenceSelected)
-      }.getOrElse(throw InvalidJsonConferenceException(conferenceSelected))
+      }).getOrElse(throw InvalidJsonConferenceException(conferenceSelected))
     } yield reloadList(searchResponse.messages)) recover {
       case _ => failed()
     }
@@ -117,8 +116,7 @@ class SocialFragment
         runUi(
           (layout.progressBar <~ vVisible) ~
               (layout.recyclerView <~ vGone) ~
-              (layout.failedContent <~ vGone)
-        )
+              (layout.failedContent <~ vGone))
     }
   }
 
@@ -128,8 +126,7 @@ class SocialFragment
         runUi(
           (layout.progressBar <~ vGone) ~
               (layout.recyclerView <~ vGone) ~
-              (layout.failedContent <~ vVisible)
-        )
+              (layout.failedContent <~ vVisible))
     }
   }
 
@@ -151,8 +148,7 @@ class SocialFragment
           runUi(
             (layout.progressBar <~ vGone) ~
                 (layout.failedContent <~ vGone) ~
-                (layout.recyclerView <~ vVisible <~ rvAdapter(adapter))
-          )
+                (layout.recyclerView <~ vVisible <~ rvAdapter(adapter)))
         }
     }
   }

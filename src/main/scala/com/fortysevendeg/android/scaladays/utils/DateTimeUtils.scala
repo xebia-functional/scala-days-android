@@ -63,8 +63,6 @@ object DateTimeUtils {
     "%s (%s %s) %s".format(dayOfWeek, dayOfMonth, monthOfYear, hour)
   }
 
-  def parsePrettyTime(dateTime: DateTime): String = {
-    new PrettyTime().format(dateTime.toDate)
-  }
+  def parsePrettyTime(dateTime: DateTime): String = new PrettyTime().format(dateTime.toDate)
 
 }

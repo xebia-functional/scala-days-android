@@ -32,9 +32,9 @@ import macroid.FullDsl._
 
 import scala.language.postfixOps
 
-trait Styles {
+trait Styles extends FragmentStyles with AdapterStyles with AuthorizationStyles
 
-  // Styles for Fragment
+trait FragmentStyles {
 
   val rootStyle = vMatchParent
 
@@ -44,7 +44,9 @@ trait Styles {
   val progressBarStyle = vWrapContent +
       flLayoutGravity(Gravity.CENTER)
 
-  // Styles for Adapter
+}
+
+trait AdapterStyles {
 
   def itemContentStyle(implicit appContext: AppContext) = vMatchParent +
       llHorizontal +
@@ -78,7 +80,9 @@ trait Styles {
       tvColorResource(R.color.text_title_default) +
       vPadding(0, 4 dp, 0, 0)
 
-  // Styles for Authorization Layout
+}
+
+trait AuthorizationStyles {
 
   val rootAuthStyle = vMatchParent
 
@@ -87,7 +91,6 @@ trait Styles {
   val progressBarAuthStyle = vWrapContent +
       flLayoutGravity(Gravity.CENTER) +
       vGone
-
 
 }
 

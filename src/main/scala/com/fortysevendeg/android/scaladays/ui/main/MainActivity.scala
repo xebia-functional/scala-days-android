@@ -84,9 +84,8 @@ class MainActivity
     }
   }
 
-  override def onActivityResult(requestCode: Int, resultCode: Int, data: Intent): Unit = {
+  override def onActivityResult(requestCode: Int, resultCode: Int, data: Intent): Unit =
     super.onActivityResult(requestCode, resultCode, data)
-  }
 
   private def itemSelected(info: DrawerMenuItem) {
     val builder = info.section match {
