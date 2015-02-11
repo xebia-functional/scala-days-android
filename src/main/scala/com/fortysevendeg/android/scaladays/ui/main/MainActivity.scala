@@ -57,6 +57,7 @@ class MainActivity
         override def onDrawerClosed(drawerView: View): Unit = {
           super.onDrawerClosed(drawerView)
           invalidateOptionsMenu()
+          findFragmentById[MenuFragment](Id.menuFragment) map (_.showMainMenu)
         }
 
         override def onDrawerOpened(drawerView: View): Unit = {
@@ -80,12 +81,12 @@ class MainActivity
   override def onActivityResult(requestCode: Int, resultCode: Int, data: Intent): Unit =
     super.onActivityResult(requestCode, resultCode, data)
 
-  private def itemSelected(info: DrawerMenuItem) {
-    val builder = info.section match {
+  def itemSelected(section: MenuSection.Value, title: String) {
+    val builder = section match {
       case SPEAKERS => f[SpeakersFragment]
       case SCHEDULE => f[ScheduleFragment]
       case SOCIAL => f[SocialFragment]
-      case _ => f[SampleFragment].pass(SampleFragment.titleArg → info.name)
+      case _ => f[SampleFragment].pass(SampleFragment.titleArg → title)
     }
     runUi(
       (toolBar <~ tbTitle(title)) ~

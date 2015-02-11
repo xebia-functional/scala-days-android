@@ -30,7 +30,7 @@ class MainMenuAdapter(listener: MainMenuClickListener)
     extends RecyclerView.Adapter[ViewHolderMainMenuAdapter]
     with IdGeneration {
   
-  var selectedItem: Option[Int] = None
+  var selectedItem: Option[MainMenuItem] = None
 
   val recyclerClickListener = listener
 
@@ -78,13 +78,13 @@ class MainMenuAdapter(listener: MainMenuClickListener)
     )
     
     selectedItem match {
-      case Some(p) if p == mainMenuItem.id => viewHolder.content.setChecked(true)
+      case Some(menuItem) if menuItem.id == mainMenuItem.id => viewHolder.content.setChecked(true)
       case _ => viewHolder.content.setChecked(false)
     }
   }
   
-  def selectItem(itemId: Option[Int]) {
-    selectedItem = itemId
+  def selectItem(menuItem: Option[MainMenuItem]) {
+    selectedItem = menuItem
     notifyDataSetChanged()
   }
 }

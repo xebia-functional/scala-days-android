@@ -107,14 +107,18 @@ class MenuFragment
           (recyclerView <~ rvAdapter(conferenceMenuAdapter)))
     }
   }
+  
+  def showMainMenu = 
+    if (!mainMenuVisible) toggleMenu()
 
   def itemSelected(menuItem: MainMenuItem) = {
-    mainMenuAdapter.selectItem(Some(menuItem.id))
+    mainMenuAdapter.selectItem(Some(menuItem))
     mainActivity map (_.itemSelected(menuItem.section, menuItem.name))
   }
   
   def conferenceSelected(menuItem: ConferenceMenuItem) = {
     showConference(menuItem.information)
+    mainMenuAdapter.selectedItem map itemSelected
   }
   
   def showConference(information: Information) = {
