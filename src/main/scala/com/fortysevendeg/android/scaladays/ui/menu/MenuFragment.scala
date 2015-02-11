@@ -6,7 +6,7 @@ import android.support.v4.app.Fragment
 import android.support.v7.widget.LinearLayoutManager
 import android.view.{LayoutInflater, View, ViewGroup}
 import com.fortysevendeg.android.scaladays.R
-import com.fortysevendeg.android.scaladays.model.{Information, Conference}
+import com.fortysevendeg.android.scaladays.model.Information
 import com.fortysevendeg.android.scaladays.modules.ComponentRegistryImpl
 import com.fortysevendeg.android.scaladays.ui.commons.GlideTweaks._
 import com.fortysevendeg.android.scaladays.ui.commons.UiServices
@@ -16,6 +16,8 @@ import com.fortysevendeg.macroid.extras.TextTweaks._
 import com.fortysevendeg.macroid.extras.ViewTweaks._
 import macroid.FullDsl._
 import macroid._
+
+import scala.concurrent.ExecutionContext.Implicits.global
 
 class MenuFragment
   extends Fragment
@@ -75,25 +77,29 @@ class MenuFragment
         Ui { itemSelected(mainMenuAdapter.list(defaultSection)) }
       )
     }
-
-    val conferenceId = 0 // TODO Use PersistentService
     
-    loadConferences(
-      success = { root =>
-        conferenceMenuAdapter.loadConferences(root.conferences map (_.info))
-        root.conferences find (_.info.id == conferenceId || conferenceId == 0) map { conf =>
-          showConference(conf.info)
-        }
-      }
-    )
+    val conferenceId = loadSelectedConferenceId
+    val result = for {
+      conferences <- loadConferences()
+      selectedConference <- findConference(conferences, conferenceId)
+    } yield {
+      conferenceMenuAdapter.loadConferences(conferences map (_.info))
+      showConference(selectedConference.info)
+    }
+
+    result.recover {
+      case _ => failed()
+    }
   }
+
+  def failed() = {}
 
   override def onDetach(): Unit = {
     mainActivity = None
     super.onDetach()
   }
   
-  def toggleMenu() = {
+  def toggleMenu() =
     for {
       layout <- fragmentLayout
       recyclerView <- layout.recyclerView
@@ -106,7 +112,6 @@ class MenuFragment
         (recyclerView <~ vBackgroundTransition(durationMilis = colorTransitionTime, reverse = false)) ~
           (recyclerView <~ rvAdapter(conferenceMenuAdapter)))
     }
-  }
   
   def showMainMenu = 
     if (!mainMenuVisible) toggleMenu()
@@ -118,20 +123,20 @@ class MenuFragment
   
   def conferenceSelected(menuItem: ConferenceMenuItem) = {
     showConference(menuItem.information)
+    saveSelectedConferenceId(menuItem.id)
     mainMenuAdapter.selectedItem map itemSelected
   }
   
-  def showConference(information: Information) = {
+  def showConference(information: Information) =
     for {
       layout <- fragmentLayout
       imageView <- layout.bigImage
       textView <- layout.conferenceTitle
     } yield {
       runUi(
-        (imageView <~ glideCenterCrop(information.pictures(0).url, R.drawable.placeholder_error)) ~
+        (imageView <~ glideCenterCrop(information.pictures(0).url, R.drawable.placeholder_circle)) ~
           (textView <~ tvText(information.longName))
       )
     }
-  }
 
 }

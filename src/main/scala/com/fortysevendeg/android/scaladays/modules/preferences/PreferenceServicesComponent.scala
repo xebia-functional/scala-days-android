@@ -14,15 +14,15 @@
  *  limitations under the License.
  */
 
-package com.fortysevendeg.android.scaladays.modules
+package com.fortysevendeg.android.scaladays.modules.preferences
 
-import com.fortysevendeg.android.scaladays.modules.json.JsonServicesComponent
-import com.fortysevendeg.android.scaladays.modules.net.NetServicesComponent
-import com.fortysevendeg.android.scaladays.modules.preferences.PreferenceServicesComponent
-import com.fortysevendeg.android.scaladays.modules.twitter.TwitterServicesComponent
+trait PreferenceServices {
+  
+  def fetchIntPreference(request: PreferenceRequest[Int]): PreferenceResponse[Int]
+  
+  def saveIntPreference(request: PreferenceRequest[Int]): PreferenceResponse[Int]
+}
 
-trait ComponentRegistry
-    extends PreferenceServicesComponent
-    with JsonServicesComponent
-    with NetServicesComponent
-    with TwitterServicesComponent
+trait PreferenceServicesComponent {
+  val preferenceServices: PreferenceServices
+}

@@ -26,8 +26,8 @@ import com.fortysevendeg.android.scaladays.model.Speaker
 import com.fortysevendeg.android.scaladays.modules.ComponentRegistryImpl
 import com.fortysevendeg.android.scaladays.modules.json.JsonRequest
 import com.fortysevendeg.android.scaladays.modules.net.NetRequest
-import com.fortysevendeg.android.scaladays.ui.commons.LineItemDecorator
-import macroid.{AppContext, Contexts}
+import com.fortysevendeg.android.scaladays.ui.commons.{UiServices, LineItemDecorator}
+import macroid.{Ui, AppContext, Contexts}
 import scala.concurrent.ExecutionContext.Implicits.global
 import macroid.FullDsl._
 import com.fortysevendeg.macroid.extras.ViewTweaks._
@@ -37,7 +37,8 @@ import com.fortysevendeg.macroid.extras.ActionsExtras._
 class SpeakersFragment
     extends Fragment
     with Contexts[Fragment]
-    with ComponentRegistryImpl {
+    with ComponentRegistryImpl
+    with UiServices {
 
   override implicit lazy val appContextProvider: AppContext = fragmentAppContext
 
@@ -56,15 +57,21 @@ class SpeakersFragment
 
   override def onViewCreated(view: View, savedInstanceState: Bundle): Unit = {
     super.onViewCreated(view, savedInstanceState)
-    (for {
-      _ <- netServices.saveJsonInLocal(NetRequest(false))
-      jsonResponse <- jsonServices.loadJson(JsonRequest())
-    } yield {
-      jsonResponse.apiResponse
-    }).map(_ map (api => reloadList(api.conferences(0).speakers))).recover {
-      case _ => aShortToast("error")
+    val result = for {
+      conference <- loadSelectedConference()
+    } yield reloadList(conference.speakers)
+
+    result.recover {
+      case _ => failed()
     }
   }
+  
+  def failed() = {
+    for {
+      layout <- fragmentLayout
+    } yield runUi(layout.progressBar <~ vGone)
+    runUi(Ui(aShortToast("error")))
+  } // TODO show failed screen
 
   def reloadList(speakers: Seq[Speaker]) = {
     for {

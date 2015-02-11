@@ -19,5 +19,8 @@ package com.fortysevendeg.android.scaladays.ui.commons
 case class ConferenceSelectedNotFoundException(conferenceId: Int)
     extends RuntimeException("Conference %d not found".format(conferenceId))
 
-case class InvalidJsonConferenceException(conferenceId: Int)
-    extends RuntimeException("Json for conference %d invalid".format(conferenceId))
+case class ConferenceSequenceEmptyException()
+    extends RuntimeException("Conference sequence empty")
+
+case class InvalidJsonException()
+    extends RuntimeException("Json load failed")
