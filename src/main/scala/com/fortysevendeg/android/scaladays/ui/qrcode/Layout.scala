@@ -14,12 +14,25 @@
  *  limitations under the License.
  */
 
-package com.fortysevendeg.android.scaladays.utils
+package com.fortysevendeg.android.scaladays.ui.qrcode
 
-object MenuSection extends Enumeration {
+import android.widget._
+import macroid.FullDsl._
+import macroid.{ActivityContext, AppContext}
 
-  type MenuSection = Value
+class Layout(implicit appContext: AppContext, context: ActivityContext)
+    extends Styles {
 
-  val SAMPLE, SPEAKERS, SCHEDULE, SOCIAL, CONTACTS = Value
+  var scanButton = slot[Button]
+
+  val content = getUi(
+    l[LinearLayout](
+      w[ImageView] <~ qrImageStyle,
+      w[TextView] <~ qrMessageStyle,
+      w[Button] <~ qrButtonStyle <~ wire(scanButton)
+    ) <~ qrContentStyle
+  )
+
+  def layout = content
 
 }

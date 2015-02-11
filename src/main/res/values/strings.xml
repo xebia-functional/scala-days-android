@@ -36,6 +36,10 @@
     <string name="generalMessageError">There was an error. Try again</string>
     <string name="reload">Reload</string>
 
+    <string name="scanMessage">You can scan the QR Code in the conference and add it to your contacts</string>
+    <string name="scan">Scan</string>
+    <string name="scanError">QR Code is not a VCard type</string>
+
     <string name="dayOfWeek0">Sunday</string>
     <string name="dayOfWeek1">Monday</string>
     <string name="dayOfWeek2">Tuesday</string>
