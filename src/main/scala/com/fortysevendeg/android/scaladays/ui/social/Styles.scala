@@ -32,8 +32,6 @@ import macroid.FullDsl._
 
 import scala.language.postfixOps
 
-trait Styles extends FragmentStyles with AdapterStyles with AuthorizationStyles
-
 trait FragmentStyles {
 
   val rootStyle = vMatchParent

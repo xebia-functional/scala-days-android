@@ -26,7 +26,7 @@ import scala.language.postfixOps
 
 trait Layout
     extends ToolbarLayout
-    with Styles {
+    with ActivityStyles {
 
   var titleToolbar = slot[TextView]
 
@@ -69,7 +69,7 @@ trait Layout
 }
 
 class SpeakersDetailLayout(speaker: Speaker)(implicit context: ActivityContext, appContext: AppContext)
-    extends Styles {
+    extends SpeakersDetailStyles {
 
   val content = layout
 

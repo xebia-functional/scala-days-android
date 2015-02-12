@@ -28,6 +28,7 @@ import com.fortysevendeg.android.scaladays.ui.qrcode.QrCodeFragment
 import com.fortysevendeg.android.scaladays.ui.schedule.ScheduleFragment
 import com.fortysevendeg.android.scaladays.ui.social.SocialFragment
 import com.fortysevendeg.android.scaladays.ui.speakers.SpeakersFragment
+import com.fortysevendeg.android.scaladays.ui.sponsors.SponsorsFragment
 import com.fortysevendeg.android.scaladays.utils.MenuSection._
 import com.fortysevendeg.macroid.extras.DrawerLayoutTweaks._
 import com.fortysevendeg.macroid.extras.FragmentExtras._
@@ -94,6 +95,7 @@ class MainActivity
       case SCHEDULE => f[ScheduleFragment]
       case SOCIAL => f[SocialFragment]
       case CONTACTS => f[QrCodeFragment]
+      case SPONSORS => f[SponsorsFragment]
       case _ => f[SampleFragment].pass(SampleFragment.titleArg → info.name)
     }
     runUi(

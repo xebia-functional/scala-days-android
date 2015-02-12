@@ -51,6 +51,14 @@ object GlideTweaks {
           .into(imageView)
     }
   )
+
+  def glideSrc(url: String)(implicit appContext: AppContext): Tweak[W] = Tweak[W](
+    imageView => {
+      Glide.`with`(appContext.get)
+          .load(url)
+          .into(imageView)
+    }
+  )
 }
 
 object DateTimeTextViewTweaks {

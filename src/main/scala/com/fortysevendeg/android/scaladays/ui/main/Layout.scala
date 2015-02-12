@@ -68,9 +68,9 @@ class MenuAdapter(implicit context: ActivityContext, appContext: AppContext)
 class ViewHolderMenuAdapter(adapter: MenuAdapter)(implicit context: ActivityContext, appContext: AppContext)
     extends RecyclerView.ViewHolder(adapter.content) {
 
-  var content = adapter.content
+  val content = adapter.content
 
-  var title = adapter.menuItem
+  val title = adapter.menuItem
 
 }
 
