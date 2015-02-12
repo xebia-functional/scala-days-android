@@ -35,7 +35,7 @@ class DrawerMenuAdapter(listener: RecyclerClickListener)
     DrawerMenuItem(appContext.app.getString(R.string.social), R.drawable.menu_icon_social, SOCIAL),
     DrawerMenuItem(appContext.app.getString(R.string.speakers), R.drawable.menu_icon_speakers, SPEAKERS),
     DrawerMenuItem(appContext.app.getString(R.string.tickets), R.drawable.menu_icon_tickets, SAMPLE),
-    DrawerMenuItem(appContext.app.getString(R.string.contacts), R.drawable.menu_icon_contact, SAMPLE),
+    DrawerMenuItem(appContext.app.getString(R.string.contacts), R.drawable.menu_icon_contact, CONTACTS),
     DrawerMenuItem(appContext.app.getString(R.string.sponsors), R.drawable.menu_icon_sponsors, SAMPLE),
     DrawerMenuItem(appContext.app.getString(R.string.places), R.drawable.menu_icon_places, SAMPLE),
     DrawerMenuItem(appContext.app.getString(R.string.about), R.drawable.menu_icon_about, SAMPLE))

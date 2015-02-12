@@ -24,6 +24,7 @@ import android.support.v7.app.{ActionBarActivity, ActionBarDrawerToggle}
 import android.support.v7.widget.LinearLayoutManager
 import android.view.{MenuItem, View}
 import com.fortysevendeg.android.scaladays.R
+import com.fortysevendeg.android.scaladays.ui.qrcode.QrCodeFragment
 import com.fortysevendeg.android.scaladays.ui.schedule.ScheduleFragment
 import com.fortysevendeg.android.scaladays.ui.social.SocialFragment
 import com.fortysevendeg.android.scaladays.ui.speakers.SpeakersFragment
@@ -92,6 +93,7 @@ class MainActivity
       case SPEAKERS => f[SpeakersFragment]
       case SCHEDULE => f[ScheduleFragment]
       case SOCIAL => f[SocialFragment]
+      case CONTACTS => f[QrCodeFragment]
       case _ => f[SampleFragment].pass(SampleFragment.titleArg → info.name)
     }
     runUi(
