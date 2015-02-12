@@ -21,7 +21,7 @@ import macroid.{ActivityContext, AppContext}
 import macroid.FullDsl._
 
 trait PlaceHolderFailedLayout
-    extends CommonsStyles {
+    extends PlaceHolderFailedStyles {
 
   var reloadButton = slot[Button]
 

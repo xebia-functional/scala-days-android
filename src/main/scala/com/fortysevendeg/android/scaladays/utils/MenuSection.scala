@@ -20,6 +20,6 @@ object MenuSection extends Enumeration {
 
   type MenuSection = Value
 
-  val SAMPLE, SPEAKERS, SCHEDULE, SOCIAL, CONTACTS = Value
+  val SAMPLE, SPEAKERS, SCHEDULE, SOCIAL, CONTACTS, SPONSORS = Value
 
 }

@@ -27,7 +27,7 @@ import com.fortysevendeg.android.scaladays.modules.ComponentRegistryImpl
 import com.fortysevendeg.android.scaladays.modules.json.JsonRequest
 import com.fortysevendeg.android.scaladays.modules.net.NetRequest
 import com.fortysevendeg.android.scaladays.ui.commons.LineItemDecorator
-import macroid.{AppContext, Contexts}
+import macroid.{Ui, AppContext, Contexts}
 import scala.concurrent.ExecutionContext.Implicits.global
 import macroid.FullDsl._
 import com.fortysevendeg.macroid.extras.ViewTweaks._
@@ -47,22 +47,25 @@ class SpeakersFragment
     val fLayout = new Layout
     fragmentLayout = Some(fLayout)
     runUi(
-      fLayout.recyclerView
+      (fLayout.recyclerView
           <~ rvLayoutManager(new LinearLayoutManager(appContextProvider.get))
-          <~ rvAddItemDecoration(new LineItemDecorator())
-    )
+          <~ rvAddItemDecoration(new LineItemDecorator())) ~
+          (fLayout.reloadButton <~ On.click(Ui {
+            // TODO reload
+          })))
     fLayout.content
   }
 
   override def onViewCreated(view: View, savedInstanceState: Bundle): Unit = {
     super.onViewCreated(view, savedInstanceState)
+    val conferenceSelected = 0 // TODO Use PersistentService
     (for {
       _ <- netServices.saveJsonInLocal(NetRequest(false))
       jsonResponse <- jsonServices.loadJson(JsonRequest())
     } yield {
       jsonResponse.apiResponse
-    }).map(_ map (api => reloadList(api.conferences(0).speakers))).recover {
-      case _ => aShortToast("error")
+    }).map(_ map (api => reloadList(api.conferences(conferenceSelected).speakers))).recover {
+      case _ => failed()
     }
   }
 
@@ -85,6 +88,16 @@ class SpeakersFragment
         (layout.progressBar <~ vInvisible) ~
             (layout.recyclerView <~ rvAdapter(adapter))
       )
+    }
+  }
+
+  def failed() = {
+    fragmentLayout map {
+      layout =>
+        runUi(
+          (layout.progressBar <~ vGone) ~
+              (layout.recyclerView <~ vGone) ~
+              (layout.failedContent <~ vVisible))
     }
   }
 

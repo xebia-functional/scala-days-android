@@ -14,20 +14,18 @@
  *  limitations under the License.
  */
 
-package com.fortysevendeg.android.scaladays.ui.schedule
+package com.fortysevendeg.android.scaladays.ui.sponsors
 
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v7.widget.LinearLayoutManager
 import android.view.{LayoutInflater, View, ViewGroup}
-import com.fortysevendeg.android.scaladays.model.{Root, Event}
+import com.fortysevendeg.android.scaladays.model.SponsorType
 import com.fortysevendeg.android.scaladays.modules.ComponentRegistryImpl
 import com.fortysevendeg.android.scaladays.modules.json.JsonRequest
-import com.fortysevendeg.android.scaladays.modules.json.models.ApiRoot
 import com.fortysevendeg.android.scaladays.modules.net.NetRequest
-import com.fortysevendeg.android.scaladays.ui.scheduledetail.ScheduleDetailActivity
-import com.fortysevendeg.macroid.extras.ActionsExtras._
 import com.fortysevendeg.macroid.extras.RecyclerViewTweaks._
 import com.fortysevendeg.macroid.extras.ViewTweaks._
 import macroid.FullDsl._
@@ -35,7 +33,7 @@ import macroid.{Ui, AppContext, Contexts}
 
 import scala.concurrent.ExecutionContext.Implicits.global
 
-class ScheduleFragment
+class SponsorsFragment
     extends Fragment
     with Contexts[Fragment]
     with ComponentRegistryImpl {
@@ -49,8 +47,7 @@ class ScheduleFragment
     fragmentLayout = Some(fLayout)
     runUi(
       (fLayout.recyclerView
-          <~ rvLayoutManager(new LinearLayoutManager(appContextProvider.get))
-          <~ rvAddItemDecoration(new ScheduleItemDecorator())) ~
+          <~ rvLayoutManager(new LinearLayoutManager(appContextProvider.get))) ~
           (fLayout.reloadButton <~ On.click(Ui {
             // TODO reload
           })))
@@ -59,25 +56,37 @@ class ScheduleFragment
 
   override def onViewCreated(view: View, savedInstanceState: Bundle): Unit = {
     super.onViewCreated(view, savedInstanceState)
-
     val conferenceSelected = 0 // TODO Use PersistentService
-
-    val saveJsonOp = for {
+    (for {
       _ <- netServices.saveJsonInLocal(NetRequest(false))
       jsonResponse <- jsonServices.loadJson(JsonRequest())
     } yield {
       jsonResponse.apiResponse
-    }
-
-    saveJsonOp map {
-      case Some(Root(list)) if list.length > conferenceSelected =>
-        val conference = list(conferenceSelected)
-        reloadList(conference.info.utcTimezoneOffset, conference.schedule)
-      case None => failed()
-    } recover {
+    }).map(_ map (api => reloadList(api.conferences(conferenceSelected).sponsors))).recover {
       case _ => failed()
     }
+  }
 
+  def reloadList(sponsors: Seq[SponsorType]) = {
+    val sponsorItems = SponsorConversion.toSponsorItem(sponsors)
+    for {
+      layout <- fragmentLayout
+      recyclerView <- layout.recyclerView
+    } yield {
+      val adapter = new SponsorsAdapter(sponsorItems, new RecyclerClickListener {
+        override def onClick(sponsorItem: SponsorItem): Unit = {
+          sponsorItem.sponsor map {
+            sponsor =>
+              val intent = new Intent(Intent.ACTION_VIEW, Uri.parse(sponsor.url))
+              startActivity(intent)
+          }
+        }
+      })
+      runUi(
+        (layout.progressBar <~ vInvisible) ~
+            (layout.recyclerView <~ rvAdapter(adapter))
+      )
+    }
   }
 
   def failed() = {
@@ -90,30 +99,5 @@ class ScheduleFragment
     }
   }
 
-  def reloadList(timeZone: String, events: Seq[Event]) = {
-    val scheduleItems = ScheduleConversion.toScheduleItem(timeZone, events)
-    for {
-      layout <- fragmentLayout
-      recyclerView <- layout.recyclerView
-    } yield {
-      val adapter = new ScheduleAdapter(timeZone, scheduleItems, new RecyclerClickListener {
-        override def onClick(scheduleItem: ScheduleItem): Unit = {
-          if (!scheduleItem.isHeader) {
-            scheduleItem.event map {
-              event =>
-                val intent = new Intent(fragmentActivityContext.get, classOf[ScheduleDetailActivity])
-                intent.putExtra(ScheduleDetailActivity.scheduleItemKey, event)
-                intent.putExtra(ScheduleDetailActivity.timeZoneKey, timeZone)
-                fragmentActivityContext.get.startActivity(intent)
-            }
-          }
-        }
-      })
-      runUi(
-        (layout.progressBar <~ vGone) ~
-            (layout.recyclerView <~ rvAdapter(adapter))
-      )
-    }
-  }
-
 }
+

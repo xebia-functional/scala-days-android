@@ -16,7 +16,8 @@
 
 package com.fortysevendeg.android.scaladays.ui.commons
 
-import android.view.Gravity
+import android.view.ViewGroup.LayoutParams._
+import android.view.{ViewGroup, Gravity}
 import com.fortysevendeg.android.scaladays.R
 import com.fortysevendeg.macroid.extras.FrameLayoutTweaks._
 import com.fortysevendeg.macroid.extras.LinearLayoutTweaks._
@@ -28,10 +29,14 @@ import macroid.FullDsl._
 
 import scala.language.postfixOps
 
-trait CommonsStyles {
+trait ToolbarStyles {
 
   def toolbarStyle(height: Int)(implicit appContext: AppContext) = vContentSizeMatchWidth(height) +
       vBackground(R.color.primary)
+
+}
+
+trait PlaceHolderFailedStyles {
 
   val failedContentStyle = vWrapContent +
       flLayoutGravity(Gravity.CENTER) +
@@ -57,5 +62,21 @@ trait CommonsStyles {
       tvAllCaps +
       tvSize(14) +
       tvGravity(Gravity.CENTER)
+
+}
+
+trait HeaderAdapterStyles {
+
+  def headerContentStyle(implicit appContext: AppContext) = lp[ViewGroup](MATCH_PARENT, 44 dp) +
+      llHorizontal +
+      vBackgroundColorResource(R.color.background_list_schedule_header)
+
+  def headerNameStyle(implicit appContext: AppContext) = vWrapContent +
+      tvSize(14) +
+      llLayoutGravity(Gravity.CENTER_VERTICAL) +
+      tvColorResource(R.color.text_schedule_name) +
+      tvBold +
+      tvAllCaps +
+      vPadding(16 dp, 0, 0, 0)
 
 }

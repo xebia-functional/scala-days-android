@@ -18,20 +18,26 @@ package com.fortysevendeg.android.scaladays.ui.speakers
 
 import android.support.v7.widget.RecyclerView
 import android.widget._
+import com.fortysevendeg.android.scaladays.R
+import com.fortysevendeg.android.scaladays.ui.commons.PlaceHolderFailedLayout
 import macroid.{ActivityContext, AppContext}
 import macroid.FullDsl._
 
 class Layout(implicit appContext: AppContext, context: ActivityContext)
-    extends Styles {
+    extends FragmentStyles
+    with PlaceHolderFailedLayout {
 
   var recyclerView = slot[RecyclerView]
 
   var progressBar = slot[ProgressBar]
 
+  var failedContent = slot[LinearLayout]
+
   val content = getUi(
     l[FrameLayout](
       w[ProgressBar] <~ wire(progressBar) <~ progressBarStyle,
-      w[RecyclerView] <~ wire(recyclerView) <~ recyclerViewStyle
+      w[RecyclerView] <~ wire(recyclerView) <~ recyclerViewStyle,
+      placeholderFailed(R.string.generalMessageError) <~ wire(failedContent)
     ) <~ rootStyle
   )
 
@@ -40,7 +46,7 @@ class Layout(implicit appContext: AppContext, context: ActivityContext)
 }
 
 class SpeakersLayoutAdapter(implicit context: ActivityContext, appContext: AppContext)
-    extends Styles {
+    extends AdapterStyles {
 
   var avatar = slot[ImageView]
 

@@ -19,14 +19,14 @@ package com.fortysevendeg.android.scaladays.ui.schedule
 import android.support.v7.widget.RecyclerView
 import android.view.View.OnClickListener
 import android.view.{View, ViewGroup}
-import com.fortysevendeg.android.scaladays.model.{Speaker, Event}
 import com.fortysevendeg.android.scaladays.ui.commons.DateTimeTextViewTweaks._
+import com.fortysevendeg.android.scaladays.ui.commons.{ViewHolderHeaderAdapter, HeaderLayoutAdapter}
+import com.fortysevendeg.android.scaladays.ui.schedule.ScheduleAdapter._
 import com.fortysevendeg.macroid.extras.TextTweaks._
-import com.fortysevendeg.macroid.extras.ViewTweaks._
 import com.fortysevendeg.macroid.extras.ViewGroupTweaks._
+import com.fortysevendeg.macroid.extras.ViewTweaks._
 import macroid.FullDsl._
 import macroid.{ActivityContext, AppContext}
-import ScheduleAdapter._
 
 class ScheduleAdapter(timeZone: String, scheduleItems: Seq[ScheduleItem], listener: RecyclerClickListener)
     (implicit context: ActivityContext, appContext: AppContext)
@@ -87,7 +87,6 @@ class ScheduleAdapter(timeZone: String, scheduleItems: Seq[ScheduleItem], listen
   }
 
   override def getItemViewType(position: Int): Int = if (scheduleItems(position).isHeader) itemViewTypeHeader else itemViewTypeTalk
-
 
 }
 

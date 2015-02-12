@@ -39,7 +39,7 @@ trait Styles {
       llVertical
 
   val qrImageStyle = vWrapContent +
-      ivSrc(R.drawable.placeholder_error)
+      ivSrc(R.drawable.placeholder_contact)
 
   def qrMessageStyle(implicit appContext: AppContext) = vWrapContent +
       tvText(R.string.scanMessage) +

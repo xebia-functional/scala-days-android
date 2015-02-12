@@ -44,20 +44,6 @@ trait Styles {
   val progressBarStyle = vWrapContent +
       flLayoutGravity(Gravity.CENTER)
 
-  // Styles for Header Adapter
-
-  def headerContentStyle(implicit appContext: AppContext) = lp[ViewGroup](MATCH_PARENT, 44 dp) +
-      llHorizontal +
-      vBackgroundColorResource(R.color.background_list_schedule_header)
-
-  def headerNameStyle(implicit appContext: AppContext) = vWrapContent +
-      tvSize(14) +
-      llLayoutGravity(Gravity.CENTER_VERTICAL) +
-      tvColorResource(R.color.text_schedule_name) +
-      tvBold +
-      tvAllCaps +
-      vPadding(16 dp, 0, 0, 0)
-
   // Styles for Schedule Adapter
 
   def itemContentStyle(implicit appContext: AppContext) = vMatchParent +

@@ -14,18 +14,17 @@
  *  limitations under the License.
  */
 
-package com.fortysevendeg.android.scaladays.ui.schedule
+package com.fortysevendeg.android.scaladays.ui.sponsors
 
 import android.support.v7.widget.RecyclerView
 import android.widget._
 import com.fortysevendeg.android.scaladays.R
-import com.fortysevendeg.android.scaladays.model.Speaker
 import com.fortysevendeg.android.scaladays.ui.commons.PlaceHolderFailedLayout
 import macroid.FullDsl._
 import macroid.{ActivityContext, AppContext}
 
 class Layout(implicit appContext: AppContext, context: ActivityContext)
-    extends Styles
+    extends FragmentStyles
     with PlaceHolderFailedLayout {
 
   var recyclerView = slot[RecyclerView]
@@ -46,60 +45,25 @@ class Layout(implicit appContext: AppContext, context: ActivityContext)
 
 }
 
-class SpeakersLayout(speaker: Speaker)(implicit context: ActivityContext, appContext: AppContext)
-    extends Styles {
+class SponsorsLayoutAdapter(implicit context: ActivityContext, appContext: AppContext)
+    extends AdapterStyles {
 
-  val content = layout
-
-  var speakerName = slot[TextView]
-
-  var speakerTwitter = slot[TextView]
-
-  private def layout(implicit appContext: AppContext, context: ActivityContext) = getUi(
-    l[LinearLayout](
-      w[TextView] <~ wire(speakerName) <~ speakerNameItemStyle(speaker.name),
-      w[TextView] <~ wire(speakerTwitter) <~ speakerTwitterItemStyle(speaker.twitter)
-    ) <~ itemSpeakerContentStyle
-  )
-
-}
-
-class ScheduleLayoutAdapter(implicit context: ActivityContext, appContext: AppContext)
-    extends Styles {
-
-  var hour = slot[TextView]
-
-  var room = slot[TextView]
-
-  var name = slot[TextView]
-
-  var speakerContent = slot[LinearLayout]
+  var logo = slot[ImageView]
 
   val content = layout
 
   private def layout(implicit appContext: AppContext, context: ActivityContext) = getUi(
     l[LinearLayout](
-      w[TextView] <~ wire(hour) <~ hourStyle,
-      l[LinearLayout](
-        w[TextView] <~ wire(room) <~ roomItemStyle,
-        w[TextView] <~ wire(name) <~ nameItemStyle,
-        l[LinearLayout]() <~ itemSpeakersContentStyle <~ wire(speakerContent)
-      ) <~ itemInfoContentStyle
+      w[ImageView] <~ wire(logo) <~ logoStyle
     ) <~ itemContentStyle
   )
 }
 
-class ViewHolderScheduleAdapter(adapter: ScheduleLayoutAdapter)(implicit context: ActivityContext, appContext: AppContext)
+class ViewHolderSponsorsAdapter(adapter: SponsorsLayoutAdapter)(implicit context: ActivityContext, appContext: AppContext)
     extends RecyclerView.ViewHolder(adapter.content) {
 
-  val content = adapter.content
+  var content = adapter.content
 
-  val hour = adapter.hour
-
-  val room = adapter.room
-
-  val name = adapter.name
-
-  val speakerContent = adapter.speakerContent
+  var logo = adapter.logo
 
 }
