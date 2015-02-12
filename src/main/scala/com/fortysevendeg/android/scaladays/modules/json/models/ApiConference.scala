@@ -91,6 +91,6 @@ case class ApiVenues(
   name: String,
   address: String,
   website: String,
-  latitude: String,
-  longitude: String,
-  zoom: String)
+  latitude: Double,
+  longitude: Double,
+  zoom: Int)

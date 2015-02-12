@@ -2745,13 +2745,17 @@
           "name": "Venue",
           "address": "Fort Mason Center\n\r\n2 Marina Blvd\n\r\nSan Francisco, CA 94123",
           "website": "http:\/\/www.fortmason.org\/aboutus",
-          "map": "https:\/\/www.google.com\/maps\/place\/Fort+Mason+Center\/@37.806657,-122.43104,16z\/data=!4m2!3m1!1s0x0:0x12e3ff67705d349c"
+          "longitude": -122.43104,
+          "latitude": 37.806657,
+          "zoom": 16
         },
         {
           "name": "Lodging & Training",
           "address": "Hyatt Fisherman's Wharf\n\r\n555 North Pont Street\n\r\nSan Francisco, CA 94133",
-          "website": "http:\/\/fishermanswharf.hyatt.com\/en\/hotel\/home.html",
-          "map": "https:\/\/www.google.com\/maps\/place\/Hyatt+Fisherman's+Wharf\/@37.805954,-122.416108,17z\/data=!3m1!4b1!4m2!3m1!1s0x808580e4799a55a5:0x6d7309ae49b784bb"
+          "website": "https:\/\/aws.passkey.com\/event\/12588546\/owner\/5389\/home",
+          "longitude": -122.416108,
+          "latitude": 37.805954,
+          "zoom": 17
         }
       ],
       "codeOfConduct": "Our Code of Conduct is inspired by the kind folks at NE Scala, who adopted theirs from PNW Scala. We think they both nailed it.\nNobody likes a jerk, so please show respect for those around you. This applies to both in-person and online behavior.\nScala Days is dedicated to providing a harassment-free experience for everyone, regardless of gender, gender identity and expression, sexual orientation, disability, physical appearance, body size, race, or religion (or lack thereof). We do not tolerate harassment of participants in any form.\nAll communication should be appropriate for a technical audience, including people of many different backgrounds. Sexual language, innuendo, and imagery is not appropriate for any conference venue, including talks.\nParticipants violating these rules may be asked to leave without a refund at the sole discretion of the organizers.\n"
