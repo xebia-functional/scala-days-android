@@ -13,4 +13,6 @@ object Versions {
   val glideV = "3.5.1"
   val twitter4jV = "4.0.2"
   val prettytimeV = "3.2.7.Final"
+  val zxingCoreV = "2.2"
+  val zxingAndroidV = "1.2.0"
 }

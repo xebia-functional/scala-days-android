@@ -5,6 +5,7 @@ import Libraries.test._
 import Libraries.graphics._
 import Libraries.social._
 import Libraries.date._
+import Libraries.qr._
 
 android.Plugin.androidBuild
 
@@ -39,6 +40,8 @@ libraryDependencies ++= Seq(
   glide,
   twitter4j,
   prettytime,
+  zxingCore,
+  aar(zxingAndroid),
   compilerPlugin(Libraries.wartRemover))
 
 run <<= run in Android

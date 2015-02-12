@@ -54,4 +54,9 @@ object Libraries {
     lazy val prettytime = "org.ocpsoft.prettytime" % "prettytime" % Versions.prettytimeV
   }
 
+  object qr {
+    lazy val zxingCore = "com.google.zxing" % "core" % Versions.zxingCoreV
+    lazy val zxingAndroid = "com.embarkmobile" % "zxing-android-minimal" % Versions.zxingAndroidV
+  }
+
 }
