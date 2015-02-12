@@ -48,10 +48,12 @@ class SpeakersFragment
     val fLayout = new Layout
     fragmentLayout = Some(fLayout)
     runUi(
-      fLayout.recyclerView
+      (fLayout.recyclerView
           <~ rvLayoutManager(new LinearLayoutManager(appContextProvider.get))
-          <~ rvAddItemDecoration(new LineItemDecorator())
-    )
+          <~ rvAddItemDecoration(new LineItemDecorator())) ~
+          (fLayout.reloadButton <~ On.click(Ui {
+            // TODO reload
+          })))
     fLayout.content
   }
 
@@ -92,6 +94,16 @@ class SpeakersFragment
         (layout.progressBar <~ vInvisible) ~
             (layout.recyclerView <~ rvAdapter(adapter))
       )
+    }
+  }
+
+  def failed() = {
+    fragmentLayout map {
+      layout =>
+        runUi(
+          (layout.progressBar <~ vGone) ~
+              (layout.recyclerView <~ vGone) ~
+              (layout.failedContent <~ vVisible))
     }
   }
 

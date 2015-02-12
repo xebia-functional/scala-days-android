@@ -25,7 +25,7 @@ import macroid.FullDsl._
 import macroid.{Ui, ActivityContext, AppContext}
 
 class Layout(implicit appContext: AppContext, context: ActivityContext)
-    extends Styles
+    extends FragmentStyles
     with PlaceHolderFailedLayout {
 
   var recyclerView = slot[RecyclerView]
@@ -47,7 +47,7 @@ class Layout(implicit appContext: AppContext, context: ActivityContext)
 }
 
 class SocialLayoutAdapter(implicit context: ActivityContext, appContext: AppContext)
-    extends Styles {
+    extends AdapterStyles {
 
   var avatar = slot[ImageView]
 
@@ -94,7 +94,7 @@ class ViewHolderSocialAdapter(adapter: SocialLayoutAdapter)(implicit context: Ac
 }
 
 trait AuthorizationLayout
-    extends Styles {
+    extends AuthorizationStyles {
 
   var webView = slot[WebView]
 

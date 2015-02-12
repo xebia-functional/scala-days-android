@@ -25,7 +25,7 @@ import macroid.{ActivityContext, AppContext, Ui}
 import scala.language.postfixOps
 
 trait ToolbarLayout
-    extends CommonsStyles {
+    extends ToolbarStyles {
 
   var toolBar = slot[Toolbar]
 

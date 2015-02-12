@@ -14,7 +14,7 @@
  *  limitations under the License.
  */
 
-package com.fortysevendeg.android.scaladays.ui.speakers
+package com.fortysevendeg.android.scaladays.ui.sponsors
 
 import android.view.Gravity
 import android.widget.ImageView.ScaleType
@@ -46,27 +46,9 @@ trait FragmentStyles {
 trait AdapterStyles {
 
   def itemContentStyle(implicit appContext: AppContext) = vMatchParent +
-      llHorizontal +
-      vPaddings(16 dp)
+      vPaddings(16 dp) +
+      llGravity(Gravity.CENTER)
 
-  def avatarStyle(implicit appContext: AppContext) = lp[LinearLayout](40 dp, 40 dp) +
-      ivScaleType(ScaleType.CENTER_CROP)
-
-  def itemNoAvatarContentStyle(implicit appContext: AppContext) = vMatchWidth +
-      llVertical +
-      vPadding(16 dp, 0, 0, 0)
-
-  def nameItemStyle(implicit appContext: AppContext) = vWrapContent +
-      tvSize(16) +
-      tvColorResource(R.color.text_title_default)
-
-  def twitterItemStyle(implicit appContext: AppContext) = vWrapContent +
-      tvSize(12) +
-      tvColorResource(R.color.text_twitter_default)
-
-  def bioItemStyle(implicit appContext: AppContext) = vWrapContent +
-      tvSize(14) +
-      tvColorResource(R.color.text_title_default) +
-      vPadding(0, 4 dp, 0, 0)
+  def logoStyle(implicit appContext: AppContext) = lp[LinearLayout](200 dp, 90 dp)
 
 }

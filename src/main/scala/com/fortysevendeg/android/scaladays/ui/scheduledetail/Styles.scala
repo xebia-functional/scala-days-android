@@ -34,7 +34,7 @@ import macroid.FullDsl._
 
 import scala.language.postfixOps
 
-trait Styles {
+trait ActivityStyles {
 
   val rootStyle = vMatchParent
 
@@ -100,7 +100,9 @@ trait Styles {
       vPadding(0, 12 dp, 0, 0) +
       tvColorResource(R.color.text_schedule_detail_secondary)
 
-  // Speaker layout
+}
+
+trait SpeakersDetailStyles {
 
   def itemSpeakerContentStyle(implicit appContext: AppContext) = vMatchWidth +
       llHorizontal +
@@ -133,5 +135,8 @@ trait Styles {
       vPadding(0, 0, 4 dp, 0) +
       tvColorResource(R.color.text_schedule_detail_secondary) +
       tvText(bio)
+
+  val verticalLayoutStyle = llWrapWeightHorizontal +
+      llVertical
 
 }

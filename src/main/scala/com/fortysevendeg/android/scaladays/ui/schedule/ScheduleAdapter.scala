@@ -19,14 +19,14 @@ package com.fortysevendeg.android.scaladays.ui.schedule
 import android.support.v7.widget.RecyclerView
 import android.view.View.OnClickListener
 import android.view.{View, ViewGroup}
-import com.fortysevendeg.android.scaladays.model.{Speaker, Event}
 import com.fortysevendeg.android.scaladays.ui.commons.DateTimeTextViewTweaks._
+import com.fortysevendeg.android.scaladays.ui.commons.{ViewHolderHeaderAdapter, HeaderLayoutAdapter}
+import com.fortysevendeg.android.scaladays.ui.schedule.ScheduleAdapter._
 import com.fortysevendeg.macroid.extras.TextTweaks._
-import com.fortysevendeg.macroid.extras.ViewTweaks._
 import com.fortysevendeg.macroid.extras.ViewGroupTweaks._
+import com.fortysevendeg.macroid.extras.ViewTweaks._
 import macroid.FullDsl._
 import macroid.{ActivityContext, AppContext}
-import ScheduleAdapter._
 
 class ScheduleAdapter(timeZone: String, scheduleItems: Seq[ScheduleItem], listener: RecyclerClickListener)
     (implicit context: ActivityContext, appContext: AppContext)
@@ -36,13 +36,13 @@ class ScheduleAdapter(timeZone: String, scheduleItems: Seq[ScheduleItem], listen
 
   override def onCreateViewHolder(parentViewGroup: ViewGroup, viewType: Int): RecyclerView.ViewHolder = {
     viewType match {
-      case viewType if viewType == itemViewTypeTalk =>
+      case `itemViewTypeTalk` =>
         val adapter = new ScheduleLayoutAdapter()
         adapter.content.setOnClickListener(new OnClickListener {
           override def onClick(v: View): Unit = recyclerClickListener.onClick(scheduleItems(v.getTag.asInstanceOf[Int]))
         })
         new ViewHolderScheduleAdapter(adapter)
-      case viewType if viewType == itemViewTypeHeader =>
+      case `itemViewTypeHeader` =>
         val adapter = new HeaderLayoutAdapter()
         adapter.content.setOnClickListener(new OnClickListener {
           override def onClick(v: View): Unit = recyclerClickListener.onClick(scheduleItems(v.getTag.asInstanceOf[Int]))
@@ -56,7 +56,7 @@ class ScheduleAdapter(timeZone: String, scheduleItems: Seq[ScheduleItem], listen
   override def onBindViewHolder(viewHolder: RecyclerView.ViewHolder, position: Int): Unit = {
     val scheduleItem = scheduleItems(position)
     getItemViewType(position) match {
-      case viewType if viewType == itemViewTypeTalk =>
+      case `itemViewTypeTalk` =>
         val vh = viewHolder.asInstanceOf[ViewHolderScheduleAdapter]
         scheduleItem.event map {
           event =>
@@ -78,7 +78,7 @@ class ScheduleAdapter(timeZone: String, scheduleItems: Seq[ScheduleItem], listen
                   (vh.room <~ event.track.map(track => tvText(track.name) + vVisible).getOrElse(vGone))
             )
         }
-      case viewType if viewType == itemViewTypeHeader =>
+      case `itemViewTypeHeader` =>
         val vh = viewHolder.asInstanceOf[ViewHolderHeaderAdapter]
         runUi(
           vh.headerName <~ scheduleItem.header.map(tvText(_) + vVisible).getOrElse(vGone)
@@ -87,7 +87,6 @@ class ScheduleAdapter(timeZone: String, scheduleItems: Seq[ScheduleItem], listen
   }
 
   override def getItemViewType(position: Int): Int = if (scheduleItems(position).isHeader) itemViewTypeHeader else itemViewTypeTalk
-
 
 }
 
