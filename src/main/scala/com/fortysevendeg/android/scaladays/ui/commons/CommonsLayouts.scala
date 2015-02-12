@@ -38,8 +38,8 @@ class HeaderLayoutAdapter(implicit context: ActivityContext, appContext: AppCont
 class ViewHolderHeaderAdapter(adapter: HeaderLayoutAdapter)(implicit context: ActivityContext, appContext: AppContext)
     extends RecyclerView.ViewHolder(adapter.content) {
 
-  var content = adapter.content
+  val content = adapter.content
 
-  var headerName = adapter.headerName
+  val headerName = adapter.headerName
 
 }

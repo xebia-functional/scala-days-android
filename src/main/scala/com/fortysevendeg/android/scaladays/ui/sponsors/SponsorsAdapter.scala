@@ -36,13 +36,13 @@ class SponsorsAdapter(sponsorItems: Seq[SponsorItem], listener: RecyclerClickLis
 
   override def onCreateViewHolder(parentViewGroup: ViewGroup, viewType: Int): RecyclerView.ViewHolder = {
     viewType match {
-      case viewType if viewType == itemViewTypeSponsor =>
+      case `itemViewTypeSponsor` =>
         val adapter = new SponsorsLayoutAdapter()
         adapter.content.setOnClickListener(new OnClickListener {
           override def onClick(v: View): Unit = recyclerClickListener.onClick(sponsorItems(v.getTag.asInstanceOf[Int]))
         })
         new ViewHolderSponsorsAdapter(adapter)
-      case viewType if viewType == itemViewTypeHeader =>
+      case `itemViewTypeHeader` =>
         val adapter = new HeaderLayoutAdapter()
         adapter.content.setOnClickListener(new OnClickListener {
           override def onClick(v: View): Unit = recyclerClickListener.onClick(sponsorItems(v.getTag.asInstanceOf[Int]))
@@ -57,7 +57,7 @@ class SponsorsAdapter(sponsorItems: Seq[SponsorItem], listener: RecyclerClickLis
   override def onBindViewHolder(viewHolder: RecyclerView.ViewHolder, position: Int): Unit = {
     val sponsorItem = sponsorItems(position)
     getItemViewType(position) match {
-      case viewType if viewType == itemViewTypeSponsor =>
+      case `itemViewTypeSponsor` =>
         val vh = viewHolder.asInstanceOf[ViewHolderSponsorsAdapter]
         sponsorItem.sponsor map {
           sponsor =>
@@ -66,7 +66,7 @@ class SponsorsAdapter(sponsorItems: Seq[SponsorItem], listener: RecyclerClickLis
               vh.logo <~
                   glide(sponsor.logo))
         }
-      case viewType if viewType == itemViewTypeHeader =>
+      case `itemViewTypeHeader` =>
         val vh = viewHolder.asInstanceOf[ViewHolderHeaderAdapter]
         runUi(
           vh.headerName <~ sponsorItem.header.map(tvText(_) + vVisible).getOrElse(vGone)

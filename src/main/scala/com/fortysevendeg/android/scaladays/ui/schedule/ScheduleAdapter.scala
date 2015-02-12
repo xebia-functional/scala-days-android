@@ -36,13 +36,13 @@ class ScheduleAdapter(timeZone: String, scheduleItems: Seq[ScheduleItem], listen
 
   override def onCreateViewHolder(parentViewGroup: ViewGroup, viewType: Int): RecyclerView.ViewHolder = {
     viewType match {
-      case viewType if viewType == itemViewTypeTalk =>
+      case `itemViewTypeTalk` =>
         val adapter = new ScheduleLayoutAdapter()
         adapter.content.setOnClickListener(new OnClickListener {
           override def onClick(v: View): Unit = recyclerClickListener.onClick(scheduleItems(v.getTag.asInstanceOf[Int]))
         })
         new ViewHolderScheduleAdapter(adapter)
-      case viewType if viewType == itemViewTypeHeader =>
+      case `itemViewTypeHeader` =>
         val adapter = new HeaderLayoutAdapter()
         adapter.content.setOnClickListener(new OnClickListener {
           override def onClick(v: View): Unit = recyclerClickListener.onClick(scheduleItems(v.getTag.asInstanceOf[Int]))
@@ -56,7 +56,7 @@ class ScheduleAdapter(timeZone: String, scheduleItems: Seq[ScheduleItem], listen
   override def onBindViewHolder(viewHolder: RecyclerView.ViewHolder, position: Int): Unit = {
     val scheduleItem = scheduleItems(position)
     getItemViewType(position) match {
-      case viewType if viewType == itemViewTypeTalk =>
+      case `itemViewTypeTalk` =>
         val vh = viewHolder.asInstanceOf[ViewHolderScheduleAdapter]
         scheduleItem.event map {
           event =>
@@ -78,7 +78,7 @@ class ScheduleAdapter(timeZone: String, scheduleItems: Seq[ScheduleItem], listen
                   (vh.room <~ event.track.map(track => tvText(track.name) + vVisible).getOrElse(vGone))
             )
         }
-      case viewType if viewType == itemViewTypeHeader =>
+      case `itemViewTypeHeader` =>
         val vh = viewHolder.asInstanceOf[ViewHolderHeaderAdapter]
         runUi(
           vh.headerName <~ scheduleItem.header.map(tvText(_) + vVisible).getOrElse(vGone)

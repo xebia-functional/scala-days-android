@@ -64,7 +64,7 @@ class SpeakersFragment
       jsonResponse <- jsonServices.loadJson(JsonRequest())
     } yield {
       jsonResponse.apiResponse
-    }).map(_ map (api => reloadList(api.conferences(conferenceSelected).speakers))).recover {
+    }) map (_ map (api => reloadList(api.conferences(conferenceSelected).speakers))) recover {
       case _ => failed()
     }
   }

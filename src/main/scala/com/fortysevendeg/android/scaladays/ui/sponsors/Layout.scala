@@ -62,8 +62,8 @@ class SponsorsLayoutAdapter(implicit context: ActivityContext, appContext: AppCo
 class ViewHolderSponsorsAdapter(adapter: SponsorsLayoutAdapter)(implicit context: ActivityContext, appContext: AppContext)
     extends RecyclerView.ViewHolder(adapter.content) {
 
-  var content = adapter.content
+  val content = adapter.content
 
-  var logo = adapter.logo
+  val logo = adapter.logo
 
 }

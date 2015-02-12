@@ -73,14 +73,14 @@ class SpeakersLayoutAdapter(implicit context: ActivityContext, appContext: AppCo
 class ViewHolderSpeakersAdapter(adapter: SpeakersLayoutAdapter)(implicit context: ActivityContext, appContext: AppContext)
     extends RecyclerView.ViewHolder(adapter.content) {
 
-  var content = adapter.content
+  val content = adapter.content
 
-  var avatar = adapter.avatar
+  val avatar = adapter.avatar
 
-  var name = adapter.name
+  val name = adapter.name
 
-  var twitter = adapter.twitter
+  val twitter = adapter.twitter
 
-  var bio = adapter.bio
+  val bio = adapter.bio
 
 }
