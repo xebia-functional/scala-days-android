@@ -26,6 +26,7 @@ import com.fortysevendeg.android.scaladays.modules.ComponentRegistryImpl
 import com.fortysevendeg.android.scaladays.modules.json.JsonRequest
 import com.fortysevendeg.android.scaladays.modules.json.models.ApiRoot
 import com.fortysevendeg.android.scaladays.modules.net.NetRequest
+import com.fortysevendeg.android.scaladays.ui.commons.UiServices
 import com.fortysevendeg.android.scaladays.ui.scheduledetail.ScheduleDetailActivity
 import com.fortysevendeg.macroid.extras.ActionsExtras._
 import com.fortysevendeg.macroid.extras.RecyclerViewTweaks._
@@ -38,7 +39,8 @@ import scala.concurrent.ExecutionContext.Implicits.global
 class ScheduleFragment
     extends Fragment
     with Contexts[Fragment]
-    with ComponentRegistryImpl {
+    with ComponentRegistryImpl
+    with UiServices {
 
   override implicit lazy val appContextProvider: AppContext = fragmentAppContext
 
@@ -59,25 +61,13 @@ class ScheduleFragment
 
   override def onViewCreated(view: View, savedInstanceState: Bundle): Unit = {
     super.onViewCreated(view, savedInstanceState)
+    val result = for {
+      conference <- loadSelectedConference()
+    } yield reloadList(conference.info.utcTimezoneOffset, conference.schedule)
 
-    val conferenceSelected = 0 // TODO Use PersistentService
-
-    val saveJsonOp = for {
-      _ <- netServices.saveJsonInLocal(NetRequest(false))
-      jsonResponse <- jsonServices.loadJson(JsonRequest())
-    } yield {
-      jsonResponse.apiResponse
-    }
-
-    saveJsonOp map {
-      case Some(Root(list)) if list.length > conferenceSelected =>
-        val conference = list(conferenceSelected)
-        reloadList(conference.info.utcTimezoneOffset, conference.schedule)
-      case None => failed()
-    } recover {
+    result.recover {
       case _ => failed()
     }
-
   }
 
   def failed() = {

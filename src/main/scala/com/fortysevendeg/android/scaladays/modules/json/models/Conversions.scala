@@ -50,7 +50,14 @@ trait ApiConversions {
       registrationSite = apiConferenceInfo.registrationSite,
       utcTimezoneOffset = apiConferenceInfo.utcTimezoneOffset,
       utcTimezoneOffsetMillis = apiConferenceInfo.utcTimezoneOffsetMillis,
-      hashTag = apiConferenceInfo.hashtag)
+      hashTag = apiConferenceInfo.hashtag,
+      apiConferenceInfo.pictures map toPicture)
+  
+  def toPicture(apiPicture: ApiPicture): Picture =
+    Picture(
+      width = apiPicture.width,
+      height = apiPicture.height,
+      url = apiPicture.url)
 
   def toEvent(apiEvent: ApiEvent): Event =
     Event(

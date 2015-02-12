@@ -21,19 +21,18 @@ import android.content.res.Configuration
 import android.os.Bundle
 import android.support.v4.app.FragmentActivity
 import android.support.v7.app.{ActionBarActivity, ActionBarDrawerToggle}
-import android.support.v7.widget.LinearLayoutManager
 import android.view.{MenuItem, View}
 import com.fortysevendeg.android.scaladays.R
 import com.fortysevendeg.android.scaladays.ui.qrcode.QrCodeFragment
+import com.fortysevendeg.android.scaladays.ui.menu.MenuSection._
+import com.fortysevendeg.android.scaladays.ui.menu._
 import com.fortysevendeg.android.scaladays.ui.schedule.ScheduleFragment
 import com.fortysevendeg.android.scaladays.ui.social.SocialFragment
 import com.fortysevendeg.android.scaladays.ui.speakers.SpeakersFragment
 import com.fortysevendeg.android.scaladays.ui.sponsors.SponsorsFragment
-import com.fortysevendeg.android.scaladays.utils.MenuSection._
 import com.fortysevendeg.macroid.extras.DrawerLayoutTweaks._
 import com.fortysevendeg.macroid.extras.FragmentExtras._
 import com.fortysevendeg.macroid.extras.ToolbarTweaks._
-import com.fortysevendeg.macroid.extras.RecyclerViewTweaks._
 import macroid.FullDsl._
 import macroid._
 
@@ -60,6 +59,7 @@ class MainActivity
         override def onDrawerClosed(drawerView: View): Unit = {
           super.onDrawerClosed(drawerView)
           invalidateOptionsMenu()
+          findFragmentById[MenuFragment](Id.menuFragment) map (_.showMainMenu)
         }
 
         override def onDrawerOpened(drawerView: View): Unit = {
@@ -71,40 +71,34 @@ class MainActivity
       drawerLayout.setDrawerListener(drawerToggle)
     }
 
-    val adapter = new DrawerMenuAdapter(new RecyclerClickListener {
-      override def onClick(info: DrawerMenuItem): Unit = {
-        itemSelected(info)
-      }
-    })
-
-    runUi(
-      recyclerView <~ rvLayoutManager(new LinearLayoutManager(this)) <~ rvAdapter(adapter)
-    )
-
     if (savedInstanceState == null) {
-      itemSelected(adapter.list.head)
+      runUi(
+        replaceFragment(
+          builder = f[MenuFragment],
+          id = Id.menuFragment,
+          tag = Some(Tag.menuFragment)))
     }
   }
 
   override def onActivityResult(requestCode: Int, resultCode: Int, data: Intent): Unit =
     super.onActivityResult(requestCode, resultCode, data)
 
-  private def itemSelected(info: DrawerMenuItem) {
-    val builder = info.section match {
+  def itemSelected(section: MenuSection.Value, title: String) {
+    val builder = section match {
       case SPEAKERS => f[SpeakersFragment]
       case SCHEDULE => f[ScheduleFragment]
       case SOCIAL => f[SocialFragment]
       case CONTACTS => f[QrCodeFragment]
       case SPONSORS => f[SponsorsFragment]
-      case _ => f[SampleFragment].pass(SampleFragment.titleArg → info.name)
+      case _ => f[SampleFragment].pass(SampleFragment.titleArg → title)
     }
     runUi(
-      (toolBar <~ tbTitle(info.name)) ~
-          (drawerLayout <~ dlCloseDrawer(drawerMenuLayout)) ~
-          (replaceFragment(
+      (toolBar <~ tbTitle(title)) ~
+          (drawerLayout <~ dlCloseDrawer(fragmentMenu)) ~
+          replaceFragment(
             builder = builder,
             id = Id.mainFragment,
-            tag = Some(Tag.mainFragment)))
+            tag = Some(Tag.mainFragment))
     )
   }
 

@@ -14,15 +14,12 @@
  *  limitations under the License.
  */
 
-package com.fortysevendeg.android.scaladays.modules
+package com.fortysevendeg.android.scaladays.ui.menu
 
-import com.fortysevendeg.android.scaladays.modules.json.JsonServicesComponent
-import com.fortysevendeg.android.scaladays.modules.net.NetServicesComponent
-import com.fortysevendeg.android.scaladays.modules.preferences.PreferenceServicesComponent
-import com.fortysevendeg.android.scaladays.modules.twitter.TwitterServicesComponent
+object MenuSection extends Enumeration {
 
-trait ComponentRegistry
-    extends PreferenceServicesComponent
-    with JsonServicesComponent
-    with NetServicesComponent
-    with TwitterServicesComponent
+  type MenuSection = Value
+
+  val SAMPLE, SPEAKERS, SCHEDULE, SOCIAL, CONTACTS, SPONSORS = Value
+
+}

@@ -14,12 +14,15 @@
  *  limitations under the License.
  */
 
-package com.fortysevendeg.android.scaladays.utils
+package com.fortysevendeg.android.scaladays.modules.preferences
 
-object MenuSection extends Enumeration {
+trait PreferenceServices {
+  
+  def fetchIntPreference(request: PreferenceRequest[Int]): PreferenceResponse[Int]
+  
+  def saveIntPreference(request: PreferenceRequest[Int]): PreferenceResponse[Int]
+}
 
-  type MenuSection = Value
-
-  val SAMPLE, SPEAKERS, SCHEDULE, SOCIAL, CONTACTS, SPONSORS = Value
-
+trait PreferenceServicesComponent {
+  val preferenceServices: PreferenceServices
 }

@@ -18,7 +18,6 @@ package com.fortysevendeg.android.scaladays.ui.main
 
 import android.os.Bundle
 import android.support.v4.app.Fragment
-import android.util.Log
 import android.view.{LayoutInflater, View, ViewGroup}
 import macroid.Contexts
 
@@ -26,11 +25,11 @@ class SampleFragment
     extends Fragment
     with Contexts[Fragment] {
 
-  private var fragmentLayout: Option[ScheduleLayout] = None
+  private var fragmentLayout: Option[SampleLayout] = None
 
   override def onCreateView(inflater: LayoutInflater, container: ViewGroup, savedInstanceState: Bundle): View = {
 
-    val fLayout = new ScheduleLayout
+    val fLayout = new SampleLayout
 
     fLayout.textView map (_.setText(getArguments.getString(SampleFragment.titleArg)))
 

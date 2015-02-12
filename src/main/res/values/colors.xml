@@ -23,6 +23,7 @@
     <color name="color_control_highlight">#2F3C46</color>
     <color name="accent">#ff19232c</color>
     <color name="toolbar_title">#ffffff</color>
+    <color name="menu_conference_title">#ffffff</color>
 
     <!-- Placeholder -->
     <color name="text_error_message">#87364550</color>
@@ -31,8 +32,12 @@
     <color name="background_error_button_pressed">#ffc45453</color>
 
     <!-- Menu -->
-    <color name="background_menu">#364550</color>
-    <color name="background_header_menu">#FFFFFF</color>
+    <color name="background_main_menu">#364550</color>
+    <color name="background_conference_menu">#ffffff</color>
+    <color name="background_menu_header_selected">#44c2c2c2</color>
+    <color name="background_menu_item">#00000000</color>
+    <color name="background_menu_item_pressed">#2F3C46</color>
+    <color name="background_menu_item_selected">#2F3C46</color>
 
     <!-- Lists -->
     <color name="text_title_default">#364550</color>

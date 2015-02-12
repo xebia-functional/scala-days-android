@@ -19,7 +19,7 @@ package com.fortysevendeg.android.scaladays.ui.main
 import android.graphics.Color
 import android.view.Gravity
 import android.view.ViewGroup.LayoutParams._
-import android.widget.{AbsListView, LinearLayout}
+import android.widget.{FrameLayout, AbsListView, LinearLayout}
 import com.fortysevendeg.android.scaladays.R
 import com.fortysevendeg.macroid.extras.DrawerLayoutTweaks._
 import com.fortysevendeg.macroid.extras.LinearLayoutTweaks._
@@ -34,27 +34,13 @@ trait Styles {
 
   val drawerStyle = vMatchParent
 
-  def drawerLayoutStyle(implicit appContext: AppContext) = llVertical +
-      lp[LinearLayout](304 dp, MATCH_PARENT) +
+  def drawerLayoutStyle(implicit appContext: AppContext) = lp[FrameLayout](304 dp, MATCH_PARENT) +
       dlLayoutGravity(Gravity.START)
 
   val contentStyle = vMatchParent +
       llVertical
 
   val fragmentContentStyle = vMatchParent
-
-  def drawerMenuStyle(implicit appContext: AppContext) = lp[AbsListView](MATCH_PARENT, MATCH_PARENT) +
-      vBackgroundColorResource(R.color.background_menu)
-
-  def imageMenuStyle(implicit appContext: AppContext) = lp[LinearLayout](MATCH_PARENT, 150 dp) +
-      vBackgroundColorResource(R.color.background_header_menu)
-
-  def menuItemStyle(implicit appContext: AppContext) = lp[AbsListView](MATCH_PARENT, 50 dp) +
-      tvSize(18) +
-      tvColor(Color.WHITE) +
-      tvGravity(Gravity.CENTER_VERTICAL) +
-      vPaddings(10 dp) +
-      tvDrawablePadding(10 dp)
 
   val sampleStyle = vMatchParent +
       llGravity(Gravity.CENTER)
