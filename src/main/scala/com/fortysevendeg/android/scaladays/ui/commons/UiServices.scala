@@ -27,7 +27,10 @@ import scala.concurrent.Future
 
 trait UiServices {
   
-  self : PreferenceServicesComponent with JsonServicesComponent with NetServicesComponent with AppContextProvider =>
+  self : PreferenceServicesComponent 
+    with JsonServicesComponent 
+    with NetServicesComponent 
+    with AppContextProvider =>
   
   val errorLogMessage = "Error loading conferences"
   
@@ -50,9 +53,7 @@ trait UiServices {
       jsonResponse <- jsonServices.loadJson(JsonRequest())
       root <- Future.successful(jsonResponse.apiResponse.getOrElse(throw InvalidJsonException()))
       conference <- findConference(root.conferences, conferenceId)
-    } yield {
-      conference
-    }
+    } yield conference
   }
   
   def findConference(conferences: Seq[Conference], conferenceId: Int): Future[Conference] = {
