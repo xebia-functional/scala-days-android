@@ -29,6 +29,7 @@ import com.fortysevendeg.android.scaladays.ui.commons.UiServices
 import com.fortysevendeg.android.scaladays.ui.main.MainActivity
 import com.fortysevendeg.macroid.extras.RecyclerViewTweaks._
 import com.fortysevendeg.macroid.extras.TextTweaks._
+import com.fortysevendeg.macroid.extras.ImageViewTweaks._
 import com.fortysevendeg.macroid.extras.ViewTweaks._
 import macroid.FullDsl._
 import macroid._
@@ -119,13 +120,16 @@ class MenuFragment
     for {
       layout <- fragmentLayout
       recyclerView <- layout.recyclerView
+      selectorImageView <- layout.conferenceSelector
     } yield {
       mainMenuVisible = !mainMenuVisible
       if (mainMenuVisible) runUi(
         (recyclerView <~ vBackgroundTransition(durationMilis = colorTransitionTime, reverse = true)) ~
+          (selectorImageView <~ ivSrc(R.drawable.menu_header_select_arrow)) ~
           (recyclerView <~ rvAdapter(mainMenuAdapter)))
       else runUi(
         (recyclerView <~ vBackgroundTransition(durationMilis = colorTransitionTime, reverse = false)) ~
+          (selectorImageView <~ ivSrc(R.drawable.menu_header_select_arrow_up)) ~
           (recyclerView <~ rvAdapter(conferenceMenuAdapter)))
     }
   
@@ -150,7 +154,7 @@ class MenuFragment
       textView <- layout.conferenceTitle
     } yield {
       runUi(
-        (imageView <~ glideCenterCrop(information.pictures(0).url, R.drawable.placeholder_circle)) ~
+        (imageView <~ glideCenterCrop(information.pictures(0).url, R.drawable.placeholder_square)) ~
           (textView <~ tvText(information.longName))
       )
     }

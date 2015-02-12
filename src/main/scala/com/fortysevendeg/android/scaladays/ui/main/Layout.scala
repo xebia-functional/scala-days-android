@@ -48,10 +48,10 @@ trait Layout
 
 }
 
-class ScheduleLayout(implicit appContext: AppContext, context: ActivityContext)
+class SampleLayout(implicit appContext: AppContext, context: ActivityContext)
     extends Styles {
 
-  var textView = slo  t[TextView]
+  var textView = slot[TextView]
 
   val content = getUi(
     l[LinearLayout](

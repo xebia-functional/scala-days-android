@@ -67,13 +67,6 @@ class SpeakersFragment
       case _ => failed()
     }
   }
-  
-  def failed() = {
-    for {
-      layout <- fragmentLayout
-    } yield runUi(layout.progressBar <~ vGone)
-    runUi(Ui(aShortToast("error")))
-  } // TODO show failed screen
 
   def reloadList(speakers: Seq[Speaker]) = {
     for {

@@ -52,7 +52,7 @@ class MainMenuAdapter(listener: MainMenuClickListener)
       R.drawable.menu_icon_contact, SAMPLE),
     MainMenuItem(Id.sponsors,
       appContext.app.getString(R.string.sponsors), 
-      R.drawable.menu_icon_sponsors, SAMPLE),
+      R.drawable.menu_icon_sponsors, SPONSORS),
     MainMenuItem(Id.places,
       appContext.app.getString(R.string.places), 
       R.drawable.menu_icon_places, SAMPLE),
