@@ -62,9 +62,7 @@ class SponsorsAdapter(sponsorItems: Seq[SponsorItem], listener: RecyclerClickLis
         sponsorItem.sponsor map {
           sponsor =>
             vh.content.setTag(position)
-            runUi(
-              vh.logo <~
-                  glide(sponsor.logo))
+            runUi(vh.logo <~ glideSrc(sponsor.logo))
         }
       case `itemViewTypeHeader` =>
         val vh = viewHolder.asInstanceOf[ViewHolderHeaderAdapter]

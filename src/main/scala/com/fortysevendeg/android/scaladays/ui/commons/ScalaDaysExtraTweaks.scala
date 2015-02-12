@@ -52,9 +52,7 @@ object GlideTweaks {
     }
   )
 
-  def glide(
-      url: String
-      )(implicit appContext: AppContext): Tweak[W] = Tweak[W](
+  def glideSrc(url: String)(implicit appContext: AppContext): Tweak[W] = Tweak[W](
     imageView => {
       Glide.`with`(appContext.get)
           .load(url)
