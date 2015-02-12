@@ -47,7 +47,8 @@ trait AdapterStyles {
 
   def itemContentStyle(implicit appContext: AppContext) = vMatchParent +
       vPaddings(16 dp) +
-      llGravity(Gravity.CENTER)
+      llGravity(Gravity.CENTER) +
+      vBackground(R.drawable.background_list_default)
 
   def logoStyle(implicit appContext: AppContext) = lp[LinearLayout](200 dp, 90 dp)
 

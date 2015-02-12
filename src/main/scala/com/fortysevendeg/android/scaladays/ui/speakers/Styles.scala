@@ -47,7 +47,8 @@ trait AdapterStyles {
 
   def itemContentStyle(implicit appContext: AppContext) = vMatchParent +
       llHorizontal +
-      vPaddings(16 dp)
+      vPaddings(16 dp) +
+      vBackground(R.drawable.background_list_default)
 
   def avatarStyle(implicit appContext: AppContext) = lp[LinearLayout](40 dp, 40 dp) +
       ivScaleType(ScaleType.CENTER_CROP)
