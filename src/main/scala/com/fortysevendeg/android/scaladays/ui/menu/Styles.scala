@@ -78,7 +78,6 @@ trait Styles {
   def conferenceMenuItemIconStyle(implicit appContext: AppContext) = lp[LinearLayout](42 dp, 42 dp) +
     ivScaleType(ScaleType.CENTER_CROP)
 
-
   def conferenceMenuItemStyle(implicit appContext: AppContext) = vWrapContent +
     tvSize(14) +
     tvColor(Color.DKGRAY) +

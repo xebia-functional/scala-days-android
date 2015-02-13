@@ -40,6 +40,9 @@
     <string name="scan">Scan</string>
     <string name="scanError">QR Code is not a VCard type</string>
 
+    <string name="codeOfConduct">Code Of Conduct</string>
+    <string name="about47">The official Scala Days App for Android handcrafted by 47 Degrees</string>
+
     <string name="dayOfWeek0">Sunday</string>
     <string name="dayOfWeek1">Monday</string>
     <string name="dayOfWeek2">Tuesday</string>

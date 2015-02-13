@@ -36,7 +36,8 @@ trait ApiConversions {
       toInformation(apiConference.info),
       apiConference.schedule map toEvent,
       apiConference.sponsors map toSponsorType,
-      apiConference.speakers map toSpeaker)
+      apiConference.speakers map toSpeaker,
+      apiConference.codeOfConduct)
 
   def toInformation(apiConferenceInfo: ApiInformation): Information =
     Information(
