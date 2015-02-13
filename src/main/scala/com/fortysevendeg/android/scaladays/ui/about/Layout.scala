@@ -25,7 +25,7 @@ import macroid.FullDsl._
 import macroid.{Ui, ActivityContext, AppContext}
 
 class Layout(implicit appContext: AppContext, context: ActivityContext)
-    extends FragmentStyles
+    extends Styles
     with PlaceHolderFailedLayout {
 
   var description = slot[TextView]

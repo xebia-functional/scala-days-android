@@ -17,44 +17,44 @@
 package com.fortysevendeg.android.scaladays.ui.commons
 
 import android.widget.{TextView, ImageView}
-import com.bumptech.glide.Glide
-import com.bumptech.glide.load.resource.bitmap.CenterCrop
+import com.fortysevendeg.android.scaladays.components.CircularTransformation
 import com.fortysevendeg.android.scaladays.utils.DateTimeUtils
+import com.squareup.picasso.Picasso
 import macroid.{ActivityContext, AppContext, Tweak}
 import org.joda.time.DateTime
 
-object GlideTweaks {
+object AsyncImageTweaks {
   type W = ImageView
 
-  def glideRoundedImage(
+  def roundedImage(
       url: String,
-      placeHolder: Int
+      placeHolder: Int,
+      size: Int
       )(implicit appContext: AppContext, activityContext: ActivityContext): Tweak[W] = Tweak[W](
     imageView => {
-      Glide.`with`(activityContext.get)
+      Picasso.`with`(activityContext.get)
           .load(url)
-          .transform(new CenterCrop(activityContext.get), new RoundedImageTransformation)
+          .transform(new CircularTransformation(size))
           .placeholder(placeHolder)
           .into(imageView)
     }
   )
 
-  def glideCenterCrop(
+  def srcImage(
       url: String,
       placeHolder: Int
       )(implicit appContext: AppContext, activityContext: ActivityContext): Tweak[W] = Tweak[W](
     imageView => {
-      Glide.`with`(activityContext.get)
+      Picasso.`with`(activityContext.get)
           .load(url)
-          .centerCrop()
           .placeholder(placeHolder)
           .into(imageView)
     }
   )
 
-  def glideSrc(url: String)(implicit appContext: AppContext, activityContext: ActivityContext): Tweak[W] = Tweak[W](
+  def srcImage(url: String)(implicit appContext: AppContext, activityContext: ActivityContext): Tweak[W] = Tweak[W](
     imageView => {
-      Glide.`with`(activityContext.get)
+      Picasso.`with`(activityContext.get)
           .load(url)
           .into(imageView)
     }

@@ -26,12 +26,14 @@ import macroid.FullDsl._
 
 import scala.language.postfixOps
 
-class LineItemDecorator(implicit appContext: AppContext) extends RecyclerView.ItemDecoration {
+class LineItemDecorator(implicit appContext: AppContext) 
+  extends RecyclerView.ItemDecoration
+  with ResourceLoader {
 
   val divider = new ColorDrawable(appContext.get.getResources.getColor(R.color.list_line_default))
 
   override def onDrawOver(c: Canvas, parent: RecyclerView, state: State): Unit = {
-    val left = parent.getPaddingLeft + (72 dp)
+    val left = parent.getPaddingLeft + getDimension(R.dimen.margin_line_decorator_left)
     val right = parent.getWidth - parent.getPaddingRight
 
     val childCount = parent.getChildCount

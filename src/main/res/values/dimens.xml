@@ -16,8 +16,47 @@
 
 <resources>
 
-    <dimen name="padding_default">8dp</dimen>
-    <dimen name="margin_default">4dp</dimen>
-    <dimen name="drawer_width">240dp</dimen>
+    <dimen name="size_avatar">40dp</dimen>
+    <dimen name="size_menu_conference_icon">38dp</dimen>
+    <dimen name="size_schedule_detail_fab">44dp</dimen>
+
+    <dimen name="padding_default_extra_small">4dp</dimen>
+    <dimen name="padding_default_small">12dp</dimen>
+    <dimen name="padding_default">16dp</dimen>
+    <dimen name="padding_default_big">30dp</dimen>
+    <dimen name="padding_menu_image_action_tb">15dp</dimen>
+    <dimen name="padding_menu_item_lr">14dp</dimen>
+    <dimen name="padding_menu_item_icon">34dp</dimen>
+    <dimen name="padding_about_logo">8dp</dimen>
+    <dimen name="padding_schedule_detail_scroll_top">124dp</dimen>
+    <dimen name="padding_schedule_detail_description_top">36dp</dimen>
+    <dimen name="padding_schedule_detail_speaker_tb">8dp</dimen>
+    <dimen name="padding_schedule_detail_fab">10dp</dimen>
+
+    <dimen name="height_toolbar">56dp</dimen>
+    <dimen name="height_toolbar_expanded">124dp</dimen>
+    <dimen name="height_header">44dp</dimen>
+    <dimen name="height_menu_image_header">169dp</dimen>
+    <dimen name="height_menu_item">48dp</dimen>
+    <dimen name="height_menu_conference_item">74dp</dimen>
+    <dimen name="width_sponsors_logo">200dp</dimen>
+
+
+    <dimen name="width_drawer">304dp</dimen>
+    <dimen name="width_button">160dp</dimen>
+    <dimen name="width_schedule_hour">70dp</dimen>
+    <dimen name="width_schedule_detail_calendar">54dp</dimen>
+    <dimen name="height_sponsors_logo">90dp</dimen>
+
+    <dimen name="margin_schedule_detail_fab_left">12dp</dimen>
+    <dimen name="margin_schedule_detail_fab_top">102dp</dimen>
+    <dimen name="margin_line_decorator_left">72dp</dimen>
+    
+    <dimen name="stroke_schedule_detail_fab">2dp</dimen>
+
+    <integer name="text_huge">24</integer>
+    <integer name="text_big">16</integer>
+    <integer name="text_medium">14</integer>
+    <integer name="text_small">12</integer>
 
 </resources>

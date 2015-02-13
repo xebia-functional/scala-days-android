@@ -25,7 +25,8 @@ import macroid.{ActivityContext, AppContext, Ui}
 import scala.language.postfixOps
 
 trait ToolbarLayout
-    extends ToolbarStyles {
+    extends ToolbarStyles
+    with ResourceLoader {
 
   var toolBar = slot[Toolbar]
 
@@ -35,7 +36,7 @@ trait ToolbarLayout
       children foreach (uiView => darkToolBar.addView(uiView.get))
       toolBar = Some(darkToolBar)
       darkToolBar
-    } <~ toolbarStyle(56 dp)
+    } <~ toolbarStyle(getDimension(R.dimen.height_toolbar))
 
   def expandedToolBarLayout(children: Ui[View]*)
       (height: Int)

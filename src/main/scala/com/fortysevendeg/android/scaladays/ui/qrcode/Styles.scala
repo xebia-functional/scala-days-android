@@ -20,6 +20,7 @@ import android.view.Gravity
 import android.widget.ImageView.ScaleType
 import android.widget.{TextView, ImageView, LinearLayout}
 import com.fortysevendeg.android.scaladays.R
+import com.fortysevendeg.android.scaladays.ui.commons.ResourceLoader
 import com.fortysevendeg.macroid.extras.FrameLayoutTweaks._
 import com.fortysevendeg.macroid.extras.ImageViewTweaks._
 import com.fortysevendeg.macroid.extras.LinearLayoutTweaks._
@@ -31,7 +32,7 @@ import macroid.FullDsl._
 
 import scala.language.postfixOps
 
-trait Styles {
+trait Styles extends ResourceLoader {
 
   val qrContentStyle: Tweak[LinearLayout] =
     vWrapContent +
@@ -48,17 +49,17 @@ trait Styles {
       tvText(R.string.scanMessage) +
       tvGravity(Gravity.CENTER) +
       tvColorResource(R.color.text_error_message) +
-      tvSize(16) +
-      vPaddings(30 dp)
+      tvSize(getInt(R.integer.text_big)) +
+      vPaddings(getDimension(R.dimen.padding_default_big))
 
   def qrButtonStyle(implicit appContext: AppContext): Tweak[TextView] =
     vWrapContent +
-      vMinWidth(160 dp) +
+      vMinWidth(getDimension(R.dimen.width_button)) +
       tvText(R.string.scan) +
       tvColorResource(R.color.text_error_button) +
       vBackground(R.drawable.background_error_button) +
       tvAllCaps +
-      tvSize(14) +
+      tvSize(getInt(R.integer.text_big)) +
       tvGravity(Gravity.CENTER)
 
 }

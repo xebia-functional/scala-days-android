@@ -39,7 +39,7 @@ trait ToolbarStyles {
 
 }
 
-trait PlaceHolderFailedStyles {
+trait PlaceHolderFailedStyles extends ResourceLoader {
 
   val failedContentStyle: Tweak[LinearLayout] =
     vWrapContent +
@@ -57,35 +57,35 @@ trait PlaceHolderFailedStyles {
       tvText(text) +
       tvGravity(Gravity.CENTER) +
       tvColorResource(R.color.text_error_message) +
-      tvSize(16) +
-      vPaddings(30 dp)
+      tvSize(getInt(R.integer.text_big)) +
+      vPaddings(getDimension(R.dimen.padding_default_big))
 
   def failedButtonStyle(implicit appContext: AppContext): Tweak[TextView] =
     vWrapContent +
-      vMinWidth(160 dp) +
+      vMinWidth(getDimension(R.dimen.width_button)) +
       tvText(R.string.reload) +
       tvColorResource(R.color.text_error_button) +
       vBackground(R.drawable.background_error_button) +
       tvAllCaps +
-      tvSize(14) +
+      tvSize(getInt(R.integer.text_medium)) +
       tvGravity(Gravity.CENTER)
 
 }
 
-trait HeaderAdapterStyles {
+trait HeaderAdapterStyles extends ResourceLoader {
 
   def headerContentStyle(implicit appContext: AppContext): Tweak[LinearLayout] =
-    lp[ViewGroup](MATCH_PARENT, 44 dp) +
+    lp[ViewGroup](MATCH_PARENT, getDimension(R.dimen.height_header)) +
       llHorizontal +
       vBackgroundColorResource(R.color.background_list_schedule_header)
 
   def headerNameStyle(implicit appContext: AppContext): Tweak[TextView] =
     vWrapContent +
-      tvSize(14) +
+      tvSize(getInt(R.integer.text_medium)) +
       llLayoutGravity(Gravity.CENTER_VERTICAL) +
       tvColorResource(R.color.text_schedule_name) +
       tvBold +
       tvAllCaps +
-      vPadding(16 dp, 0, 0, 0)
+      vPadding(getDimension(R.dimen.padding_default), 0, 0, 0)
 
 }

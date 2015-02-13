@@ -53,7 +53,8 @@ class Layout(implicit appContext: AppContext, context: ActivityContext)
   def layout = content
 }
 
-class MainMenuAdapterLayout(implicit context: ActivityContext, appContext: AppContext) extends Styles {
+class MainMenuAdapterLayout(implicit context: ActivityContext, appContext: AppContext) 
+  extends MainMenuAdapterStyles {
 
   var menuItem = slot[TextView]
 
@@ -66,7 +67,8 @@ class MainMenuAdapterLayout(implicit context: ActivityContext, appContext: AppCo
   )
 }
 
-class ViewHolderMainMenuAdapter(adapterLayout: MainMenuAdapterLayout)(implicit context: ActivityContext, appContext: AppContext)
+class ViewHolderMainMenuAdapter(adapterLayout: MainMenuAdapterLayout)
+  (implicit context: ActivityContext, appContext: AppContext)
     extends RecyclerView.ViewHolder(adapterLayout.content) {
 
   val content = adapterLayout.content
@@ -75,7 +77,8 @@ class ViewHolderMainMenuAdapter(adapterLayout: MainMenuAdapterLayout)(implicit c
 
 }
 
-class ConferenceMenuAdapterLayout(implicit context: ActivityContext, appContext: AppContext) extends Styles {
+class ConferenceMenuAdapterLayout(implicit context: ActivityContext, appContext: AppContext) 
+  extends ConferenceMenuAdapterStyles {
 
   var menuItem = slot[TextView]
 
@@ -91,7 +94,8 @@ class ConferenceMenuAdapterLayout(implicit context: ActivityContext, appContext:
   )
 }
 
-class ViewHolderConferenceMenuAdapter(adapterLayout: ConferenceMenuAdapterLayout)(implicit context: ActivityContext, appContext: AppContext)
+class ViewHolderConferenceMenuAdapter(adapterLayout: ConferenceMenuAdapterLayout)
+  (implicit context: ActivityContext, appContext: AppContext)
     extends RecyclerView.ViewHolder(adapterLayout.content) {
 
   val content = adapterLayout.content

@@ -15,4 +15,5 @@ object Versions {
   val prettytimeV = "3.2.7.Final"
   val zxingCoreV = "2.2"
   val zxingAndroidV = "1.2.0"
+  val picassoV = "2.5.0"
 }

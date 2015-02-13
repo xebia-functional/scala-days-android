@@ -22,6 +22,7 @@ import android.view.ViewGroup.LayoutParams._
 import android.widget.ImageView.ScaleType
 import android.widget.{TextView, ProgressBar, FrameLayout, LinearLayout}
 import com.fortysevendeg.android.scaladays.R
+import com.fortysevendeg.android.scaladays.ui.commons.ResourceLoader
 import com.fortysevendeg.macroid.extras.FrameLayoutTweaks._
 import com.fortysevendeg.macroid.extras.ImageViewTweaks._
 import com.fortysevendeg.macroid.extras.LinearLayoutTweaks._
@@ -33,7 +34,7 @@ import macroid.FullDsl._
 
 import scala.language.postfixOps
 
-trait Styles {
+trait FragmentStyles extends ResourceLoader {
 
   // Styles for Fragment
 
@@ -46,17 +47,39 @@ trait Styles {
   val progressBarStyle: Tweak[ProgressBar] =
     vWrapContent +
       flLayoutGravity(Gravity.CENTER)
+}
 
-  // Styles for Schedule Adapter
+trait SpeakersLayoutStyles extends ResourceLoader {
+
+  def speakerNameItemStyle(name: String)(implicit appContext: AppContext): Tweak[TextView] =
+    vWrapContent +
+      tvSize(getInt(R.integer.text_medium)) +
+      vPadding(0, 0, getDimension(R.dimen.padding_default_extra_small), 0) +
+      tvColorResource(R.color.text_schedule_name) +
+      tvText(name)
+
+  def speakerTwitterItemStyle(twitter: Option[String])(implicit appContext: AppContext): Tweak[TextView] =
+    vWrapContent +
+      tvSize(getInt(R.integer.text_medium)) +
+      tvColorResource(R.color.text_schedule_twitter) +
+      twitter.map(tvText(_) + vVisible).getOrElse(vGone)
+
+  def itemSpeakerContentStyle(implicit appContext: AppContext): Tweak[LinearLayout] =
+    vMatchWidth +
+      llHorizontal +
+      vPadding(0, getDimension(R.dimen.padding_default_extra_small), 0, 0)
+}
+
+trait AdapterStyles extends ResourceLoader {
 
   def itemContentStyle(implicit appContext: AppContext): Tweak[LinearLayout] =
     vMatchParent +
       llHorizontal
 
   def hourStyle(implicit appContext: AppContext): Tweak[TextView] =
-    lp[LinearLayout](70 dp, MATCH_PARENT) +
-      tvSize(14) +
-      vPadding(0, 12 dp, 0, 0) +
+    lp[LinearLayout](getDimension(R.dimen.width_schedule_hour), MATCH_PARENT) +
+      tvSize(getInt(R.integer.text_medium)) +
+      vPadding(0, getDimension(R.dimen.padding_default_small), 0, 0) +
       vBackgroundColorResource(R.color.background_list_schedule_hour) +
       tvGravity(Gravity.CENTER_HORIZONTAL) +
       tvColorResource(R.color.text_schedule_name) +
@@ -65,41 +88,23 @@ trait Styles {
   def itemInfoContentStyle(implicit appContext: AppContext): Tweak[LinearLayout] =
     vMatchWidth +
       llVertical +
-      vPadding(16 dp, 12 dp, 16 dp, 12 dp) +
+      vPaddings(getDimension(R.dimen.padding_default), getDimension(R.dimen.padding_default_small)) +
       vBackgroundColorResource(R.color.background_list_schedule_info)
 
   val itemSpeakersContentStyle: Tweak[LinearLayout] =
     vMatchWidth +
       llVertical
 
-  def itemSpeakerContentStyle(implicit appContext: AppContext): Tweak[LinearLayout] =
-    vMatchWidth +
-      llHorizontal +
-      vPadding(0, 4 dp, 0, 0)
-
   def roomItemStyle(implicit appContext: AppContext): Tweak[TextView] =
     vWrapContent +
-      tvSize(12) +
+      tvSize(getInt(R.integer.text_small)) +
       tvColorResource(R.color.text_schedule_room) +
-      vPadding(0, 0, 0, 4 dp)
+      vPadding(0, 0, 0, getDimension(R.dimen.padding_default_extra_small))
 
   def nameItemStyle(implicit appContext: AppContext): Tweak[TextView] =
     vWrapContent +
-      tvSize(14) +
+      tvSize(getInt(R.integer.text_medium)) +
       tvColorResource(R.color.text_schedule_name) +
       tvBold
-
-  def speakerNameItemStyle(name: String)(implicit appContext: AppContext): Tweak[TextView] =
-    vWrapContent +
-      tvSize(14) +
-      vPadding(0, 0, 4 dp, 0) +
-      tvColorResource(R.color.text_schedule_name) +
-      tvText(name)
-
-  def speakerTwitterItemStyle(twitter: Option[String])(implicit appContext: AppContext): Tweak[TextView] =
-    vWrapContent +
-      tvSize(14) +
-      tvColorResource(R.color.text_schedule_twitter) +
-      twitter.map(tvText(_) + vVisible).getOrElse(vGone)
 
 }

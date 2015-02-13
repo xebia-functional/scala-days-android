@@ -20,6 +20,7 @@ import android.view.Gravity
 import android.widget.ImageView.ScaleType
 import android.widget.{TextView, ImageView, LinearLayout}
 import com.fortysevendeg.android.scaladays.R
+import com.fortysevendeg.android.scaladays.ui.commons.ResourceLoader
 import com.fortysevendeg.macroid.extras.FrameLayoutTweaks._
 import com.fortysevendeg.macroid.extras.ImageViewTweaks._
 import com.fortysevendeg.macroid.extras.LinearLayoutTweaks._
@@ -43,37 +44,39 @@ trait FragmentStyles {
 
 }
 
-trait AdapterStyles {
+trait AdapterStyles extends ResourceLoader {
 
   def itemContentStyle(implicit appContext: AppContext): Tweak[LinearLayout] =
     vMatchParent +
       llHorizontal +
-      vPaddings(16 dp) +
+      vPaddings(getDimension(R.dimen.padding_default)) +
       vBackground(R.drawable.background_list_default)
 
-  def avatarStyle(implicit appContext: AppContext): Tweak[ImageView] =
-    lp[LinearLayout](40 dp, 40 dp) +
+  def avatarStyle(implicit appContext: AppContext): Tweak[ImageView] = {
+    val avatarSize = getDimension(R.dimen.size_avatar)
+    lp[LinearLayout](avatarSize, avatarSize) +
       ivScaleType(ScaleType.CENTER_CROP)
+  }
 
   def itemNoAvatarContentStyle(implicit appContext: AppContext): Tweak[LinearLayout] =
     vMatchWidth +
       llVertical +
-      vPadding(16 dp, 0, 0, 0)
+      vPadding(getDimension(R.dimen.padding_default), 0, 0, 0)
 
   def nameItemStyle(implicit appContext: AppContext): Tweak[TextView] =
     vWrapContent +
-      tvSize(16) +
+      tvSize(getInt(R.integer.text_big)) +
       tvColorResource(R.color.text_title_default)
 
   def twitterItemStyle(implicit appContext: AppContext): Tweak[TextView] =
     vWrapContent +
-      tvSize(12) +
+      tvSize(getInt(R.integer.text_small)) +
       tvColorResource(R.color.text_twitter_default)
 
   def bioItemStyle(implicit appContext: AppContext): Tweak[TextView] =
     vWrapContent +
-      tvSize(14) +
+      tvSize(getInt(R.integer.text_medium)) +
       tvColorResource(R.color.text_title_default) +
-      vPadding(0, 4 dp, 0, 0)
+      vPadding(0, getDimension(R.dimen.padding_default_extra_small), 0, 0)
 
 }

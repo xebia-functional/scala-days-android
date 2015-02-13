@@ -20,7 +20,7 @@ import android.support.v7.widget.RecyclerView
 import android.view.View.OnClickListener
 import android.view.{View, ViewGroup}
 import com.fortysevendeg.android.scaladays.R
-import com.fortysevendeg.android.scaladays.ui.commons.GlideTweaks._
+import com.fortysevendeg.android.scaladays.ui.commons.AsyncImageTweaks._
 import com.fortysevendeg.android.scaladays.ui.commons.{HeaderLayoutAdapter, ViewHolderHeaderAdapter}
 import com.fortysevendeg.android.scaladays.ui.sponsors.SponsorsAdapter._
 import com.fortysevendeg.macroid.extras.TextTweaks._
@@ -62,7 +62,7 @@ class SponsorsAdapter(sponsorItems: Seq[SponsorItem], listener: RecyclerClickLis
         sponsorItem.sponsor map {
           sponsor =>
             vh.content.setTag(position)
-            runUi(vh.logo <~ glideSrc(sponsor.logo))
+            runUi(vh.logo <~ srcImage(sponsor.logo))
         }
       case `itemViewTypeHeader` =>
         val vh = viewHolder.asInstanceOf[ViewHolderHeaderAdapter]

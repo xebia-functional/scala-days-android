@@ -21,7 +21,7 @@ import android.view.View.OnClickListener
 import android.view.{View, ViewGroup}
 import com.fortysevendeg.android.scaladays.R
 import com.fortysevendeg.android.scaladays.model.Speaker
-import com.fortysevendeg.android.scaladays.ui.commons.GlideTweaks._
+import com.fortysevendeg.android.scaladays.ui.commons.AsyncImageTweaks._
 import com.fortysevendeg.macroid.extras.ImageViewTweaks._
 import com.fortysevendeg.macroid.extras.TextTweaks._
 import com.fortysevendeg.macroid.extras.ViewTweaks._
@@ -46,9 +46,10 @@ class SpeakersAdapter(speakers: Seq[Speaker], listener: RecyclerClickListener)
 
   override def onBindViewHolder(viewHolder: ViewHolderSpeakersAdapter, position: Int): Unit = {
     val speaker = speakers(position)
+    val avatarSize = appContext.get.getResources.getDimensionPixelSize(R.dimen.size_avatar)
     viewHolder.content.setTag(position)
     runUi(
-      (viewHolder.avatar <~ speaker.picture.map(glideRoundedImage(_, R.drawable.placeholder_circle)).getOrElse(ivSrc(R.drawable.placeholder_avatar_failed))) ~
+      (viewHolder.avatar <~ speaker.picture.map(roundedImage(_, R.drawable.placeholder_circle, avatarSize)).getOrElse(ivSrc(R.drawable.placeholder_avatar_failed))) ~
           (viewHolder.name <~ tvText(speaker.name)) ~
           (viewHolder.twitter <~ speaker.twitter.map(tvText(_) + vVisible).getOrElse(vGone)) ~
           (viewHolder.bio <~ tvText(speaker.bio))
@@ -59,4 +60,3 @@ class SpeakersAdapter(speakers: Seq[Speaker], listener: RecyclerClickListener)
 trait RecyclerClickListener {
   def onClick(speaker: Speaker)
 }
-

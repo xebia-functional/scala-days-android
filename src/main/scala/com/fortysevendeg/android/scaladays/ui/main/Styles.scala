@@ -22,6 +22,7 @@ import android.view.Gravity
 import android.view.ViewGroup.LayoutParams._
 import android.widget.{TextView, FrameLayout, AbsListView, LinearLayout}
 import com.fortysevendeg.android.scaladays.R
+import com.fortysevendeg.android.scaladays.ui.commons.ResourceLoader
 import com.fortysevendeg.macroid.extras.DrawerLayoutTweaks._
 import com.fortysevendeg.macroid.extras.LinearLayoutTweaks._
 import com.fortysevendeg.macroid.extras.TextTweaks._
@@ -31,12 +32,12 @@ import macroid.FullDsl._
 
 import scala.language.postfixOps
 
-trait Styles {
+trait Styles extends ResourceLoader {
 
   val drawerStyle: Tweak[DrawerLayout] = vMatchParent
 
   def drawerLayoutStyle(implicit appContext: AppContext): Tweak[FrameLayout] =
-    lp[FrameLayout](304 dp, MATCH_PARENT) +
+    lp[FrameLayout](getDimension(R.dimen.width_drawer), MATCH_PARENT) +
       dlLayoutGravity(Gravity.START)
 
   val contentStyle: Tweak[LinearLayout] =
@@ -50,9 +51,9 @@ trait Styles {
     vMatchParent +
       llGravity(Gravity.CENTER)
 
-  val sampleTextStyle: Tweak[TextView] =
+  def sampleTextStyle(implicit appContext: AppContext): Tweak[TextView] =
     tvText(R.string.sampleText) +
-      tvSize(24) +
+      tvSize(getInt(R.integer.text_huge)) +
       tvColor(Color.BLACK)
 
 }

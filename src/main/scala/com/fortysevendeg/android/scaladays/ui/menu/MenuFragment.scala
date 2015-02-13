@@ -26,7 +26,7 @@ import android.view.{LayoutInflater, View, ViewGroup}
 import com.fortysevendeg.android.scaladays.R
 import com.fortysevendeg.android.scaladays.model.Information
 import com.fortysevendeg.android.scaladays.modules.ComponentRegistryImpl
-import com.fortysevendeg.android.scaladays.ui.commons.GlideTweaks._
+import com.fortysevendeg.android.scaladays.ui.commons.AsyncImageTweaks._
 import com.fortysevendeg.android.scaladays.ui.commons.UiServices
 import com.fortysevendeg.android.scaladays.ui.main.MainActivity
 import com.fortysevendeg.macroid.extras.RecyclerViewTweaks._
@@ -163,7 +163,7 @@ class MenuFragment
       textView <- layout.conferenceTitle
     } yield {
       runUi(
-        (imageView <~ glideCenterCrop(information.pictures(0).url, R.drawable.placeholder_square)) ~
+        (imageView <~ srcImage(information.pictures(0).url, R.drawable.placeholder_square)) ~
           (textView <~ tvText(information.longName)))
     }
 

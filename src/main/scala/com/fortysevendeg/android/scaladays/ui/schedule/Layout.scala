@@ -25,7 +25,7 @@ import macroid.FullDsl._
 import macroid.{ActivityContext, AppContext}
 
 class Layout(implicit appContext: AppContext, context: ActivityContext)
-    extends Styles
+    extends FragmentStyles
     with PlaceHolderFailedLayout {
 
   var recyclerView = slot[RecyclerView]
@@ -47,7 +47,7 @@ class Layout(implicit appContext: AppContext, context: ActivityContext)
 }
 
 class SpeakersLayout(speaker: Speaker)(implicit context: ActivityContext, appContext: AppContext)
-    extends Styles {
+    extends SpeakersLayoutStyles {
 
   val content = layout
 
@@ -65,7 +65,7 @@ class SpeakersLayout(speaker: Speaker)(implicit context: ActivityContext, appCon
 }
 
 class ScheduleLayoutAdapter(implicit context: ActivityContext, appContext: AppContext)
-    extends Styles {
+    extends AdapterStyles {
 
   var hour = slot[TextView]
 

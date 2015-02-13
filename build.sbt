@@ -37,7 +37,7 @@ libraryDependencies ++= Seq(
   aar(macroidExtras),
   playJson,
   specs2,
-  glide,
+  picasso,
   twitter4j,
   prettytime,
   zxingCore,
