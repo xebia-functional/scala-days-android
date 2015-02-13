@@ -23,6 +23,7 @@ import android.support.v4.app.FragmentActivity
 import android.support.v7.app.{ActionBarActivity, ActionBarDrawerToggle}
 import android.view.{MenuItem, View}
 import com.fortysevendeg.android.scaladays.R
+import com.fortysevendeg.android.scaladays.ui.about.AboutFragment
 import com.fortysevendeg.android.scaladays.ui.qrcode.QrCodeFragment
 import com.fortysevendeg.android.scaladays.ui.menu.MenuSection._
 import com.fortysevendeg.android.scaladays.ui.menu._
@@ -90,6 +91,7 @@ class MainActivity
       case SOCIAL => f[SocialFragment]
       case CONTACTS => f[QrCodeFragment]
       case SPONSORS => f[SponsorsFragment]
+      case ABOUT => f[AboutFragment]
       case _ => f[SampleFragment].pass(SampleFragment.titleArg → title)
     }
     runUi(

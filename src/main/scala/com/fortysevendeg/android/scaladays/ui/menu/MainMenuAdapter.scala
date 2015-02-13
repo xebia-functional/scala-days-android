@@ -46,7 +46,7 @@ class MainMenuAdapter(listener: MainMenuClickListener)
       R.drawable.menu_icon_speakers, SPEAKERS),
     MainMenuItem(Id.tickets,
       appContext.app.getString(R.string.tickets), 
-      R.drawable.menu_icon_tickets, SAMPLE),
+      R.drawable.menu_icon_tickets, TICKETS),
     MainMenuItem(Id.contacts,
       appContext.app.getString(R.string.contacts), 
       R.drawable.menu_icon_contact, CONTACTS),
@@ -58,7 +58,7 @@ class MainMenuAdapter(listener: MainMenuClickListener)
       R.drawable.menu_icon_places, SAMPLE),
     MainMenuItem(Id.about,
       appContext.app.getString(R.string.about), 
-      R.drawable.menu_icon_about, SAMPLE))
+      R.drawable.menu_icon_about, ABOUT))
 
   override def onCreateViewHolder(parentViewGroup: ViewGroup, i: Int): ViewHolderMainMenuAdapter = {
     val adapter = new MainMenuAdapterLayout()

@@ -16,39 +16,43 @@
 
 package com.fortysevendeg.android.scaladays.ui.sponsors
 
+import android.support.v7.widget.RecyclerView
 import android.view.Gravity
-import android.widget.ImageView.ScaleType
-import android.widget.LinearLayout
+import android.widget.{ImageView, FrameLayout, LinearLayout, ProgressBar}
 import com.fortysevendeg.android.scaladays.R
 import com.fortysevendeg.macroid.extras.FrameLayoutTweaks._
-import com.fortysevendeg.macroid.extras.ImageViewTweaks._
 import com.fortysevendeg.macroid.extras.LinearLayoutTweaks._
 import com.fortysevendeg.macroid.extras.RecyclerViewTweaks._
-import com.fortysevendeg.macroid.extras.TextTweaks._
 import com.fortysevendeg.macroid.extras.ViewTweaks._
-import macroid.AppContext
 import macroid.FullDsl._
+import macroid.{AppContext, Tweak}
 
 import scala.language.postfixOps
 
 trait FragmentStyles {
 
-  val rootStyle = vMatchParent
+  val rootStyle: Tweak[FrameLayout] =
+    vMatchParent +
+    vBackground(R.color.background_sponsors)
 
-  val recyclerViewStyle = vMatchParent +
+  val recyclerViewStyle: Tweak[RecyclerView] =
+    vMatchParent +
       rvNoFixedSize
 
-  val progressBarStyle = vWrapContent +
+  val progressBarStyle: Tweak[ProgressBar] =
+    vWrapContent +
       flLayoutGravity(Gravity.CENTER)
 
 }
 
 trait AdapterStyles {
 
-  def itemContentStyle(implicit appContext: AppContext) = vMatchParent +
+  def itemContentStyle(implicit appContext: AppContext): Tweak[LinearLayout] =
+    vMatchParent +
       vPaddings(16 dp) +
-      llGravity(Gravity.CENTER)
+      llGravity(Gravity.CENTER) +
+      vBackground(R.drawable.background_list_default)
 
-  def logoStyle(implicit appContext: AppContext) = lp[LinearLayout](200 dp, 90 dp)
+  def logoStyle(implicit appContext: AppContext): Tweak[ImageView] = lp[LinearLayout](200 dp, 90 dp)
 
 }
