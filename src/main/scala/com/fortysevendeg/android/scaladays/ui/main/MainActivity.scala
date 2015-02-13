@@ -35,6 +35,7 @@ import com.fortysevendeg.macroid.extras.FragmentExtras._
 import com.fortysevendeg.macroid.extras.ToolbarTweaks._
 import macroid.FullDsl._
 import macroid._
+import com.crashlytics.android.Crashlytics
 
 
 class MainActivity
@@ -47,6 +48,7 @@ class MainActivity
 
   override def onCreate(savedInstanceState: Bundle) = {
     super.onCreate(savedInstanceState)
+    Crashlytics.start(this);
     setContentView(layout)
 
     toolBar map setSupportActionBar

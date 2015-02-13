@@ -58,6 +58,7 @@
                 android:name="com.google.zxing.client.android.HelpActivity"
                 android:screenOrientation="user"/>
 
+        <meta-data android:name="com.crashlytics.ApiKey" android:value="***REMOVED***"/>
     </application>
 
     <uses-permission android:name="android.permission.INTERNET"/>

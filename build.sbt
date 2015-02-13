@@ -6,6 +6,7 @@ import Libraries.graphics._
 import Libraries.social._
 import Libraries.date._
 import Libraries.qr._
+import Libraries.crashlytics._
 
 android.Plugin.androidBuild
 
@@ -42,6 +43,7 @@ libraryDependencies ++= Seq(
   prettytime,
   zxingCore,
   aar(zxingAndroid),
+  crashlytics,
   compilerPlugin(Libraries.wartRemover))
 
 run <<= run in Android

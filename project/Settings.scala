@@ -15,8 +15,9 @@ object Settings {
         "jcenter" at "http://jcenter.bintray.com",
         "Scalaz Bintray Repo" at "http://dl.bintray.com/scalaz/releases",
         "47deg Public" at "http://clinker.47deg.com/nexus/content/groups/public",
-        "zxing Android Minimal" at "https://raw.github.com/embarkmobile/zxing-android-minimal/mvn-repo/maven-repository/"
-      )
+        "zxing Android Minimal" at "https://raw.github.com/embarkmobile/zxing-android-minimal/mvn-repo/maven-repository/",
+        "Crashlytics" at "http://download.crashlytics.com/mave"
+       )
 
   lazy val proguardCommons = Seq(
     "-ignorewarnings",
@@ -27,6 +28,7 @@ object Settings {
     "-keep class org.ocpsoft.prettytime.i18n.**",
     "-keep class macroid.** { *; }",
     "-keep class android.** { *; }",
-    "-keep class com.google.** { *; }")
+    "-keep class com.google.** { *; }",
+    "-keep class com.crashlytics.** { *; }")
 
 }

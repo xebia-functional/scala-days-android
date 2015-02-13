@@ -58,5 +58,10 @@ object Libraries {
     lazy val zxingCore = "com.google.zxing" % "core" % Versions.zxingCoreV
     lazy val zxingAndroid = "com.embarkmobile" % "zxing-android-minimal" % Versions.zxingAndroidV
   }
+  
+  object crashlytics {
+    lazy val crashlytics = "com.crashlytics.android" % "crashlytics" % Versions.crashlyticsV
+    
+  }
 
 }
