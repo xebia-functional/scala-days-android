@@ -25,7 +25,8 @@ case class Conference(
   info: Information,
   schedule: Seq[Event],
   sponsors: Seq[SponsorType],
-  speakers: Seq[Speaker])
+  speakers: Seq[Speaker],
+  codeOfConduct: Option[String])
 
 case class Information(
   id: Int,

@@ -18,7 +18,7 @@ package com.fortysevendeg.android.scaladays.ui.speakers
 
 import android.view.Gravity
 import android.widget.ImageView.ScaleType
-import android.widget.LinearLayout
+import android.widget.{TextView, ImageView, LinearLayout}
 import com.fortysevendeg.android.scaladays.R
 import com.fortysevendeg.macroid.extras.FrameLayoutTweaks._
 import com.fortysevendeg.macroid.extras.ImageViewTweaks._
@@ -26,7 +26,7 @@ import com.fortysevendeg.macroid.extras.LinearLayoutTweaks._
 import com.fortysevendeg.macroid.extras.RecyclerViewTweaks._
 import com.fortysevendeg.macroid.extras.TextTweaks._
 import com.fortysevendeg.macroid.extras.ViewTweaks._
-import macroid.AppContext
+import macroid.{Tweak, AppContext}
 import macroid.FullDsl._
 
 import scala.language.postfixOps
@@ -36,35 +36,42 @@ trait FragmentStyles {
   val rootStyle = vMatchParent
 
   val recyclerViewStyle = vMatchParent +
-      rvNoFixedSize
+    rvNoFixedSize
 
   val progressBarStyle = vWrapContent +
-      flLayoutGravity(Gravity.CENTER)
+    flLayoutGravity(Gravity.CENTER)
 
 }
 
 trait AdapterStyles {
 
-  def itemContentStyle(implicit appContext: AppContext) = vMatchParent +
+  def itemContentStyle(implicit appContext: AppContext): Tweak[LinearLayout] =
+    vMatchParent +
       llHorizontal +
-      vPaddings(16 dp)
+      vPaddings(16 dp) +
+      vBackground(R.drawable.background_list_default)
 
-  def avatarStyle(implicit appContext: AppContext) = lp[LinearLayout](40 dp, 40 dp) +
+  def avatarStyle(implicit appContext: AppContext): Tweak[ImageView] =
+    lp[LinearLayout](40 dp, 40 dp) +
       ivScaleType(ScaleType.CENTER_CROP)
 
-  def itemNoAvatarContentStyle(implicit appContext: AppContext) = vMatchWidth +
+  def itemNoAvatarContentStyle(implicit appContext: AppContext): Tweak[LinearLayout] =
+    vMatchWidth +
       llVertical +
       vPadding(16 dp, 0, 0, 0)
 
-  def nameItemStyle(implicit appContext: AppContext) = vWrapContent +
+  def nameItemStyle(implicit appContext: AppContext): Tweak[TextView] =
+    vWrapContent +
       tvSize(16) +
       tvColorResource(R.color.text_title_default)
 
-  def twitterItemStyle(implicit appContext: AppContext) = vWrapContent +
+  def twitterItemStyle(implicit appContext: AppContext): Tweak[TextView] =
+    vWrapContent +
       tvSize(12) +
       tvColorResource(R.color.text_twitter_default)
 
-  def bioItemStyle(implicit appContext: AppContext) = vWrapContent +
+  def bioItemStyle(implicit appContext: AppContext): Tweak[TextView] =
+    vWrapContent +
       tvSize(14) +
       tvColorResource(R.color.text_title_default) +
       vPadding(0, 4 dp, 0, 0)

@@ -20,7 +20,7 @@ import android.widget.{TextView, ImageView}
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.CenterCrop
 import com.fortysevendeg.android.scaladays.utils.DateTimeUtils
-import macroid.{AppContext, Tweak}
+import macroid.{ActivityContext, AppContext, Tweak}
 import org.joda.time.DateTime
 
 object GlideTweaks {
@@ -29,11 +29,11 @@ object GlideTweaks {
   def glideRoundedImage(
       url: String,
       placeHolder: Int
-      )(implicit appContext: AppContext): Tweak[W] = Tweak[W](
+      )(implicit appContext: AppContext, activityContext: ActivityContext): Tweak[W] = Tweak[W](
     imageView => {
-      Glide.`with`(appContext.get)
+      Glide.`with`(activityContext.get)
           .load(url)
-          .transform(new CenterCrop(appContext.get), new RoundedImageTransformation)
+          .transform(new CenterCrop(activityContext.get), new RoundedImageTransformation)
           .placeholder(placeHolder)
           .into(imageView)
     }
@@ -42,9 +42,9 @@ object GlideTweaks {
   def glideCenterCrop(
       url: String,
       placeHolder: Int
-      )(implicit appContext: AppContext): Tweak[W] = Tweak[W](
+      )(implicit appContext: AppContext, activityContext: ActivityContext): Tweak[W] = Tweak[W](
     imageView => {
-      Glide.`with`(appContext.get)
+      Glide.`with`(activityContext.get)
           .load(url)
           .centerCrop()
           .placeholder(placeHolder)
@@ -52,9 +52,9 @@ object GlideTweaks {
     }
   )
 
-  def glideSrc(url: String)(implicit appContext: AppContext): Tweak[W] = Tweak[W](
+  def glideSrc(url: String)(implicit appContext: AppContext, activityContext: ActivityContext): Tweak[W] = Tweak[W](
     imageView => {
-      Glide.`with`(appContext.get)
+      Glide.`with`(activityContext.get)
           .load(url)
           .into(imageView)
     }

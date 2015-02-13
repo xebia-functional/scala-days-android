@@ -17,6 +17,8 @@
 package com.fortysevendeg.android.scaladays.ui.menu
 
 import android.app.Activity
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v7.widget.LinearLayoutManager
@@ -30,7 +32,6 @@ import com.fortysevendeg.android.scaladays.ui.main.MainActivity
 import com.fortysevendeg.macroid.extras.RecyclerViewTweaks._
 import com.fortysevendeg.macroid.extras.TextTweaks._
 import com.fortysevendeg.macroid.extras.ImageViewTweaks._
-import com.fortysevendeg.macroid.extras.ViewTweaks._
 import macroid.FullDsl._
 import macroid._
 
@@ -45,22 +46,31 @@ class MenuFragment
   override implicit lazy val appContextProvider: AppContext = fragmentAppContext
 
   private var fragmentLayout: Option[Layout] = None
-  
+
   private var mainActivity: Option[MainActivity] = None
-  
+
+  private var urlTickets: Option[String] = None
+
   lazy val mainMenuAdapter: MainMenuAdapter = new MainMenuAdapter(new MainMenuClickListener {
     override def onClick(mainMenuItem: MainMenuItem) =
-      itemSelected(mainMenuItem)
+      mainMenuItem.section match {
+        case MenuSection.TICKETS =>
+          urlTickets map {
+            url =>
+              val intent = new Intent(Intent.ACTION_VIEW,
+                Uri.parse(url))
+              fragmentActivityContext.get.startActivity(intent)
+          }
+        case _ => itemSelected(mainMenuItem)
+      }
   })
-  
+
   lazy val conferenceMenuAdapter: ConferenceMenuAdapter = new ConferenceMenuAdapter(new ConferenceMenuClickListener {
     override def onClick(conferenceMenuItem: ConferenceMenuItem) =
       conferenceSelected(conferenceMenuItem)
   })
 
   private var mainMenuVisible: Boolean = true
-  
-  val colorTransitionTime = 400
 
   override def onAttach(activity: Activity) = {
     super.onAttach(activity)
@@ -82,19 +92,19 @@ class MenuFragment
     for {
       layout <- fragmentLayout
       bigImageLayout <- layout.bigImageLayout
-      recyclerView <- layout.recyclerView
     } yield {
       bigImageLayout.setOnClickListener(new View.OnClickListener {
         override def onClick(v: View) =
           toggleMenu()
       })
       val defaultSection = 0
-      runUi(        
+      runUi(
         (layout.recyclerView <~ rvAdapter(mainMenuAdapter)) ~
-        Ui { itemSelected(mainMenuAdapter.list(defaultSection)) }
-      )
+          Ui {
+            itemSelected(mainMenuAdapter.list(defaultSection))
+          })
     }
-    
+
     val conferenceId = loadSelectedConferenceId
     val result = for {
       conferences <- loadConferences()
@@ -102,6 +112,7 @@ class MenuFragment
     } yield {
       conferenceMenuAdapter.loadConferences(conferences map (_.info))
       showConference(selectedConference.info)
+      urlTickets = Some(selectedConference.info.registrationSite)
     }
 
     result.recover {
@@ -115,7 +126,7 @@ class MenuFragment
     mainActivity = None
     super.onDetach()
   }
-  
+
   def toggleMenu() =
     for {
       layout <- fragmentLayout
@@ -124,29 +135,27 @@ class MenuFragment
     } yield {
       mainMenuVisible = !mainMenuVisible
       if (mainMenuVisible) runUi(
-        (recyclerView <~ vBackgroundTransition(durationMilis = colorTransitionTime, reverse = true)) ~
-          (selectorImageView <~ ivSrc(R.drawable.menu_header_select_arrow)) ~
+        (selectorImageView <~ ivSrc(R.drawable.menu_header_select_arrow)) ~
           (recyclerView <~ rvAdapter(mainMenuAdapter)))
       else runUi(
-        (recyclerView <~ vBackgroundTransition(durationMilis = colorTransitionTime, reverse = false)) ~
-          (selectorImageView <~ ivSrc(R.drawable.menu_header_select_arrow_up)) ~
+        (selectorImageView <~ ivSrc(R.drawable.menu_header_select_arrow_up)) ~
           (recyclerView <~ rvAdapter(conferenceMenuAdapter)))
     }
-  
-  def showMainMenu = 
+
+  def showMainMenu =
     if (!mainMenuVisible) toggleMenu()
 
   def itemSelected(menuItem: MainMenuItem) = {
     mainMenuAdapter.selectItem(Some(menuItem))
     mainActivity map (_.itemSelected(menuItem.section, menuItem.name))
   }
-  
+
   def conferenceSelected(menuItem: ConferenceMenuItem) = {
     showConference(menuItem.information)
     saveSelectedConferenceId(menuItem.id)
     mainMenuAdapter.selectedItem map itemSelected
   }
-  
+
   def showConference(information: Information) =
     for {
       layout <- fragmentLayout
@@ -155,8 +164,7 @@ class MenuFragment
     } yield {
       runUi(
         (imageView <~ glideCenterCrop(information.pictures(0).url, R.drawable.placeholder_square)) ~
-          (textView <~ tvText(information.longName))
-      )
+          (textView <~ tvText(information.longName)))
     }
 
 }
