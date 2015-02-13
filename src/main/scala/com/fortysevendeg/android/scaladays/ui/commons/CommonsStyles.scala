@@ -16,45 +16,52 @@
 
 package com.fortysevendeg.android.scaladays.ui.commons
 
+import android.support.v7.widget.Toolbar
 import android.view.ViewGroup.LayoutParams._
 import android.view.{ViewGroup, Gravity}
+import android.widget.{TextView, ImageView, LinearLayout}
 import com.fortysevendeg.android.scaladays.R
 import com.fortysevendeg.macroid.extras.FrameLayoutTweaks._
 import com.fortysevendeg.macroid.extras.LinearLayoutTweaks._
 import com.fortysevendeg.macroid.extras.ViewTweaks._
 import com.fortysevendeg.macroid.extras.ImageViewTweaks._
 import com.fortysevendeg.macroid.extras.TextTweaks._
-import macroid.AppContext
+import macroid.{Tweak, AppContext}
 import macroid.FullDsl._
 
 import scala.language.postfixOps
 
 trait ToolbarStyles {
 
-  def toolbarStyle(height: Int)(implicit appContext: AppContext) = vContentSizeMatchWidth(height) +
+  def toolbarStyle(height: Int)(implicit appContext: AppContext): Tweak[Toolbar] =
+    vContentSizeMatchWidth(height) +
       vBackground(R.color.primary)
 
 }
 
 trait PlaceHolderFailedStyles {
 
-  val failedContentStyle = vWrapContent +
+  val failedContentStyle: Tweak[LinearLayout] =
+    vWrapContent +
       flLayoutGravity(Gravity.CENTER) +
       llGravity(Gravity.CENTER_HORIZONTAL) +
       llVertical +
       vGone
 
-  val failedImageStyle = vWrapContent +
+  val failedImageStyle: Tweak[ImageView] =
+    vWrapContent +
       ivSrc(R.drawable.placeholder_error)
 
-  def failedMessageStyle(text: Int)(implicit appContext: AppContext) = vWrapContent +
+  def failedMessageStyle(text: Int)(implicit appContext: AppContext): Tweak[TextView] =
+    vWrapContent +
       tvText(text) +
       tvGravity(Gravity.CENTER) +
       tvColorResource(R.color.text_error_message) +
       tvSize(16) +
       vPaddings(30 dp)
 
-  def failedButtonStyle(implicit appContext: AppContext) = vWrapContent +
+  def failedButtonStyle(implicit appContext: AppContext): Tweak[TextView] =
+    vWrapContent +
       vMinWidth(160 dp) +
       tvText(R.string.reload) +
       tvColorResource(R.color.text_error_button) +
@@ -67,11 +74,13 @@ trait PlaceHolderFailedStyles {
 
 trait HeaderAdapterStyles {
 
-  def headerContentStyle(implicit appContext: AppContext) = lp[ViewGroup](MATCH_PARENT, 44 dp) +
+  def headerContentStyle(implicit appContext: AppContext): Tweak[LinearLayout] =
+    lp[ViewGroup](MATCH_PARENT, 44 dp) +
       llHorizontal +
       vBackgroundColorResource(R.color.background_list_schedule_header)
 
-  def headerNameStyle(implicit appContext: AppContext) = vWrapContent +
+  def headerNameStyle(implicit appContext: AppContext): Tweak[TextView] =
+    vWrapContent +
       tvSize(14) +
       llLayoutGravity(Gravity.CENTER_VERTICAL) +
       tvColorResource(R.color.text_schedule_name) +

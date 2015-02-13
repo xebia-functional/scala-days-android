@@ -17,35 +17,41 @@
 package com.fortysevendeg.android.scaladays.ui.main
 
 import android.graphics.Color
+import android.support.v4.widget.DrawerLayout
 import android.view.Gravity
 import android.view.ViewGroup.LayoutParams._
-import android.widget.{FrameLayout, AbsListView, LinearLayout}
+import android.widget.{TextView, FrameLayout, AbsListView, LinearLayout}
 import com.fortysevendeg.android.scaladays.R
 import com.fortysevendeg.macroid.extras.DrawerLayoutTweaks._
 import com.fortysevendeg.macroid.extras.LinearLayoutTweaks._
 import com.fortysevendeg.macroid.extras.TextTweaks._
 import com.fortysevendeg.macroid.extras.ViewTweaks._
-import macroid.AppContext
+import macroid.{Tweak, AppContext}
 import macroid.FullDsl._
 
 import scala.language.postfixOps
 
 trait Styles {
 
-  val drawerStyle = vMatchParent
+  val drawerStyle: Tweak[DrawerLayout] = vMatchParent
 
-  def drawerLayoutStyle(implicit appContext: AppContext) = lp[FrameLayout](304 dp, MATCH_PARENT) +
+  def drawerLayoutStyle(implicit appContext: AppContext): Tweak[FrameLayout] =
+    lp[FrameLayout](304 dp, MATCH_PARENT) +
       dlLayoutGravity(Gravity.START)
 
-  val contentStyle = vMatchParent +
+  val contentStyle: Tweak[LinearLayout] =
+    vMatchParent +
       llVertical
 
-  val fragmentContentStyle = vMatchParent
+  val fragmentContentStyle: Tweak[FrameLayout] =
+    vMatchParent
 
-  val sampleStyle = vMatchParent +
+  val sampleStyle: Tweak[LinearLayout] =
+    vMatchParent +
       llGravity(Gravity.CENTER)
 
-  val sampleTextStyle = tvText(R.string.sampleText) +
+  val sampleTextStyle: Tweak[TextView] =
+    tvText(R.string.sampleText) +
       tvSize(24) +
       tvColor(Color.BLACK)
 

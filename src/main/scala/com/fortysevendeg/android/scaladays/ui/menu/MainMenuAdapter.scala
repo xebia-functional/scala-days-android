@@ -46,7 +46,7 @@ class MainMenuAdapter(listener: MainMenuClickListener)
       R.drawable.menu_icon_speakers, SPEAKERS),
     MainMenuItem(Id.tickets,
       appContext.app.getString(R.string.tickets), 
-      R.drawable.menu_icon_tickets, SAMPLE),
+      R.drawable.menu_icon_tickets, TICKETS),
     MainMenuItem(Id.contacts,
       appContext.app.getString(R.string.contacts), 
       R.drawable.menu_icon_contact, CONTACTS),

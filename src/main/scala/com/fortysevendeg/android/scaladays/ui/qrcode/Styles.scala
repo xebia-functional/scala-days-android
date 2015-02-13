@@ -18,7 +18,7 @@ package com.fortysevendeg.android.scaladays.ui.qrcode
 
 import android.view.Gravity
 import android.widget.ImageView.ScaleType
-import android.widget.LinearLayout
+import android.widget.{TextView, ImageView, LinearLayout}
 import com.fortysevendeg.android.scaladays.R
 import com.fortysevendeg.macroid.extras.FrameLayoutTweaks._
 import com.fortysevendeg.macroid.extras.ImageViewTweaks._
@@ -26,29 +26,33 @@ import com.fortysevendeg.macroid.extras.LinearLayoutTweaks._
 import com.fortysevendeg.macroid.extras.RecyclerViewTweaks._
 import com.fortysevendeg.macroid.extras.TextTweaks._
 import com.fortysevendeg.macroid.extras.ViewTweaks._
-import macroid.AppContext
+import macroid.{Tweak, AppContext}
 import macroid.FullDsl._
 
 import scala.language.postfixOps
 
 trait Styles {
 
-  val qrContentStyle = vWrapContent +
+  val qrContentStyle: Tweak[LinearLayout] =
+    vWrapContent +
       flLayoutGravity(Gravity.CENTER) +
       llGravity(Gravity.CENTER_HORIZONTAL) +
       llVertical
 
-  val qrImageStyle = vWrapContent +
+  val qrImageStyle: Tweak[ImageView] =
+    vWrapContent +
       ivSrc(R.drawable.placeholder_contact)
 
-  def qrMessageStyle(implicit appContext: AppContext) = vWrapContent +
+  def qrMessageStyle(implicit appContext: AppContext): Tweak[TextView] =
+    vWrapContent +
       tvText(R.string.scanMessage) +
       tvGravity(Gravity.CENTER) +
       tvColorResource(R.color.text_error_message) +
       tvSize(16) +
       vPaddings(30 dp)
 
-  def qrButtonStyle(implicit appContext: AppContext) = vWrapContent +
+  def qrButtonStyle(implicit appContext: AppContext): Tweak[TextView] =
+    vWrapContent +
       vMinWidth(160 dp) +
       tvText(R.string.scan) +
       tvColorResource(R.color.text_error_button) +

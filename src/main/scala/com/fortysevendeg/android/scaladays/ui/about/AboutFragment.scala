@@ -57,8 +57,7 @@ class AboutFragment
   def show(codeOfConduct: Option[String]) = {
     fragmentLayout map {
       layout =>
-        runUi(
-          layout.description <~ (codeOfConduct map (tvText(_) + vVisible) getOrElse vGone))
+        runUi(layout.description <~ (codeOfConduct map (tvText(_) + vVisible) getOrElse vGone))
     }
   }
 
