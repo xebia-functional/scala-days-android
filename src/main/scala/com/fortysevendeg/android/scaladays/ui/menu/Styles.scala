@@ -73,15 +73,17 @@ trait Styles {
     llHorizontal +
     llGravity(Gravity.CENTER_VERTICAL) +
     vPadding(18 dp, 14 dp, 18 dp, 14 dp) +
-    vBackground(R.drawable.background_list_default)
+    vBackground(R.drawable.foreground_list_menu)
 
-  def conferenceMenuItemIconStyle(implicit appContext: AppContext) = lp[LinearLayout](42 dp, 42 dp) +
+  def conferenceMenuItemIconStyle(implicit appContext: AppContext) = lp[LinearLayout](38 dp, 38 dp) +
     ivScaleType(ScaleType.CENTER_CROP)
 
   def conferenceMenuItemStyle(implicit appContext: AppContext) = vWrapContent +
-    tvSize(14) +
-    tvColor(Color.DKGRAY) +
-    vPadding(paddingLeft = 34 dp) +
-    tvBoldLight
+      tvSize(14) +
+      tvColor(Color.WHITE) +
+      tvGravity(Gravity.CENTER_VERTICAL) +
+      tvDrawablePadding(34 dp) +
+      vPadding(paddingLeft = 20 dp) +
+      tvBoldLight
 
 }

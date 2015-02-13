@@ -17,6 +17,6 @@
 
 <resources>
 
-    <color name="background_menu_item_pressed">#6CCFE9</color>
+    <color name="background_menu_item_pressed">#000000</color>
 
 </resources>
