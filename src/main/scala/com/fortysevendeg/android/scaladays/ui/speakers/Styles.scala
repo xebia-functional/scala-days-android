@@ -26,6 +26,7 @@ import com.fortysevendeg.macroid.extras.LinearLayoutTweaks._
 import com.fortysevendeg.macroid.extras.RecyclerViewTweaks._
 import com.fortysevendeg.macroid.extras.TextTweaks._
 import com.fortysevendeg.macroid.extras.ViewTweaks._
+import com.fortysevendeg.macroid.extras.ResourcesExtras._
 import macroid.{Tweak, AppContext}
 import macroid.FullDsl._
 
@@ -48,32 +49,34 @@ trait AdapterStyles {
   def itemContentStyle(implicit appContext: AppContext): Tweak[LinearLayout] =
     vMatchParent +
       llHorizontal +
-      vPaddings(16 dp) +
+      vPaddings(resGetDimensionPixelSize(R.dimen.padding_default)) +
       vBackground(R.drawable.background_list_default)
 
-  def avatarStyle(implicit appContext: AppContext): Tweak[ImageView] =
-    lp[LinearLayout](40 dp, 40 dp) +
+  def avatarStyle(implicit appContext: AppContext): Tweak[ImageView] = {
+    val avatarSize = resGetDimensionPixelSize(R.dimen.size_avatar)
+    lp[LinearLayout](avatarSize, avatarSize) +
       ivScaleType(ScaleType.CENTER_CROP)
+  }
 
   def itemNoAvatarContentStyle(implicit appContext: AppContext): Tweak[LinearLayout] =
     vMatchWidth +
       llVertical +
-      vPadding(16 dp, 0, 0, 0)
+      vPadding(resGetDimensionPixelSize(R.dimen.padding_default), 0, 0, 0)
 
   def nameItemStyle(implicit appContext: AppContext): Tweak[TextView] =
     vWrapContent +
-      tvSize(16) +
+      tvSize(resGetInteger(R.integer.text_big)) +
       tvColorResource(R.color.text_title_default)
 
   def twitterItemStyle(implicit appContext: AppContext): Tweak[TextView] =
     vWrapContent +
-      tvSize(12) +
+      tvSize(resGetInteger(R.integer.text_small)) +
       tvColorResource(R.color.text_twitter_default)
 
   def bioItemStyle(implicit appContext: AppContext): Tweak[TextView] =
     vWrapContent +
-      tvSize(14) +
+      tvSize(resGetInteger(R.integer.text_medium)) +
       tvColorResource(R.color.text_title_default) +
-      vPadding(0, 4 dp, 0, 0)
+      vPadding(0, resGetDimensionPixelSize(R.dimen.padding_default_extra_small), 0, 0)
 
 }

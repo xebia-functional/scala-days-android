@@ -10,9 +10,9 @@ object Versions {
   val wartremoverV = "0.11"
   val playJsonV = "2.3.4"
   val specs2V = "2.4.15"
-  val glideV = "3.5.1"
   val twitter4jV = "4.0.2"
   val prettytimeV = "3.2.7.Final"
   val zxingCoreV = "2.2"
   val zxingAndroidV = "1.2.0"
+  val picassoV = "2.5.0"
 }

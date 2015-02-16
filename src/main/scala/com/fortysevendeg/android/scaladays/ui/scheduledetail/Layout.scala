@@ -17,8 +17,10 @@
 package com.fortysevendeg.android.scaladays.ui.scheduledetail
 
 import android.widget._
+import com.fortysevendeg.android.scaladays.R
 import com.fortysevendeg.android.scaladays.model.Speaker
 import com.fortysevendeg.android.scaladays.ui.commons.ToolbarLayout
+import com.fortysevendeg.macroid.extras.ResourcesExtras._
 import macroid.FullDsl._
 import macroid.{ActivityContext, AppContext}
 
@@ -60,7 +62,7 @@ trait Layout
         ) <~ scrollContentStyle,
         expandedToolBarLayout(
           w[TextView] <~ wire(titleToolbar) <~ toolBarTitleStyle
-        )(124 dp),
+        )(resGetDimensionPixelSize(R.dimen.height_toolbar_expanded)),
         w[ImageView] <~ fabStyle <~ wire(fabFavorite)
       ) <~ rootStyle
     )

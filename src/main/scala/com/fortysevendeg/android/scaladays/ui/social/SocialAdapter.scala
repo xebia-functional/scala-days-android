@@ -23,7 +23,7 @@ import android.view.{View, ViewGroup}
 import com.fortysevendeg.android.scaladays.R
 import com.fortysevendeg.android.scaladays.model.TwitterMessage
 import com.fortysevendeg.android.scaladays.ui.commons.DateTimeTextViewTweaks._
-import com.fortysevendeg.android.scaladays.ui.commons.GlideTweaks._
+import com.fortysevendeg.android.scaladays.ui.commons.AsyncImageTweaks._
 import com.fortysevendeg.macroid.extras.TextTweaks._
 import macroid.FullDsl._
 import macroid.{ActivityContext, AppContext}
@@ -46,9 +46,10 @@ class SocialAdapter(messages: Seq[TwitterMessage], listener: RecyclerClickListen
 
   override def onBindViewHolder(viewHolder: ViewHolderSocialAdapter, position: Int): Unit = {
     val message = messages(position)
+    val avatarSize = appContext.get.getResources.getDimensionPixelSize(R.dimen.size_avatar)
     viewHolder.content.setTag(position)
     runUi(
-      (viewHolder.avatar <~ glideRoundedImage(message.avatar, R.drawable.placeholder_circle)) ~
+      (viewHolder.avatar <~ roundedImage(message.avatar, R.drawable.placeholder_circle, avatarSize)) ~
           (viewHolder.name <~ tvText(message.fullName)) ~
           (viewHolder.date <~ tvPrettyTime(message.date)) ~
           (viewHolder.twitter <~ tvText("@%s".format(message.screenName))) ~

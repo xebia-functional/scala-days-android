@@ -18,11 +18,12 @@ package com.fortysevendeg.android.scaladays.ui.sponsors
 
 import android.support.v7.widget.RecyclerView
 import android.view.Gravity
-import android.widget.{ImageView, FrameLayout, LinearLayout, ProgressBar}
+import android.widget.{FrameLayout, ImageView, LinearLayout, ProgressBar}
 import com.fortysevendeg.android.scaladays.R
 import com.fortysevendeg.macroid.extras.FrameLayoutTweaks._
 import com.fortysevendeg.macroid.extras.LinearLayoutTweaks._
 import com.fortysevendeg.macroid.extras.RecyclerViewTweaks._
+import com.fortysevendeg.macroid.extras.ResourcesExtras._
 import com.fortysevendeg.macroid.extras.ViewTweaks._
 import macroid.FullDsl._
 import macroid.{AppContext, Tweak}
@@ -49,10 +50,13 @@ trait AdapterStyles {
 
   def itemContentStyle(implicit appContext: AppContext): Tweak[LinearLayout] =
     vMatchParent +
-      vPaddings(16 dp) +
+      vPaddings(resGetDimensionPixelSize(R.dimen.padding_default)) +
       llGravity(Gravity.CENTER) +
       vBackground(R.drawable.background_list_default)
 
-  def logoStyle(implicit appContext: AppContext): Tweak[ImageView] = lp[LinearLayout](200 dp, 90 dp)
+  def logoStyle(implicit appContext: AppContext): Tweak[ImageView] = 
+    lp[LinearLayout](
+      resGetDimensionPixelSize(R.dimen.width_sponsors_logo),
+      resGetDimensionPixelSize(R.dimen.height_sponsors_logo))
 
 }
