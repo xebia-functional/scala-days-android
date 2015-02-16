@@ -58,5 +58,18 @@ object Libraries {
     lazy val zxingCore = "com.google.zxing" % "core" % Versions.zxingCoreV
     lazy val zxingAndroid = "com.embarkmobile" % "zxing-android-minimal" % Versions.zxingAndroidV
   }
+  
+  object config {
+    lazy val typesafeConf = "com.typesafe" % "config" % Versions.typeSafeConfigV
+  }
+
+  object playServices {
+
+    def playServicesDep(module: String) = "com.google.android.gms" % module % Versions.playServicesV
+    
+    lazy val playServicesMaps = playServicesDep("play-services-maps")
+    // Google Actions, Google Analytics and Google Cloud Messaging
+    lazy val playServicesBase = playServicesDep("play-services-base")
+  }
 
 }

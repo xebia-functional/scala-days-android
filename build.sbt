@@ -6,6 +6,9 @@ import Libraries.graphics._
 import Libraries.social._
 import Libraries.date._
 import Libraries.qr._
+import Libraries.config._
+import Libraries.playServices._
+import Generator._
 
 android.Plugin.androidBuild
 
@@ -35,6 +38,8 @@ libraryDependencies ++= Seq(
   aar(androidCardView),
   aar(androidRecyclerview),
   aar(macroidExtras),
+  aar(playServicesMaps),
+  typesafeConf,
   playJson,
   specs2,
   picasso,
@@ -57,3 +62,6 @@ apkbuildExcludes in Android ++= Seq(
   "META-INF/LICENSE.txt",
   "META-INF/NOTICE",
   "META-INF/NOTICE.txt")
+
+
+manifestPlaceholders in Android := manifestPlaceholderMap
