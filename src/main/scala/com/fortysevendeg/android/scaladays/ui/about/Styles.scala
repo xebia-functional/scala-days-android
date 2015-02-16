@@ -17,24 +17,23 @@
 package com.fortysevendeg.android.scaladays.ui.about
 
 import android.view.Gravity
-import android.widget.{TextView, ImageView, ScrollView, LinearLayout}
+import android.widget.{ImageView, LinearLayout, ScrollView, TextView}
 import com.fortysevendeg.android.scaladays.R
-import com.fortysevendeg.android.scaladays.ui.commons.ResourceLoader
 import com.fortysevendeg.macroid.extras.ImageViewTweaks._
 import com.fortysevendeg.macroid.extras.LinearLayoutTweaks._
+import com.fortysevendeg.macroid.extras.ResourcesExtras._
 import com.fortysevendeg.macroid.extras.TextTweaks._
 import com.fortysevendeg.macroid.extras.ViewTweaks._
-import macroid.{Tweak, AppContext}
-import macroid.FullDsl._
+import macroid.{AppContext, Tweak}
 
 import scala.language.postfixOps
 
-trait Styles extends ResourceLoader {
+trait Styles {
 
   def rootStyle(implicit appContext: AppContext): Tweak[LinearLayout] =
     vMatchParent +
       llVertical +
-      vPaddings(getDimension(R.dimen.padding_default))
+      vPaddings(resGetDimensionPixelSize(R.dimen.padding_default))
 
   val scrollStyle: Tweak[ScrollView] = llMatchWeightVertical
 
@@ -50,24 +49,24 @@ trait Styles extends ResourceLoader {
   def about47ImageStyle(implicit appContext: AppContext): Tweak[ImageView] =
     vWrapContent +
       ivSrc(R.drawable.logo_47deg) +
-      vPadding(0, 0, getDimension(R.dimen.padding_about_logo), 0)
+      vPadding(0, 0, resGetDimensionPixelSize(R.dimen.padding_about_logo), 0)
 
   def about47TextStyle(implicit appContext: AppContext): Tweak[TextView] =
     vWrapContent +
       tvText(R.string.about47) +
       tvColorResource(R.color.primary) +
-      tvSize(getInt(R.integer.text_small))
+      tvSize(resGetInteger(R.integer.text_small))
 
   def titleStyle(implicit appContext: AppContext): Tweak[TextView] =
     vMatchParent +
       tvText(R.string.codeOfConduct) +
       tvColorResource(R.color.accent) +
-      tvSize(getInt(R.integer.text_big))
+      tvSize(resGetInteger(R.integer.text_big))
 
   def descriptionStyle(implicit appContext: AppContext): Tweak[TextView] =
     vWrapContent +
       tvColorResource(R.color.primary) +
       tvSize(appContext.get.getResources.getInteger(R.integer.text_medium)) +
-      vPadding(0, getDimension(R.dimen.padding_default), 0, 0)
+      vPadding(0, resGetDimensionPixelSize(R.dimen.padding_default), 0, 0)
 
 }

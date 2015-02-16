@@ -17,7 +17,7 @@
 package com.fortysevendeg.android.scaladays.ui.commons
 
 import android.widget.{TextView, ImageView}
-import com.fortysevendeg.android.scaladays.components.CircularTransformation
+import com.fortysevendeg.android.scaladays.ui.widgets.CircularTransformation
 import com.fortysevendeg.android.scaladays.utils.DateTimeUtils
 import com.squareup.picasso.Picasso
 import macroid.{ActivityContext, AppContext, Tweak}

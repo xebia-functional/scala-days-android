@@ -26,6 +26,7 @@ import com.fortysevendeg.macroid.extras.LinearLayoutTweaks._
 import com.fortysevendeg.macroid.extras.ViewTweaks._
 import com.fortysevendeg.macroid.extras.ImageViewTweaks._
 import com.fortysevendeg.macroid.extras.TextTweaks._
+import com.fortysevendeg.macroid.extras.ResourcesExtras._
 import macroid.{Tweak, AppContext}
 import macroid.FullDsl._
 
@@ -39,7 +40,7 @@ trait ToolbarStyles {
 
 }
 
-trait PlaceHolderFailedStyles extends ResourceLoader {
+trait PlaceHolderFailedStyles {
 
   val failedContentStyle: Tweak[LinearLayout] =
     vWrapContent +
@@ -57,35 +58,35 @@ trait PlaceHolderFailedStyles extends ResourceLoader {
       tvText(text) +
       tvGravity(Gravity.CENTER) +
       tvColorResource(R.color.text_error_message) +
-      tvSize(getInt(R.integer.text_big)) +
-      vPaddings(getDimension(R.dimen.padding_default_big))
+      tvSize(resGetInteger(R.integer.text_big)) +
+      vPaddings(resGetDimensionPixelSize(R.dimen.padding_default_big))
 
   def failedButtonStyle(implicit appContext: AppContext): Tweak[TextView] =
     vWrapContent +
-      vMinWidth(getDimension(R.dimen.width_button)) +
+      vMinWidth(resGetDimensionPixelSize(R.dimen.width_button)) +
       tvText(R.string.reload) +
       tvColorResource(R.color.text_error_button) +
       vBackground(R.drawable.background_error_button) +
       tvAllCaps +
-      tvSize(getInt(R.integer.text_medium)) +
+      tvSize(resGetInteger(R.integer.text_medium)) +
       tvGravity(Gravity.CENTER)
 
 }
 
-trait HeaderAdapterStyles extends ResourceLoader {
+trait HeaderAdapterStyles {
 
   def headerContentStyle(implicit appContext: AppContext): Tweak[LinearLayout] =
-    lp[ViewGroup](MATCH_PARENT, getDimension(R.dimen.height_header)) +
+    lp[ViewGroup](MATCH_PARENT, resGetDimensionPixelSize(R.dimen.height_header)) +
       llHorizontal +
       vBackgroundColorResource(R.color.background_list_schedule_header)
 
   def headerNameStyle(implicit appContext: AppContext): Tweak[TextView] =
     vWrapContent +
-      tvSize(getInt(R.integer.text_medium)) +
+      tvSize(resGetInteger(R.integer.text_medium)) +
       llLayoutGravity(Gravity.CENTER_VERTICAL) +
       tvColorResource(R.color.text_schedule_name) +
       tvBold +
       tvAllCaps +
-      vPadding(getDimension(R.dimen.padding_default), 0, 0, 0)
+      vPadding(resGetDimensionPixelSize(R.dimen.padding_default), 0, 0, 0)
 
 }

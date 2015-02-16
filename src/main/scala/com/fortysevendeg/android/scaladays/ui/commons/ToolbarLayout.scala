@@ -17,16 +17,15 @@
 package com.fortysevendeg.android.scaladays.ui.commons
 
 import android.support.v7.widget.Toolbar
-import android.view.{View, ViewGroup, ContextThemeWrapper}
+import android.view.{ContextThemeWrapper, View}
 import com.fortysevendeg.android.scaladays.R
+import com.fortysevendeg.macroid.extras.ResourcesExtras._
 import macroid.FullDsl._
-import macroid.LayoutBuildingMacros._
 import macroid.{ActivityContext, AppContext, Ui}
+
 import scala.language.postfixOps
 
-trait ToolbarLayout
-    extends ToolbarStyles
-    with ResourceLoader {
+trait ToolbarLayout extends ToolbarStyles {
 
   var toolBar = slot[Toolbar]
 
@@ -36,7 +35,7 @@ trait ToolbarLayout
       children foreach (uiView => darkToolBar.addView(uiView.get))
       toolBar = Some(darkToolBar)
       darkToolBar
-    } <~ toolbarStyle(getDimension(R.dimen.height_toolbar))
+    } <~ toolbarStyle(resGetDimensionPixelSize(R.dimen.height_toolbar))
 
   def expandedToolBarLayout(children: Ui[View]*)
       (height: Int)

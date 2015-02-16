@@ -21,19 +21,18 @@ import android.graphics.drawable.ColorDrawable
 import android.support.v7.widget.RecyclerView
 import android.support.v7.widget.RecyclerView.State
 import com.fortysevendeg.android.scaladays.R
+import com.fortysevendeg.macroid.extras.ResourcesExtras._
 import macroid.AppContext
-import macroid.FullDsl._
 
 import scala.language.postfixOps
 
 class LineItemDecorator(implicit appContext: AppContext) 
-  extends RecyclerView.ItemDecoration
-  with ResourceLoader {
+  extends RecyclerView.ItemDecoration {
 
   val divider = new ColorDrawable(appContext.get.getResources.getColor(R.color.list_line_default))
 
   override def onDrawOver(c: Canvas, parent: RecyclerView, state: State): Unit = {
-    val left = parent.getPaddingLeft + getDimension(R.dimen.margin_line_decorator_left)
+    val left = parent.getPaddingLeft + resGetDimensionPixelSize(R.dimen.margin_line_decorator_left)
     val right = parent.getWidth - parent.getPaddingRight
 
     val childCount = parent.getChildCount

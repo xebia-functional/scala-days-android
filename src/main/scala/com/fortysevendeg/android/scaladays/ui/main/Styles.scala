@@ -20,24 +20,24 @@ import android.graphics.Color
 import android.support.v4.widget.DrawerLayout
 import android.view.Gravity
 import android.view.ViewGroup.LayoutParams._
-import android.widget.{TextView, FrameLayout, AbsListView, LinearLayout}
+import android.widget.{FrameLayout, LinearLayout, TextView}
 import com.fortysevendeg.android.scaladays.R
-import com.fortysevendeg.android.scaladays.ui.commons.ResourceLoader
 import com.fortysevendeg.macroid.extras.DrawerLayoutTweaks._
 import com.fortysevendeg.macroid.extras.LinearLayoutTweaks._
+import com.fortysevendeg.macroid.extras.ResourcesExtras._
 import com.fortysevendeg.macroid.extras.TextTweaks._
 import com.fortysevendeg.macroid.extras.ViewTweaks._
-import macroid.{Tweak, AppContext}
 import macroid.FullDsl._
+import macroid.{AppContext, Tweak}
 
 import scala.language.postfixOps
 
-trait Styles extends ResourceLoader {
+trait Styles {
 
   val drawerStyle: Tweak[DrawerLayout] = vMatchParent
 
   def drawerLayoutStyle(implicit appContext: AppContext): Tweak[FrameLayout] =
-    lp[FrameLayout](getDimension(R.dimen.width_drawer), MATCH_PARENT) +
+    lp[FrameLayout](resGetDimensionPixelSize(R.dimen.width_drawer), MATCH_PARENT) +
       dlLayoutGravity(Gravity.START)
 
   val contentStyle: Tweak[LinearLayout] =
@@ -53,7 +53,7 @@ trait Styles extends ResourceLoader {
 
   def sampleTextStyle(implicit appContext: AppContext): Tweak[TextView] =
     tvText(R.string.sampleText) +
-      tvSize(getInt(R.integer.text_huge)) +
+      tvSize(resGetInteger(R.integer.text_huge)) +
       tvColor(Color.BLACK)
 
 }

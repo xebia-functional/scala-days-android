@@ -23,13 +23,13 @@ import android.webkit.WebView
 import android.widget.ImageView.ScaleType
 import android.widget._
 import com.fortysevendeg.android.scaladays.R
-import com.fortysevendeg.android.scaladays.ui.commons.ResourceLoader
 import com.fortysevendeg.macroid.extras.FrameLayoutTweaks._
 import com.fortysevendeg.macroid.extras.ImageViewTweaks._
 import com.fortysevendeg.macroid.extras.LinearLayoutTweaks._
 import com.fortysevendeg.macroid.extras.RecyclerViewTweaks._
 import com.fortysevendeg.macroid.extras.TextTweaks._
 import com.fortysevendeg.macroid.extras.ViewTweaks._
+import com.fortysevendeg.macroid.extras.ResourcesExtras._
 import macroid.{Tweak, AppContext}
 import macroid.FullDsl._
 
@@ -49,16 +49,16 @@ trait FragmentStyles {
 
 }
 
-trait AdapterStyles extends ResourceLoader {
+trait AdapterStyles {
   
   def itemContentStyle(implicit appContext: AppContext): Tweak[LinearLayout] =
     vMatchParent +
       llHorizontal +
-      vPaddings(getDimension(R.dimen.padding_default)) +
+      vPaddings(resGetDimensionPixelSize(R.dimen.padding_default)) +
       vBackground(R.drawable.background_list_default)
 
   def avatarStyle(implicit appContext: AppContext): Tweak[ImageView] = {
-    val size = getDimension(R.dimen.size_avatar)
+    val size = resGetDimensionPixelSize(R.dimen.size_avatar)
     lp[LinearLayout](size, size) +
       ivScaleType(ScaleType.CENTER_CROP)
   }
@@ -66,33 +66,33 @@ trait AdapterStyles extends ResourceLoader {
   def itemNoAvatarContentStyle(implicit appContext: AppContext): Tweak[LinearLayout] =
     vMatchWidth +
       llVertical +
-      vPadding(getDimension(R.dimen.padding_default), 0, 0, 0)
+      vPadding(resGetDimensionPixelSize(R.dimen.padding_default), 0, 0, 0)
 
   def titlesContentStyle(implicit appContext: AppContext): Tweak[LinearLayout] =
     vMatchWidth +
       llHorizontal +
-      vPadding(0, 0, 0, getDimension(R.dimen.padding_default_extra_small))
+      vPadding(0, 0, 0, resGetDimensionPixelSize(R.dimen.padding_default_extra_small))
 
   def nameItemStyle(implicit appContext: AppContext): Tweak[TextView] =
     lp[LinearLayout](0, WRAP_CONTENT, 1) +
-      tvSize(getInt(R.integer.text_big)) +
+      tvSize(resGetInteger(R.integer.text_big)) +
       tvColorResource(R.color.text_title_default)
 
   def dateItemStyle(implicit appContext: AppContext): Tweak[TextView] =
     vWrapContent +
-      tvSize(getInt(R.integer.text_small)) +
+      tvSize(resGetInteger(R.integer.text_small)) +
       tvColorResource(R.color.text_date_default)
 
   def twitterItemStyle(implicit appContext: AppContext): Tweak[TextView] =
     vWrapContent +
-      tvSize(getInt(R.integer.text_small)) +
+      tvSize(resGetInteger(R.integer.text_small)) +
       tvColorResource(R.color.text_twitter_default)
 
   def messageItemStyle(implicit appContext: AppContext): Tweak[TextView] =
     vWrapContent +
-      tvSize(getInt(R.integer.text_medium)) +
+      tvSize(resGetInteger(R.integer.text_medium)) +
       tvColorResource(R.color.text_title_default) +
-      vPadding(0, getDimension(R.dimen.padding_default_extra_small), 0, 0)
+      vPadding(0, resGetDimensionPixelSize(R.dimen.padding_default_extra_small), 0, 0)
 
 }
 
