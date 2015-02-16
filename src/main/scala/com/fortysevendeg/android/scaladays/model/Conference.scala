@@ -26,6 +26,7 @@ case class Conference(
   schedule: Seq[Event],
   sponsors: Seq[SponsorType],
   speakers: Seq[Speaker],
+  venues: Seq[Venue],
   codeOfConduct: Option[String])
 
 case class Information(
@@ -88,10 +89,18 @@ case class Speaker(
   picture: Option[String],
   bio: String)
 
+case class Venue(
+  name: String,
+  address: String,
+  website: String,
+  latitude: Double,
+  longitude: Double,
+  zoom: Int)
+
 case class TwitterMessage(
-    id: Long,
-    fullName: String,
-    screenName: String,
-    date: DateTime,
-    message: String,
-    avatar: String)
+  id: Long,
+  fullName: String,
+  screenName: String,
+  date: DateTime,
+  message: String,
+  avatar: String)

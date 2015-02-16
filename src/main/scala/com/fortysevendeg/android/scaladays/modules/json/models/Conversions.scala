@@ -37,6 +37,7 @@ trait ApiConversions {
       apiConference.schedule map toEvent,
       apiConference.sponsors map toSponsorType,
       apiConference.speakers map toSpeaker,
+      apiConference.venues map toVenue,
       apiConference.codeOfConduct)
 
   def toInformation(apiConferenceInfo: ApiInformation): Information =
@@ -92,6 +93,15 @@ trait ApiConversions {
       twitter = apiSpeaker.twitter,
       picture = apiSpeaker.picture,
       bio = apiSpeaker.bio)
+  
+  def toVenue(apiVenue: ApiVenue): Venue =
+    Venue(
+      name = apiVenue.name,
+      address = apiVenue.address,
+      website = apiVenue.website,
+      latitude = apiVenue.latitude,
+      longitude = apiVenue.longitude,
+      zoom = apiVenue.zoom)
 
   def toTrack(apiTrack: ApiTrack): Track =
     Track(
