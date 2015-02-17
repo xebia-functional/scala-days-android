@@ -76,14 +76,14 @@ trait ActivityStyles {
       vPadding(padding, 0, padding, padding)
   }
 
-  def fabStyle(implicit appContext: AppContext): Tweak[ImageView] = {
+  def fabStyle(favorite: Boolean)(implicit appContext: AppContext): Tweak[ImageView] = {
     val size = resGetDimensionPixelSize(R.dimen.size_schedule_detail_fab)
     lp[FrameLayout](size, size) +
       vMargin(resGetDimensionPixelSize(R.dimen.margin_schedule_detail_fab_left), resGetDimensionPixelSize(R.dimen.margin_schedule_detail_fab_top), 0, 0) +
-      vBackground(R.drawable.fab_button_no_check) +
+      vBackground(if (favorite) R.drawable.fab_button_check else R.drawable.fab_button_no_check) +
       vPaddings(resGetDimensionPixelSize(R.dimen.padding_schedule_detail_fab)) +
       ivSrc(new PathMorphDrawable(
-        defaultIcon = IconTypes.ADD,
+        defaultIcon = if (favorite) IconTypes.CHECK else IconTypes.ADD,
         defaultStroke = resGetDimensionPixelSize(R.dimen.stroke_schedule_detail_fab),
         defaultColor = Color.WHITE
       ))

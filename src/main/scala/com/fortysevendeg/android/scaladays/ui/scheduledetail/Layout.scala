@@ -42,7 +42,7 @@ trait Layout
 
   var fabFavorite = slot[ImageView]
 
-  def layout(implicit appContext: AppContext, context: ActivityContext) = {
+  def layout(favorite: Boolean)(implicit appContext: AppContext, context: ActivityContext) = {
     getUi(
       l[FrameLayout](
         l[ScrollView](
@@ -63,7 +63,7 @@ trait Layout
         expandedToolBarLayout(
           w[TextView] <~ wire(titleToolbar) <~ toolBarTitleStyle
         )(resGetDimensionPixelSize(R.dimen.height_toolbar_expanded)),
-        w[ImageView] <~ fabStyle <~ wire(fabFavorite)
+        w[ImageView] <~ fabStyle(favorite) <~ wire(fabFavorite)
       ) <~ rootStyle
     )
   }

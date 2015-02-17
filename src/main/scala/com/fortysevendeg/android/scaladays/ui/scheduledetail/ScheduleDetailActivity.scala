@@ -20,11 +20,15 @@ import android.os.Bundle
 import android.support.v4.app.FragmentActivity
 import android.support.v7.app.ActionBarActivity
 import android.view.MenuItem
+import android.widget.ImageView
 import com.fortysevendeg.android.scaladays.R
 import com.fortysevendeg.android.scaladays.model.Event
+import com.fortysevendeg.android.scaladays.modules.ComponentRegistryImpl
+import com.fortysevendeg.android.scaladays.modules.preferences.PreferenceRequest
+import com.fortysevendeg.android.scaladays.ui.commons.UiServices
 import com.fortysevendeg.android.scaladays.ui.components.IconTypes
 import com.fortysevendeg.macroid.extras.ViewGroupTweaks._
-import macroid.Contexts
+import macroid.{Ui, Tweak, AppContext, Contexts}
 import macroid.FullDsl._
 import com.fortysevendeg.macroid.extras.TextTweaks._
 import com.fortysevendeg.android.scaladays.ui.commons.DateTimeTextViewTweaks._
@@ -32,17 +36,16 @@ import com.fortysevendeg.android.scaladays.ui.components.PathMorphDrawableTweaks
 import com.fortysevendeg.macroid.extras.ViewTweaks._
 
 class ScheduleDetailActivity
-    extends ActionBarActivity
-    with Contexts[FragmentActivity]
-    with Layout {
+  extends ActionBarActivity
+  with Contexts[FragmentActivity]
+  with ComponentRegistryImpl
+  with UiServices
+  with Layout {
 
-  // TODO We should create a PersistentService and save the favorite items in this service
-  // For now is only for testing design
-  var isFavorite = false
+  override implicit lazy val appContextProvider: AppContext = activityAppContext
 
   override def onCreate(savedInstanceState: Bundle) = {
     super.onCreate(savedInstanceState)
-    setContentView(layout)
 
     val (maybeScheduleItem, maybeTimeZone) = Option(getIntent.getExtras).map {
       extras =>
@@ -55,18 +58,25 @@ class ScheduleDetailActivity
         (scheduleItem, timeZone)
     }.getOrElse(None, None)
 
-    toolBar map setSupportActionBar
-    getSupportActionBar.setDisplayHomeAsUpEnabled(true)
-
     (for {
       event <- maybeScheduleItem
       timeZone <- maybeTimeZone
     } yield {
+      val namePreferenceFavorite = "%d_%d".format(loadSelectedConferenceId, event.id)
+      val isFavorite = preferenceServices.fetchBooleanPreference(PreferenceRequest[Boolean](namePreferenceFavorite, false)).value
+
+      setContentView(layout(isFavorite))
+      toolBar map setSupportActionBar
+      getSupportActionBar.setDisplayHomeAsUpEnabled(true)
+
       runUi(
-        (titleToolbar <~ tvText(event.title)) ~
-            (date <~ tvDateDateTime(event.startTime, timeZone)) ~
-            (room <~ event.track.map(track => tvText(track.name) + vVisible).getOrElse(vGone)) ~
-            (description <~ tvText(event.description))
+        (fabFavorite <~ On.click {
+          favoriteClick(namePreferenceFavorite)
+        }) ~
+          (titleToolbar <~ tvText(event.title)) ~
+          (date <~ tvDateDateTime(event.startTime, timeZone)) ~
+          (room <~ event.track.map(track => tvText(track.name) + vVisible).getOrElse(vGone)) ~
+          (description <~ tvText(event.description))
       )
       if (event.speakers.size == 0) {
         runUi(speakersContent <~ vGone)
@@ -75,22 +85,23 @@ class ScheduleDetailActivity
         event.speakers.map(
           speaker => {
             val speakerLayout = new SpeakersDetailLayout(speaker)
-            runUi((speakersContent <~ vgAddView(speakerLayout.content)))
+            runUi(speakersContent <~ vgAddView(speakerLayout.content))
           }
         )
       }
     }).getOrElse(finish())
 
-    runUi(fabFavorite <~ On.click{
-      if (isFavorite) {
-        isFavorite = false
-        fabFavorite <~ pmdAnimIcon(IconTypes.ADD) <~ vBackground(R.drawable.fab_button_no_check)
-      } else {
-        isFavorite = true
-        fabFavorite <~ pmdAnimIcon(IconTypes.CHECK) <~ vBackground(R.drawable.fab_button_check)
-      }
-    })
+  }
 
+  private def favoriteClick(name: String) = {
+    val isFavorite = preferenceServices.fetchBooleanPreference(PreferenceRequest[Boolean](name, false)).value
+    if (isFavorite) {
+      preferenceServices.saveBooleanPreference(PreferenceRequest[Boolean](name, false))
+      fabFavorite <~ pmdAnimIcon(IconTypes.ADD) <~ vBackground(R.drawable.fab_button_no_check)
+    } else {
+      preferenceServices.saveBooleanPreference(PreferenceRequest[Boolean](name, true))
+      fabFavorite <~ pmdAnimIcon(IconTypes.CHECK) <~ vBackground(R.drawable.fab_button_check)
+    }
   }
 
   override def onOptionsItemSelected(item: MenuItem): Boolean = {
