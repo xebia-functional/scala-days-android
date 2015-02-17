@@ -5,6 +5,8 @@ import scala.collection.JavaConverters._
 object Generator {
 
   val manifestProperties = "manifest.properties"
+  
+  val defaultMap = Map("google.map.key" -> "")
 
   lazy val manifestPlaceholderMap: Map[String, String] = {
     (loadManifestPropertiesFile map { file =>
