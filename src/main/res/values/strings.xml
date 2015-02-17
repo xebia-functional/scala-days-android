@@ -31,6 +31,13 @@
     <string name="openMenu">Open</string>
     <string name="clodeMenu">Close</string>
 
+    <string name="filter">Filter</string>
+
+    <string-array name="filter_menu">
+        <item>All</item>
+        <item>Favorites</item>
+    </string-array>
+
     <string name="sampleText">Sample Text</string>
 
     <string name="generalMessageError">There was an error. Try again</string>

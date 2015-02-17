@@ -16,57 +16,90 @@
 
 package com.fortysevendeg.android.scaladays.ui.schedule
 
-import android.content.Intent
+import android.app.AlertDialog
+import android.content.DialogInterface.OnClickListener
+import android.content.{DialogInterface, Intent}
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v7.widget.LinearLayoutManager
-import android.view.{LayoutInflater, View, ViewGroup}
-import com.fortysevendeg.android.scaladays.model.{Root, Event}
+import android.view._
+import com.fortysevendeg.android.scaladays.R
+import com.fortysevendeg.android.scaladays.model.Event
 import com.fortysevendeg.android.scaladays.modules.ComponentRegistryImpl
-import com.fortysevendeg.android.scaladays.modules.json.JsonRequest
-import com.fortysevendeg.android.scaladays.modules.json.models.ApiRoot
-import com.fortysevendeg.android.scaladays.modules.net.NetRequest
 import com.fortysevendeg.android.scaladays.ui.commons.UiServices
 import com.fortysevendeg.android.scaladays.ui.scheduledetail.ScheduleDetailActivity
-import com.fortysevendeg.macroid.extras.ActionsExtras._
 import com.fortysevendeg.macroid.extras.RecyclerViewTweaks._
 import com.fortysevendeg.macroid.extras.ViewTweaks._
 import macroid.FullDsl._
-import macroid.{Ui, AppContext, Contexts}
+import macroid.{AppContext, Contexts, Ui}
 
 import scala.concurrent.ExecutionContext.Implicits.global
 
 class ScheduleFragment
-    extends Fragment
-    with Contexts[Fragment]
-    with ComponentRegistryImpl
-    with UiServices {
+  extends Fragment
+  with Contexts[Fragment]
+  with ComponentRegistryImpl
+  with UiServices
+  with ScheduleConversion {
 
   override implicit lazy val appContextProvider: AppContext = fragmentAppContext
 
   private var fragmentLayout: Option[Layout] = None
+
+  override def onCreate(savedInstanceState: Bundle): Unit = {
+    super.onCreate(savedInstanceState)
+    setHasOptionsMenu(true)
+  }
 
   override def onCreateView(inflater: LayoutInflater, container: ViewGroup, savedInstanceState: Bundle): View = {
     val fLayout = new Layout
     fragmentLayout = Some(fLayout)
     runUi(
       (fLayout.recyclerView
-          <~ rvLayoutManager(new LinearLayoutManager(appContextProvider.get))
-          <~ rvAddItemDecoration(new ScheduleItemDecorator())) ~
-          (fLayout.reloadButton <~ On.click(Ui {
-            // TODO reload
-          })))
+        <~ rvLayoutManager(new LinearLayoutManager(appContextProvider.get))
+        <~ rvAddItemDecoration(new ScheduleItemDecorator())) ~
+        (fLayout.reloadButton <~ On.click(Ui {
+          // TODO reload
+        })))
     fLayout.content
   }
 
   override def onViewCreated(view: View, savedInstanceState: Bundle): Unit = {
     super.onViewCreated(view, savedInstanceState)
+    loadConferencesInList()
+  }
+
+  private def loadConferencesInList(favorites: Boolean = false): Unit = {
     val result = for {
       conference <- loadSelectedConference()
-    } yield reloadList(conference.info.utcTimezoneOffset, conference.schedule)
+    } yield reloadList(conference.info.utcTimezoneOffset, conference.schedule, favorites)
 
     result.recover {
       case _ => failed()
+    }
+  }
+
+  override def onCreateOptionsMenu(menu: Menu, inflater: MenuInflater): Unit = {
+    inflater.inflate(R.menu.schedule_menu, menu)
+    super.onCreateOptionsMenu(menu, inflater)
+  }
+
+
+  override def onOptionsItemSelected(item: MenuItem): Boolean = {
+    item.getItemId match {
+      case R.id.action_filter =>
+        new AlertDialog.Builder(getActivity)
+          .setCancelable(true)
+          .setItems(R.array.filter_menu, new OnClickListener() {
+          override def onClick(dialog: DialogInterface, which: Int): Unit = {
+            which match {
+              case 0 => loadConferencesInList()
+              case 1 => loadConferencesInList(true)
+            }
+          }
+        }).create().show()
+        true
+      case _ => super.onOptionsItemSelected(item)
     }
   }
 
@@ -75,13 +108,13 @@ class ScheduleFragment
       layout =>
         runUi(
           (layout.progressBar <~ vGone) ~
-              (layout.recyclerView <~ vGone) ~
-              (layout.failedContent <~ vVisible))
+            (layout.recyclerView <~ vGone) ~
+            (layout.failedContent <~ vVisible))
     }
   }
 
-  def reloadList(timeZone: String, events: Seq[Event]) = {
-    val scheduleItems = ScheduleConversion.toScheduleItem(timeZone, events)
+  def reloadList(timeZone: String, events: Seq[Event], favorites: Boolean = false) = {
+    val scheduleItems = toScheduleItem(timeZone, events, favorites)
     for {
       layout <- fragmentLayout
       recyclerView <- layout.recyclerView
@@ -101,7 +134,7 @@ class ScheduleFragment
       })
       runUi(
         (layout.progressBar <~ vGone) ~
-            (layout.recyclerView <~ rvAdapter(adapter))
+          (layout.recyclerView <~ rvAdapter(adapter))
       )
     }
   }
