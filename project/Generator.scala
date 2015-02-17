@@ -13,7 +13,7 @@ object Generator {
       val properties = new Properties()
       properties.load(new FileInputStream(file))
       properties.asScala.toMap
-    }) getOrElse Map.empty
+    }) getOrElse defaultMap
   }
   
   private def loadManifestPropertiesFile: Option[File] = {
