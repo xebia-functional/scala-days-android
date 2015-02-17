@@ -16,16 +16,14 @@
 
 package com.fortysevendeg.android.scaladays.ui.main
 
-import android.graphics.Color
 import android.support.v4.widget.DrawerLayout
 import android.view.Gravity
 import android.view.ViewGroup.LayoutParams._
-import android.widget.{FrameLayout, LinearLayout, TextView}
+import android.widget.{FrameLayout, LinearLayout}
 import com.fortysevendeg.android.scaladays.R
 import com.fortysevendeg.macroid.extras.DrawerLayoutTweaks._
 import com.fortysevendeg.macroid.extras.LinearLayoutTweaks._
 import com.fortysevendeg.macroid.extras.ResourcesExtras._
-import com.fortysevendeg.macroid.extras.TextTweaks._
 import com.fortysevendeg.macroid.extras.ViewTweaks._
 import macroid.FullDsl._
 import macroid.{AppContext, Tweak}
@@ -46,14 +44,5 @@ trait Styles {
 
   val fragmentContentStyle: Tweak[FrameLayout] =
     vMatchParent
-
-  val sampleStyle: Tweak[LinearLayout] =
-    vMatchParent +
-      llGravity(Gravity.CENTER)
-
-  def sampleTextStyle(implicit appContext: AppContext): Tweak[TextView] =
-    tvText(R.string.sampleText) +
-      tvSize(resGetInteger(R.integer.text_huge)) +
-      tvColor(Color.BLACK)
-
+  
 }

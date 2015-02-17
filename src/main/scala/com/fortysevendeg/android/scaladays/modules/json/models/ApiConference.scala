@@ -24,7 +24,7 @@ case class ApiConference(
   schedule: Seq[ApiEvent],
   sponsors: Seq[ApiSponsorType],
   speakers: Seq[ApiSpeaker],
-  venues: Seq[ApiVenues],
+  venues: Seq[ApiVenue],
   codeOfConduct : Option[String])
 
 case class ApiInformation(
@@ -87,7 +87,7 @@ case class ApiSpeaker(
   picture: Option[String],
   bio: String)
 
-case class ApiVenues(
+case class ApiVenue(
   name: String,
   address: String,
   website: String,

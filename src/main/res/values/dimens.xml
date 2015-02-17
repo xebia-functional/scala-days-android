@@ -32,6 +32,11 @@
     <dimen name="padding_schedule_detail_description_top">36dp</dimen>
     <dimen name="padding_schedule_detail_speaker_tb">8dp</dimen>
     <dimen name="padding_schedule_detail_fab">10dp</dimen>
+    <dimen name="padding_info_window_left">13dp</dimen>
+    <dimen name="padding_info_window_top">7dp</dimen>
+    <dimen name="padding_info_window_right">16dp</dimen>
+    <dimen name="padding_info_window_bottom">15dp</dimen>
+    <dimen name="padding_info_window_inner">2dp</dimen>
 
     <dimen name="height_toolbar">56dp</dimen>
     <dimen name="height_toolbar_expanded">124dp</dimen>
@@ -58,5 +63,6 @@
     <integer name="text_big">16</integer>
     <integer name="text_medium">14</integer>
     <integer name="text_small">12</integer>
+    <integer name="text_info_window_snippet">11</integer>
 
 </resources>

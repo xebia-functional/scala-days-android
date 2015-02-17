@@ -24,6 +24,7 @@ import android.support.v7.app.{ActionBarActivity, ActionBarDrawerToggle}
 import android.view.{MenuItem, View}
 import com.fortysevendeg.android.scaladays.R
 import com.fortysevendeg.android.scaladays.ui.about.AboutFragment
+import com.fortysevendeg.android.scaladays.ui.places.PlacesFragment
 import com.fortysevendeg.android.scaladays.ui.qrcode.QrCodeFragment
 import com.fortysevendeg.android.scaladays.ui.menu.MenuSection._
 import com.fortysevendeg.android.scaladays.ui.menu._
@@ -91,8 +92,9 @@ class MainActivity
       case SOCIAL => f[SocialFragment]
       case CONTACTS => f[QrCodeFragment]
       case SPONSORS => f[SponsorsFragment]
+      case PLACES => f[PlacesFragment]
       case ABOUT => f[AboutFragment]
-      case _ => f[SampleFragment].pass(SampleFragment.titleArg → title)
+      case _ => throw new IllegalStateException
     }
     runUi(
       (toolBar <~ tbTitle(title)) ~

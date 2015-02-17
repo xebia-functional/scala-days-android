@@ -41,15 +41,20 @@ class MenuFragment
   extends Fragment
   with Contexts[Fragment]
   with ComponentRegistryImpl
-  with UiServices {
+  with UiServices
+  with IdGeneration {
 
   override implicit lazy val appContextProvider: AppContext = fragmentAppContext
+
+  val defaultItem = 0
 
   private var fragmentLayout: Option[Layout] = None
 
   private var mainActivity: Option[MainActivity] = None
 
   private var urlTickets: Option[String] = None
+
+  private val previousItemSelectedKey = "previous_item_selected_key"
 
   lazy val mainMenuAdapter: MainMenuAdapter = new MainMenuAdapter(new MainMenuClickListener {
     override def onClick(mainMenuItem: MainMenuItem) =
@@ -97,12 +102,12 @@ class MenuFragment
         override def onClick(v: View) =
           toggleMenu()
       })
-      val defaultSection = 0
       runUi(
-        (layout.recyclerView <~ rvAdapter(mainMenuAdapter)) ~
-          Ui {
-            itemSelected(mainMenuAdapter.list(defaultSection))
-          })
+        (layout.recyclerView <~ rvAdapter(mainMenuAdapter)))
+
+      val defaultSection = Option(savedInstanceState) map (_.getInt(previousItemSelectedKey, defaultItem)) getOrElse defaultItem
+      itemSelected(mainMenuAdapter.list(defaultSection), savedInstanceState == null)
+
     }
 
     val conferenceId = loadSelectedConferenceId
@@ -121,6 +126,12 @@ class MenuFragment
   }
 
   def failed() = {}
+
+
+  override def onSaveInstanceState(outState: Bundle): Unit = {
+    outState.putInt(previousItemSelectedKey, mainMenuAdapter.selectedItem map (mainMenuAdapter.list.indexOf(_)) getOrElse defaultItem)
+    super.onSaveInstanceState(outState)
+  }
 
   override def onDetach(): Unit = {
     mainActivity = None
@@ -145,15 +156,15 @@ class MenuFragment
   def showMainMenu =
     if (!mainMenuVisible) toggleMenu()
 
-  def itemSelected(menuItem: MainMenuItem) = {
+  def itemSelected(menuItem: MainMenuItem, callCallback: Boolean = true) = {
     mainMenuAdapter.selectItem(Some(menuItem))
-    mainActivity map (_.itemSelected(menuItem.section, menuItem.name))
+    if (callCallback) mainActivity map (_.itemSelected(menuItem.section, menuItem.name))
   }
 
   def conferenceSelected(menuItem: ConferenceMenuItem) = {
     showConference(menuItem.information)
     saveSelectedConferenceId(menuItem.id)
-    mainMenuAdapter.selectedItem map itemSelected
+    mainMenuAdapter.selectedItem map (itemSelected(_))
   }
 
   def showConference(information: Information) =

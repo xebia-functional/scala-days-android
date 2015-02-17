@@ -66,5 +66,9 @@
 
     <!-- Sponsors -->
     <color name="background_sponsors">#ffffff</color>
+    
+    <!-- Places -->
+    <color name="info_window_title">#E05F5E</color>
+    <color name="info_window_snippet">#364550</color>
 
 </resources>

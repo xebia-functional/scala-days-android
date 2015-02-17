@@ -55,7 +55,7 @@ class MainMenuAdapter(listener: MainMenuClickListener)
       R.drawable.menu_icon_sponsors, SPONSORS),
     MainMenuItem(Id.places,
       appContext.app.getString(R.string.places), 
-      R.drawable.menu_icon_places, SAMPLE),
+      R.drawable.menu_icon_places, PLACES),
     MainMenuItem(Id.about,
       appContext.app.getString(R.string.about), 
       R.drawable.menu_icon_about, ABOUT))

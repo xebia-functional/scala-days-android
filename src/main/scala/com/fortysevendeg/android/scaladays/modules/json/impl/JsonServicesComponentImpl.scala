@@ -40,7 +40,7 @@ trait ApiReads {
   implicit val eventReads = Json.reads[ApiEvent]
   implicit val sponsorReads = Json.reads[ApiSponsor]
   implicit val sponsorTypeReads = Json.reads[ApiSponsorType]
-  implicit val venuesReads = Json.reads[ApiVenues]
+  implicit val venuesReads = Json.reads[ApiVenue]
   implicit val responseReads = Json.reads[ApiConference]
   implicit val rootReads = Json.reads[ApiRoot]
 
