@@ -58,10 +58,6 @@ object Libraries {
     lazy val zxingCore = "com.google.zxing" % "core" % Versions.zxingCoreV
     lazy val zxingAndroid = "com.embarkmobile" % "zxing-android-minimal" % Versions.zxingAndroidV
   }
-  
-  object config {
-    lazy val typesafeConf = "com.typesafe" % "config" % Versions.typeSafeConfigV
-  }
 
   object playServices {
 

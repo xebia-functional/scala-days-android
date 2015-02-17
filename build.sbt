@@ -6,7 +6,6 @@ import Libraries.graphics._
 import Libraries.social._
 import Libraries.date._
 import Libraries.qr._
-import Libraries.config._
 import Libraries.playServices._
 import Generator._
 
@@ -39,7 +38,6 @@ libraryDependencies ++= Seq(
   aar(androidRecyclerview),
   aar(macroidExtras),
   aar(playServicesMaps),
-  typesafeConf,
   playJson,
   specs2,
   picasso,

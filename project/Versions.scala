@@ -16,5 +16,4 @@ object Versions {
   val zxingAndroidV = "1.2.0"
   val picassoV = "2.5.0"
   val playServicesV = "6.5.87"
-  val typeSafeConfigV = "1.2.1"
 }
