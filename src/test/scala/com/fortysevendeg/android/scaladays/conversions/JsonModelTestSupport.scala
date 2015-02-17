@@ -35,7 +35,7 @@ object JsonImplicits {
   implicit val speakerReads = Json.reads[ApiSpeaker]
   implicit val trackReads = Json.reads[ApiTrack]
   implicit val eventReads = Json.reads[ApiEvent]
-  implicit val venuesReads = Json.reads[ApiVenues]
+  implicit val venuesReads = Json.reads[ApiVenue]
   implicit val responseReads = Json.reads[ApiConference]
   implicit val rootReads = Json.reads[ApiRoot]
 
