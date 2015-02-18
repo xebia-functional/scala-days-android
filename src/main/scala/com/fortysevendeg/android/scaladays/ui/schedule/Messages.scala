@@ -25,15 +25,18 @@ import macroid.AppContext
 import scala.annotation.tailrec
 
 case class ScheduleItem(
-                         isHeader: Boolean,
-                         header: Option[String],
-                         event: Option[Event])
+  isHeader: Boolean,
+  header: Option[String],
+  event: Option[Event])
 
 trait ScheduleConversion {
 
   self: PreferenceServicesComponent with UiServices =>
 
-  def toScheduleItem(timeZone: String, events: Seq[Event], func: (Event) => Boolean)(implicit appContext: AppContext): Seq[ScheduleItem] = {
+  def toScheduleItem(
+    timeZone: String,
+    events: Seq[Event],
+    func: (Event) => Boolean)(implicit appContext: AppContext): Seq[ScheduleItem] = {
 
     @tailrec
     def loop(events: Seq[Event], date: String = "", acc: Seq[ScheduleItem] = Nil): Seq[ScheduleItem] =

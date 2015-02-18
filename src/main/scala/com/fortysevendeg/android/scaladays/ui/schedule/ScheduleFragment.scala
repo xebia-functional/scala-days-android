@@ -59,9 +59,7 @@ class ScheduleFragment
       (fLayout.recyclerView
         <~ rvLayoutManager(new LinearLayoutManager(appContextProvider.get))
         <~ rvAddItemDecoration(new ScheduleItemDecorator())) ~
-        (fLayout.reloadButton <~ On.click(Ui {
-          loadConferencesInList()
-        })))
+        (fLayout.reloadButton <~ On.click(Ui { loadConferencesInList() })))
     fLayout.content
   }
 
@@ -120,7 +118,7 @@ class ScheduleFragment
       conference <- loadSelectedConference()
     } yield reloadList(conference.info.utcTimezoneOffset, conference.schedule, favorites)
 
-    result.recover {
+    result recover {
       case _ => failed()
     }
   }

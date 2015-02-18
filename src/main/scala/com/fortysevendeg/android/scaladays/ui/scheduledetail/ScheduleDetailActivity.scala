@@ -90,7 +90,7 @@ class ScheduleDetailActivity
           }
         )
       }
-    }).getOrElse(finish())
+    }) getOrElse finish()
 
   }
 
