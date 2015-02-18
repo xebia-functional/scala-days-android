@@ -34,8 +34,6 @@ import scala.language.postfixOps
 
 trait FragmentStyles {
 
-  // Styles for Fragment
-
   def rootStyle(implicit appContext: AppContext): Tweak[FrameLayout] =
     vMatchParent +
       vBackgroundColorResource(R.color.background_list_schedule_header)
@@ -71,6 +69,10 @@ trait SpeakersLayoutStyles {
 }
 
 trait AdapterStyles {
+
+  def itemRootContentStyle(implicit appContext: AppContext): Tweak[FrameLayout] =
+    vMatchParent +
+      flForeground(resGetDrawable(R.drawable.foreground_list_menu))
 
   def itemContentStyle(implicit appContext: AppContext): Tweak[LinearLayout] =
     vMatchParent +

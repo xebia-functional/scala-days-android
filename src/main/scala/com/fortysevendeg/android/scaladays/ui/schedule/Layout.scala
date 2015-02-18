@@ -25,8 +25,8 @@ import macroid.FullDsl._
 import macroid.{ActivityContext, AppContext}
 
 class Layout(implicit appContext: AppContext, context: ActivityContext)
-    extends FragmentStyles
-    with PlaceHolderFailedLayout {
+  extends FragmentStyles
+  with PlaceHolderFailedLayout {
 
   var recyclerView = slot[RecyclerView]
 
@@ -47,7 +47,7 @@ class Layout(implicit appContext: AppContext, context: ActivityContext)
 }
 
 class SpeakersLayout(speaker: Speaker)(implicit context: ActivityContext, appContext: AppContext)
-    extends SpeakersLayoutStyles {
+  extends SpeakersLayoutStyles {
 
   val content = layout
 
@@ -65,7 +65,7 @@ class SpeakersLayout(speaker: Speaker)(implicit context: ActivityContext, appCon
 }
 
 class ScheduleLayoutAdapter(implicit context: ActivityContext, appContext: AppContext)
-    extends AdapterStyles {
+  extends AdapterStyles {
 
   var hour = slot[TextView]
 
@@ -78,19 +78,21 @@ class ScheduleLayoutAdapter(implicit context: ActivityContext, appContext: AppCo
   val content = layout
 
   private def layout(implicit appContext: AppContext, context: ActivityContext) = getUi(
-    l[LinearLayout](
-      w[TextView] <~ wire(hour) <~ hourStyle,
+    l[FrameLayout](
       l[LinearLayout](
-        w[TextView] <~ wire(room) <~ roomItemStyle,
-        w[TextView] <~ wire(name) <~ nameItemStyle,
-        l[LinearLayout]() <~ itemSpeakersContentStyle <~ wire(speakerContent)
-      ) <~ itemInfoContentStyle
-    ) <~ itemContentStyle
+        w[TextView] <~ wire(hour) <~ hourStyle,
+        l[LinearLayout](
+          w[TextView] <~ wire(room) <~ roomItemStyle,
+          w[TextView] <~ wire(name) <~ nameItemStyle,
+          l[LinearLayout]() <~ itemSpeakersContentStyle <~ wire(speakerContent)
+        ) <~ itemInfoContentStyle
+      ) <~ itemContentStyle
+    ) <~ itemRootContentStyle
   )
 }
 
 class ViewHolderScheduleAdapter(adapter: ScheduleLayoutAdapter)(implicit context: ActivityContext, appContext: AppContext)
-    extends RecyclerView.ViewHolder(adapter.content) {
+  extends RecyclerView.ViewHolder(adapter.content) {
 
   val content = adapter.content
 
