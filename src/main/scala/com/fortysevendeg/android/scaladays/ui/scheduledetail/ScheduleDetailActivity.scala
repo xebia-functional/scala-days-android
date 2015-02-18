@@ -20,20 +20,19 @@ import android.os.Bundle
 import android.support.v4.app.FragmentActivity
 import android.support.v7.app.ActionBarActivity
 import android.view.MenuItem
-import android.widget.ImageView
 import com.fortysevendeg.android.scaladays.R
 import com.fortysevendeg.android.scaladays.model.Event
 import com.fortysevendeg.android.scaladays.modules.ComponentRegistryImpl
 import com.fortysevendeg.android.scaladays.modules.preferences.PreferenceRequest
+import com.fortysevendeg.android.scaladays.ui.commons.DateTimeTextViewTweaks._
 import com.fortysevendeg.android.scaladays.ui.commons.UiServices
 import com.fortysevendeg.android.scaladays.ui.components.IconTypes
-import com.fortysevendeg.macroid.extras.ViewGroupTweaks._
-import macroid.{Ui, Tweak, AppContext, Contexts}
-import macroid.FullDsl._
-import com.fortysevendeg.macroid.extras.TextTweaks._
-import com.fortysevendeg.android.scaladays.ui.commons.DateTimeTextViewTweaks._
 import com.fortysevendeg.android.scaladays.ui.components.PathMorphDrawableTweaks._
+import com.fortysevendeg.macroid.extras.TextTweaks._
+import com.fortysevendeg.macroid.extras.ViewGroupTweaks._
 import com.fortysevendeg.macroid.extras.ViewTweaks._
+import macroid.FullDsl._
+import macroid.{AppContext, Contexts}
 
 class ScheduleDetailActivity
   extends ActionBarActivity
@@ -79,7 +78,9 @@ class ScheduleDetailActivity
           (description <~ tvText(event.description))
       )
       if (event.speakers.size == 0) {
-        runUi(speakersContent <~ vGone)
+        runUi(
+          (speakersContent <~ vGone) ~
+            (speakerTitle <~ vGone))
       } else {
         runUi(speakersContent <~ vVisible <~ vgRemoveAllViews)
         event.speakers.map(

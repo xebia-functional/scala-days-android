@@ -36,7 +36,9 @@ trait FragmentStyles {
 
   // Styles for Fragment
 
-  val rootStyle: Tweak[FrameLayout] = vMatchParent
+  def rootStyle(implicit appContext: AppContext): Tweak[FrameLayout] =
+    vMatchParent +
+      vBackgroundColorResource(R.color.background_list_schedule_header)
 
   val recyclerViewStyle: Tweak[RecyclerView] =
     vMatchParent +

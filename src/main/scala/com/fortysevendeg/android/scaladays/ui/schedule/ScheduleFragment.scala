@@ -26,6 +26,7 @@ import android.view._
 import com.fortysevendeg.android.scaladays.R
 import com.fortysevendeg.android.scaladays.model.Event
 import com.fortysevendeg.android.scaladays.modules.ComponentRegistryImpl
+import com.fortysevendeg.android.scaladays.modules.preferences.PreferenceRequest
 import com.fortysevendeg.android.scaladays.ui.commons.UiServices
 import com.fortysevendeg.android.scaladays.ui.scheduledetail.ScheduleDetailActivity
 import com.fortysevendeg.macroid.extras.RecyclerViewTweaks._
@@ -59,7 +60,7 @@ class ScheduleFragment
         <~ rvLayoutManager(new LinearLayoutManager(appContextProvider.get))
         <~ rvAddItemDecoration(new ScheduleItemDecorator())) ~
         (fLayout.reloadButton <~ On.click(Ui {
-          // TODO reload
+          loadConferencesInList()
         })))
     fLayout.content
   }
@@ -67,16 +68,6 @@ class ScheduleFragment
   override def onViewCreated(view: View, savedInstanceState: Bundle): Unit = {
     super.onViewCreated(view, savedInstanceState)
     loadConferencesInList()
-  }
-
-  private def loadConferencesInList(favorites: Boolean = false): Unit = {
-    val result = for {
-      conference <- loadSelectedConference()
-    } yield reloadList(conference.info.utcTimezoneOffset, conference.schedule, favorites)
-
-    result.recover {
-      case _ => failed()
-    }
   }
 
   override def onCreateOptionsMenu(menu: Menu, inflater: MenuInflater): Unit = {
@@ -103,6 +94,16 @@ class ScheduleFragment
     }
   }
 
+  def loading() = {
+    fragmentLayout map {
+      layout =>
+        runUi(
+          (layout.progressBar <~ vVisible) ~
+            (layout.recyclerView <~ vGone) ~
+            (layout.failedContent <~ vGone))
+    }
+  }
+
   def failed() = {
     fragmentLayout map {
       layout =>
@@ -113,29 +114,50 @@ class ScheduleFragment
     }
   }
 
+  def loadConferencesInList(favorites: Boolean = false): Unit = {
+    loading()
+    val result = for {
+      conference <- loadSelectedConference()
+    } yield reloadList(conference.info.utcTimezoneOffset, conference.schedule, favorites)
+
+    result.recover {
+      case _ => failed()
+    }
+  }
+
   def reloadList(timeZone: String, events: Seq[Event], favorites: Boolean = false) = {
-    val scheduleItems = toScheduleItem(timeZone, events, favorites)
-    for {
-      layout <- fragmentLayout
-      recyclerView <- layout.recyclerView
-    } yield {
-      val adapter = new ScheduleAdapter(timeZone, scheduleItems, new RecyclerClickListener {
-        override def onClick(scheduleItem: ScheduleItem): Unit = {
-          if (!scheduleItem.isHeader) {
-            scheduleItem.event map {
-              event =>
-                val intent = new Intent(fragmentActivityContext.get, classOf[ScheduleDetailActivity])
-                intent.putExtra(ScheduleDetailActivity.scheduleItemKey, event)
-                intent.putExtra(ScheduleDetailActivity.timeZoneKey, timeZone)
-                fragmentActivityContext.get.startActivity(intent)
+    val scheduleItems = toScheduleItem(timeZone, events,
+      if (favorites) {
+        event => {
+          val namePreferenceFavorite = "%d_%d".format(loadSelectedConferenceId, event.id)
+          preferenceServices.fetchBooleanPreference(PreferenceRequest[Boolean](namePreferenceFavorite, false)).value
+        }
+      } else {
+        event => true
+      })
+    fragmentLayout map {
+      layout =>
+        val adapter = new ScheduleAdapter(timeZone, scheduleItems, new RecyclerClickListener {
+          override def onClick(scheduleItem: ScheduleItem): Unit = {
+            if (!scheduleItem.isHeader) {
+              scheduleItem.event map {
+                event =>
+                  if (event.eventType == 1 || event.eventType == 2) {
+                    val intent = new Intent(fragmentActivityContext.get, classOf[ScheduleDetailActivity])
+                    intent.putExtra(ScheduleDetailActivity.scheduleItemKey, event)
+                    intent.putExtra(ScheduleDetailActivity.timeZoneKey, timeZone)
+                    fragmentActivityContext.get.startActivity(intent)
+                  }
+              }
             }
           }
-        }
-      })
-      runUi(
-        (layout.progressBar <~ vGone) ~
-          (layout.recyclerView <~ rvAdapter(adapter))
-      )
+        })
+        runUi(
+          (layout.progressBar <~ vGone) ~
+            (layout.failedContent <~ vGone) ~
+            (layout.recyclerView <~ vVisible) ~
+            (layout.recyclerView <~ rvAdapter(adapter))
+        )
     }
   }
 

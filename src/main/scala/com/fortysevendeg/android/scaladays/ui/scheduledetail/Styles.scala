@@ -17,6 +17,7 @@
 package com.fortysevendeg.android.scaladays.ui.scheduledetail
 
 import android.graphics.Color
+import android.text.TextUtils.TruncateAt
 import android.view.Gravity
 import android.view.ViewGroup.LayoutParams._
 import android.widget.ImageView.ScaleType
@@ -43,9 +44,9 @@ trait ActivityStyles {
     val paddingLeftRight = resGetDimensionPixelSize(R.dimen.padding_default)
     vMatchParent +
       vPadding(
-        paddingLeftRight, 
-        resGetDimensionPixelSize(R.dimen.padding_schedule_detail_scroll_top), 
-        paddingLeftRight, 
+        paddingLeftRight,
+        resGetDimensionPixelSize(R.dimen.padding_schedule_detail_scroll_top),
+        paddingLeftRight,
         0) +
       svRemoveVerticalScrollBar
   }
@@ -73,6 +74,8 @@ trait ActivityStyles {
       tvGravity(Gravity.BOTTOM) +
       tvColorResource(R.color.toolbar_title) +
       tvSize(resGetInteger(R.integer.text_huge)) +
+      tvMaxLines(3) +
+      tvEllipsize(TruncateAt.END) +
       vPadding(padding, 0, padding, padding)
   }
 

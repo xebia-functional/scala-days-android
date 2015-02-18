@@ -40,6 +40,8 @@ trait Layout
 
   var speakersContent = slot[LinearLayout]
 
+  var speakerTitle = slot[TextView]
+
   var fabFavorite = slot[ImageView]
 
   def layout(favorite: Boolean)(implicit appContext: AppContext, context: ActivityContext) = {
@@ -54,7 +56,7 @@ trait Layout
                 w[TextView] <~ wire(room) <~ roomStyle,
                 w[TextView] <~ wire(description) <~ descriptionStyle,
                 w[ImageView] <~ lineStyle,
-                w[TextView] <~ speakerTitleStyle
+                w[TextView] <~ speakerTitleStyle <~ wire(speakerTitle)
               ) <~ verticalLayoutStyle
             ) <~ descriptionContentLayoutStyle,
             l[LinearLayout]() <~ wire(speakersContent) <~ speakersContentLayoutStyle

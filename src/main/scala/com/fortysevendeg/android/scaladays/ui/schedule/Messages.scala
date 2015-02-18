@@ -25,15 +25,15 @@ import macroid.AppContext
 import scala.annotation.tailrec
 
 case class ScheduleItem(
-    isHeader: Boolean,
-    header: Option[String],
-    event: Option[Event])
+                         isHeader: Boolean,
+                         header: Option[String],
+                         event: Option[Event])
 
 trait ScheduleConversion {
 
   self: PreferenceServicesComponent with UiServices =>
 
-  def toScheduleItem(timeZone: String, events: Seq[Event], favorites: Boolean)(implicit appContext: AppContext): Seq[ScheduleItem] = {
+  def toScheduleItem(timeZone: String, events: Seq[Event], func: (Event) => Boolean)(implicit appContext: AppContext): Seq[ScheduleItem] = {
 
     @tailrec
     def loop(events: Seq[Event], date: String = "", acc: Seq[ScheduleItem] = Nil): Seq[ScheduleItem] =
@@ -41,18 +41,12 @@ trait ScheduleConversion {
         case Nil => acc
         case h :: t =>
           val dayStr = DateTimeUtils.parseDateSchedule(h.startTime, timeZone)
-          val namePreferenceFavorite = "%d_%d".format(loadSelectedConferenceId, h.id)
-          val isFavorite = preferenceServices.fetchBooleanPreference(PreferenceRequest[Boolean](namePreferenceFavorite, false)).value
-          if (favorites && !isFavorite) {
-            loop(t, dayStr, acc)
+          val newAcc = if (date != dayStr) {
+            acc :+ new ScheduleItem(isHeader = true, header = Some(dayStr), event = None)
           } else {
-            val newAcc = if (date != dayStr) {
-              acc :+ new ScheduleItem(isHeader = true, header = Some(dayStr), event = None)
-            } else {
-              acc
-            }
-            loop(t, dayStr, newAcc :+ ScheduleItem(isHeader = false, None, Some(h)))
+            acc
           }
+          loop(t, dayStr, if (func(h)) newAcc :+ ScheduleItem(isHeader = false, None, Some(h)) else newAcc)
       }
 
     loop(events)
