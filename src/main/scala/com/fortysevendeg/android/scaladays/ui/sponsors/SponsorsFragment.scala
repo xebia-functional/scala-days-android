@@ -26,6 +26,7 @@ import com.fortysevendeg.android.scaladays.model.SponsorType
 import com.fortysevendeg.android.scaladays.modules.ComponentRegistryImpl
 import com.fortysevendeg.android.scaladays.modules.json.JsonRequest
 import com.fortysevendeg.android.scaladays.modules.net.NetRequest
+import com.fortysevendeg.android.scaladays.ui.commons.UiServices
 import com.fortysevendeg.macroid.extras.RecyclerViewTweaks._
 import com.fortysevendeg.macroid.extras.ViewTweaks._
 import macroid.FullDsl._
@@ -36,7 +37,8 @@ import scala.concurrent.ExecutionContext.Implicits.global
 class SponsorsFragment
     extends Fragment
     with Contexts[Fragment]
-    with ComponentRegistryImpl {
+    with ComponentRegistryImpl
+    with UiServices {
 
   override implicit lazy val appContextProvider: AppContext = fragmentAppContext
 
@@ -49,53 +51,83 @@ class SponsorsFragment
       (fLayout.recyclerView
           <~ rvLayoutManager(new LinearLayoutManager(appContextProvider.get))) ~
           (fLayout.reloadButton <~ On.click(Ui {
-            // TODO reload
+            loadSponsors()
           })))
     fLayout.content
   }
 
   override def onViewCreated(view: View, savedInstanceState: Bundle): Unit = {
     super.onViewCreated(view, savedInstanceState)
-    val conferenceSelected = 0 // TODO Use PersistentService
-    (for {
-      _ <- netServices.saveJsonInLocal(NetRequest(false))
-      jsonResponse <- jsonServices.loadJson(JsonRequest())
-    } yield {
-      jsonResponse.apiResponse
-    }).map(_ map (api => reloadList(api.conferences(conferenceSelected).sponsors))).recover {
+    loadSponsors()
+  }
+
+  def loadSponsors() = {
+    loading()
+    val result = for {
+      conference <- loadSelectedConference()
+    } yield reloadList(conference.sponsors)
+
+    result recover {
       case _ => failed()
     }
   }
 
   def reloadList(sponsors: Seq[SponsorType]) = {
-    val sponsorItems = SponsorConversion.toSponsorItem(sponsors)
-    for {
-      layout <- fragmentLayout
-      recyclerView <- layout.recyclerView
-    } yield {
-      val adapter = new SponsorsAdapter(sponsorItems, new RecyclerClickListener {
-        override def onClick(sponsorItem: SponsorItem): Unit = {
-          sponsorItem.sponsor map {
-            sponsor =>
-              val intent = new Intent(Intent.ACTION_VIEW, Uri.parse(sponsor.url))
-              startActivity(intent)
-          }
+    sponsors.length match {
+      case 0 => empty()
+      case _ =>
+        val sponsorItems = SponsorConversion.toSponsorItem(sponsors)
+        for {
+          layout <- fragmentLayout
+          recyclerView <- layout.recyclerView
+        } yield {
+          val adapter = new SponsorsAdapter(sponsorItems, new RecyclerClickListener {
+            override def onClick(sponsorItem: SponsorItem): Unit = {
+              sponsorItem.sponsor map {
+                sponsor =>
+                  val intent = new Intent(Intent.ACTION_VIEW, Uri.parse(sponsor.url))
+                  startActivity(intent)
+              }
+            }
+          })
+          runUi(
+            (layout.progressBar <~ vGone) ~
+              (layout.recyclerView <~ vVisible) ~
+              (layout.recyclerView <~ rvAdapter(adapter))
+          )
         }
-      })
-      runUi(
-        (layout.progressBar <~ vInvisible) ~
-            (layout.recyclerView <~ rvAdapter(adapter))
-      )
+    }
+  }
+
+  def loading() = {
+    fragmentLayout map {
+      layout =>
+        runUi(
+          (layout.progressBar <~ vVisible) ~
+            (layout.recyclerView <~ vGone) ~
+            (layout.placeholderContent <~ vGone))
     }
   }
 
   def failed() = {
     fragmentLayout map {
       layout =>
+        layout.loadFailed()
         runUi(
           (layout.progressBar <~ vGone) ~
               (layout.recyclerView <~ vGone) ~
-              (layout.failedContent <~ vVisible))
+              (layout.placeholderContent <~ vVisible))
+    }
+  }
+
+  def empty() = {
+    fragmentLayout map {
+      layout =>
+        layout.loadEmpty()
+        runUi(
+          (layout.progressBar <~ vGone) ~
+            (layout.recyclerView <~ vGone) ~
+            (layout.placeholderContent <~ vVisible))
     }
   }
 

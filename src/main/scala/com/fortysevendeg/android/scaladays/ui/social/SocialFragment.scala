@@ -84,9 +84,7 @@ class SocialFragment
   }
 
   def search() = {
-
-    showLoading()
-
+    loading()
     val result = for {
       conference <- loadSelectedConference()
       searchResponse <- twitterServices.search(SearchRequest(conference.info.hashTag))
@@ -97,29 +95,9 @@ class SocialFragment
     }
   }
 
-  def showLoading() = {
-    fragmentLayout map {
-      layout =>
-        runUi(
-          (layout.progressBar <~ vVisible) ~
-              (layout.recyclerView <~ vGone) ~
-              (layout.failedContent <~ vGone))
-    }
-  }
-
-  def failed() = {
-    fragmentLayout map {
-      layout =>
-        runUi(
-          (layout.progressBar <~ vGone) ~
-              (layout.recyclerView <~ vGone) ~
-              (layout.failedContent <~ vVisible))
-    }
-  }
-
   def reloadList(messages: Seq[TwitterMessage]) = {
     messages.length match {
-      case 0 => failed()
+      case 0 => empty()
       case _ =>
         for {
           layout <- fragmentLayout
@@ -134,9 +112,41 @@ class SocialFragment
           })
           runUi(
             (layout.progressBar <~ vGone) ~
-                (layout.failedContent <~ vGone) ~
+                (layout.placeholderContent <~ vGone) ~
                 (layout.recyclerView <~ vVisible <~ rvAdapter(adapter)))
         }
+    }
+  }
+
+  def loading() = {
+    fragmentLayout map {
+      layout =>
+        runUi(
+          (layout.progressBar <~ vVisible) ~
+            (layout.recyclerView <~ vGone) ~
+            (layout.placeholderContent <~ vGone))
+    }
+  }
+
+  def failed() = {
+    fragmentLayout map {
+      layout =>
+        layout.loadFailed()
+        runUi(
+          (layout.progressBar <~ vGone) ~
+            (layout.recyclerView <~ vGone) ~
+            (layout.placeholderContent <~ vVisible))
+    }
+  }
+
+  def empty() = {
+    fragmentLayout map {
+      layout =>
+        layout.loadEmpty()
+        runUi(
+          (layout.progressBar <~ vGone) ~
+            (layout.recyclerView <~ vGone) ~
+            (layout.placeholderContent <~ vVisible))
     }
   }
 

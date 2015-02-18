@@ -35,10 +35,10 @@ import com.fortysevendeg.macroid.extras.RecyclerViewTweaks._
 import com.fortysevendeg.macroid.extras.ActionsExtras._
 
 class SpeakersFragment
-    extends Fragment
-    with Contexts[Fragment]
-    with ComponentRegistryImpl
-    with UiServices {
+  extends Fragment
+  with Contexts[Fragment]
+  with ComponentRegistryImpl
+  with UiServices {
 
   override implicit lazy val appContextProvider: AppContext = fragmentAppContext
 
@@ -49,54 +49,86 @@ class SpeakersFragment
     fragmentLayout = Some(fLayout)
     runUi(
       (fLayout.recyclerView
-          <~ rvLayoutManager(new LinearLayoutManager(appContextProvider.get))
-          <~ rvAddItemDecoration(new LineItemDecorator())) ~
-          (fLayout.reloadButton <~ On.click(Ui {
-            // TODO reload
-          })))
+        <~ rvLayoutManager(new LinearLayoutManager(appContextProvider.get))
+        <~ rvAddItemDecoration(new LineItemDecorator())) ~
+        (fLayout.reloadButton <~ On.click(Ui {
+          loadSpeakers()
+        })))
     fLayout.content
   }
 
   override def onViewCreated(view: View, savedInstanceState: Bundle): Unit = {
     super.onViewCreated(view, savedInstanceState)
+    loadSpeakers()
+  }
+
+  def loadSpeakers(): Unit = {
+    loading()
     val result = for {
       conference <- loadSelectedConference()
     } yield reloadList(conference.speakers)
 
-    result.recover {
+    result recover {
       case _ => failed()
     }
   }
 
   def reloadList(speakers: Seq[Speaker]) = {
-    for {
-      layout <- fragmentLayout
-      recyclerView <- layout.recyclerView
-    } yield {
-      val adapter = new SpeakersAdapter(speakers, new RecyclerClickListener {
-        override def onClick(speaker: Speaker): Unit = {
-          speaker.twitter map {
-            twitterName =>
-              val intent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://twitter.com/%s".format(twitterName)))
-              startActivity(intent)
-          }
+    speakers.length match {
+      case 0 => empty()
+      case _ =>
+        for {
+          layout <- fragmentLayout
+          recyclerView <- layout.recyclerView
+        } yield {
+          val adapter = new SpeakersAdapter(speakers, new RecyclerClickListener {
+            override def onClick(speaker: Speaker): Unit = {
+              speaker.twitter map {
+                twitterName =>
+                  val intent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://twitter.com/%s".format(twitterName)))
+                  startActivity(intent)
+              }
 
+            }
+          })
+          runUi(
+            (layout.progressBar <~ vGone) ~
+              (layout.recyclerView <~ vVisible) ~
+              (layout.recyclerView <~ rvAdapter(adapter))
+          )
         }
-      })
-      runUi(
-        (layout.progressBar <~ vInvisible) ~
-            (layout.recyclerView <~ rvAdapter(adapter))
-      )
+    }
+  }
+
+  def loading() = {
+    fragmentLayout map {
+      layout =>
+        runUi(
+          (layout.progressBar <~ vVisible) ~
+            (layout.recyclerView <~ vGone) ~
+            (layout.placeholderContent <~ vGone))
     }
   }
 
   def failed() = {
     fragmentLayout map {
       layout =>
+        layout.loadFailed()
         runUi(
           (layout.progressBar <~ vGone) ~
-              (layout.recyclerView <~ vGone) ~
-              (layout.failedContent <~ vVisible))
+            (layout.recyclerView <~ vGone) ~
+            (layout.placeholderContent <~ vVisible))
+    }
+  }
+
+  def empty() = {
+    fragmentLayout map {
+      layout =>
+        layout.loadEmpty()
+        runUi(
+          (layout.progressBar <~ vGone) ~
+            (layout.recyclerView <~ vGone) ~
+            (layout.placeholderContent <~ vVisible))
     }
   }
 

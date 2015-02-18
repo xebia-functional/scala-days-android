@@ -17,20 +17,38 @@
 package com.fortysevendeg.android.scaladays.ui.commons
 
 import android.widget.{Button, ImageView, LinearLayout, TextView}
+import com.fortysevendeg.android.scaladays.R
+import com.fortysevendeg.macroid.extras.TextTweaks._
+import com.fortysevendeg.macroid.extras.ImageViewTweaks._
 import macroid.{ActivityContext, AppContext}
 import macroid.FullDsl._
 
-trait PlaceHolderFailedLayout
-    extends PlaceHolderFailedStyles {
+trait PlaceHolderLayout
+    extends PlaceHolderStyles {
 
   var reloadButton = slot[Button]
 
-  def placeholderFailed(message: Int)(implicit appContext: AppContext, context: ActivityContext) = {
+  var image = slot[ImageView]
+
+  var text = slot[TextView]
+
+  def placeholder(implicit appContext: AppContext, context: ActivityContext) = {
     l[LinearLayout](
-      w[ImageView] <~ failedImageStyle,
-      w[TextView] <~ failedMessageStyle(message),
-      w[Button] <~ failedButtonStyle <~ wire(reloadButton)
-    ) <~ failedContentStyle
+      w[ImageView] <~ placeholderImageStyle <~ wire(image),
+      w[TextView] <~ placeholderMessageStyle <~ wire(text),
+      w[Button] <~ placeholderButtonStyle <~ wire(reloadButton)
+    ) <~ placeholderContentStyle
+  }
+
+  def loadFailed() = load(R.string.generalMessageError, R.drawable.placeholder_error)
+
+  def loadEmpty() = load(R.string.generalMessageEmpty, R.drawable.placeholder_general)
+
+  private def load(messageRes: Int, imageRes: Int) = {
+    runUi(
+      (text <~ tvText(messageRes)) ~
+        (image <~ ivSrc(imageRes))
+    )
   }
 
 }

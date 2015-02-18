@@ -14,14 +14,9 @@
  * limitations under the License.
  */
 
-package com.fortysevendeg.android.scaladays.ui.widgets
+package com.fortysevendeg.android.scaladays.ui.components
 
-import android.graphics.Bitmap
-import android.graphics.Canvas
-import android.graphics.Paint
-import android.graphics.PorterDuff
-import android.graphics.PorterDuffXfermode
-import android.graphics.Rect
+import android.graphics.{Bitmap, Canvas, Paint, PorterDuff, PorterDuffXfermode, Rect}
 import com.squareup.picasso.Transformation
 
 class CircularTransformation(size: Int) extends Transformation {
