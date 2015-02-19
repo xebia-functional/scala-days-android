@@ -31,9 +31,17 @@
     <string name="openMenu">Open</string>
     <string name="clodeMenu">Close</string>
 
+    <string name="filter">Filter</string>
+
+    <string-array name="filter_menu">
+        <item>All</item>
+        <item>Favorites</item>
+    </string-array>
+
     <string name="sampleText">Sample Text</string>
 
-    <string name="generalMessageError">There was an error. Try again</string>
+    <string name="generalMessageError">There was an error while trying to retrieve the latest Scala Days information. Please tap on the \"Reload\" button to try again</string>
+    <string name="generalMessageEmpty">We haven\'t found enough data for this section yet. Please tap on the \"Reload\" button to try again</string>
     <string name="reload">Reload</string>
 
     <string name="scanMessage">You can scan the QR Code in the conference and add it to your contacts</string>

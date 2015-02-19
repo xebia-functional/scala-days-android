@@ -120,7 +120,7 @@ class PathMorphDrawable(val defaultIcon: Int = NOICON, val defaultStroke: Int = 
   override def getOpacity: Int = PixelFormat.TRANSPARENT
 
   override def stop(): Unit = {
-    toIcon map (setIcon(_))
+    toIcon map setIcon
     toIcon = None
     running = false
   }
@@ -128,14 +128,10 @@ class PathMorphDrawable(val defaultIcon: Int = NOICON, val defaultStroke: Int = 
   override def isRunning: Boolean = running
 
   override def start(): Unit = {
-    if (!toIcon.isEmpty) {
-      if (!currentIcon.isEmpty) {
-        running = true
-        moveIcon(currentIcon.get, toIcon.get)
-      } else {
-        toIcon map (setIcon(_))
-        toIcon = None
-      }
+    (toIcon, currentIcon) match {
+      case (Some(to), Some(current)) => running = true; moveIcon(current, to)
+      case (Some(to), None) => setIcon(to); toIcon = None
+      case _ => ()
     }
   }
 

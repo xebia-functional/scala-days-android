@@ -31,13 +31,12 @@ import com.google.zxing.integration.android.IntentIntegrator
 import macroid.FullDsl._
 import macroid.{Ui, AppContext, Contexts}
 import com.fortysevendeg.macroid.extras.UIActionsExtras._
+import com.fortysevendeg.android.scaladays.ui.commons.IntegerResults._
 
 class QrCodeFragment
     extends Fragment
     with Contexts[Fragment]
     with ComponentRegistryImpl {
-
-  val scanResult = 1002
 
   override implicit lazy val appContextProvider: AppContext = fragmentAppContext
 

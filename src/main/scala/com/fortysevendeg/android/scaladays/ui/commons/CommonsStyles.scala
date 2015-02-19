@@ -16,15 +16,15 @@
 
 package com.fortysevendeg.android.scaladays.ui.commons
 
-import android.support.v7.widget.Toolbar
+import android.support.v7.widget.{RecyclerView, Toolbar}
 import android.view.ViewGroup.LayoutParams._
 import android.view.{ViewGroup, Gravity}
-import android.widget.{TextView, ImageView, LinearLayout}
+import android.widget._
 import com.fortysevendeg.android.scaladays.R
 import com.fortysevendeg.macroid.extras.FrameLayoutTweaks._
 import com.fortysevendeg.macroid.extras.LinearLayoutTweaks._
 import com.fortysevendeg.macroid.extras.ViewTweaks._
-import com.fortysevendeg.macroid.extras.ImageViewTweaks._
+import com.fortysevendeg.macroid.extras.RecyclerViewTweaks._
 import com.fortysevendeg.macroid.extras.TextTweaks._
 import com.fortysevendeg.macroid.extras.ResourcesExtras._
 import macroid.{Tweak, AppContext}
@@ -40,28 +40,26 @@ trait ToolbarStyles {
 
 }
 
-trait PlaceHolderFailedStyles {
+trait PlaceHolderStyles {
 
-  val failedContentStyle: Tweak[LinearLayout] =
+  val placeholderContentStyle: Tweak[LinearLayout] =
     vWrapContent +
       flLayoutGravity(Gravity.CENTER) +
       llGravity(Gravity.CENTER_HORIZONTAL) +
       llVertical +
       vGone
 
-  val failedImageStyle: Tweak[ImageView] =
-    vWrapContent +
-      ivSrc(R.drawable.placeholder_error)
+  val placeholderImageStyle: Tweak[ImageView] =
+    vWrapContent
 
-  def failedMessageStyle(text: Int)(implicit appContext: AppContext): Tweak[TextView] =
+  def placeholderMessageStyle(implicit appContext: AppContext): Tweak[TextView] =
     vWrapContent +
-      tvText(text) +
       tvGravity(Gravity.CENTER) +
       tvColorResource(R.color.text_error_message) +
       tvSize(resGetInteger(R.integer.text_big)) +
       vPaddings(resGetDimensionPixelSize(R.dimen.padding_default_big))
 
-  def failedButtonStyle(implicit appContext: AppContext): Tweak[TextView] =
+  def placeholderButtonStyle(implicit appContext: AppContext): Tweak[TextView] =
     vWrapContent +
       vMinWidth(resGetDimensionPixelSize(R.dimen.width_button)) +
       tvText(R.string.reload) +
@@ -89,4 +87,19 @@ trait HeaderAdapterStyles {
       tvAllCaps +
       vPadding(resGetDimensionPixelSize(R.dimen.padding_default), 0, 0, 0)
 
+}
+
+trait ListStyles {
+
+  def rootStyle(backgroundColor: Option[Int] = None)(implicit appContext: AppContext): Tweak[FrameLayout] =
+    vMatchParent +
+      (backgroundColor map vBackgroundColorResource getOrElse vBlankBackground)
+
+  val recyclerViewStyle: Tweak[RecyclerView] =
+    vMatchParent +
+      rvNoFixedSize
+
+  val progressBarStyle: Tweak[ProgressBar] =
+    vWrapContent +
+      flLayoutGravity(Gravity.CENTER)
 }

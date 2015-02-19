@@ -41,6 +41,15 @@ trait PreferenceServicesComponentImpl
         sharedPreferences.edit().putInt(request.name, request.value).apply()
         PreferenceResponse(request.value)
       }
+
+    def fetchBooleanPreference(request: PreferenceRequest[Boolean]): PreferenceResponse[Boolean] =
+      PreferenceResponse(sharedPreferences.getBoolean(request.name, request.value))
+
+    def saveBooleanPreference(request: PreferenceRequest[Boolean]): PreferenceResponse[Boolean] = {
+      sharedPreferences.edit().putBoolean(request.name, request.value).apply()
+      PreferenceResponse(request.value)
+    }
+
   }
 
 }

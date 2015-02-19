@@ -21,7 +21,7 @@ import android.content.res.Configuration
 import android.os.Bundle
 import android.support.v4.app.FragmentActivity
 import android.support.v7.app.{ActionBarActivity, ActionBarDrawerToggle}
-import android.view.{MenuItem, View}
+import android.view.{Menu, MenuItem, View}
 import com.fortysevendeg.android.scaladays.R
 import com.fortysevendeg.android.scaladays.ui.about.AboutFragment
 import com.fortysevendeg.android.scaladays.ui.places.PlacesFragment
@@ -85,26 +85,7 @@ class MainActivity
   override def onActivityResult(requestCode: Int, resultCode: Int, data: Intent): Unit =
     super.onActivityResult(requestCode, resultCode, data)
 
-  def itemSelected(section: MenuSection.Value, title: String) {
-    val builder = section match {
-      case SPEAKERS => f[SpeakersFragment]
-      case SCHEDULE => f[ScheduleFragment]
-      case SOCIAL => f[SocialFragment]
-      case CONTACTS => f[QrCodeFragment]
-      case SPONSORS => f[SponsorsFragment]
-      case PLACES => f[PlacesFragment]
-      case ABOUT => f[AboutFragment]
-      case _ => throw new IllegalStateException
-    }
-    runUi(
-      (toolBar <~ tbTitle(title)) ~
-          (drawerLayout <~ dlCloseDrawer(fragmentMenu)) ~
-          replaceFragment(
-            builder = builder,
-            id = Id.mainFragment,
-            tag = Some(Tag.mainFragment))
-    )
-  }
+  override def onCreateOptionsMenu(menu: Menu): Boolean = super.onCreateOptionsMenu(menu)
 
   override def onPostCreate(savedInstanceState: Bundle): Unit = {
     super.onPostCreate(savedInstanceState)
@@ -120,5 +101,26 @@ class MainActivity
   override def onOptionsItemSelected(item: MenuItem): Boolean = {
     if (actionBarDrawerToggle.isDefined && actionBarDrawerToggle.get.onOptionsItemSelected(item)) true
     else super.onOptionsItemSelected(item)
+  }
+
+  def itemSelected(section: MenuSection.Value, title: String) {
+    val builder = section match {
+      case SPEAKERS => f[SpeakersFragment]
+      case SCHEDULE => f[ScheduleFragment]
+      case SOCIAL => f[SocialFragment]
+      case CONTACTS => f[QrCodeFragment]
+      case SPONSORS => f[SponsorsFragment]
+      case PLACES => f[PlacesFragment]
+      case ABOUT => f[AboutFragment]
+      case _ => throw new IllegalStateException
+    }
+    runUi(
+      (toolBar <~ tbTitle(title)) ~
+        (drawerLayout <~ dlCloseDrawer(fragmentMenu)) ~
+        replaceFragment(
+          builder = builder,
+          id = Id.mainFragment,
+          tag = Some(Tag.mainFragment))
+    )
   }
 }

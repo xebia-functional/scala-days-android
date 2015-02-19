@@ -15,16 +15,14 @@
   ~  limitations under the License.
   -->
 
-<transition xmlns:android="http://schemas.android.com/apk/res/android">
-    <item>
-        <shape>
-            <solid android:color="@color/background_main_menu"/>
-        </shape>
-    </item>
+<menu
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:scaladays="http://schemas.android.com/apk/res-auto">
 
-    <item>
-        <shape>
-            <solid android:color="@color/background_conference_menu"/>
-        </shape>
-    </item>
-</transition>
+    <item
+            android:id="@+id/action_filter"
+            android:icon="@drawable/action_bar_icon_filter"
+            android:title="@string/filter"
+            scaladays:showAsAction="ifRoom"/>
+
+</menu>

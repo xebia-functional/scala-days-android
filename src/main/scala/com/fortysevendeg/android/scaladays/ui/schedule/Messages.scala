@@ -17,19 +17,26 @@
 package com.fortysevendeg.android.scaladays.ui.schedule
 
 import com.fortysevendeg.android.scaladays.model.Event
+import com.fortysevendeg.android.scaladays.modules.preferences.{PreferenceRequest, PreferenceServicesComponent}
+import com.fortysevendeg.android.scaladays.ui.commons.UiServices
 import com.fortysevendeg.android.scaladays.utils.DateTimeUtils
 import macroid.AppContext
 
 import scala.annotation.tailrec
 
 case class ScheduleItem(
-    isHeader: Boolean,
-    header: Option[String],
-    event: Option[Event])
+  isHeader: Boolean,
+  header: Option[String],
+  event: Option[Event])
 
-object ScheduleConversion {
+trait ScheduleConversion {
 
-  def toScheduleItem(timeZone: String, events: Seq[Event])(implicit appContext: AppContext): Seq[ScheduleItem] = {
+  self: PreferenceServicesComponent with UiServices =>
+
+  def toScheduleItem(
+    timeZone: String,
+    events: Seq[Event],
+    func: (Event) => Boolean)(implicit appContext: AppContext): Seq[ScheduleItem] = {
 
     @tailrec
     def loop(events: Seq[Event], date: String = "", acc: Seq[ScheduleItem] = Nil): Seq[ScheduleItem] =
@@ -42,7 +49,7 @@ object ScheduleConversion {
           } else {
             acc
           }
-          loop(t, dayStr, newAcc :+ ScheduleItem(isHeader = false, None, Some(h)))
+          loop(t, dayStr, if (func(h)) newAcc :+ ScheduleItem(isHeader = false, None, Some(h)) else newAcc)
       }
 
     loop(events)

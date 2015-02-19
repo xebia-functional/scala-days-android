@@ -19,8 +19,10 @@ package com.fortysevendeg.android.scaladays.ui.schedule
 import android.support.v7.widget.RecyclerView
 import android.view.View.OnClickListener
 import android.view.{View, ViewGroup}
+import com.fortysevendeg.android.scaladays.modules.ComponentRegistryImpl
+import com.fortysevendeg.android.scaladays.modules.preferences.{PreferenceRequest, PreferenceServicesComponent}
 import com.fortysevendeg.android.scaladays.ui.commons.DateTimeTextViewTweaks._
-import com.fortysevendeg.android.scaladays.ui.commons.{ViewHolderHeaderAdapter, HeaderLayoutAdapter}
+import com.fortysevendeg.android.scaladays.ui.commons.{UiServices, ViewHolderHeaderAdapter, HeaderLayoutAdapter}
 import com.fortysevendeg.android.scaladays.ui.schedule.ScheduleAdapter._
 import com.fortysevendeg.macroid.extras.TextTweaks._
 import com.fortysevendeg.macroid.extras.ViewGroupTweaks._
@@ -30,7 +32,11 @@ import macroid.{ActivityContext, AppContext}
 
 class ScheduleAdapter(timeZone: String, scheduleItems: Seq[ScheduleItem], listener: RecyclerClickListener)
     (implicit context: ActivityContext, appContext: AppContext)
-    extends RecyclerView.Adapter[RecyclerView.ViewHolder] {
+    extends RecyclerView.Adapter[RecyclerView.ViewHolder]
+    with ComponentRegistryImpl
+    with UiServices {
+
+  override val appContextProvider: AppContext = appContext
 
   val recyclerClickListener = listener
 
@@ -72,10 +78,13 @@ class ScheduleAdapter(timeZone: String, scheduleItems: Seq[ScheduleItem], listen
                 }
               )
             }
+            val isFavorite = preferenceServices.fetchBooleanPreference(PreferenceRequest[Boolean](
+              getNamePreferenceFavorite(event.id), false)).value
             runUi(
               (vh.hour <~ tvDateTimeHourMinute(event.startTime, timeZone)) ~
                   (vh.name <~ tvText(event.title)) ~
-                  (vh.room <~ event.track.map(track => tvText(track.name) + vVisible).getOrElse(vGone))
+                  (vh.room <~ event.track.map(track => tvText(track.name) + vVisible).getOrElse(vGone)) ~
+                  (vh.tagFavorite <~ (if (isFavorite) vVisible else vGone))
             )
         }
       case `itemViewTypeHeader` =>
