@@ -42,11 +42,11 @@ trait Styles {
 
   def drawerMenuStyle(implicit appContext: AppContext): Tweak[RecyclerView] =
     lp[AbsListView](MATCH_PARENT, MATCH_PARENT) +
-      vBackground(R.drawable.background_menu_transition)
+      vBackgroundColorResource(R.color.background_main_menu)
 
   def bigImageLayoutStyle(implicit appContext: AppContext): Tweak[FrameLayout] =
     lp[FrameLayout](MATCH_PARENT, resGetDimensionPixelSize(R.dimen.height_menu_image_header)) +
-      flForeground(resGetDrawable(R.drawable.background_header_menu_default))
+      flForeground(resGetDrawable(R.drawable.foreground_list_dark))
 
   val bigImageStyle: Tweak[ImageView] = 
     vMatchParent +
@@ -77,7 +77,7 @@ trait MainMenuAdapterStyles {
     lp[AbsListView](MATCH_PARENT, resGetDimensionPixelSize(R.dimen.height_menu_item)) +
       vPaddings(paddingLeftRight = resGetDimensionPixelSize(R.dimen.padding_menu_item_lr), paddingTopBottom = 0) +
       vBackground(R.drawable.background_list_menu) +
-      flForeground(resGetDrawable(R.drawable.foreground_list_menu))
+      flForeground(resGetDrawable(R.drawable.foreground_list_dark))
 
   def textMenuItemStyle(implicit appContext: AppContext): Tweak[TextView] =
     vMatchParent +
@@ -96,7 +96,7 @@ trait ConferenceMenuAdapterStyles {
       llHorizontal +
       llGravity(Gravity.CENTER_VERTICAL) +
       vPaddings(paddingLeftRight = resGetDimensionPixelSize(R.dimen.padding_menu_item_lr), paddingTopBottom = 0) +
-      vBackground(R.drawable.foreground_list_menu)
+      vBackground(R.drawable.foreground_list_dark)
 
   def conferenceMenuItemIconStyle(implicit appContext: AppContext): Tweak[ImageView] = {
     val size = resGetDimensionPixelSize(R.dimen.size_menu_conference_icon)

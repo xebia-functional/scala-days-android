@@ -72,7 +72,7 @@ trait AdapterStyles {
 
   def itemRootContentStyle(implicit appContext: AppContext): Tweak[FrameLayout] =
     vMatchParent +
-      flForeground(resGetDrawable(R.drawable.foreground_list_menu))
+      flForeground(resGetDrawable(R.drawable.foreground_list_dark))
 
   def itemContentStyle(implicit appContext: AppContext): Tweak[LinearLayout] =
     vMatchParent +

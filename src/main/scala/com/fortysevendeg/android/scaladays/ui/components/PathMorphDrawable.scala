@@ -128,14 +128,10 @@ class PathMorphDrawable(val defaultIcon: Int = NOICON, val defaultStroke: Int = 
   override def isRunning: Boolean = running
 
   override def start(): Unit = {
-    if (toIcon.isDefined) {
-      if (currentIcon.isDefined) {
-        running = true
-        moveIcon(currentIcon.get, toIcon.get)
-      } else {
-        toIcon map setIcon
-        toIcon = None
-      }
+    (toIcon, currentIcon) match {
+      case (Some(to), Some(current)) => running = true; moveIcon(current, to)
+      case (Some(to), None) => setIcon(to); toIcon = None
+      case _ => ()
     }
   }
 
