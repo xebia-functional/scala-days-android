@@ -16,7 +16,7 @@
 
 package com.fortysevendeg.android.scaladays.ui.schedule
 
-import android.app.AlertDialog
+import android.app.{Activity, AlertDialog}
 import android.content.DialogInterface.OnClickListener
 import android.content.{DialogInterface, Intent}
 import android.os.Bundle
@@ -41,6 +41,8 @@ class ScheduleFragment
   with ComponentRegistryImpl
   with UiServices
   with ScheduleConversion {
+
+  val detailResult = 1003
 
   override implicit lazy val appContextProvider: AppContext = fragmentAppContext
 
@@ -92,6 +94,18 @@ class ScheduleFragment
     }
   }
 
+  override def onActivityResult(requestCode: Int, resultCode: Int, data: Intent): Unit = {
+    super.onActivityResult(requestCode, resultCode, data)
+    requestCode match {
+      case request if request == detailResult =>
+        resultCode match {
+          case Activity.RESULT_OK =>
+            loadSchedule()
+          case _ => ()
+        }
+    }
+  }
+
   def loadSchedule(favorites: Boolean = false): Unit = {
     fragmentLayout map (_.loading())
     val result = for {
@@ -110,8 +124,8 @@ class ScheduleFragment
         val scheduleItems = toScheduleItem(timeZone, events,
           if (favorites) {
             event => {
-              val namePreferenceFavorite = "%d_%d".format(loadSelectedConferenceId, event.id)
-              preferenceServices.fetchBooleanPreference(PreferenceRequest[Boolean](namePreferenceFavorite, false)).value
+              preferenceServices.fetchBooleanPreference(PreferenceRequest[Boolean](
+                getNamePreferenceFavorite(event.id), false)).value
             }
           } else {
             event => true
@@ -125,7 +139,7 @@ class ScheduleFragment
                     val intent = new Intent(fragmentActivityContext.get, classOf[ScheduleDetailActivity])
                     intent.putExtra(ScheduleDetailActivity.scheduleItemKey, event)
                     intent.putExtra(ScheduleDetailActivity.timeZoneKey, timeZone)
-                    fragmentActivityContext.get.startActivity(intent)
+                    startActivityForResult(intent, detailResult)
                   }
               }
             }

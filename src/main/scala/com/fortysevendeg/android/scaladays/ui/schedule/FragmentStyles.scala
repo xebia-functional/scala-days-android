@@ -16,15 +16,15 @@
 
 package com.fortysevendeg.android.scaladays.ui.schedule
 
-import android.support.v7.widget.RecyclerView
 import android.view.Gravity
 import android.view.ViewGroup.LayoutParams._
-import android.widget.{FrameLayout, LinearLayout, ProgressBar, TextView}
+import android.widget._
 import com.fortysevendeg.android.scaladays.R
 import com.fortysevendeg.macroid.extras.FrameLayoutTweaks._
 import com.fortysevendeg.macroid.extras.LinearLayoutTweaks._
 import com.fortysevendeg.macroid.extras.ResourcesExtras._
 import com.fortysevendeg.macroid.extras.TextTweaks._
+import com.fortysevendeg.macroid.extras.ImageViewTweaks._
 import com.fortysevendeg.macroid.extras.ViewTweaks._
 import macroid.FullDsl._
 import macroid.{AppContext, Tweak}
@@ -57,6 +57,12 @@ trait AdapterStyles {
   def itemRootContentStyle(implicit appContext: AppContext): Tweak[FrameLayout] =
     vMatchParent +
       flForeground(resGetDrawable(R.drawable.foreground_list_dark))
+
+  def tagFavoriteStyle(implicit appContext: AppContext): Tweak[ImageView] =
+    vWrapContent +
+      ivSrc(R.drawable.shedule_tag_favorite) +
+      flLayoutGravity(Gravity.RIGHT) +
+      vPadding(paddingRight = resGetDimensionPixelSize(R.dimen.padding_default_small))
 
   def itemContentStyle(implicit appContext: AppContext): Tweak[LinearLayout] =
     vMatchParent +

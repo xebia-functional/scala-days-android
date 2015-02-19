@@ -16,6 +16,7 @@
 
 package com.fortysevendeg.android.scaladays.ui.scheduledetail
 
+import android.app.Activity
 import android.os.Bundle
 import android.support.v4.app.FragmentActivity
 import android.support.v7.app.ActionBarActivity
@@ -44,10 +45,12 @@ class ScheduleDetailActivity
 
   override implicit lazy val appContextProvider: AppContext = activityAppContext
 
+  private var favoriteChanged = false
+
   override def onCreate(savedInstanceState: Bundle) = {
     super.onCreate(savedInstanceState)
 
-    val (maybeScheduleItem, maybeTimeZone) = Option(getIntent.getExtras).map {
+    val (maybeScheduleItem, maybeTimeZone) = Option(getIntent.getExtras) map {
       extras =>
         val scheduleItem: Option[Event] = if (extras.containsKey(ScheduleDetailActivity.scheduleItemKey))
           Some(extras.getSerializable(ScheduleDetailActivity.scheduleItemKey).asInstanceOf[Event])
@@ -56,14 +59,15 @@ class ScheduleDetailActivity
           Some(extras.getString(ScheduleDetailActivity.timeZoneKey))
         else None
         (scheduleItem, timeZone)
-    }.getOrElse(None, None)
+    } getOrElse ((None, None))
 
     (for {
       event <- maybeScheduleItem
       timeZone <- maybeTimeZone
     } yield {
-      val namePreferenceFavorite = "%d_%d".format(loadSelectedConferenceId, event.id)
-      val isFavorite = preferenceServices.fetchBooleanPreference(PreferenceRequest[Boolean](namePreferenceFavorite, false)).value
+      val namePreferenceFavorite = getNamePreferenceFavorite(event.id)
+      val isFavorite = preferenceServices.fetchBooleanPreference(PreferenceRequest[Boolean](
+        namePreferenceFavorite, false)).value
 
       setContentView(layout(isFavorite))
       toolBar map setSupportActionBar
@@ -96,6 +100,7 @@ class ScheduleDetailActivity
   }
 
   private def favoriteClick(name: String) = {
+    favoriteChanged = true
     val isFavorite = preferenceServices.fetchBooleanPreference(PreferenceRequest[Boolean](name, false)).value
     if (isFavorite) {
       preferenceServices.saveBooleanPreference(PreferenceRequest[Boolean](name, false))
@@ -109,12 +114,21 @@ class ScheduleDetailActivity
   override def onOptionsItemSelected(item: MenuItem): Boolean = {
     item.getItemId match {
       case android.R.id.home =>
+        if (favoriteChanged) setResult(Activity.RESULT_OK)
         finish()
         true
       case _ => super.onOptionsItemSelected(item)
     }
   }
 
+  override def onBackPressed(): Unit = {
+    if (favoriteChanged) {
+      setResult(Activity.RESULT_OK)
+      finish()
+    } else {
+      super.onBackPressed()
+    }
+  }
 }
 
 object ScheduleDetailActivity {

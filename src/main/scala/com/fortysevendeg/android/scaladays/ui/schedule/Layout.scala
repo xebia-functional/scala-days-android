@@ -50,6 +50,8 @@ class ScheduleLayoutAdapter(implicit context: ActivityContext, appContext: AppCo
 
   var name = slot[TextView]
 
+  var tagFavorite = slot[ImageView]
+
   var speakerContent = slot[LinearLayout]
 
   val content = layout
@@ -63,7 +65,8 @@ class ScheduleLayoutAdapter(implicit context: ActivityContext, appContext: AppCo
           w[TextView] <~ wire(name) <~ nameItemStyle,
           l[LinearLayout]() <~ itemSpeakersContentStyle <~ wire(speakerContent)
         ) <~ itemInfoContentStyle
-      ) <~ itemContentStyle
+      ) <~ itemContentStyle,
+      w[ImageView] <~ wire(tagFavorite) <~ tagFavoriteStyle
     ) <~ itemRootContentStyle
   )
 }
@@ -78,6 +81,8 @@ class ViewHolderScheduleAdapter(adapter: ScheduleLayoutAdapter)(implicit context
   val room = adapter.room
 
   val name = adapter.name
+
+  val tagFavorite = adapter.tagFavorite
 
   val speakerContent = adapter.speakerContent
 
