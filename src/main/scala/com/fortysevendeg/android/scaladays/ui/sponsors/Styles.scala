@@ -16,35 +16,16 @@
 
 package com.fortysevendeg.android.scaladays.ui.sponsors
 
-import android.support.v7.widget.RecyclerView
 import android.view.Gravity
-import android.widget.{FrameLayout, ImageView, LinearLayout, ProgressBar}
+import android.widget.{ImageView, LinearLayout}
 import com.fortysevendeg.android.scaladays.R
-import com.fortysevendeg.macroid.extras.FrameLayoutTweaks._
 import com.fortysevendeg.macroid.extras.LinearLayoutTweaks._
-import com.fortysevendeg.macroid.extras.RecyclerViewTweaks._
 import com.fortysevendeg.macroid.extras.ResourcesExtras._
 import com.fortysevendeg.macroid.extras.ViewTweaks._
 import macroid.FullDsl._
 import macroid.{AppContext, Tweak}
 
 import scala.language.postfixOps
-
-trait FragmentStyles {
-
-  val rootStyle: Tweak[FrameLayout] =
-    vMatchParent +
-    vBackground(R.color.background_sponsors)
-
-  val recyclerViewStyle: Tweak[RecyclerView] =
-    vMatchParent +
-      rvNoFixedSize
-
-  val progressBarStyle: Tweak[ProgressBar] =
-    vWrapContent +
-      flLayoutGravity(Gravity.CENTER)
-
-}
 
 trait AdapterStyles {
 

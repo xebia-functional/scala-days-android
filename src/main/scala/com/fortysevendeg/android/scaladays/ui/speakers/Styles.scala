@@ -16,33 +16,18 @@
 
 package com.fortysevendeg.android.scaladays.ui.speakers
 
-import android.view.Gravity
 import android.widget.ImageView.ScaleType
-import android.widget.{TextView, ImageView, LinearLayout}
+import android.widget.{ImageView, LinearLayout, TextView}
 import com.fortysevendeg.android.scaladays.R
-import com.fortysevendeg.macroid.extras.FrameLayoutTweaks._
 import com.fortysevendeg.macroid.extras.ImageViewTweaks._
 import com.fortysevendeg.macroid.extras.LinearLayoutTweaks._
-import com.fortysevendeg.macroid.extras.RecyclerViewTweaks._
+import com.fortysevendeg.macroid.extras.ResourcesExtras._
 import com.fortysevendeg.macroid.extras.TextTweaks._
 import com.fortysevendeg.macroid.extras.ViewTweaks._
-import com.fortysevendeg.macroid.extras.ResourcesExtras._
-import macroid.{Tweak, AppContext}
 import macroid.FullDsl._
+import macroid.{AppContext, Tweak}
 
 import scala.language.postfixOps
-
-trait FragmentStyles {
-
-  val rootStyle = vMatchParent
-
-  val recyclerViewStyle = vMatchParent +
-    rvNoFixedSize
-
-  val progressBarStyle = vWrapContent +
-    flLayoutGravity(Gravity.CENTER)
-
-}
 
 trait AdapterStyles {
 

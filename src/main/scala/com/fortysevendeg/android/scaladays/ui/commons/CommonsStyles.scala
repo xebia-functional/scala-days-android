@@ -16,15 +16,15 @@
 
 package com.fortysevendeg.android.scaladays.ui.commons
 
-import android.support.v7.widget.Toolbar
+import android.support.v7.widget.{RecyclerView, Toolbar}
 import android.view.ViewGroup.LayoutParams._
 import android.view.{ViewGroup, Gravity}
-import android.widget.{TextView, ImageView, LinearLayout}
+import android.widget._
 import com.fortysevendeg.android.scaladays.R
 import com.fortysevendeg.macroid.extras.FrameLayoutTweaks._
 import com.fortysevendeg.macroid.extras.LinearLayoutTweaks._
 import com.fortysevendeg.macroid.extras.ViewTweaks._
-import com.fortysevendeg.macroid.extras.ImageViewTweaks._
+import com.fortysevendeg.macroid.extras.RecyclerViewTweaks._
 import com.fortysevendeg.macroid.extras.TextTweaks._
 import com.fortysevendeg.macroid.extras.ResourcesExtras._
 import macroid.{Tweak, AppContext}
@@ -87,4 +87,19 @@ trait HeaderAdapterStyles {
       tvAllCaps +
       vPadding(resGetDimensionPixelSize(R.dimen.padding_default), 0, 0, 0)
 
+}
+
+trait ListStyles {
+
+  def rootStyle(backgroundColor: Option[Int] = None)(implicit appContext: AppContext): Tweak[FrameLayout] =
+    vMatchParent +
+      (backgroundColor map vBackgroundColorResource getOrElse vBackground(null))
+
+  val recyclerViewStyle: Tweak[RecyclerView] =
+    vMatchParent +
+      rvNoFixedSize
+
+  val progressBarStyle: Tweak[ProgressBar] =
+    vWrapContent +
+      flLayoutGravity(Gravity.CENTER)
 }

@@ -26,36 +26,35 @@ import android.view.{LayoutInflater, View, ViewGroup}
 import com.fortysevendeg.android.scaladays.model.TwitterMessage
 import com.fortysevendeg.android.scaladays.modules.ComponentRegistryImpl
 import com.fortysevendeg.android.scaladays.modules.twitter.SearchRequest
-import com.fortysevendeg.android.scaladays.ui.commons.{LineItemDecorator, UiServices}
+import com.fortysevendeg.android.scaladays.ui.commons.{ListLayout, LineItemDecorator, UiServices}
 import com.fortysevendeg.macroid.extras.RecyclerViewTweaks._
-import com.fortysevendeg.macroid.extras.ViewTweaks._
 import macroid.FullDsl._
 import macroid.{AppContext, Contexts, Ui}
 
 import scala.concurrent.ExecutionContext.Implicits.global
 
 class SocialFragment
-    extends Fragment
-    with Contexts[Fragment]
-    with ComponentRegistryImpl
-    with UiServices {
+  extends Fragment
+  with Contexts[Fragment]
+  with ComponentRegistryImpl
+  with UiServices {
 
   val authResult = 1001
 
   override implicit lazy val appContextProvider: AppContext = fragmentAppContext
 
-  private var fragmentLayout: Option[Layout] = None
+  private var fragmentLayout: Option[ListLayout] = None
 
   override def onCreateView(inflater: LayoutInflater, container: ViewGroup, savedInstanceState: Bundle): View = {
-    val fLayout = new Layout
+    val fLayout = new ListLayout
     fragmentLayout = Some(fLayout)
     runUi(
       (fLayout.recyclerView
-          <~ rvLayoutManager(new LinearLayoutManager(appContextProvider.get))
-          <~ rvAddItemDecoration(new LineItemDecorator())) ~
-          (fLayout.reloadButton <~ On.click(Ui {
-            search()
-          })))
+        <~ rvLayoutManager(new LinearLayoutManager(appContextProvider.get))
+        <~ rvAddItemDecoration(new LineItemDecorator())) ~
+        (fLayout.reloadButton <~ On.click(Ui {
+          search()
+        })))
     fLayout.content
   }
 
@@ -78,75 +77,35 @@ class SocialFragment
           case Activity.RESULT_OK =>
             search()
           case Activity.RESULT_CANCELED =>
-            failed()
+            fragmentLayout map (_.failed())
         }
     }
   }
 
   def search() = {
-    loading()
+    fragmentLayout map (_.loading())
     val result = for {
       conference <- loadSelectedConference()
       searchResponse <- twitterServices.search(SearchRequest(conference.info.hashTag))
     } yield reloadList(searchResponse.messages)
-    
+
     result.recover {
-      case _ => failed()
+      case _ => fragmentLayout map (_.failed())
     }
   }
 
   def reloadList(messages: Seq[TwitterMessage]) = {
     messages.length match {
-      case 0 => empty()
+      case 0 => fragmentLayout map (_.empty())
       case _ =>
-        for {
-          layout <- fragmentLayout
-          recyclerView <- layout.recyclerView
-        } yield {
-          val adapter = new SocialAdapter(messages, new RecyclerClickListener {
-            override def onClick(message: TwitterMessage): Unit = {
-              val intent = new Intent(Intent.ACTION_VIEW,
-                Uri.parse("https://twitter.com/%s/status/%s".format(message.screenName, message.id)))
-              startActivity(intent)
-            }
-          })
-          runUi(
-            (layout.progressBar <~ vGone) ~
-                (layout.placeholderContent <~ vGone) ~
-                (layout.recyclerView <~ vVisible <~ rvAdapter(adapter)))
-        }
-    }
-  }
-
-  def loading() = {
-    fragmentLayout map {
-      layout =>
-        runUi(
-          (layout.progressBar <~ vVisible) ~
-            (layout.recyclerView <~ vGone) ~
-            (layout.placeholderContent <~ vGone))
-    }
-  }
-
-  def failed() = {
-    fragmentLayout map {
-      layout =>
-        layout.loadFailed()
-        runUi(
-          (layout.progressBar <~ vGone) ~
-            (layout.recyclerView <~ vGone) ~
-            (layout.placeholderContent <~ vVisible))
-    }
-  }
-
-  def empty() = {
-    fragmentLayout map {
-      layout =>
-        layout.loadEmpty()
-        runUi(
-          (layout.progressBar <~ vGone) ~
-            (layout.recyclerView <~ vGone) ~
-            (layout.placeholderContent <~ vVisible))
+        val adapter = new SocialAdapter(messages, new RecyclerClickListener {
+          override def onClick(message: TwitterMessage): Unit = {
+            val intent = new Intent(Intent.ACTION_VIEW,
+              Uri.parse("https://twitter.com/%s/status/%s".format(message.screenName, message.id)))
+            startActivity(intent)
+          }
+        })
+        fragmentLayout map (_.adapter(adapter))
     }
   }
 

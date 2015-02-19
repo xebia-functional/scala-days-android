@@ -23,7 +23,6 @@ import android.widget.{FrameLayout, LinearLayout, ProgressBar, TextView}
 import com.fortysevendeg.android.scaladays.R
 import com.fortysevendeg.macroid.extras.FrameLayoutTweaks._
 import com.fortysevendeg.macroid.extras.LinearLayoutTweaks._
-import com.fortysevendeg.macroid.extras.RecyclerViewTweaks._
 import com.fortysevendeg.macroid.extras.ResourcesExtras._
 import com.fortysevendeg.macroid.extras.TextTweaks._
 import com.fortysevendeg.macroid.extras.ViewTweaks._
@@ -31,21 +30,6 @@ import macroid.FullDsl._
 import macroid.{AppContext, Tweak}
 
 import scala.language.postfixOps
-
-trait FragmentStyles {
-
-  def rootStyle(implicit appContext: AppContext): Tweak[FrameLayout] =
-    vMatchParent +
-      vBackgroundColorResource(R.color.background_list_schedule_header)
-
-  val recyclerViewStyle: Tweak[RecyclerView] =
-    vMatchParent +
-      rvNoFixedSize
-
-  val progressBarStyle: Tweak[ProgressBar] =
-    vWrapContent +
-      flLayoutGravity(Gravity.CENTER)
-}
 
 trait SpeakersLayoutStyles {
 

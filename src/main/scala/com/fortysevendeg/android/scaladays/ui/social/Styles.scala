@@ -16,7 +16,6 @@
 
 package com.fortysevendeg.android.scaladays.ui.social
 
-import android.support.v7.widget.RecyclerView
 import android.view.Gravity
 import android.view.ViewGroup.LayoutParams._
 import android.webkit.WebView
@@ -26,28 +25,13 @@ import com.fortysevendeg.android.scaladays.R
 import com.fortysevendeg.macroid.extras.FrameLayoutTweaks._
 import com.fortysevendeg.macroid.extras.ImageViewTweaks._
 import com.fortysevendeg.macroid.extras.LinearLayoutTweaks._
-import com.fortysevendeg.macroid.extras.RecyclerViewTweaks._
+import com.fortysevendeg.macroid.extras.ResourcesExtras._
 import com.fortysevendeg.macroid.extras.TextTweaks._
 import com.fortysevendeg.macroid.extras.ViewTweaks._
-import com.fortysevendeg.macroid.extras.ResourcesExtras._
-import macroid.{Tweak, AppContext}
 import macroid.FullDsl._
+import macroid.{AppContext, Tweak}
 
 import scala.language.postfixOps
-
-trait FragmentStyles {
-
-  val rootStyle: Tweak[FrameLayout] = vMatchParent
-
-  val recyclerViewStyle: Tweak[RecyclerView] =
-    vMatchParent +
-      rvNoFixedSize
-
-  val progressBarStyle: Tweak[ProgressBar] =
-    vWrapContent +
-      flLayoutGravity(Gravity.CENTER)
-
-}
 
 trait AdapterStyles {
   

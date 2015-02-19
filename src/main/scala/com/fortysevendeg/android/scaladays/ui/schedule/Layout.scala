@@ -18,33 +18,10 @@ package com.fortysevendeg.android.scaladays.ui.schedule
 
 import android.support.v7.widget.RecyclerView
 import android.widget._
-import com.fortysevendeg.android.scaladays.R
 import com.fortysevendeg.android.scaladays.model.Speaker
 import com.fortysevendeg.android.scaladays.ui.commons.PlaceHolderLayout
 import macroid.FullDsl._
 import macroid.{ActivityContext, AppContext}
-
-class Layout(implicit appContext: AppContext, context: ActivityContext)
-  extends FragmentStyles
-  with PlaceHolderLayout {
-
-  var recyclerView = slot[RecyclerView]
-
-  var progressBar = slot[ProgressBar]
-
-  var placeholderContent = slot[LinearLayout]
-
-  val content = getUi(
-    l[FrameLayout](
-      w[ProgressBar] <~ wire(progressBar) <~ progressBarStyle,
-      w[RecyclerView] <~ wire(recyclerView) <~ recyclerViewStyle,
-      placeholder <~ wire(placeholderContent)
-    ) <~ rootStyle
-  )
-
-  def layout = content
-
-}
 
 class SpeakersLayout(speaker: Speaker)(implicit context: ActivityContext, appContext: AppContext)
   extends SpeakersLayoutStyles {

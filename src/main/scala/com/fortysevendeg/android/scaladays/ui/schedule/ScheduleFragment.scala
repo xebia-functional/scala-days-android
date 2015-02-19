@@ -27,10 +27,9 @@ import com.fortysevendeg.android.scaladays.R
 import com.fortysevendeg.android.scaladays.model.Event
 import com.fortysevendeg.android.scaladays.modules.ComponentRegistryImpl
 import com.fortysevendeg.android.scaladays.modules.preferences.PreferenceRequest
-import com.fortysevendeg.android.scaladays.ui.commons.UiServices
+import com.fortysevendeg.android.scaladays.ui.commons.{ListLayout, UiServices}
 import com.fortysevendeg.android.scaladays.ui.scheduledetail.ScheduleDetailActivity
 import com.fortysevendeg.macroid.extras.RecyclerViewTweaks._
-import com.fortysevendeg.macroid.extras.ViewTweaks._
 import macroid.FullDsl._
 import macroid.{AppContext, Contexts, Ui}
 
@@ -45,7 +44,7 @@ class ScheduleFragment
 
   override implicit lazy val appContextProvider: AppContext = fragmentAppContext
 
-  private var fragmentLayout: Option[Layout] = None
+  private var fragmentLayout: Option[ListLayout] = None
 
   override def onCreate(savedInstanceState: Bundle): Unit = {
     super.onCreate(savedInstanceState)
@@ -53,7 +52,7 @@ class ScheduleFragment
   }
 
   override def onCreateView(inflater: LayoutInflater, container: ViewGroup, savedInstanceState: Bundle): View = {
-    val fLayout = new Layout
+    val fLayout = new ListLayout(Some(R.color.background_list_schedule_header))
     fragmentLayout = Some(fLayout)
     runUi(
       (fLayout.recyclerView
@@ -74,7 +73,7 @@ class ScheduleFragment
     inflater.inflate(R.menu.schedule_menu, menu)
     super.onCreateOptionsMenu(menu, inflater)
   }
-  
+
   override def onOptionsItemSelected(item: MenuItem): Boolean = {
     item.getItemId match {
       case R.id.action_filter =>
@@ -92,21 +91,21 @@ class ScheduleFragment
       case _ => super.onOptionsItemSelected(item)
     }
   }
-  
+
   def loadSchedule(favorites: Boolean = false): Unit = {
-    loading()
+    fragmentLayout map (_.loading())
     val result = for {
       conference <- loadSelectedConference()
     } yield reloadList(conference.info.utcTimezoneOffset, conference.schedule, favorites)
 
     result recover {
-      case _ => failed()
+      case _ => fragmentLayout map (_.failed())
     }
   }
 
   def reloadList(timeZone: String, events: Seq[Event], favorites: Boolean = false) = {
     events.length match {
-      case 0 => empty()
+      case 0 => fragmentLayout map (_.empty())
       case _ =>
         val scheduleItems = toScheduleItem(timeZone, events,
           if (favorites) {
@@ -117,62 +116,22 @@ class ScheduleFragment
           } else {
             event => true
           })
-        fragmentLayout map {
-          layout =>
-            val adapter = new ScheduleAdapter(timeZone, scheduleItems, new RecyclerClickListener {
-              override def onClick(scheduleItem: ScheduleItem): Unit = {
-                if (!scheduleItem.isHeader) {
-                  scheduleItem.event map {
-                    event =>
-                      if (event.eventType == 1 || event.eventType == 2) {
-                        val intent = new Intent(fragmentActivityContext.get, classOf[ScheduleDetailActivity])
-                        intent.putExtra(ScheduleDetailActivity.scheduleItemKey, event)
-                        intent.putExtra(ScheduleDetailActivity.timeZoneKey, timeZone)
-                        fragmentActivityContext.get.startActivity(intent)
-                      }
+        val adapter = new ScheduleAdapter(timeZone, scheduleItems, new RecyclerClickListener {
+          override def onClick(scheduleItem: ScheduleItem): Unit = {
+            if (!scheduleItem.isHeader) {
+              scheduleItem.event map {
+                event =>
+                  if (event.eventType == 1 || event.eventType == 2) {
+                    val intent = new Intent(fragmentActivityContext.get, classOf[ScheduleDetailActivity])
+                    intent.putExtra(ScheduleDetailActivity.scheduleItemKey, event)
+                    intent.putExtra(ScheduleDetailActivity.timeZoneKey, timeZone)
+                    fragmentActivityContext.get.startActivity(intent)
                   }
-                }
               }
-            })
-            runUi(
-              (layout.progressBar <~ vGone) ~
-                (layout.placeholderContent <~ vGone) ~
-                (layout.recyclerView <~ vVisible) ~
-                (layout.recyclerView <~ rvAdapter(adapter))
-            )
-        }
-    }
-  }
-
-  def loading() = {
-    fragmentLayout map {
-      layout =>
-        runUi(
-          (layout.progressBar <~ vVisible) ~
-            (layout.recyclerView <~ vGone) ~
-            (layout.placeholderContent <~ vGone))
-    }
-  }
-
-  def failed() = {
-    fragmentLayout map {
-      layout =>
-        layout.loadFailed()
-        runUi(
-          (layout.progressBar <~ vGone) ~
-            (layout.recyclerView <~ vGone) ~
-            (layout.placeholderContent <~ vVisible))
-    }
-  }
-
-  def empty() = {
-    fragmentLayout map {
-      layout =>
-        layout.loadEmpty()
-        runUi(
-          (layout.progressBar <~ vGone) ~
-            (layout.recyclerView <~ vGone) ~
-            (layout.placeholderContent <~ vVisible))
+            }
+          }
+        })
+        fragmentLayout map (_.adapter(adapter))
     }
   }
 
