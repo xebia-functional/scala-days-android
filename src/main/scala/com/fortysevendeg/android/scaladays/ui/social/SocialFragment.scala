@@ -23,23 +23,24 @@ import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v7.widget.LinearLayoutManager
 import android.view.{LayoutInflater, View, ViewGroup}
+import com.fortysevendeg.android.scaladays.R
 import com.fortysevendeg.android.scaladays.model.TwitterMessage
 import com.fortysevendeg.android.scaladays.modules.ComponentRegistryImpl
 import com.fortysevendeg.android.scaladays.modules.twitter.SearchRequest
 import com.fortysevendeg.android.scaladays.ui.commons.{ListLayout, LineItemDecorator, UiServices}
 import com.fortysevendeg.macroid.extras.RecyclerViewTweaks._
+import com.fortysevendeg.macroid.extras.ResourcesExtras._
 import macroid.FullDsl._
 import macroid.{AppContext, Contexts, Ui}
 
 import scala.concurrent.ExecutionContext.Implicits.global
+import com.fortysevendeg.android.scaladays.ui.commons.IntegerResults._
 
 class SocialFragment
   extends Fragment
   with Contexts[Fragment]
   with ComponentRegistryImpl
   with UiServices {
-
-  val authResult = 1001
 
   override implicit lazy val appContextProvider: AppContext = fragmentAppContext
 
@@ -100,9 +101,8 @@ class SocialFragment
       case _ =>
         val adapter = new SocialAdapter(messages, new RecyclerClickListener {
           override def onClick(message: TwitterMessage): Unit = {
-            val intent = new Intent(Intent.ACTION_VIEW,
-              Uri.parse("https://twitter.com/%s/status/%s".format(message.screenName, message.id)))
-            startActivity(intent)
+            startActivity(new Intent(Intent.ACTION_VIEW,
+              Uri.parse(resGetString(R.string.url_twitter_status, message.screenName, message.id.toString))))
           }
         })
         fragmentLayout map (_.adapter(adapter))

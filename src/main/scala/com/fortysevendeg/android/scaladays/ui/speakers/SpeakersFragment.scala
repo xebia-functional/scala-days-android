@@ -22,17 +22,15 @@ import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v7.widget.LinearLayoutManager
 import android.view.{LayoutInflater, View, ViewGroup}
+import com.fortysevendeg.android.scaladays.R
 import com.fortysevendeg.android.scaladays.model.Speaker
 import com.fortysevendeg.android.scaladays.modules.ComponentRegistryImpl
-import com.fortysevendeg.android.scaladays.modules.json.JsonRequest
-import com.fortysevendeg.android.scaladays.modules.net.NetRequest
 import com.fortysevendeg.android.scaladays.ui.commons.{ListLayout, UiServices, LineItemDecorator}
 import macroid.{Ui, AppContext, Contexts}
 import scala.concurrent.ExecutionContext.Implicits.global
 import macroid.FullDsl._
-import com.fortysevendeg.macroid.extras.ViewTweaks._
+import com.fortysevendeg.macroid.extras.ResourcesExtras._
 import com.fortysevendeg.macroid.extras.RecyclerViewTweaks._
-import com.fortysevendeg.macroid.extras.ActionsExtras._
 
 class SpeakersFragment
   extends Fragment
@@ -81,10 +79,8 @@ class SpeakersFragment
           override def onClick(speaker: Speaker): Unit = {
             speaker.twitter map {
               twitterName =>
-                val intent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://twitter.com/%s".format(twitterName)))
-                startActivity(intent)
+                startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(resGetString(R.string.url_twitter_user, twitterName))))
             }
-
           }
         })
         fragmentLayout map (_.adapter(adapter))

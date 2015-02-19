@@ -93,7 +93,7 @@ trait ListStyles {
 
   def rootStyle(backgroundColor: Option[Int] = None)(implicit appContext: AppContext): Tweak[FrameLayout] =
     vMatchParent +
-      (backgroundColor map vBackgroundColorResource getOrElse vBackground(null))
+      (backgroundColor map vBackgroundColorResource getOrElse vBlankBackground)
 
   val recyclerViewStyle: Tweak[RecyclerView] =
     vMatchParent +

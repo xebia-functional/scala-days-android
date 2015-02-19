@@ -34,6 +34,7 @@ import macroid.FullDsl._
 import macroid.{AppContext, Contexts, Ui}
 
 import scala.concurrent.ExecutionContext.Implicits.global
+import com.fortysevendeg.android.scaladays.ui.commons.IntegerResults._
 
 class ScheduleFragment
   extends Fragment
@@ -41,8 +42,6 @@ class ScheduleFragment
   with ComponentRegistryImpl
   with UiServices
   with ScheduleConversion {
-
-  val detailResult = 1003
 
   override implicit lazy val appContextProvider: AppContext = fragmentAppContext
 
