@@ -32,6 +32,7 @@ import com.fortysevendeg.android.scaladays.ui.scheduledetail.ScheduleDetailActiv
 import com.fortysevendeg.macroid.extras.RecyclerViewTweaks._
 import macroid.FullDsl._
 import macroid.{AppContext, Contexts, Ui}
+import com.fortysevendeg.android.scaladays.ui.commons.AnalyticStrings._
 
 import scala.concurrent.ExecutionContext.Implicits.global
 import com.fortysevendeg.android.scaladays.ui.commons.IntegerResults._
@@ -53,6 +54,7 @@ class ScheduleFragment
   }
 
   override def onCreateView(inflater: LayoutInflater, container: ViewGroup, savedInstanceState: Bundle): View = {
+    analyticsServices.send(analyticsScheduleScreen, Some(analyticsScheduleCategoryList))
     val fLayout = new ListLayout(Some(R.color.background_list_schedule_header))
     fragmentLayout = Some(fLayout)
     runUi(
@@ -83,8 +85,16 @@ class ScheduleFragment
           .setItems(R.array.filter_menu, new OnClickListener() {
           override def onClick(dialog: DialogInterface, which: Int): Unit = {
             which match {
-              case 0 => loadSchedule()
-              case 1 => loadSchedule(true)
+              case 0 =>
+                analyticsServices.send(analyticsScheduleScreen,
+                  Some(analyticsScheduleCategoryList),
+                  Some(analyticsScheduleActionFilterAll))
+                loadSchedule()
+              case 1 =>
+                analyticsServices.send(analyticsScheduleScreen,
+                  Some(analyticsScheduleCategoryList),
+                  Some(analyticsScheduleActionFilterFavorites))
+                loadSchedule(true)
             }
           }
         }).create().show()

@@ -22,6 +22,7 @@ import android.os.{Handler, Bundle}
 import android.support.v4.app.Fragment
 import com.fortysevendeg.android.scaladays.model.Venue
 import com.fortysevendeg.android.scaladays.modules.ComponentRegistryImpl
+import com.fortysevendeg.android.scaladays.ui.commons.AnalyticStrings._
 import com.fortysevendeg.android.scaladays.ui.commons.UiServices
 import com.google.android.gms.maps.GoogleMap.OnInfoWindowClickListener
 import com.google.android.gms.maps._
@@ -48,6 +49,7 @@ class PlacesFragment
 
   override def onCreate(savedInstanceState: Bundle) = {
     super.onCreate(savedInstanceState)
+    analyticsServices.send(analyticsPlacesScreen)
     getMapAsync(this)
   }
 
@@ -68,8 +70,12 @@ class PlacesFragment
     }
   }
   
-  def openLink(link: String) =
+  def openLink(link: String) = {
+    analyticsServices.send(
+      screenName = analyticsPlacesScreen,
+      action = Some(analyticsPlacesActionGoToMap))
     startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(link)))
+  }
   
   def showVenueMarkers(venues: Seq[Venue]) = {
     venues map createMarker

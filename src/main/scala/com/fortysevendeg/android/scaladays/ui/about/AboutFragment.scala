@@ -16,30 +16,47 @@
 
 package com.fortysevendeg.android.scaladays.ui.about
 
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.view.{LayoutInflater, View, ViewGroup}
+import com.fortysevendeg.android.scaladays.R
 import com.fortysevendeg.android.scaladays.modules.ComponentRegistryImpl
+import com.fortysevendeg.android.scaladays.ui.commons.AnalyticStrings._
 import com.fortysevendeg.android.scaladays.ui.commons.UiServices
 import com.fortysevendeg.macroid.extras.TextTweaks._
 import com.fortysevendeg.macroid.extras.ViewTweaks._
+import com.fortysevendeg.macroid.extras.ResourcesExtras._
 import macroid.FullDsl._
-import macroid.{AppContext, Contexts}
+import macroid.{Ui, AppContext, Contexts}
 
 import scala.concurrent.ExecutionContext.Implicits.global
 
 class AboutFragment
-    extends Fragment
-    with Contexts[Fragment]
-    with ComponentRegistryImpl
-    with UiServices {
+  extends Fragment
+  with Contexts[Fragment]
+  with ComponentRegistryImpl
+  with UiServices {
 
   override implicit lazy val appContextProvider: AppContext = fragmentAppContext
 
   private var fragmentLayout: Option[Layout] = None
 
   override def onCreateView(inflater: LayoutInflater, container: ViewGroup, savedInstanceState: Bundle): View = {
+    analyticsServices.send(analyticsAboutScreen)
     val fLayout = new Layout
+    runUi(
+      fLayout.aboutContent <~ On.click {
+        Ui {
+          analyticsServices.send(
+            screenName = analyticsAboutScreen,
+            action = Some(analyticsAboutActionGoTo47Deg))
+          startActivity(new Intent(Intent.ACTION_VIEW,
+            Uri.parse(resGetString(R.string.url_47deg))))
+        }
+      }
+    )
     fragmentLayout = Some(fLayout)
     fLayout.content
   }
@@ -66,7 +83,7 @@ class AboutFragment
       layout =>
         runUi(
           (layout.mainContent <~ vGone) ~
-              (layout.placeholderContent <~ vVisible))
+            (layout.placeholderContent <~ vVisible))
     }
   }
 

@@ -25,6 +25,7 @@ import android.view.{LayoutInflater, View, ViewGroup}
 import com.fortysevendeg.android.scaladays.R
 import com.fortysevendeg.android.scaladays.model.Speaker
 import com.fortysevendeg.android.scaladays.modules.ComponentRegistryImpl
+import com.fortysevendeg.android.scaladays.ui.commons.AnalyticStrings._
 import com.fortysevendeg.android.scaladays.ui.commons.{ListLayout, UiServices, LineItemDecorator}
 import macroid.{Ui, AppContext, Contexts}
 import scala.concurrent.ExecutionContext.Implicits.global
@@ -43,6 +44,7 @@ class SpeakersFragment
   private var fragmentLayout: Option[ListLayout] = None
 
   override def onCreateView(inflater: LayoutInflater, container: ViewGroup, savedInstanceState: Bundle): View = {
+    analyticsServices.send(analyticsSpeakersScreen)
     val fLayout = new ListLayout
     fragmentLayout = Some(fLayout)
     runUi(
@@ -79,6 +81,9 @@ class SpeakersFragment
           override def onClick(speaker: Speaker): Unit = {
             speaker.twitter map {
               twitterName =>
+                analyticsServices.send(
+                  screenName = analyticsSpeakersScreen,
+                  action = Some(analyticsSpeakersActionGoToUser))
                 startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(resGetString(R.string.url_twitter_user, twitterName))))
             }
           }

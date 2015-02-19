@@ -24,10 +24,10 @@ import android.support.v4.app.Fragment
 import android.view.{LayoutInflater, View, ViewGroup}
 import com.fortysevendeg.android.scaladays.R
 import com.fortysevendeg.android.scaladays.modules.ComponentRegistryImpl
+import com.fortysevendeg.android.scaladays.ui.commons.AnalyticStrings._
 import com.google.zxing.Result
 import com.google.zxing.client.android.CaptureActivity
 import com.google.zxing.client.result.VCardResultParser
-import com.google.zxing.integration.android.IntentIntegrator
 import macroid.FullDsl._
 import macroid.{Ui, AppContext, Contexts}
 import com.fortysevendeg.macroid.extras.UIActionsExtras._
@@ -43,11 +43,15 @@ class QrCodeFragment
   private var fragmentLayout: Option[Layout] = None
 
   override def onCreateView(inflater: LayoutInflater, container: ViewGroup, savedInstanceState: Bundle): View = {
+    analyticsServices.send(analyticsContactsScreen)
     val fLayout = new Layout
     fragmentLayout = Some(fLayout)
     runUi(
       fLayout.scanButton <~ On.click {
         Ui {
+          analyticsServices.send(
+            screenName = analyticsContactsScreen,
+            action = Some(analyticsContactsActionScanContact))
           val intent = new Intent(getActivity, classOf[CaptureActivity])
           intent.setAction("com.google.zxing.client.android.SCAN")
           intent.putExtra("RESULT_DISPLAY_DURATION_MS", 0L)

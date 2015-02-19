@@ -26,6 +26,7 @@ import android.view.{LayoutInflater, View, ViewGroup}
 import com.fortysevendeg.android.scaladays.R
 import com.fortysevendeg.android.scaladays.model.Information
 import com.fortysevendeg.android.scaladays.modules.ComponentRegistryImpl
+import com.fortysevendeg.android.scaladays.ui.commons.AnalyticStrings._
 import com.fortysevendeg.android.scaladays.ui.commons.AsyncImageTweaks._
 import com.fortysevendeg.android.scaladays.ui.commons.UiServices
 import com.fortysevendeg.android.scaladays.ui.main.MainActivity
@@ -60,6 +61,7 @@ class MenuFragment
     override def onClick(mainMenuItem: MainMenuItem) =
       mainMenuItem.section match {
         case MenuSection.TICKETS =>
+          analyticsServices.send(analyticsTickets)
           urlTickets map {
             url =>
               val intent = new Intent(Intent.ACTION_VIEW,
@@ -71,8 +73,13 @@ class MenuFragment
   })
 
   lazy val conferenceMenuAdapter: ConferenceMenuAdapter = new ConferenceMenuAdapter(new ConferenceMenuClickListener {
-    override def onClick(conferenceMenuItem: ConferenceMenuItem) =
+    override def onClick(conferenceMenuItem: ConferenceMenuItem) = {
+      analyticsServices.send(
+        screenName = analyticsMenuScreen,
+        action = Some(analyticsMenuActionChangeConference),
+        label = Some(conferenceMenuItem.name))
       conferenceSelected(conferenceMenuItem)
+    }
   })
 
   private var mainMenuVisible: Boolean = true
@@ -102,12 +109,9 @@ class MenuFragment
         override def onClick(v: View) =
           toggleMenu()
       })
-      runUi(
-        (layout.recyclerView <~ rvAdapter(mainMenuAdapter)))
-
+      runUi(layout.recyclerView <~ rvAdapter(mainMenuAdapter))
       val defaultSection = Option(savedInstanceState) map (_.getInt(previousItemSelectedKey, defaultItem)) getOrElse defaultItem
       itemSelected(mainMenuAdapter.list(defaultSection), savedInstanceState == null)
-
     }
 
     val conferenceId = loadSelectedConferenceId

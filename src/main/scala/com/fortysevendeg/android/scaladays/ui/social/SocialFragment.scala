@@ -27,6 +27,7 @@ import com.fortysevendeg.android.scaladays.R
 import com.fortysevendeg.android.scaladays.model.TwitterMessage
 import com.fortysevendeg.android.scaladays.modules.ComponentRegistryImpl
 import com.fortysevendeg.android.scaladays.modules.twitter.SearchRequest
+import com.fortysevendeg.android.scaladays.ui.commons.AnalyticStrings._
 import com.fortysevendeg.android.scaladays.ui.commons.{ListLayout, LineItemDecorator, UiServices}
 import com.fortysevendeg.macroid.extras.RecyclerViewTweaks._
 import com.fortysevendeg.macroid.extras.ResourcesExtras._
@@ -47,6 +48,7 @@ class SocialFragment
   private var fragmentLayout: Option[ListLayout] = None
 
   override def onCreateView(inflater: LayoutInflater, container: ViewGroup, savedInstanceState: Bundle): View = {
+    analyticsServices.send(analyticsSocialScreen)
     val fLayout = new ListLayout
     fragmentLayout = Some(fLayout)
     runUi(
@@ -101,6 +103,9 @@ class SocialFragment
       case _ =>
         val adapter = new SocialAdapter(messages, new RecyclerClickListener {
           override def onClick(message: TwitterMessage): Unit = {
+            analyticsServices.send(
+              screenName = analyticsSocialScreen,
+              action = Some(analyticsSocialActionGoToTweet))
             startActivity(new Intent(Intent.ACTION_VIEW,
               Uri.parse(resGetString(R.string.url_twitter_status, message.screenName, message.id.toString))))
           }

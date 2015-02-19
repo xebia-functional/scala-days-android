@@ -17,16 +17,10 @@
 
 <resources>
 
-    <string name="url_json_conference">http://scala-days-2015.s3.amazonaws.com/conferences.json</string>
+    <string name="ga_appName">Scala Days</string>
 
-    <string name="url_twitter_user">https://twitter.com/%s</string>
-    <string name="url_twitter_status">https://twitter.com/%1$s/status/%2$s</string>
+    <bool name="ga_autoActivityTracking">false</bool>
 
-    <string name="url_47deg">http://www.47deg.com</string>
-
-    <!-- Twitter Api -->
-    <string name="twitter_app_key">***REMOVED***</string>
-    <string name="twitter_app_secret">***REMOVED***</string>
-    <string name="twitter_app_callback_host">47deg.com</string>
+    <string name="ga_trackingId">***REMOVED***</string>
 
 </resources>
