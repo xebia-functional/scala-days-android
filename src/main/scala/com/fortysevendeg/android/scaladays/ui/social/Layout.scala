@@ -19,32 +19,8 @@ package com.fortysevendeg.android.scaladays.ui.social
 import android.support.v7.widget.RecyclerView
 import android.webkit.WebView
 import android.widget._
-import com.fortysevendeg.android.scaladays.R
-import com.fortysevendeg.android.scaladays.ui.commons.PlaceHolderFailedLayout
 import macroid.FullDsl._
-import macroid.{Ui, ActivityContext, AppContext}
-
-class Layout(implicit appContext: AppContext, context: ActivityContext)
-    extends FragmentStyles
-    with PlaceHolderFailedLayout {
-
-  var recyclerView = slot[RecyclerView]
-
-  var progressBar = slot[ProgressBar]
-
-  var failedContent = slot[LinearLayout]
-
-  val content = getUi(
-    l[FrameLayout](
-      w[ProgressBar] <~ wire(progressBar) <~ progressBarStyle,
-      w[RecyclerView] <~ wire(recyclerView) <~ recyclerViewStyle,
-      placeholderFailed(R.string.generalMessageError) <~ wire(failedContent)
-    ) <~ rootStyle
-  )
-
-  def layout = content
-
-}
+import macroid.{ActivityContext, AppContext}
 
 class SocialLayoutAdapter(implicit context: ActivityContext, appContext: AppContext)
     extends AdapterStyles {

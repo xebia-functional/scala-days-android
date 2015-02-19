@@ -34,7 +34,6 @@
 
     <!-- Menu -->
     <color name="background_main_menu">#364550</color>
-    <color name="background_conference_menu">#ffffff</color>
     <color name="background_menu_header_selected">#44c2c2c2</color>
     <color name="background_menu_item">#00000000</color>
     <color name="background_menu_item_pressed">#22000000</color>
@@ -66,5 +65,9 @@
 
     <!-- Sponsors -->
     <color name="background_sponsors">#ffffff</color>
+    
+    <!-- Places -->
+    <color name="info_window_title">#E05F5E</color>
+    <color name="info_window_snippet">#364550</color>
 
 </resources>

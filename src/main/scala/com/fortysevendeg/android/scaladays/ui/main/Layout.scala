@@ -17,11 +17,10 @@
 package com.fortysevendeg.android.scaladays.ui.main
 
 import android.support.v4.widget.DrawerLayout
-import android.support.v7.widget.RecyclerView
-import android.widget.{FrameLayout, LinearLayout, TextView}
+import android.widget.{FrameLayout, LinearLayout}
 import com.fortysevendeg.android.scaladays.ui.commons.ToolbarLayout
 import macroid.FullDsl._
-import macroid.{IdGeneration, ActivityContext, AppContext}
+import macroid.{ActivityContext, AppContext, IdGeneration}
 
 trait Layout
     extends ToolbarLayout
@@ -45,20 +44,5 @@ trait Layout
       ) <~ wire(drawerLayout) <~ drawerStyle
     )
   }
-
-}
-
-class SampleLayout(implicit appContext: AppContext, context: ActivityContext)
-    extends Styles {
-
-  var textView = slot[TextView]
-
-  val content = getUi(
-    l[LinearLayout](
-      w[TextView] <~ wire(textView) <~ sampleTextStyle
-    ) <~ sampleStyle
-  )
-
-  def layout = content
 
 }

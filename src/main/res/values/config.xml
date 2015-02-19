@@ -19,6 +19,9 @@
 
     <string name="url_json_conference">http://scala-days-2015.s3.amazonaws.com/conferences.json</string>
 
+    <string name="url_twitter_user">https://twitter.com/%s</string>
+    <string name="url_twitter_status">https://twitter.com/%1$s/status/%2$s</string>
+
     <!-- Twitter Api -->
     <string name="twitter_app_key">***REMOVED***</string>
     <string name="twitter_app_secret">***REMOVED***</string>

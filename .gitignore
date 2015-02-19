@@ -5,6 +5,7 @@ project/target/
 .idea_modules
 gen/
 local.properties
+manifest.properties
 crashlytics.properties
 src/main/res/values/com_crashlytics_export_strings.xml
 src/main/assets/crashlytics-build.properties

@@ -21,7 +21,7 @@ import android.view.View.OnClickListener
 import android.view.{View, ViewGroup}
 import com.fortysevendeg.android.scaladays.R
 import com.fortysevendeg.android.scaladays.model.{Picture, Information}
-import com.fortysevendeg.android.scaladays.ui.commons.GlideTweaks._
+import com.fortysevendeg.android.scaladays.ui.commons.AsyncImageTweaks._
 import com.fortysevendeg.macroid.extras.ImageViewTweaks._
 import com.fortysevendeg.macroid.extras.TextTweaks._
 import macroid.{ActivityContext, AppContext}
@@ -51,10 +51,11 @@ class ConferenceMenuAdapter(listener: ConferenceMenuClickListener)
 
   override def onBindViewHolder(viewHolder: ViewHolderConferenceMenuAdapter, position: Int): Unit = {
     val conferenceMenuItem = list(position)
+    val iconSize = appContext.get.getResources.getDimensionPixelSize(R.dimen.size_menu_conference_icon)
     viewHolder.content.setTag(position)
     runUi(
       (viewHolder.title <~ tvText(conferenceMenuItem.name)) ~
-        (viewHolder.icon <~ conferenceMenuItem.icon.map(glideRoundedImage(_, R.drawable.placeholder_circle)).getOrElse(ivSrc(R.drawable.placeholder_circle)))
+        (viewHolder.icon <~ conferenceMenuItem.icon.map(roundedImage(_, R.drawable.placeholder_circle, iconSize)).getOrElse(ivSrc(R.drawable.placeholder_circle)))
     )
   }
   

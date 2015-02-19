@@ -20,19 +20,19 @@ import android.content.Intent
 import android.net.Uri
 import android.widget._
 import com.fortysevendeg.android.scaladays.R
-import com.fortysevendeg.android.scaladays.ui.commons.PlaceHolderFailedLayout
+import com.fortysevendeg.android.scaladays.ui.commons.PlaceHolderLayout
 import macroid.FullDsl._
 import macroid.{Ui, ActivityContext, AppContext}
 
 class Layout(implicit appContext: AppContext, context: ActivityContext)
-    extends FragmentStyles
-    with PlaceHolderFailedLayout {
+    extends Styles
+    with PlaceHolderLayout {
 
   var description = slot[TextView]
 
   var mainContent = slot[LinearLayout]
 
-  var failedContent = slot[LinearLayout]
+  var placeholderContent = slot[LinearLayout]
 
   val content = getUi(
     l[FrameLayout](
@@ -54,7 +54,7 @@ class Layout(implicit appContext: AppContext, context: ActivityContext)
           }
         }
       ) <~ wire(mainContent) <~ rootStyle,
-      placeholderFailed(R.string.generalMessageError) <~ wire(failedContent)
+      placeholder <~ wire(placeholderContent)
     )
   )
 

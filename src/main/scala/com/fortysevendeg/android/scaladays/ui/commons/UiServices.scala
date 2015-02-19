@@ -35,6 +35,8 @@ trait UiServices {
   val errorLogMessage = "Error loading conferences"
   
   val forceDownload = false
+
+  def getNamePreferenceFavorite(eventId: Int) = "%d_%d".format(loadSelectedConferenceId, eventId)
   
   def loadConferences(): Future[Seq[Conference]] = {
     for {

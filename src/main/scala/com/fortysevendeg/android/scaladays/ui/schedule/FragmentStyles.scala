@@ -16,47 +16,62 @@
 
 package com.fortysevendeg.android.scaladays.ui.schedule
 
-import android.support.v7.widget.RecyclerView
-import android.view.{ViewGroup, Gravity}
+import android.view.Gravity
 import android.view.ViewGroup.LayoutParams._
-import android.widget.ImageView.ScaleType
-import android.widget.{TextView, ProgressBar, FrameLayout, LinearLayout}
+import android.widget._
 import com.fortysevendeg.android.scaladays.R
 import com.fortysevendeg.macroid.extras.FrameLayoutTweaks._
-import com.fortysevendeg.macroid.extras.ImageViewTweaks._
 import com.fortysevendeg.macroid.extras.LinearLayoutTweaks._
-import com.fortysevendeg.macroid.extras.RecyclerViewTweaks._
+import com.fortysevendeg.macroid.extras.ResourcesExtras._
 import com.fortysevendeg.macroid.extras.TextTweaks._
+import com.fortysevendeg.macroid.extras.ImageViewTweaks._
 import com.fortysevendeg.macroid.extras.ViewTweaks._
-import macroid.{Tweak, AppContext}
 import macroid.FullDsl._
+import macroid.{AppContext, Tweak}
 
 import scala.language.postfixOps
 
-trait Styles {
+trait SpeakersLayoutStyles {
 
-  // Styles for Fragment
-
-  val rootStyle: Tweak[FrameLayout] = vMatchParent
-
-  val recyclerViewStyle: Tweak[RecyclerView] =
-    vMatchParent +
-      rvNoFixedSize
-
-  val progressBarStyle: Tweak[ProgressBar] =
+  def speakerNameItemStyle(name: String)(implicit appContext: AppContext): Tweak[TextView] =
     vWrapContent +
-      flLayoutGravity(Gravity.CENTER)
+      tvSize(resGetInteger(R.integer.text_medium)) +
+      vPadding(0, 0, resGetDimensionPixelSize(R.dimen.padding_default_extra_small), 0) +
+      tvColorResource(R.color.text_schedule_name) +
+      tvText(name)
 
-  // Styles for Schedule Adapter
+  def speakerTwitterItemStyle(twitter: Option[String])(implicit appContext: AppContext): Tweak[TextView] =
+    vWrapContent +
+      tvSize(resGetInteger(R.integer.text_medium)) +
+      tvColorResource(R.color.text_schedule_twitter) +
+      twitter.map(tvText(_) + vVisible).getOrElse(vGone)
+
+  def itemSpeakerContentStyle(implicit appContext: AppContext): Tweak[LinearLayout] =
+    vMatchWidth +
+      llHorizontal +
+      vPadding(0, resGetDimensionPixelSize(R.dimen.padding_default_extra_small), 0, 0)
+}
+
+trait AdapterStyles {
+
+  def itemRootContentStyle(implicit appContext: AppContext): Tweak[FrameLayout] =
+    vMatchParent +
+      flForeground(resGetDrawable(R.drawable.foreground_list_dark))
+
+  def tagFavoriteStyle(implicit appContext: AppContext): Tweak[ImageView] =
+    vWrapContent +
+      ivSrc(R.drawable.shedule_tag_favorite) +
+      flLayoutGravity(Gravity.RIGHT) +
+      vPadding(paddingRight = resGetDimensionPixelSize(R.dimen.padding_default_small))
 
   def itemContentStyle(implicit appContext: AppContext): Tweak[LinearLayout] =
     vMatchParent +
       llHorizontal
 
   def hourStyle(implicit appContext: AppContext): Tweak[TextView] =
-    lp[LinearLayout](70 dp, MATCH_PARENT) +
-      tvSize(14) +
-      vPadding(0, 12 dp, 0, 0) +
+    lp[LinearLayout](resGetDimensionPixelSize(R.dimen.width_schedule_hour), MATCH_PARENT) +
+      tvSize(resGetInteger(R.integer.text_medium)) +
+      vPadding(0, resGetDimensionPixelSize(R.dimen.padding_default_small), 0, 0) +
       vBackgroundColorResource(R.color.background_list_schedule_hour) +
       tvGravity(Gravity.CENTER_HORIZONTAL) +
       tvColorResource(R.color.text_schedule_name) +
@@ -65,41 +80,23 @@ trait Styles {
   def itemInfoContentStyle(implicit appContext: AppContext): Tweak[LinearLayout] =
     vMatchWidth +
       llVertical +
-      vPadding(16 dp, 12 dp, 16 dp, 12 dp) +
+      vPaddings(resGetDimensionPixelSize(R.dimen.padding_default), resGetDimensionPixelSize(R.dimen.padding_default_small)) +
       vBackgroundColorResource(R.color.background_list_schedule_info)
 
   val itemSpeakersContentStyle: Tweak[LinearLayout] =
     vMatchWidth +
       llVertical
 
-  def itemSpeakerContentStyle(implicit appContext: AppContext): Tweak[LinearLayout] =
-    vMatchWidth +
-      llHorizontal +
-      vPadding(0, 4 dp, 0, 0)
-
   def roomItemStyle(implicit appContext: AppContext): Tweak[TextView] =
     vWrapContent +
-      tvSize(12) +
+      tvSize(resGetInteger(R.integer.text_small)) +
       tvColorResource(R.color.text_schedule_room) +
-      vPadding(0, 0, 0, 4 dp)
+      vPadding(0, 0, 0, resGetDimensionPixelSize(R.dimen.padding_default_extra_small))
 
   def nameItemStyle(implicit appContext: AppContext): Tweak[TextView] =
     vWrapContent +
-      tvSize(14) +
+      tvSize(resGetInteger(R.integer.text_medium)) +
       tvColorResource(R.color.text_schedule_name) +
       tvBold
-
-  def speakerNameItemStyle(name: String)(implicit appContext: AppContext): Tweak[TextView] =
-    vWrapContent +
-      tvSize(14) +
-      vPadding(0, 0, 4 dp, 0) +
-      tvColorResource(R.color.text_schedule_name) +
-      tvText(name)
-
-  def speakerTwitterItemStyle(twitter: Option[String])(implicit appContext: AppContext): Tweak[TextView] =
-    vWrapContent +
-      tvSize(14) +
-      tvColorResource(R.color.text_schedule_twitter) +
-      twitter.map(tvText(_) + vVisible).getOrElse(vGone)
 
 }

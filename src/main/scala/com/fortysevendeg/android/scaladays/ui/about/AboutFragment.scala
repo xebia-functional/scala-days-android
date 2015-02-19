@@ -66,7 +66,7 @@ class AboutFragment
       layout =>
         runUi(
           (layout.mainContent <~ vGone) ~
-              (layout.failedContent <~ vVisible))
+              (layout.placeholderContent <~ vVisible))
     }
   }
 

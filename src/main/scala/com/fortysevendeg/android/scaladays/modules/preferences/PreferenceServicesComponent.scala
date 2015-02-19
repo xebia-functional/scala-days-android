@@ -21,6 +21,10 @@ trait PreferenceServices {
   def fetchIntPreference(request: PreferenceRequest[Int]): PreferenceResponse[Int]
   
   def saveIntPreference(request: PreferenceRequest[Int]): PreferenceResponse[Int]
+
+  def fetchBooleanPreference(request: PreferenceRequest[Boolean]): PreferenceResponse[Boolean]
+
+  def saveBooleanPreference(request: PreferenceRequest[Boolean]): PreferenceResponse[Boolean]
 }
 
 trait PreferenceServicesComponent {

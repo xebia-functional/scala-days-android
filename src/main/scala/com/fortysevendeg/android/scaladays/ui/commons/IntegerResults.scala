@@ -16,21 +16,10 @@
 
 package com.fortysevendeg.android.scaladays.ui.commons
 
-import android.widget.{Button, ImageView, LinearLayout, TextView}
-import macroid.{ActivityContext, AppContext}
-import macroid.FullDsl._
+object IntegerResults {
 
-trait PlaceHolderFailedLayout
-    extends PlaceHolderFailedStyles {
-
-  var reloadButton = slot[Button]
-
-  def placeholderFailed(message: Int)(implicit appContext: AppContext, context: ActivityContext) = {
-    l[LinearLayout](
-      w[ImageView] <~ failedImageStyle,
-      w[TextView] <~ failedMessageStyle(message),
-      w[Button] <~ failedButtonStyle <~ wire(reloadButton)
-    ) <~ failedContentStyle
-  }
+  val authResult = 1001
+  val scanResult = 1002
+  val detailResult = 1003
 
 }

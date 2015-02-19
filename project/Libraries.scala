@@ -43,7 +43,7 @@ object Libraries {
   }
 
   object graphics {
-    lazy val glide = "com.github.bumptech.glide" % "glide" % Versions.glideV
+    lazy val picasso = "com.squareup.picasso" % "picasso" % Versions.picassoV
   }
 
   object social {
@@ -62,6 +62,15 @@ object Libraries {
   object crashlytics {
     lazy val crashlytics = "com.crashlytics.android" % "crashlytics" % Versions.crashlyticsV
     
+  }
+
+  object playServices {
+
+    def playServicesDep(module: String) = "com.google.android.gms" % module % Versions.playServicesV
+    
+    lazy val playServicesMaps = playServicesDep("play-services-maps")
+    // Google Actions, Google Analytics and Google Cloud Messaging
+    lazy val playServicesBase = playServicesDep("play-services-base")
   }
 
 }
