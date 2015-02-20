@@ -167,28 +167,34 @@
 # view res/layout/abc_search_view.xml #generated:78
 -keep class android.support.v7.widget.SearchView$SearchAutoComplete { <init>(...); }
 
-# view AndroidManifest.xml #generated:37
+# view AndroidManifest.xml #generated:49
 -keep class android.support.v7.widget.TestActivity { <init>(...); }
 
 # view res/layout/abc_screen_toolbar.xml #generated:36
 -keep class android.support.v7.widget.Toolbar { <init>(...); }
 
-# view AndroidManifest.xml #generated:40
+# view AndroidManifest.xml #generated:52
 -keep class android.test.InstrumentationTestRunner { <init>(...); }
 
-# view AndroidManifest.xml #generated:26
+# view AndroidManifest.xml #generated:41
+-keep class com.fortysevendeg.android.scaladays.receivers.BootReceiver { <init>(...); }
+
+# view AndroidManifest.xml #generated:39
+-keep class com.fortysevendeg.android.scaladays.services.ReloadJsonService { <init>(...); }
+
+# view AndroidManifest.xml #generated:27
 -keep class com.fortysevendeg.android.scaladays.ui.main.MainActivity { <init>(...); }
 
-# view AndroidManifest.xml #generated:33
+# view AndroidManifest.xml #generated:34
 -keep class com.fortysevendeg.android.scaladays.ui.scheduledetail.ScheduleDetailActivity { <init>(...); }
 
-# view AndroidManifest.xml #generated:34
+# view AndroidManifest.xml #generated:35
 -keep class com.fortysevendeg.android.scaladays.ui.social.AuthorizationActivity { <init>(...); }
 
-# view AndroidManifest.xml #generated:35
+# view AndroidManifest.xml #generated:36
 -keep class com.google.zxing.client.android.CaptureActivity { <init>(...); }
 
-# view AndroidManifest.xml #generated:36
+# view AndroidManifest.xml #generated:37
 -keep class com.google.zxing.client.android.HelpActivity { <init>(...); }
 
 # view ldpi-v4/res/layout-ldpi-v4/zxing_capture.xml #generated:25

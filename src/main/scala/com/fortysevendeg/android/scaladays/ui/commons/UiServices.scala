@@ -31,9 +31,7 @@ trait UiServices {
     with JsonServicesComponent 
     with NetServicesComponent 
     with AppContextProvider =>
-  
-  val errorLogMessage = "Error loading conferences"
-  
+
   val forceDownload = false
 
   def getNamePreferenceFavorite(eventId: Int) = "%d_%d".format(loadSelectedConferenceId, eventId)

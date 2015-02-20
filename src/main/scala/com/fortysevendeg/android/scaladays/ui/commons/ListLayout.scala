@@ -66,6 +66,14 @@ class ListLayout(backgroundColor: Option[Int] = None)(implicit appContext: AppCo
         (placeholderContent <~ vVisible))
   }
 
+  def noFavorites() = {
+    loadNoFavorites()
+    runUi(
+      (progressBar <~ vGone) ~
+        (recyclerView <~ vGone) ~
+        (placeholderContent <~ vVisible))
+  }
+
   def adapter[VH <: RecyclerView.ViewHolder](adapter: RecyclerView.Adapter[VH]) = {
     runUi(
       (progressBar <~ vGone) ~

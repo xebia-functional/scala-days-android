@@ -32,6 +32,7 @@ import com.fortysevendeg.android.scaladays.ui.schedule.ScheduleFragment
 import com.fortysevendeg.android.scaladays.ui.social.SocialFragment
 import com.fortysevendeg.android.scaladays.ui.speakers.SpeakersFragment
 import com.fortysevendeg.android.scaladays.ui.sponsors.SponsorsFragment
+import com.fortysevendeg.android.scaladays.utils.AlarmUtils
 import com.fortysevendeg.macroid.extras.DrawerLayoutTweaks._
 import com.fortysevendeg.macroid.extras.FragmentExtras._
 import com.fortysevendeg.macroid.extras.ToolbarTweaks._
@@ -55,6 +56,8 @@ class MainActivity
 
     getSupportActionBar.setDisplayHomeAsUpEnabled(true)
     getSupportActionBar.setHomeButtonEnabled(true)
+
+    AlarmUtils.setReloadJsonService()
 
     drawerLayout map { drawerLayout =>
       val drawerToggle = new ActionBarDrawerToggle(this, drawerLayout, R.string.openMenu, R.string.clodeMenu) {
