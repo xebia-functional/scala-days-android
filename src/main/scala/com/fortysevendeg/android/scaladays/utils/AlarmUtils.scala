@@ -25,7 +25,7 @@ object AlarmUtils {
 
   val fourHours = 1000 * 60 * 60 * 4
 
-  def setReloadJsonService(implicit appContext: AppContext): Unit = {
+  def setReloadJsonService()(implicit appContext: AppContext): Unit = {
     val am = appContext.get.getSystemService(Context.ALARM_SERVICE).asInstanceOf[AlarmManager]
     val i = new Intent(appContext.get, classOf[ReloadJsonService])
     val pendingIntent = PendingIntent.getService(appContext.get, 0, i, 0)

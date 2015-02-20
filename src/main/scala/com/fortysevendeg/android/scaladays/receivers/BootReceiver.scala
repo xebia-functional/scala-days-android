@@ -24,8 +24,7 @@ class BootReceiver
   extends BroadcastReceiver {
 
   override def onReceive(context: Context, intent: Intent): Unit = {
-    implicit val appContext = AppContext(context.getApplicationContext)
-    AlarmUtils.setReloadJsonService
+    AlarmUtils.setReloadJsonService()(AppContext(context.getApplicationContext))
   }
 
 }

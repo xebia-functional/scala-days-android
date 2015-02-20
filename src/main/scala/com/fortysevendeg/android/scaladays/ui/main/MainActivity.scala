@@ -57,7 +57,7 @@ class MainActivity
     getSupportActionBar.setDisplayHomeAsUpEnabled(true)
     getSupportActionBar.setHomeButtonEnabled(true)
 
-    AlarmUtils.setReloadJsonService
+    AlarmUtils.setReloadJsonService()
 
     drawerLayout map { drawerLayout =>
       val drawerToggle = new ActionBarDrawerToggle(this, drawerLayout, R.string.openMenu, R.string.clodeMenu) {
