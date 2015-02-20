@@ -32,7 +32,7 @@ import macroid.{Ui, AppContext, Contexts}
 
 import scala.concurrent.ExecutionContext.Implicits.global
 
-class PlacesFragment 
+class PlacesFragment
   extends SupportMapFragment
   with Contexts[Fragment]
   with ComponentRegistryImpl
@@ -40,16 +40,16 @@ class PlacesFragment
   with OnMapReadyCallback {
 
   override implicit lazy val appContextProvider: AppContext = fragmentAppContext
-  
+
   val defaultZoom = 12
-  
+
   private var googleMap: Option[GoogleMap] = None
-  
-  private val markersMap = scala.collection.mutable.Map[String,String]()
+
+  private val markersMap = scala.collection.mutable.Map[String, String]()
 
   override def onCreate(savedInstanceState: Bundle) = {
     super.onCreate(savedInstanceState)
-    analyticsServices.send(analyticsPlacesScreen)
+    analyticsServices.sendScreenName(analyticsPlacesScreen)
     getMapAsync(this)
   }
 
@@ -69,21 +69,24 @@ class PlacesFragment
       case _ => failed()
     }
   }
-  
+
   def openLink(link: String) = {
-    analyticsServices.send(
-      screenName = analyticsPlacesScreen,
-      action = Some(analyticsPlacesActionGoToMap))
+    analyticsServices.sendEvent(
+      screenName = Some(analyticsPlacesScreen),
+      category = analyticsCategoryNavigate,
+      action = analyticsPlacesActionGoToMap)
     startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(link)))
   }
-  
+
   def showVenueMarkers(venues: Seq[Venue]) = {
     venues map createMarker
     venues.headOption map { venue =>
-      runUi(Ui{ googleMap map (_.moveCamera(toCameraUpdate(venue))) })
+      runUi(Ui {
+        googleMap map (_.moveCamera(toCameraUpdate(venue)))
+      })
     }
   }
-  
+
   def createMarker(venue: Venue) {
     val markerOptions = new MarkerOptions()
       .title(venue.name)
@@ -92,14 +95,14 @@ class PlacesFragment
       .position(new LatLng(venue.latitude, venue.longitude))
     runUi(addMarkerToMap(venue, markerOptions))
   }
-  
+
   def addMarkerToMap(venue: Venue, markerOptions: MarkerOptions) =
     Ui {
       googleMap map { googleMapValue =>
         markersMap.put(googleMapValue.addMarker(markerOptions).getId, venue.website)
       }
     }
-  
+
   def toCameraUpdate(venue: Venue): CameraUpdate =
     CameraUpdateFactory.newLatLngZoom(new LatLng(venue.latitude, venue.longitude), defaultZoom)
 

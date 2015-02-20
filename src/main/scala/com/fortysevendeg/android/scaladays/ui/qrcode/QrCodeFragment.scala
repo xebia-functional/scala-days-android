@@ -43,15 +43,16 @@ class QrCodeFragment
   private var fragmentLayout: Option[Layout] = None
 
   override def onCreateView(inflater: LayoutInflater, container: ViewGroup, savedInstanceState: Bundle): View = {
-    analyticsServices.send(analyticsContactsScreen)
+    analyticsServices.sendScreenName(analyticsContactsScreen)
     val fLayout = new Layout
     fragmentLayout = Some(fLayout)
     runUi(
       fLayout.scanButton <~ On.click {
         Ui {
-          analyticsServices.send(
-            screenName = analyticsContactsScreen,
-            action = Some(analyticsContactsActionScanContact))
+          analyticsServices.sendEvent(
+            screenName = Some(analyticsContactsScreen),
+            category = analyticsCategoryNavigate,
+            action = analyticsContactsActionScanContact)
           val intent = new Intent(getActivity, classOf[CaptureActivity])
           intent.setAction("com.google.zxing.client.android.SCAN")
           intent.putExtra("RESULT_DISPLAY_DURATION_MS", 0L)

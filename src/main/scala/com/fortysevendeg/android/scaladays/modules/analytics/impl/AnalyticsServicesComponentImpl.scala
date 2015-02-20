@@ -22,28 +22,35 @@ import com.fortysevendeg.macroid.extras.AppContextProvider
 import com.google.android.gms.analytics.{HitBuilders, GoogleAnalytics}
 
 trait AnalyticsServicesComponentImpl
-    extends AnalyticsServicesComponent {
+  extends AnalyticsServicesComponent {
 
   self: AppContextProvider =>
 
   lazy val analyticsServices = new AnalyticsServicesImpl
 
   class AnalyticsServicesImpl
-      extends AnalyticsServices {
+    extends AnalyticsServices {
 
     lazy val tracker = GoogleAnalytics
-        .getInstance(appContextProvider.get)
-        .newTracker(R.xml.app_tracker)
+      .getInstance(appContextProvider.get)
+      .newTracker(R.xml.app_tracker)
 
 
-    def send(screenName: String,
-        category: Option[String] = None,
-        action: Option[String] = None,
-        label: Option[String] = None): Unit = {
+    def sendScreenName(screenName: String): Unit = {
       tracker.setScreenName(screenName)
       val event = new HitBuilders.EventBuilder()
-      category map event.setCategory
-      action map event.setAction
+      tracker.send(event.build())
+    }
+
+    def sendEvent(
+        screenName: Option[String],
+        category: String,
+        action: String,
+        label: Option[String] = None): Unit = {
+      screenName map tracker.setScreenName
+      val event = new HitBuilders.EventBuilder()
+      event.setCategory(category)
+      event.setAction(action)
       label map event.setLabel
       tracker.send(event.build())
     }

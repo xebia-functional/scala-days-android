@@ -17,10 +17,13 @@
 package com.fortysevendeg.android.scaladays.modules.analytics
 
 trait AnalyticsServices {
-  def send(screenName: String,
-      category: Option[String] = None,
-      action: Option[String] = None,
-      label: Option[String] = None): Unit
+  def sendScreenName(screenName: String): Unit
+
+  def sendEvent(
+    screenName: Option[String],
+    category: String,
+    action: String,
+    label: Option[String] = None): Unit
 }
 
 trait AnalyticsServicesComponent {

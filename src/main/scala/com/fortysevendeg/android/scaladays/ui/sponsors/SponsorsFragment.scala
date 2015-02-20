@@ -47,7 +47,7 @@ class SponsorsFragment
   private var fragmentLayout: Option[ListLayout] = None
 
   override def onCreateView(inflater: LayoutInflater, container: ViewGroup, savedInstanceState: Bundle): View = {
-    analyticsServices.send(analyticsSponsorsScreen)
+    analyticsServices.sendScreenName(analyticsSponsorsScreen)
     val fLayout = new ListLayout(Some(R.color.background_sponsors))
     fragmentLayout = Some(fLayout)
     runUi(
@@ -84,9 +84,10 @@ class SponsorsFragment
           override def onClick(sponsorItem: SponsorItem): Unit = {
             sponsorItem.sponsor map {
               sponsor =>
-                analyticsServices.send(
-                  analyticsSponsorsScreen,
-                  action = Some(analyticsSponsorsActionGoToSponsor))
+                analyticsServices.sendEvent(
+                  screenName = Some(analyticsSponsorsScreen),
+                  category = analyticsCategoryNavigate,
+                  action = analyticsSponsorsActionGoToSponsor)
                 startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(sponsor.url)))
             }
           }

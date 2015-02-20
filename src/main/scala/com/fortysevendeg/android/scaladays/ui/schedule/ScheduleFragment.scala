@@ -54,8 +54,7 @@ class ScheduleFragment
   }
 
   override def onCreateView(inflater: LayoutInflater, container: ViewGroup, savedInstanceState: Bundle): View = {
-    analyticsServices.send(analyticsScheduleScreen, Some(analyticsScheduleCategoryList))
-    val fLayout = new ListLayout(Some(R.color.background_list_schedule_header))
+    analyticsServices.sendScreenName(analyticsScheduleListScreen)
     val fLayout = new ListLayout
     fragmentLayout = Some(fLayout)
     runUi(
@@ -87,14 +86,16 @@ class ScheduleFragment
           override def onClick(dialog: DialogInterface, which: Int): Unit = {
             which match {
               case 0 =>
-                analyticsServices.send(analyticsScheduleScreen,
-                  Some(analyticsScheduleCategoryList),
-                  Some(analyticsScheduleActionFilterAll))
+                analyticsServices.sendEvent(
+                  Some(analyticsScheduleListScreen),
+                  analyticsCategoryFilter,
+                  analyticsScheduleActionFilterAll)
                 loadSchedule()
               case 1 =>
-                analyticsServices.send(analyticsScheduleScreen,
-                  Some(analyticsScheduleCategoryList),
-                  Some(analyticsScheduleActionFilterFavorites))
+                analyticsServices.sendEvent(
+                  Some(analyticsScheduleListScreen),
+                  analyticsCategoryFilter,
+                  analyticsScheduleActionFilterFavorites)
                 loadSchedule(true)
             }
           }
@@ -147,6 +148,11 @@ class ScheduleFragment
               scheduleItem.event map {
                 event =>
                   if (event.eventType == 1 || event.eventType == 2) {
+                    analyticsServices.sendEvent(
+                      Some(analyticsScheduleListScreen),
+                      analyticsCategoryNavigate,
+                      analyticsScheduleActionGoToDetail,
+                      Some(event.title))
                     val intent = new Intent(fragmentActivityContext.get, classOf[ScheduleDetailActivity])
                     intent.putExtra(ScheduleDetailActivity.scheduleItemKey, event)
                     intent.putExtra(ScheduleDetailActivity.timeZoneKey, timeZone)

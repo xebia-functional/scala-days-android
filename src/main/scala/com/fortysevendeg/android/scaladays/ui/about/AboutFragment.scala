@@ -44,14 +44,15 @@ class AboutFragment
   private var fragmentLayout: Option[Layout] = None
 
   override def onCreateView(inflater: LayoutInflater, container: ViewGroup, savedInstanceState: Bundle): View = {
-    analyticsServices.send(analyticsAboutScreen)
+    analyticsServices.sendScreenName(analyticsAboutScreen)
     val fLayout = new Layout
     runUi(
       fLayout.aboutContent <~ On.click {
         Ui {
-          analyticsServices.send(
-            screenName = analyticsAboutScreen,
-            action = Some(analyticsAboutActionGoTo47Deg))
+          analyticsServices.sendEvent(
+            screenName = Some(analyticsAboutScreen),
+            category = analyticsCategoryNavigate,
+            action = analyticsAboutActionGoTo47Deg)
           startActivity(new Intent(Intent.ACTION_VIEW,
             Uri.parse(resGetString(R.string.url_47deg))))
         }

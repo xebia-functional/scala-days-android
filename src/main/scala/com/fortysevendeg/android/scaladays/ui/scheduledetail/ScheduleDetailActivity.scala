@@ -66,10 +66,7 @@ class ScheduleDetailActivity
       event <- maybeScheduleItem
       timeZone <- maybeTimeZone
     } yield {
-      analyticsServices.send(
-        screenName = analyticsScheduleScreen,
-        category = Some(analyticsScheduleCategoryDetail),
-        label = Some(event.title))
+      analyticsServices.sendScreenName(analyticsScheduleDetailScreen)
       val namePreferenceFavorite = getNamePreferenceFavorite(event.id)
       val isFavorite = preferenceServices.fetchBooleanPreference(PreferenceRequest[Boolean](
         namePreferenceFavorite, false)).value
@@ -108,18 +105,18 @@ class ScheduleDetailActivity
     favoriteChanged = true
     val isFavorite = preferenceServices.fetchBooleanPreference(PreferenceRequest[Boolean](name, false)).value
     if (isFavorite) {
-      analyticsServices.send(
-        screenName = analyticsScheduleScreen,
-        category = Some(analyticsScheduleCategoryDetail),
-        action = Some(analyticsScheduleActionRemoveToFavorites),
+      analyticsServices.sendEvent(
+        screenName = Some(analyticsScheduleDetailScreen),
+        category = analyticsCategoryFavorites,
+        action = analyticsScheduleActionRemoveToFavorites,
         label = Some(eventTitle))
       preferenceServices.saveBooleanPreference(PreferenceRequest[Boolean](name, false))
       fabFavorite <~ pmdAnimIcon(IconTypes.ADD) <~ vBackground(R.drawable.fab_button_no_check) <~ vPaddings(resGetDimensionPixelSize(R.dimen.padding_schedule_detail_fab))
     } else {
-      analyticsServices.send(
-        screenName = analyticsScheduleScreen,
-        category = Some(analyticsScheduleCategoryDetail),
-        action = Some(analyticsScheduleActionAddToFavorites),
+      analyticsServices.sendEvent(
+        screenName = Some(analyticsScheduleDetailScreen),
+        category = analyticsCategoryFavorites,
+        action = analyticsScheduleActionAddToFavorites,
         label = Some(eventTitle))
       preferenceServices.saveBooleanPreference(PreferenceRequest[Boolean](name, true))
       fabFavorite <~ pmdAnimIcon(IconTypes.CHECK) <~ vBackground(R.drawable.fab_button_check) <~ vPaddings(resGetDimensionPixelSize(R.dimen.padding_schedule_detail_fab))

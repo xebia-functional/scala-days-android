@@ -18,29 +18,37 @@ package com.fortysevendeg.android.scaladays.ui.commons
 
 object AnalyticStrings {
 
-  val analyticsScheduleScreen = "Schedule"
+  val analyticsScheduleListScreen = "Schedule List"
 
-  val analyticsScheduleCategoryList = "List"
+  val analyticsScheduleDetailScreen = "Schedule Detail"
 
-  val analyticsScheduleCategoryDetail = "Detail"
+  val analyticsCategoryFilter = "Filter"
 
-  val analyticsScheduleActionFilterAll = "Filter All"
+  val analyticsCategoryFavorites = "Favorites"
 
-  val analyticsScheduleActionFilterFavorites = "Filter Favorites"
+  val analyticsCategoryNavigate = "Navigate"
 
-  val analyticsScheduleActionAddToFavorites = "Add to Favorites"
+  val analyticsScheduleActionFilterAll = "All"
 
-  val analyticsScheduleActionRemoveToFavorites = "Remove Favorites"
+  val analyticsScheduleActionFilterFavorites = "Favorites"
+
+  val analyticsScheduleActionAddToFavorites = "Add"
+
+  val analyticsScheduleActionRemoveToFavorites = "Remove"
+
+  val analyticsScheduleActionGoToDetail = "Go to Detail"
 
   val analyticsSocialScreen = "Social"
 
   val analyticsSocialActionGoToTweet = "Go to Tweet"
 
+  val analyticsSocialActionPostTweet = "Post Tweet"
+
   val analyticsSpeakersScreen = "Speakers"
 
   val analyticsSpeakersActionGoToUser = "Go to User"
 
-  val analyticsTickets = "Tickets"
+  val analyticsActionGoToTickets = "Go to Tickets"
 
   val analyticsContactsScreen = "Contacts"
 
@@ -57,8 +65,6 @@ object AnalyticStrings {
   val analyticsAboutScreen = "About"
 
   val analyticsAboutActionGoTo47Deg = "Go to 47Deg Website"
-
-  val analyticsMenuScreen = "Menu"
 
   val analyticsMenuActionChangeConference = "Change Conference"
 

@@ -61,7 +61,10 @@ class MenuFragment
     override def onClick(mainMenuItem: MainMenuItem) =
       mainMenuItem.section match {
         case MenuSection.TICKETS =>
-          analyticsServices.send(analyticsTickets)
+          analyticsServices.sendEvent(
+            screenName = None,
+            category = analyticsCategoryNavigate,
+            action = analyticsActionGoToTickets)
           urlTickets map {
             url =>
               val intent = new Intent(Intent.ACTION_VIEW,
@@ -74,9 +77,10 @@ class MenuFragment
 
   lazy val conferenceMenuAdapter: ConferenceMenuAdapter = new ConferenceMenuAdapter(new ConferenceMenuClickListener {
     override def onClick(conferenceMenuItem: ConferenceMenuItem) = {
-      analyticsServices.send(
-        screenName = analyticsMenuScreen,
-        action = Some(analyticsMenuActionChangeConference),
+      analyticsServices.sendEvent(
+        screenName = None,
+        category = analyticsCategoryNavigate,
+        action = analyticsMenuActionChangeConference,
         label = Some(conferenceMenuItem.name))
       conferenceSelected(conferenceMenuItem)
     }

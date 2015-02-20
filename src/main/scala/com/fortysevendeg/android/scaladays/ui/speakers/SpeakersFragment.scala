@@ -44,7 +44,7 @@ class SpeakersFragment
   private var fragmentLayout: Option[ListLayout] = None
 
   override def onCreateView(inflater: LayoutInflater, container: ViewGroup, savedInstanceState: Bundle): View = {
-    analyticsServices.send(analyticsSpeakersScreen)
+    analyticsServices.sendScreenName(analyticsSpeakersScreen)
     val fLayout = new ListLayout
     fragmentLayout = Some(fLayout)
     runUi(
@@ -81,9 +81,10 @@ class SpeakersFragment
           override def onClick(speaker: Speaker): Unit = {
             speaker.twitter map {
               twitterName =>
-                analyticsServices.send(
-                  screenName = analyticsSpeakersScreen,
-                  action = Some(analyticsSpeakersActionGoToUser))
+                analyticsServices.sendEvent(
+                  screenName = Some(analyticsSpeakersScreen),
+                  category = analyticsCategoryNavigate,
+                  action = analyticsSpeakersActionGoToUser)
                 startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(resGetString(R.string.url_twitter_user, twitterName))))
             }
           }

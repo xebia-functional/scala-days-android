@@ -48,7 +48,7 @@ class SocialFragment
   private var fragmentLayout: Option[ListLayout] = None
 
   override def onCreateView(inflater: LayoutInflater, container: ViewGroup, savedInstanceState: Bundle): View = {
-    analyticsServices.send(analyticsSocialScreen)
+    analyticsServices.sendScreenName(analyticsSocialScreen)
     val fLayout = new ListLayout
     fragmentLayout = Some(fLayout)
     runUi(
@@ -103,9 +103,10 @@ class SocialFragment
       case _ =>
         val adapter = new SocialAdapter(messages, new RecyclerClickListener {
           override def onClick(message: TwitterMessage): Unit = {
-            analyticsServices.send(
-              screenName = analyticsSocialScreen,
-              action = Some(analyticsSocialActionGoToTweet))
+            analyticsServices.sendEvent(
+              screenName = Some(analyticsSocialScreen),
+              category = analyticsCategoryNavigate,
+              action = analyticsSocialActionGoToTweet)
             startActivity(new Intent(Intent.ACTION_VIEW,
               Uri.parse(resGetString(R.string.url_twitter_status, message.screenName, message.id.toString))))
           }
