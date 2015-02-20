@@ -44,12 +44,17 @@ trait ScheduleConversion {
         case Nil => acc
         case h :: t =>
           val dayStr = DateTimeUtils.parseDateSchedule(h.startTime, timeZone)
-          val newAcc = if (date != dayStr) {
+          val addEvent = func(h)
+          val newAcc = if (date != dayStr && addEvent) {
             acc :+ new ScheduleItem(isHeader = true, header = Some(dayStr), event = None)
           } else {
             acc
           }
-          loop(t, dayStr, if (func(h)) newAcc :+ ScheduleItem(isHeader = false, None, Some(h)) else newAcc)
+          if (addEvent) {
+            loop(t, dayStr, newAcc :+ ScheduleItem(isHeader = false, None, Some(h)))
+          } else {
+            loop(t, date, newAcc)
+          }
       }
 
     loop(events)

@@ -20,11 +20,12 @@ import android.widget.{Button, ImageView, LinearLayout, TextView}
 import com.fortysevendeg.android.scaladays.R
 import com.fortysevendeg.macroid.extras.TextTweaks._
 import com.fortysevendeg.macroid.extras.ImageViewTweaks._
+import com.fortysevendeg.macroid.extras.ViewTweaks._
 import macroid.{ActivityContext, AppContext}
 import macroid.FullDsl._
 
 trait PlaceHolderLayout
-    extends PlaceHolderStyles {
+  extends PlaceHolderStyles {
 
   var reloadButton = slot[Button]
 
@@ -44,11 +45,13 @@ trait PlaceHolderLayout
 
   def loadEmpty() = load(R.string.generalMessageEmpty, R.drawable.placeholder_general)
 
-  private def load(messageRes: Int, imageRes: Int) = {
+  def loadNoFavorites() = load(R.string.noFavoritesMessage, R.drawable.placeholder_favorite, false)
+
+  private def load(messageRes: Int, imageRes: Int, showButton: Boolean = true) = {
     runUi(
       (text <~ tvText(messageRes)) ~
-        (image <~ ivSrc(imageRes))
-    )
+        (image <~ ivSrc(imageRes)) ~
+        (reloadButton <~ (if (showButton) vVisible else vGone)))
   }
 
 }

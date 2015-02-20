@@ -56,6 +56,7 @@ class ScheduleFragment
   override def onCreateView(inflater: LayoutInflater, container: ViewGroup, savedInstanceState: Bundle): View = {
     analyticsServices.send(analyticsScheduleScreen, Some(analyticsScheduleCategoryList))
     val fLayout = new ListLayout(Some(R.color.background_list_schedule_header))
+    val fLayout = new ListLayout
     fragmentLayout = Some(fLayout)
     runUi(
       (fLayout.recyclerView
@@ -127,18 +128,19 @@ class ScheduleFragment
   }
 
   def reloadList(timeZone: String, events: Seq[Event], favorites: Boolean = false) = {
-    events.length match {
+    val scheduleItems = toScheduleItem(timeZone, events,
+      if (favorites) {
+        event => {
+          preferenceServices.fetchBooleanPreference(PreferenceRequest[Boolean](
+            getNamePreferenceFavorite(event.id), false)).value
+        }
+      } else {
+        event => true
+      })
+    scheduleItems.length match {
+      case length if length == 0 && favorites => fragmentLayout map (_.noFavorites())
       case 0 => fragmentLayout map (_.empty())
       case _ =>
-        val scheduleItems = toScheduleItem(timeZone, events,
-          if (favorites) {
-            event => {
-              preferenceServices.fetchBooleanPreference(PreferenceRequest[Boolean](
-                getNamePreferenceFavorite(event.id), false)).value
-            }
-          } else {
-            event => true
-          })
         val adapter = new ScheduleAdapter(timeZone, scheduleItems, new RecyclerClickListener {
           override def onClick(scheduleItem: ScheduleItem): Unit = {
             if (!scheduleItem.isHeader) {
