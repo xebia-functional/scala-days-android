@@ -7,7 +7,7 @@ import Libraries.social._
 import Libraries.date._
 import Libraries.qr._
 import Libraries.playServices._
-import Generator._
+import ReplacePropertiesGenerator._
 
 android.Plugin.androidBuild
 
@@ -24,6 +24,8 @@ organizationHomepage := Some(new URL("http://47deg.com"))
 version := Versions.appV
 
 scalaVersion := Versions.scalaV
+
+unmanagedBase := baseDirectory.value / "src" / "main" / "libs"
 
 scalacOptions ++= Seq("-feature", "-deprecation")
 
@@ -61,5 +63,4 @@ apkbuildExcludes in Android ++= Seq(
   "META-INF/NOTICE",
   "META-INF/NOTICE.txt")
 
-
-manifestPlaceholders in Android := manifestPlaceholderMap
+resourceGenerators in Compile += replaceValuesTask().taskValue

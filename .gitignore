@@ -5,4 +5,4 @@ project/target/
 .idea_modules
 gen/
 local.properties
-manifest.properties
+debug.properties

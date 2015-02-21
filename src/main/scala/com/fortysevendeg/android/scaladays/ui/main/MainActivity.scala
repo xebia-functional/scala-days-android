@@ -36,21 +36,27 @@ import com.fortysevendeg.android.scaladays.utils.AlarmUtils
 import com.fortysevendeg.macroid.extras.DrawerLayoutTweaks._
 import com.fortysevendeg.macroid.extras.FragmentExtras._
 import com.fortysevendeg.macroid.extras.ToolbarTweaks._
+import com.localytics.android.{LocalyticsActivityLifecycleCallbacks, Localytics}
 import macroid.FullDsl._
 import macroid._
 
-
 class MainActivity
-    extends ActionBarActivity
-    with Contexts[FragmentActivity]
-    with Layout
-    with IdGeneration {
+  extends ActionBarActivity
+  with Contexts[FragmentActivity]
+  with Layout
+  with IdGeneration {
 
   var actionBarDrawerToggle: Option[ActionBarDrawerToggle] = None
 
   override def onCreate(savedInstanceState: Bundle) = {
     super.onCreate(savedInstanceState)
     setContentView(layout)
+
+    getApplication.registerActivityLifecycleCallbacks(
+      new LocalyticsActivityLifecycleCallbacks(this)
+    )
+
+    Localytics.registerPush(getString(R.string.google_project_number))
 
     toolBar map setSupportActionBar
 
@@ -83,6 +89,11 @@ class MainActivity
           id = Id.menuFragment,
           tag = Some(Tag.menuFragment)))
     }
+  }
+
+  override def onNewIntent(intent: Intent): Unit = {
+    super.onNewIntent(intent)
+    setIntent(intent)
   }
 
   override def onActivityResult(requestCode: Int, resultCode: Int, data: Intent): Unit =
