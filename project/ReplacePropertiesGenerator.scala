@@ -85,7 +85,7 @@ object ReplacePropertiesGenerator {
       Seq(valuesFile)
     } catch {
       case e: Throwable =>
-        println("An error occurred in ApplicationBuild.scala while trying to generate build-info.conf")
+        println("An error occurred loading values.xml")
         throw e
     }
   }
