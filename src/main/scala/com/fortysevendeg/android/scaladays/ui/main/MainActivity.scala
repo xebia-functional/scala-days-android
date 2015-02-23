@@ -50,7 +50,7 @@ class MainActivity
 
   override def onCreate(savedInstanceState: Bundle) = {
     super.onCreate(savedInstanceState)
-    Crashlytics.start(this);
+    Crashlytics.start(this)
     setContentView(layout)
 
     toolBar map setSupportActionBar

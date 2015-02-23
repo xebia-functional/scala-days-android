@@ -16,11 +16,12 @@ object Settings {
         "Scalaz Bintray Repo" at "http://dl.bintray.com/scalaz/releases",
         "47deg Public" at "http://clinker.47deg.com/nexus/content/groups/public",
         "zxing Android Minimal" at "https://raw.github.com/embarkmobile/zxing-android-minimal/mvn-repo/maven-repository/",
-        "Crashlytics" at "http://download.crashlytics.com/mave"
+        "Crashlytics" at "http://download.crashlytics.com/maven"
        )
 
   lazy val proguardCommons = Seq(
     "-ignorewarnings",
+    "-printmapping mapping.txt",
     "-keep class scala.Dynamic",
     "-keep class com.fortysevendeg.** { *; }",
     "-keep class twitter4j.** { *; }",
