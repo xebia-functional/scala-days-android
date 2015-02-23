@@ -32,6 +32,7 @@ import com.fortysevendeg.android.scaladays.ui.scheduledetail.ScheduleDetailActiv
 import com.fortysevendeg.macroid.extras.RecyclerViewTweaks._
 import macroid.FullDsl._
 import macroid.{AppContext, Contexts, Ui}
+import com.fortysevendeg.android.scaladays.ui.commons.AnalyticStrings._
 
 import scala.concurrent.ExecutionContext.Implicits.global
 import com.fortysevendeg.android.scaladays.ui.commons.IntegerResults._
@@ -53,6 +54,7 @@ class ScheduleFragment
   }
 
   override def onCreateView(inflater: LayoutInflater, container: ViewGroup, savedInstanceState: Bundle): View = {
+    analyticsServices.sendScreenName(analyticsScheduleListScreen)
     val fLayout = new ListLayout
     fragmentLayout = Some(fLayout)
     runUi(
@@ -83,8 +85,18 @@ class ScheduleFragment
           .setItems(R.array.filter_menu, new OnClickListener() {
           override def onClick(dialog: DialogInterface, which: Int): Unit = {
             which match {
-              case 0 => loadSchedule()
-              case 1 => loadSchedule(true)
+              case 0 =>
+                analyticsServices.sendEvent(
+                  Some(analyticsScheduleListScreen),
+                  analyticsCategoryFilter,
+                  analyticsScheduleActionFilterAll)
+                loadSchedule()
+              case 1 =>
+                analyticsServices.sendEvent(
+                  Some(analyticsScheduleListScreen),
+                  analyticsCategoryFilter,
+                  analyticsScheduleActionFilterFavorites)
+                loadSchedule(true)
             }
           }
         }).create().show()
@@ -136,6 +148,11 @@ class ScheduleFragment
               scheduleItem.event map {
                 event =>
                   if (event.eventType == 1 || event.eventType == 2) {
+                    analyticsServices.sendEvent(
+                      Some(analyticsScheduleListScreen),
+                      analyticsCategoryNavigate,
+                      analyticsScheduleActionGoToDetail,
+                      Some(event.title))
                     val intent = new Intent(fragmentActivityContext.get, classOf[ScheduleDetailActivity])
                     intent.putExtra(ScheduleDetailActivity.scheduleItemKey, event)
                     intent.putExtra(ScheduleDetailActivity.timeZoneKey, timeZone)

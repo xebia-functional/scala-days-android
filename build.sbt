@@ -37,6 +37,7 @@ libraryDependencies ++= Seq(
   aar(androidCardView),
   aar(androidRecyclerview),
   aar(macroidExtras),
+  aar(playServicesBase),
   aar(playServicesMaps),
   playJson,
   specs2,
