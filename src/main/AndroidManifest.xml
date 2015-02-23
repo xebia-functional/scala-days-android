@@ -40,6 +40,10 @@
                 android:name="LOCALYTICS_APP_KEY"
                 android:value="@string/localytics_key"/>
 
+        <meta-data
+                android:name="LOCALYTICS_NOTIFICATION_ICON"
+                android:value="@drawable/icon_default_notification" />
+
         <activity
                 android:name=".ui.main.MainActivity">
             <intent-filter>
