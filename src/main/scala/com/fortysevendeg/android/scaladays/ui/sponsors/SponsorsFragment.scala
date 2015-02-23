@@ -27,6 +27,7 @@ import com.fortysevendeg.android.scaladays.model.SponsorType
 import com.fortysevendeg.android.scaladays.modules.ComponentRegistryImpl
 import com.fortysevendeg.android.scaladays.modules.json.JsonRequest
 import com.fortysevendeg.android.scaladays.modules.net.NetRequest
+import com.fortysevendeg.android.scaladays.ui.commons.AnalyticStrings._
 import com.fortysevendeg.android.scaladays.ui.commons.{ListLayout, UiServices}
 import com.fortysevendeg.macroid.extras.RecyclerViewTweaks._
 import com.fortysevendeg.macroid.extras.ViewTweaks._
@@ -46,6 +47,7 @@ class SponsorsFragment
   private var fragmentLayout: Option[ListLayout] = None
 
   override def onCreateView(inflater: LayoutInflater, container: ViewGroup, savedInstanceState: Bundle): View = {
+    analyticsServices.sendScreenName(analyticsSponsorsScreen)
     val fLayout = new ListLayout(Some(R.color.background_sponsors))
     fragmentLayout = Some(fLayout)
     runUi(
@@ -82,8 +84,11 @@ class SponsorsFragment
           override def onClick(sponsorItem: SponsorItem): Unit = {
             sponsorItem.sponsor map {
               sponsor =>
-                val intent = new Intent(Intent.ACTION_VIEW, Uri.parse(sponsor.url))
-                startActivity(intent)
+                analyticsServices.sendEvent(
+                  screenName = Some(analyticsSponsorsScreen),
+                  category = analyticsCategoryNavigate,
+                  action = analyticsSponsorsActionGoToSponsor)
+                startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(sponsor.url)))
             }
           }
         })

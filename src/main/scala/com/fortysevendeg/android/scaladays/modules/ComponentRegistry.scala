@@ -16,6 +16,7 @@
 
 package com.fortysevendeg.android.scaladays.modules
 
+import com.fortysevendeg.android.scaladays.modules.analytics.AnalyticsServicesComponent
 import com.fortysevendeg.android.scaladays.modules.json.JsonServicesComponent
 import com.fortysevendeg.android.scaladays.modules.net.NetServicesComponent
 import com.fortysevendeg.android.scaladays.modules.preferences.PreferenceServicesComponent
@@ -26,3 +27,4 @@ trait ComponentRegistry
     with JsonServicesComponent
     with NetServicesComponent
     with TwitterServicesComponent
+    with AnalyticsServicesComponent

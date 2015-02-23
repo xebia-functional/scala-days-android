@@ -25,6 +25,7 @@ import com.fortysevendeg.android.scaladays.R
 import com.fortysevendeg.android.scaladays.model.Event
 import com.fortysevendeg.android.scaladays.modules.ComponentRegistryImpl
 import com.fortysevendeg.android.scaladays.modules.preferences.PreferenceRequest
+import com.fortysevendeg.android.scaladays.ui.commons.AnalyticStrings._
 import com.fortysevendeg.android.scaladays.ui.commons.DateTimeTextViewTweaks._
 import com.fortysevendeg.android.scaladays.ui.commons.UiServices
 import com.fortysevendeg.android.scaladays.ui.components.IconTypes
@@ -65,6 +66,7 @@ class ScheduleDetailActivity
       event <- maybeScheduleItem
       timeZone <- maybeTimeZone
     } yield {
+      analyticsServices.sendScreenName(analyticsScheduleDetailScreen)
       val namePreferenceFavorite = getNamePreferenceFavorite(event.id)
       val isFavorite = preferenceServices.fetchBooleanPreference(PreferenceRequest[Boolean](
         namePreferenceFavorite, false)).value
@@ -75,7 +77,7 @@ class ScheduleDetailActivity
 
       runUi(
         (fabFavorite <~ On.click {
-          favoriteClick(namePreferenceFavorite)
+          favoriteClick(event.title, namePreferenceFavorite)
         }) ~
           (titleToolbar <~ tvText(event.title)) ~
           (date <~ tvDateDateTime(event.startTime, timeZone)) ~
@@ -99,13 +101,23 @@ class ScheduleDetailActivity
 
   }
 
-  private def favoriteClick(name: String) = {
+  private def favoriteClick(eventTitle: String, name: String) = {
     favoriteChanged = true
     val isFavorite = preferenceServices.fetchBooleanPreference(PreferenceRequest[Boolean](name, false)).value
     if (isFavorite) {
+      analyticsServices.sendEvent(
+        screenName = Some(analyticsScheduleDetailScreen),
+        category = analyticsCategoryFavorites,
+        action = analyticsScheduleActionRemoveToFavorites,
+        label = Some(eventTitle))
       preferenceServices.saveBooleanPreference(PreferenceRequest[Boolean](name, false))
       fabFavorite <~ pmdAnimIcon(IconTypes.ADD) <~ vBackground(R.drawable.fab_button_no_check) <~ vPaddings(resGetDimensionPixelSize(R.dimen.padding_schedule_detail_fab))
     } else {
+      analyticsServices.sendEvent(
+        screenName = Some(analyticsScheduleDetailScreen),
+        category = analyticsCategoryFavorites,
+        action = analyticsScheduleActionAddToFavorites,
+        label = Some(eventTitle))
       preferenceServices.saveBooleanPreference(PreferenceRequest[Boolean](name, true))
       fabFavorite <~ pmdAnimIcon(IconTypes.CHECK) <~ vBackground(R.drawable.fab_button_check) <~ vPaddings(resGetDimensionPixelSize(R.dimen.padding_schedule_detail_fab))
     }

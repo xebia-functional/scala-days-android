@@ -34,6 +34,8 @@ class Layout(implicit appContext: AppContext, context: ActivityContext)
 
   var placeholderContent = slot[LinearLayout]
 
+  var aboutContent = slot[LinearLayout]
+
   val content = getUi(
     l[FrameLayout](
       l[LinearLayout](
@@ -46,13 +48,7 @@ class Layout(implicit appContext: AppContext, context: ActivityContext)
         l[LinearLayout](
           w[ImageView] <~ about47ImageStyle,
           w[TextView] <~ about47TextStyle
-        ) <~ about47ContentStyle <~ On.click {
-          Ui {
-            val intent = new Intent(Intent.ACTION_VIEW,
-              Uri.parse("http://www.47deg.com"))
-            context.get.startActivity(intent)
-          }
-        }
+        ) <~ about47ContentStyle <~ wire(aboutContent)
       ) <~ wire(mainContent) <~ rootStyle,
       placeholder <~ wire(placeholderContent)
     )
