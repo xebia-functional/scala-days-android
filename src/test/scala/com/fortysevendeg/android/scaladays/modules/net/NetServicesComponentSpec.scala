@@ -37,7 +37,7 @@ class NetServicesComponentSpec
     "return a negative response when getting an error downloading json and force download flag set to false" in
       new NetServicesComponentSupport {
 
-        override def loadJsonName: String = jsonFileName
+        override def loadJsonFileName: String = jsonFileName
 
         override def loadJsonFile: File = {
           val mockFile = mock[File]
@@ -53,7 +53,7 @@ class NetServicesComponentSpec
     "return a negative response when getting an error downloading json and force download flag set to true" in
       new NetServicesComponentSupport {
 
-        override def loadJsonName: String = jsonFileName
+        override def loadJsonFileName: String = jsonFileName
 
         override def loadJsonFile: File = {
           val mockFile = mock[File]
@@ -69,7 +69,7 @@ class NetServicesComponentSpec
     "return a positive response indicating file downloaded when JSON file unavailable and force download flag set to false" in
       new NetServicesComponentSupport {
 
-        override def loadJsonName: String = jsonFileName
+        override def loadJsonFileName: String = jsonFileName
 
         override def loadJsonFile: File = {
           val mockFile = mock[File]
@@ -87,7 +87,7 @@ class NetServicesComponentSpec
     "return a positive response indicating file downloaded when JSON file unavailable and force download flag set to true" in
       new NetServicesComponentSupport {
 
-        override def loadJsonName: String = jsonFileName
+        override def loadJsonFileName: String = jsonFileName
 
         override def loadJsonFile: File = {
           val mockFile = mock[File]
@@ -105,7 +105,7 @@ class NetServicesComponentSpec
     "return a positive response indicating file downloaded when JSON file available and force download flag set to true" in
       new NetServicesComponentSupport {
 
-        override def loadJsonName: String = jsonFileName
+        override def loadJsonFileName: String = jsonFileName
 
         override def loadJsonFile: File = {
           val mockFile = mock[File]

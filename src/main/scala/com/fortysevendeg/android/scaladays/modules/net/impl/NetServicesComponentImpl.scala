@@ -38,7 +38,7 @@ trait NetServicesComponentImpl
 
   val netServices = new NetServicesImpl
   
-  def loadJsonName: String =
+  def loadJsonFileName: String =
     appContextProvider.get.getString(R.string.url_json_conference)
 
   def loadJsonFile: File =
@@ -51,7 +51,7 @@ trait NetServicesComponentImpl
       Future {
         val file = loadJsonFile
         if (request.forceDownload || !file.exists()) {
-          val result = getJson(loadJsonName) map (writeJsonFile(file, _))
+          val result = getJson(loadJsonFileName) map (writeJsonFile(file, _))
           result match {
             case Some(true) => NetResponse(success = true, downloaded = true)
             case _ => NetResponse(success = false, downloaded = false)
