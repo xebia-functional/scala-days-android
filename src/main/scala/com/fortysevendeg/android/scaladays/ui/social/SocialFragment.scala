@@ -22,7 +22,7 @@ import android.net.Uri
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v7.widget.LinearLayoutManager
-import android.view.{LayoutInflater, View, ViewGroup}
+import android.view._
 import com.fortysevendeg.android.scaladays.R
 import com.fortysevendeg.android.scaladays.model.TwitterMessage
 import com.fortysevendeg.android.scaladays.modules.ComponentRegistryImpl
@@ -47,6 +47,11 @@ class SocialFragment
 
   private var fragmentLayout: Option[ListLayout] = None
 
+  override def onCreate(savedInstanceState: Bundle): Unit = {
+    super.onCreate(savedInstanceState)
+    setHasOptionsMenu(true)
+  }
+
   override def onCreateView(inflater: LayoutInflater, container: ViewGroup, savedInstanceState: Bundle): View = {
     analyticsServices.sendScreenName(analyticsSocialScreen)
     val fLayout = new ListLayout
@@ -70,6 +75,19 @@ class SocialFragment
       val intent = new Intent(getActivity, classOf[AuthorizationActivity])
       startActivityForResult(intent, authResult)
     }
+  }
+
+  override def onCreateOptionsMenu(menu: Menu, inflater: MenuInflater): Unit = {
+    inflater.inflate(R.menu.social_menu, menu)
+    super.onCreateOptionsMenu(menu, inflater)
+  }
+  override def onOptionsItemSelected(item: MenuItem): Boolean = item.getItemId match {
+    case R.id.action_new_tweet =>
+      val i = new Intent(Intent.ACTION_VIEW)
+      i.setData(Uri.parse(getString(R.string.url_twitter_new_status)))
+      startActivity(i)
+      true
+    case _ => super.onOptionsItemSelected(item)
   }
 
   override def onActivityResult(requestCode: Int, resultCode: Int, data: Intent): Unit = {

@@ -77,32 +77,30 @@ class ScheduleFragment
     super.onCreateOptionsMenu(menu, inflater)
   }
 
-  override def onOptionsItemSelected(item: MenuItem): Boolean = {
-    item.getItemId match {
-      case R.id.action_filter =>
-        new AlertDialog.Builder(getActivity)
-          .setCancelable(true)
-          .setItems(R.array.filter_menu, new OnClickListener() {
-          override def onClick(dialog: DialogInterface, which: Int): Unit = {
-            which match {
-              case 0 =>
-                analyticsServices.sendEvent(
-                  Some(analyticsScheduleListScreen),
-                  analyticsCategoryFilter,
-                  analyticsScheduleActionFilterAll)
-                loadSchedule()
-              case 1 =>
-                analyticsServices.sendEvent(
-                  Some(analyticsScheduleListScreen),
-                  analyticsCategoryFilter,
-                  analyticsScheduleActionFilterFavorites)
-                loadSchedule(true)
-            }
+  override def onOptionsItemSelected(item: MenuItem): Boolean = item.getItemId match {
+    case R.id.action_filter =>
+      new AlertDialog.Builder(getActivity)
+        .setCancelable(true)
+        .setItems(R.array.filter_menu, new OnClickListener() {
+        override def onClick(dialog: DialogInterface, which: Int): Unit = {
+          which match {
+            case 0 =>
+              analyticsServices.sendEvent(
+                Some(analyticsScheduleListScreen),
+                analyticsCategoryFilter,
+                analyticsScheduleActionFilterAll)
+              loadSchedule()
+            case 1 =>
+              analyticsServices.sendEvent(
+                Some(analyticsScheduleListScreen),
+                analyticsCategoryFilter,
+                analyticsScheduleActionFilterFavorites)
+              loadSchedule(true)
           }
-        }).create().show()
-        true
-      case _ => super.onOptionsItemSelected(item)
-    }
+        }
+      }).create().show()
+      true
+    case _ => super.onOptionsItemSelected(item)
   }
 
   override def onActivityResult(requestCode: Int, resultCode: Int, data: Intent): Unit = {

@@ -33,6 +33,8 @@
 
     <string name="filter">Filter</string>
 
+    <string name="newTweet">New tweet</string>
+
     <string-array name="filter_menu">
         <item>All</item>
         <item>Favorites</item>

@@ -21,10 +21,12 @@
     <string name="url_47deg">http://www.47deg.com</string>
     <string name="url_twitter_user">https://twitter.com/%s</string>
     <string name="url_twitter_status">https://twitter.com/%1$s/status/%2$s</string>
+    <string name="url_twitter_new_status">https://twitter.com/intent/tweet?source=webclient&amp;text=%23scaladays</string>
 
     <!-- Google -->
     <string name="google_map_key">${google.map.key}</string>
     <string name="google_project_number">${google.project.number}</string>
+    <string name="google_analytics_key">${google.analytics.key}</string>
 
     <!-- Localytics -->
     <string name="localytics_key">${localytics.key}</string>
