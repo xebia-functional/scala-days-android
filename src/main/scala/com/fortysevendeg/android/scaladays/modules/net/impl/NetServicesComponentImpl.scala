@@ -19,7 +19,6 @@ package com.fortysevendeg.android.scaladays.modules.net.impl
 import java.io.File
 
 import com.fortysevendeg.android.scaladays.R
-import com.fortysevendeg.android.scaladays.commons.StringRes
 import com.fortysevendeg.android.scaladays.modules.net.{NetResponse, NetRequest, NetServices, NetServicesComponent}
 import com.fortysevendeg.android.scaladays.scaladays.Service
 import com.fortysevendeg.android.scaladays.utils.{FileUtils, NetUtils}
@@ -27,7 +26,7 @@ import com.fortysevendeg.macroid.extras.AppContextProvider
 
 import scala.concurrent.Future
 import scala.concurrent.ExecutionContext.Implicits.global
-import scala.util.{Failure, Success, Try}
+import scala.util.{Try, Failure, Success}
 
 trait NetServicesComponentImpl
     extends NetServicesComponent
@@ -41,19 +40,16 @@ trait NetServicesComponentImpl
   def loadJsonFileName: String =
     appContextProvider.get.getString(R.string.url_json_conference)
 
-  def loadJsonFile: File =
-    new File(appContextProvider.get.getFilesDir, StringRes.jsonFilename)
-
   class NetServicesImpl
       extends NetServices {
 
     override def saveJsonInLocal: Service[NetRequest, NetResponse] = request =>
       Future {
-        val file = loadJsonFile
+        val file = loadJsonFile(appContextProvider)
         if (request.forceDownload || !file.exists()) {
           val result = getJson(loadJsonFileName) map (writeJsonFile(file, _))
           result match {
-            case Some(true) => NetResponse(success = true, downloaded = true)
+            case Success(true) => NetResponse(success = true, downloaded = true)
             case _ => NetResponse(success = false, downloaded = false)
           }
         } else {
