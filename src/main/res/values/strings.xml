@@ -17,7 +17,7 @@
 
 <resources>
 
-    <string name="app_name">ScalaDays</string>
+    <string name="app_name">Scala Days</string>
 
     <string name="schedule">Schedule</string>
     <string name="social">Social</string>
