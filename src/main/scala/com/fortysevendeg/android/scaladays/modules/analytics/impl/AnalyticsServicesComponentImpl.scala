@@ -36,13 +36,13 @@ trait AnalyticsServicesComponentImpl
       .newTracker(R.xml.app_tracker)
 
 
-    def sendScreenName(screenName: String): Unit = {
+    override def sendScreenName(screenName: String): Unit = {
       tracker.setScreenName(screenName)
       val event = new HitBuilders.EventBuilder()
       tracker.send(event.build())
     }
 
-    def sendEvent(
+    override def sendEvent(
         screenName: Option[String],
         category: String,
         action: String,
