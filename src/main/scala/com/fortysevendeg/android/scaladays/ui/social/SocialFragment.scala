@@ -90,6 +90,10 @@ class SocialFragment
     case R.id.action_new_tweet =>
       hashtag map {
         ht =>
+          analyticsServices.sendEvent(
+            screenName = Some(analyticsSocialScreen),
+            category = analyticsCategoryNavigate,
+            action = analyticsSocialActionPostTweet)
           val encode = URLEncoder.encode(ht, "UTF-8")
           val i = new Intent(Intent.ACTION_VIEW)
           i.setData(Uri.parse(getString(R.string.url_twitter_new_status, encode)))
