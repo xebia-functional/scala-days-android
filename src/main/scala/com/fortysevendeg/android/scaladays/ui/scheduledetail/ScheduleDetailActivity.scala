@@ -17,9 +17,13 @@
 package com.fortysevendeg.android.scaladays.ui.scheduledetail
 
 import android.app.Activity
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.support.v4.app.FragmentActivity
 import android.support.v7.app.ActionBarActivity
+import android.text.SpannableString
+import android.text.style.UnderlineSpan
 import android.view.MenuItem
 import com.fortysevendeg.android.scaladays.R
 import com.fortysevendeg.android.scaladays.model.Event
@@ -35,7 +39,7 @@ import com.fortysevendeg.macroid.extras.TextTweaks._
 import com.fortysevendeg.macroid.extras.ViewGroupTweaks._
 import com.fortysevendeg.macroid.extras.ViewTweaks._
 import macroid.FullDsl._
-import macroid.{AppContext, Contexts}
+import macroid.{Ui, AppContext, Contexts}
 
 class ScheduleDetailActivity
   extends ActionBarActivity
@@ -81,7 +85,25 @@ class ScheduleDetailActivity
         }) ~
           (titleToolbar <~ tvText(event.title)) ~
           (date <~ tvDateDateTime(event.startTime, timeZone)) ~
-          (room <~ event.track.map(track => tvText(track.name) + vVisible).getOrElse(vGone)) ~
+          (track <~ (event.track map (track => tvText(track.name) + vVisible) getOrElse vGone)) ~
+          (room <~ (event.location map (
+            location =>
+                vVisible +
+                (if (location.mapUrl == "") {
+                  tvText(getString(R.string.roomName, location.name))
+                } else {
+                  val content = new SpannableString(getString(R.string.roomName, location.name))
+                  content.setSpan(new UnderlineSpan(), 0, content.length(), 0)
+                  tvText(content) + On.click {
+                    Ui {
+                      val intent = new Intent(Intent.ACTION_VIEW,
+                        Uri.parse(location.mapUrl))
+                     startActivity(intent)
+                    }
+                  }
+                })
+            )
+            getOrElse vGone)) ~
           (description <~ tvText(event.description))
       )
       if (event.speakers.size == 0) {

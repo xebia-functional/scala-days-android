@@ -35,6 +35,8 @@
 
     <string name="newTweet">New tweet</string>
 
+    <string name="roomName">Room: %s</string>
+
     <string-array name="filter_menu">
         <item>All</item>
         <item>Favorites</item>
