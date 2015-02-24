@@ -19,7 +19,6 @@ package com.fortysevendeg.android.scaladays.modules.net.impl
 import java.io.File
 
 import com.fortysevendeg.android.scaladays.R
-import com.fortysevendeg.android.scaladays.commons.StringRes
 import com.fortysevendeg.android.scaladays.modules.net.{NetResponse, NetRequest, NetServices, NetServicesComponent}
 import com.fortysevendeg.android.scaladays.scaladays.Service
 import com.fortysevendeg.android.scaladays.utils.{FileUtils, NetUtils}
@@ -27,41 +26,46 @@ import com.fortysevendeg.macroid.extras.AppContextProvider
 
 import scala.concurrent.Future
 import scala.concurrent.ExecutionContext.Implicits.global
-import scala.util.{Failure, Success, Try}
+import scala.util.{Try, Failure, Success}
 
 trait NetServicesComponentImpl
     extends NetServicesComponent
-    with FileUtils {
+    with FileUtils
+    with NetUtils {
 
   self: AppContextProvider =>
 
   val netServices = new NetServicesImpl
+  
+  def loadJsonFileName: String =
+    appContextProvider.get.getString(R.string.url_json_conference)
 
   class NetServicesImpl
-      extends NetServices
-      with NetUtils {
+      extends NetServices {
 
     override def saveJsonInLocal: Service[NetRequest, NetResponse] = request =>
       Future {
-        val file = new File(appContextProvider.get.getFilesDir, StringRes.jsonFilename)
+        val file = loadJsonFile(appContextProvider)
         if (request.forceDownload || !file.exists()) {
-          getJson(appContextProvider.get.getString(R.string.url_json_conference)) map {
-            json =>
-              if (file.exists()) file.delete()
-              Try {
-                writeText(file, json)
-              } match {
-                case Success(response) => Some(response)
-                case Failure(ex) => None
-              }
-          } match {
-            case None => NetResponse(false)
-            case _ => NetResponse(true)
+          val result = getJson(loadJsonFileName) map (writeJsonFile(file, _))
+          result match {
+            case Success(true) => NetResponse(success = true, downloaded = true)
+            case _ => NetResponse(success = false, downloaded = false)
           }
         } else {
-          NetResponse(true)
+          NetResponse(success = true, downloaded = false)
         }
       }
+    
+    def writeJsonFile(file: File, jsonContent: String): Boolean = {
+      if (file.exists()) file.delete()
+      Try {
+        writeText(file, jsonContent)
+      } match {
+        case Success(response) => true
+        case Failure(ex) => false
+      }
+    }
 
   }
 
