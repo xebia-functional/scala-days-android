@@ -44,6 +44,8 @@ libraryDependencies ++= Seq(
   aar(playServicesMaps),
   playJson,
   specs2,
+  mockito,
+  androidTest,
   picasso,
   twitter4j,
   prettytime,

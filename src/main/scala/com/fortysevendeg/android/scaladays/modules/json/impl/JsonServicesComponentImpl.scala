@@ -16,9 +16,6 @@
 
 package com.fortysevendeg.android.scaladays.modules.json.impl
 
-import java.io.File
-
-import com.fortysevendeg.android.scaladays.commons.StringRes
 import com.fortysevendeg.android.scaladays.modules.json._
 import com.fortysevendeg.android.scaladays.modules.json.models._
 import com.fortysevendeg.android.scaladays.scaladays.Service
@@ -62,7 +59,7 @@ trait JsonServicesComponentImpl
     override def loadJson: Service[JsonRequest, JsonResponse] = request =>
       Future {
         (for {
-          json <- getJson(new File(appContextProvider.get.getFilesDir, StringRes.jsonFilename))
+          json <- getJson(loadJsonFile(appContextProvider))
           apiRoot <- Try(Json.parse(json).as[ApiRoot])
         } yield apiRoot) match {
           case Success(apiRoot) => JsonResponse(Some(toRoot(apiRoot)))

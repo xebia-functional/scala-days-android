@@ -18,4 +18,5 @@ package com.fortysevendeg.android.scaladays.modules.net
 
 case class NetRequest(forceDownload: Boolean)
 
-case class NetResponse(success: Boolean)
+case class NetResponse(success: Boolean, 
+  downloaded: Boolean)
