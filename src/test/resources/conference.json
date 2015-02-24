@@ -13,7 +13,8 @@
         "registrationSite": "https:\/\/secure.trifork.com\/scaladays-sanfran-2015\/registration\/",
         "normalSite": "http:\/\/event.scaladays.org\/scaladays-sanfran-2015",
         "utcTimezoneOffsetMillis": -25200000,
-        "hashtag": "#SDSanFrancisto15",
+        "query": "#scaladays -RT",
+        "hashtag": "#scaladays",
         "pictures": [
           {
             "width": 298,
@@ -2772,7 +2773,8 @@
         "registrationSite": "https:\/\/secure.trifork.com\/amsterdam-2015\/registration\/",
         "normalSite": "http:\/\/gotocon.com\/amsterdam-2015",
         "utcTimezoneOffsetMillis": 7200000,
-        "hashtag": "#SDAmsterdam15",
+        "query": "#scaladays -RT",
+        "hashtag": "#scaladays",
         "pictures": [
           {
             "width": 298,
