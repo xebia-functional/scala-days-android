@@ -15,12 +15,14 @@
   ~  limitations under the License.
   -->
 
-<resources>
+<menu
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:scaladays="http://schemas.android.com/apk/res-auto">
 
-    <string name="ga_appName">Scala Days</string>
+    <item
+            android:id="@+id/action_new_tweet"
+            android:icon="@drawable/action_bar_icon_create"
+            android:title="@string/newTweet"
+            scaladays:showAsAction="ifRoom"/>
 
-    <bool name="ga_autoActivityTracking">false</bool>
-
-    <string name="ga_trackingId">***REMOVED***</string>
-
-</resources>
+</menu>

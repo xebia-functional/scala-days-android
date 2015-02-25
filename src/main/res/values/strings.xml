@@ -17,7 +17,7 @@
 
 <resources>
 
-    <string name="app_name">ScalaDays</string>
+    <string name="app_name">Scala Days</string>
 
     <string name="schedule">Schedule</string>
     <string name="social">Social</string>
@@ -32,6 +32,10 @@
     <string name="clodeMenu">Close</string>
 
     <string name="filter">Filter</string>
+
+    <string name="newTweet">New tweet</string>
+
+    <string name="roomName">Room: %s</string>
 
     <string-array name="filter_menu">
         <item>All</item>

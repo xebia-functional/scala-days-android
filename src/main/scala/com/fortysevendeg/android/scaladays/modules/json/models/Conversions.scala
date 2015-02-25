@@ -52,6 +52,7 @@ trait ApiConversions {
       registrationSite = apiConferenceInfo.registrationSite,
       utcTimezoneOffset = apiConferenceInfo.utcTimezoneOffset,
       utcTimezoneOffsetMillis = apiConferenceInfo.utcTimezoneOffsetMillis,
+      query = apiConferenceInfo.query,
       hashTag = apiConferenceInfo.hashtag,
       apiConferenceInfo.pictures map toPicture)
   

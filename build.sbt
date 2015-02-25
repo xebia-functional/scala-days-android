@@ -7,7 +7,8 @@ import Libraries.social._
 import Libraries.date._
 import Libraries.qr._
 import Libraries.playServices._
-import Generator._
+import ReplacePropertiesGenerator._
+import android.PromptPasswordsSigningConfig
 
 android.Plugin.androidBuild
 
@@ -24,6 +25,8 @@ organizationHomepage := Some(new URL("http://47deg.com"))
 version := Versions.appV
 
 scalaVersion := Versions.scalaV
+
+unmanagedBase := baseDirectory.value / "src" / "main" / "libs"
 
 scalacOptions ++= Seq("-feature", "-deprecation")
 
@@ -50,7 +53,14 @@ libraryDependencies ++= Seq(
   aar(zxingAndroid),
   compilerPlugin(Libraries.wartRemover))
 
-run <<= run in Android
+run <<= (run in Android).dependsOn(setDebugTask(true))
+
+apkSigningConfig in Android := Option(
+  PromptPasswordsSigningConfig(
+    keystore = new File(Path.userHome.absolutePath + "/.android/signed.keystore"),
+    alias = "47deg"))
+
+packageRelease <<= (packageRelease in Android).dependsOn(setDebugTask(false))
 
 proguardScala in Android := true
 
@@ -64,5 +74,4 @@ apkbuildExcludes in Android ++= Seq(
   "META-INF/NOTICE",
   "META-INF/NOTICE.txt")
 
-
-manifestPlaceholders in Android := manifestPlaceholderMap
+packageResources in Android <<= (packageResources in Android).dependsOn(replaceValuesTask)

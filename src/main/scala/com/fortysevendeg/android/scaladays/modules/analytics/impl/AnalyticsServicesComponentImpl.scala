@@ -31,9 +31,14 @@ trait AnalyticsServicesComponentImpl
   class AnalyticsServicesImpl
     extends AnalyticsServices {
 
-    lazy val tracker = GoogleAnalytics
-      .getInstance(appContextProvider.get)
-      .newTracker(R.xml.app_tracker)
+    lazy val tracker = {
+      val track = GoogleAnalytics
+        .getInstance(appContextProvider.get)
+        .newTracker(appContextProvider.get.getString(R.string.google_analytics_key))
+      track.setAppName(appContextProvider.get.getString(R.string.app_name))
+      track.enableAutoActivityTracking(false)
+      track
+    }
 
 
     override def sendScreenName(screenName: String): Unit = {

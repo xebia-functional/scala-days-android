@@ -38,6 +38,7 @@ case class ApiInformation(
   registrationSite: String,
   utcTimezoneOffset: String,
   utcTimezoneOffsetMillis: Long,
+  query: String,
   hashtag: String,
   pictures: Seq[ApiPicture])
 

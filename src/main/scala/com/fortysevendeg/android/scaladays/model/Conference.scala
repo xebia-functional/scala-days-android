@@ -40,6 +40,7 @@ case class Information(
   registrationSite: String,
   utcTimezoneOffset: String,
   utcTimezoneOffsetMillis: Long,
+  query: String,
   hashTag: String,
   pictures: Seq[Picture])
 

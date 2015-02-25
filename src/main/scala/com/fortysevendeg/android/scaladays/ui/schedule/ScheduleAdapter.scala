@@ -19,6 +19,7 @@ package com.fortysevendeg.android.scaladays.ui.schedule
 import android.support.v7.widget.RecyclerView
 import android.view.View.OnClickListener
 import android.view.{View, ViewGroup}
+import com.fortysevendeg.android.scaladays.R
 import com.fortysevendeg.android.scaladays.modules.ComponentRegistryImpl
 import com.fortysevendeg.android.scaladays.modules.preferences.{PreferenceRequest, PreferenceServicesComponent}
 import com.fortysevendeg.android.scaladays.ui.commons.DateTimeTextViewTweaks._
@@ -74,7 +75,7 @@ class ScheduleAdapter(timeZone: String, scheduleItems: Seq[ScheduleItem], listen
               event.speakers.map(
                 speaker => {
                   val speakerLayout = new SpeakersLayout(speaker)
-                  runUi((vh.speakerContent <~ vgAddView(speakerLayout.content)))
+                  runUi(vh.speakerContent <~ vgAddView(speakerLayout.content))
                 }
               )
             }
@@ -83,14 +84,16 @@ class ScheduleAdapter(timeZone: String, scheduleItems: Seq[ScheduleItem], listen
             runUi(
               (vh.hour <~ tvDateTimeHourMinute(event.startTime, timeZone)) ~
                   (vh.name <~ tvText(event.title)) ~
-                  (vh.room <~ event.track.map(track => tvText(track.name) + vVisible).getOrElse(vGone)) ~
+                  (vh.room <~ (event.location map (
+                    location => tvText(appContextProvider.get.getString(R.string.roomName, location.name)) + vVisible)
+                    getOrElse vGone)) ~
                   (vh.tagFavorite <~ (if (isFavorite) vVisible else vGone))
             )
         }
       case `itemViewTypeHeader` =>
         val vh = viewHolder.asInstanceOf[ViewHolderHeaderAdapter]
         runUi(
-          vh.headerName <~ scheduleItem.header.map(tvText(_) + vVisible).getOrElse(vGone)
+          vh.headerName <~ (scheduleItem.header map (tvText(_) + vVisible) getOrElse vGone)
         )
     }
   }

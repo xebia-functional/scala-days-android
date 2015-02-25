@@ -34,6 +34,8 @@ trait Layout
 
   var date = slot[TextView]
 
+  var track = slot[TextView]
+
   var room = slot[TextView]
 
   var description = slot[TextView]
@@ -53,6 +55,7 @@ trait Layout
               w[ImageView] <~ iconCalendarStyle,
               l[LinearLayout](
                 w[TextView] <~ wire(date) <~ dateStyle,
+                w[TextView] <~ wire(track) <~ trackStyle,
                 w[TextView] <~ wire(room) <~ roomStyle,
                 w[TextView] <~ wire(description) <~ descriptionStyle,
                 w[ImageView] <~ lineStyle,
