@@ -31,6 +31,9 @@
     <!-- Localytics -->
     <string name="localytics_key">${localytics.key}</string>
 
+    <!-- Crashlytics -->
+    <string name="crashlytics_key">${crashlytics.key}</string>
+
     <!-- Twitter Api -->
     <string name="twitter_app_key">${twitter.app.key}</string>
     <string name="twitter_app_secret">${twitter.app.secret}</string>

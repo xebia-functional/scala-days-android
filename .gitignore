@@ -7,3 +7,6 @@ gen/
 local.properties
 debug.properties
 release.properties
+crashlytics.properties
+src/main/res/values/com_crashlytics_export_strings.xml
+src/main/assets/crashlytics-build.properties

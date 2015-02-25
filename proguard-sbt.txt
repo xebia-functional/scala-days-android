@@ -167,41 +167,41 @@
 # view res/layout/abc_search_view.xml #generated:78
 -keep class android.support.v7.widget.SearchView$SearchAutoComplete { <init>(...); }
 
-# view AndroidManifest.xml #generated:72
+# view AndroidManifest.xml #generated:73
 -keep class android.support.v7.widget.TestActivity { <init>(...); }
 
 # view res/layout/abc_screen_toolbar.xml #generated:36
 -keep class android.support.v7.widget.Toolbar { <init>(...); }
 
-# view AndroidManifest.xml #generated:75
+# view AndroidManifest.xml #generated:76
 -keep class android.test.InstrumentationTestRunner { <init>(...); }
 
-# view AndroidManifest.xml #generated:53
+# view AndroidManifest.xml #generated:54
 -keep class com.fortysevendeg.android.scaladays.receivers.BootReceiver { <init>(...); }
 
-# view AndroidManifest.xml #generated:51
+# view AndroidManifest.xml #generated:52
 -keep class com.fortysevendeg.android.scaladays.services.ReloadJsonService { <init>(...); }
 
-# view AndroidManifest.xml #generated:39
+# view AndroidManifest.xml #generated:40
 -keep class com.fortysevendeg.android.scaladays.ui.main.MainActivity { <init>(...); }
 
-# view AndroidManifest.xml #generated:46
+# view AndroidManifest.xml #generated:47
 -keep class com.fortysevendeg.android.scaladays.ui.scheduledetail.ScheduleDetailActivity { <init>(...); }
 
-# view AndroidManifest.xml #generated:47
+# view AndroidManifest.xml #generated:48
 -keep class com.fortysevendeg.android.scaladays.ui.social.AuthorizationActivity { <init>(...); }
 
-# view AndroidManifest.xml #generated:48
+# view AndroidManifest.xml #generated:49
 -keep class com.google.zxing.client.android.CaptureActivity { <init>(...); }
 
-# view AndroidManifest.xml #generated:49
+# view AndroidManifest.xml #generated:50
 -keep class com.google.zxing.client.android.HelpActivity { <init>(...); }
 
 # view ldpi-v4/res/layout-ldpi-v4/zxing_capture.xml #generated:25
 # view res/layout/zxing_capture.xml #generated:25
 -keep class com.google.zxing.client.android.ViewfinderView { <init>(...); }
 
-# view AndroidManifest.xml #generated:63
+# view AndroidManifest.xml #generated:64
 -keep class com.localytics.android.PushReceiver { <init>(...); }
 
 -ignorewarnings
@@ -215,6 +215,7 @@
 -keep class com.google.** { *; }
 -keep class com.localytics.android.** { *; }
 -keep class com.google.android.gms.ads.** { *; }
+-keep class com.crashlytics.** { *; }
 -keep class * extends java.util.ListResourceBundle { protected Object[][] getContents(); }
 -keep public class com.google.android.gms.common.internal.safeparcel.SafeParcelable { public static final *** NULL; }
 -keepnames @com.google.android.gms.common.annotation.KeepName class *

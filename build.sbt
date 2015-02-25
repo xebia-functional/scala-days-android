@@ -9,6 +9,7 @@ import Libraries.qr._
 import Libraries.playServices._
 import ReplacePropertiesGenerator._
 import android.PromptPasswordsSigningConfig
+import Libraries.crashlytics._
 
 android.Plugin.androidBuild
 
@@ -51,6 +52,7 @@ libraryDependencies ++= Seq(
   prettytime,
   zxingCore,
   aar(zxingAndroid),
+  crashlytics,
   compilerPlugin(Libraries.wartRemover))
 
 run <<= (run in Android).dependsOn(setDebugTask(true))

@@ -39,6 +39,7 @@ import com.fortysevendeg.macroid.extras.ToolbarTweaks._
 import com.localytics.android.{LocalyticsActivityLifecycleCallbacks, Localytics}
 import macroid.FullDsl._
 import macroid._
+import com.crashlytics.android.Crashlytics
 
 class MainActivity
   extends ActionBarActivity
@@ -50,6 +51,7 @@ class MainActivity
 
   override def onCreate(savedInstanceState: Bundle) = {
     super.onCreate(savedInstanceState)
+    Crashlytics.start(this)
     setContentView(layout)
 
     getApplication.registerActivityLifecycleCallbacks(
