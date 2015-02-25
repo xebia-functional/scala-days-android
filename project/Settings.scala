@@ -15,9 +15,9 @@ object Settings {
       "jcenter" at "http://jcenter.bintray.com",
       "Scalaz Bintray Repo" at "http://dl.bintray.com/scalaz/releases",
       "47deg Public" at "http://clinker.47deg.com/nexus/content/groups/public",
-      "zxing Android Minimal" at "https://raw.github.com/embarkmobile/zxing-android-minimal/mvn-repo/maven-repository/"
-        "Crashlytics" at "http://download.crashlytics.com/maven"
-      )
+      "zxing Android Minimal" at "https://raw.github.com/embarkmobile/zxing-android-minimal/mvn-repo/maven-repository/",
+      "Crashlytics" at "http://download.crashlytics.com/maven"
+    )
 
   lazy val proguardCommons = Seq(
     "-ignorewarnings",
