@@ -16,17 +16,29 @@
 
 package com.fortysevendeg.android.scaladays.ui.commons
 
+import scala.language.postfixOps
 import android.widget.{TextView, ImageView}
 import com.fortysevendeg.android.scaladays.ui.components.CircularTransformation
 import com.fortysevendeg.android.scaladays.utils.DateTimeUtils
 import com.squareup.picasso.Picasso
 import macroid.{ActivityContext, AppContext, Tweak}
 import org.joda.time.DateTime
+import com.fortysevendeg.macroid.extras.ViewTweaks._
+import com.fortysevendeg.macroid.extras.DeviceVersion._
 
 object AsyncImageTweaks {
   type W = ImageView
 
-  def roundedImage(
+  def roundedImage(url: String,
+        placeHolder: Int,
+        size: Int)(implicit appContext: AppContext, activityContext: ActivityContext) = currentVersion match {
+    case sdk if sdk >= Lollipop =>
+      srcImage(url, placeHolder) + vCircleOutlineProvider
+    case _ =>
+      roundedImageTweak(url, placeHolder, size)
+  }
+
+  private def roundedImageTweak(
       url: String,
       placeHolder: Int,
       size: Int

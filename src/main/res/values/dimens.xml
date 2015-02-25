@@ -37,6 +37,7 @@
     <dimen name="padding_info_window_right">16dp</dimen>
     <dimen name="padding_info_window_bottom">15dp</dimen>
     <dimen name="padding_info_window_inner">2dp</dimen>
+    <dimen name="padding_fab_shadow">8dp</dimen>
 
     <dimen name="height_toolbar">56dp</dimen>
     <dimen name="height_toolbar_expanded">124dp</dimen>

@@ -65,7 +65,8 @@ trait ActivityStyles {
       llVertical +
       vPadding(0, resGetDimensionPixelSize(R.dimen.padding_schedule_detail_speaker_tb), 0, 0)
 
-  val verticalLayoutStyle = llWrapWeightHorizontal +
+  val verticalLayoutStyle =
+    llWrapWeightHorizontal +
     llVertical
 
   def toolBarTitleStyle(implicit appContext: AppContext): Tweak[TextView] = {

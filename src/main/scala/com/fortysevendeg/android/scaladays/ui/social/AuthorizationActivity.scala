@@ -68,13 +68,13 @@ class AuthorizationActivity
   override def onCreate(savedInstanceState: Bundle): Unit = {
     super.onCreate(savedInstanceState)
 
-    if (versionLowerTo(Build.VERSION_CODES.LOLLIPOP)) CookieSyncManager.createInstance(this)
+    Lollipop < (CookieSyncManager.createInstance(this))
 
     setContentView(layout)
 
     runUi(webView <~ wvClient(webViewClient))
 
-    if (versionLowerTo(Build.VERSION_CODES.LOLLIPOP)) {
+    Lollipop < {
       CookieManager.getInstance.removeAllCookie
       CookieManager.getInstance.removeExpiredCookie
       CookieManager.getInstance.removeSessionCookie
