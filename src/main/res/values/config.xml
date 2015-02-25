@@ -18,13 +18,22 @@
 <resources>
 
     <string name="url_json_conference">http://scala-days-2015.s3.amazonaws.com/conferences.json</string>
-
+    <string name="url_47deg">http://www.47deg.com</string>
     <string name="url_twitter_user">https://twitter.com/%s</string>
     <string name="url_twitter_status">https://twitter.com/%1$s/status/%2$s</string>
+    <string name="url_twitter_new_status">https://twitter.com/intent/tweet?source=webclient&amp;text=%s</string>
+
+    <!-- Google -->
+    <string name="google_map_key">${google.map.key}</string>
+    <string name="google_project_number">${google.project.number}</string>
+    <string name="google_analytics_key">${google.analytics.key}</string>
+
+    <!-- Localytics -->
+    <string name="localytics_key">${localytics.key}</string>
 
     <!-- Twitter Api -->
-    <string name="twitter_app_key">***REMOVED***</string>
-    <string name="twitter_app_secret">***REMOVED***</string>
-    <string name="twitter_app_callback_host">47deg.com</string>
+    <string name="twitter_app_key">${twitter.app.key}</string>
+    <string name="twitter_app_secret">${twitter.app.secret}</string>
+    <string name="twitter_app_callback_host">${twitter.app.callback.host}</string>
 
 </resources>

@@ -7,7 +7,8 @@ import Libraries.social._
 import Libraries.date._
 import Libraries.qr._
 import Libraries.playServices._
-import Generator._
+import ReplacePropertiesGenerator._
+import android.PromptPasswordsSigningConfig
 import Libraries.crashlytics._
 
 android.Plugin.androidBuild
@@ -26,6 +27,8 @@ version := Versions.appV
 
 scalaVersion := Versions.scalaV
 
+unmanagedBase := baseDirectory.value / "src" / "main" / "libs"
+
 scalacOptions ++= Seq("-feature", "-deprecation")
 
 credentials += Credentials(new File(Path.userHome.absolutePath + "/.ivy2/.credentials"))
@@ -38,9 +41,12 @@ libraryDependencies ++= Seq(
   aar(androidCardView),
   aar(androidRecyclerview),
   aar(macroidExtras),
+  aar(playServicesBase),
   aar(playServicesMaps),
   playJson,
   specs2,
+  mockito,
+  androidTest,
   picasso,
   twitter4j,
   prettytime,
@@ -49,7 +55,14 @@ libraryDependencies ++= Seq(
   crashlytics,
   compilerPlugin(Libraries.wartRemover))
 
-run <<= run in Android
+run <<= (run in Android).dependsOn(setDebugTask(true))
+
+apkSigningConfig in Android := Option(
+  PromptPasswordsSigningConfig(
+    keystore = new File(Path.userHome.absolutePath + "/.android/signed.keystore"),
+    alias = "47deg"))
+
+packageRelease <<= (packageRelease in Android).dependsOn(setDebugTask(false))
 
 proguardScala in Android := true
 
@@ -63,5 +76,4 @@ apkbuildExcludes in Android ++= Seq(
   "META-INF/NOTICE",
   "META-INF/NOTICE.txt")
 
-
-manifestPlaceholders in Android := manifestPlaceholderMap
+packageResources in Android <<= (packageResources in Android).dependsOn(replaceValuesTask)

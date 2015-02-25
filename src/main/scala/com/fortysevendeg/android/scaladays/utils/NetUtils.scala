@@ -26,7 +26,7 @@ import scala.util.{Failure, Success, Try}
 
 trait NetUtils {
 
-  def getJson(url: String): Option[String] = {
+  def getJson(url: String): Try[String] = {
     Try {
       val httpClient: DefaultHttpClient = new DefaultHttpClient
       val httpPost: HttpGet = new HttpGet(url)
@@ -46,11 +46,10 @@ trait NetUtils {
 
       sb.toString()
     } match {
-      case Success(response) => Some(response)
-      case Failure(ex) => {
+      case Success(response) => Success(response)
+      case Failure(ex) =>
         ex.printStackTrace()
-        None
-      }
+        Failure(ex)
     }
   }
 

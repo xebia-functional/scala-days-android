@@ -68,8 +68,8 @@ object DateTimeTextViewTweaks {
 
   import DateTimeUtils._
 
-  def tvDateTimeHourMinute(dateTime: DateTime, timeZone: String = defaultTimeZone): Tweak[W] =
-    Tweak[W](_.setText(convertTimeZone(dateTime, timeZone).toString(ISODateFormatterTime)))
+  def tvDateTimeHourMinute(dateTime: DateTime, timeZone: String = defaultTimeZone)(implicit appContext: AppContext): Tweak[W] =
+    Tweak[W](_.setText(parseTime(dateTime, timeZone)))
 
   def tvDateDay(dateTime: DateTime, timeZone: String = defaultTimeZone)(implicit appContext: AppContext): Tweak[W] =
     Tweak[W](_.setText(parseDateSchedule(dateTime, timeZone)))

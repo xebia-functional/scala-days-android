@@ -17,14 +17,19 @@
 package com.fortysevendeg.android.scaladays.ui.scheduledetail
 
 import android.app.Activity
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.support.v4.app.FragmentActivity
 import android.support.v7.app.ActionBarActivity
+import android.text.SpannableString
+import android.text.style.UnderlineSpan
 import android.view.MenuItem
 import com.fortysevendeg.android.scaladays.R
 import com.fortysevendeg.android.scaladays.model.Event
 import com.fortysevendeg.android.scaladays.modules.ComponentRegistryImpl
 import com.fortysevendeg.android.scaladays.modules.preferences.PreferenceRequest
+import com.fortysevendeg.android.scaladays.ui.commons.AnalyticStrings._
 import com.fortysevendeg.android.scaladays.ui.commons.DateTimeTextViewTweaks._
 import com.fortysevendeg.android.scaladays.ui.commons.UiServices
 import com.fortysevendeg.android.scaladays.ui.components.IconTypes
@@ -34,7 +39,7 @@ import com.fortysevendeg.macroid.extras.TextTweaks._
 import com.fortysevendeg.macroid.extras.ViewGroupTweaks._
 import com.fortysevendeg.macroid.extras.ViewTweaks._
 import macroid.FullDsl._
-import macroid.{AppContext, Contexts}
+import macroid.{Ui, AppContext, Contexts}
 
 class ScheduleDetailActivity
   extends ActionBarActivity
@@ -65,6 +70,7 @@ class ScheduleDetailActivity
       event <- maybeScheduleItem
       timeZone <- maybeTimeZone
     } yield {
+      analyticsServices.sendScreenName(analyticsScheduleDetailScreen)
       val namePreferenceFavorite = getNamePreferenceFavorite(event.id)
       val isFavorite = preferenceServices.fetchBooleanPreference(PreferenceRequest[Boolean](
         namePreferenceFavorite, false)).value
@@ -75,11 +81,29 @@ class ScheduleDetailActivity
 
       runUi(
         (fabFavorite <~ On.click {
-          favoriteClick(namePreferenceFavorite)
+          favoriteClick(event.title, namePreferenceFavorite)
         }) ~
           (titleToolbar <~ tvText(event.title)) ~
           (date <~ tvDateDateTime(event.startTime, timeZone)) ~
-          (room <~ event.track.map(track => tvText(track.name) + vVisible).getOrElse(vGone)) ~
+          (track <~ (event.track map (track => tvText(track.name) + vVisible) getOrElse vGone)) ~
+          (room <~ (event.location map (
+            location =>
+                vVisible +
+                (if (location.mapUrl == "") {
+                  tvText(getString(R.string.roomName, location.name))
+                } else {
+                  val content = new SpannableString(getString(R.string.roomName, location.name))
+                  content.setSpan(new UnderlineSpan(), 0, content.length(), 0)
+                  tvText(content) + On.click {
+                    Ui {
+                      val intent = new Intent(Intent.ACTION_VIEW,
+                        Uri.parse(location.mapUrl))
+                     startActivity(intent)
+                    }
+                  }
+                })
+            )
+            getOrElse vGone)) ~
           (description <~ tvText(event.description))
       )
       if (event.speakers.size == 0) {
@@ -99,13 +123,23 @@ class ScheduleDetailActivity
 
   }
 
-  private def favoriteClick(name: String) = {
+  private def favoriteClick(eventTitle: String, name: String) = {
     favoriteChanged = true
     val isFavorite = preferenceServices.fetchBooleanPreference(PreferenceRequest[Boolean](name, false)).value
     if (isFavorite) {
+      analyticsServices.sendEvent(
+        screenName = Some(analyticsScheduleDetailScreen),
+        category = analyticsCategoryFavorites,
+        action = analyticsScheduleActionRemoveToFavorites,
+        label = Some(eventTitle))
       preferenceServices.saveBooleanPreference(PreferenceRequest[Boolean](name, false))
       fabFavorite <~ pmdAnimIcon(IconTypes.ADD) <~ vBackground(R.drawable.fab_button_no_check) <~ vPaddings(resGetDimensionPixelSize(R.dimen.padding_schedule_detail_fab))
     } else {
+      analyticsServices.sendEvent(
+        screenName = Some(analyticsScheduleDetailScreen),
+        category = analyticsCategoryFavorites,
+        action = analyticsScheduleActionAddToFavorites,
+        label = Some(eventTitle))
       preferenceServices.saveBooleanPreference(PreferenceRequest[Boolean](name, true))
       fabFavorite <~ pmdAnimIcon(IconTypes.CHECK) <~ vBackground(R.drawable.fab_button_check) <~ vPaddings(resGetDimensionPixelSize(R.dimen.padding_schedule_detail_fab))
     }

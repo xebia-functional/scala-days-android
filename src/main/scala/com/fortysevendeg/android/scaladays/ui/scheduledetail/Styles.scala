@@ -109,6 +109,12 @@ trait ActivityStyles {
       tvColorResource(R.color.text_schedule_detail_secondary) +
       vPadding(0, 0, 0, resGetDimensionPixelSize(R.dimen.padding_default_small))
 
+  def trackStyle(implicit appContext: AppContext): Tweak[TextView] =
+    vWrapContent +
+      tvSize(resGetInteger(R.integer.text_medium)) +
+      tvColorResource(R.color.text_schedule_detail_secondary) +
+      vPadding(0, 0, 0, resGetDimensionPixelSize(R.dimen.padding_default_small))
+
   def descriptionStyle(implicit appContext: AppContext): Tweak[TextView] =
     vWrapContent +
       tvSize(resGetInteger(R.integer.text_medium)) +

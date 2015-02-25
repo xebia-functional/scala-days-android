@@ -32,6 +32,7 @@ import com.fortysevendeg.android.scaladays.ui.scheduledetail.ScheduleDetailActiv
 import com.fortysevendeg.macroid.extras.RecyclerViewTweaks._
 import macroid.FullDsl._
 import macroid.{AppContext, Contexts, Ui}
+import com.fortysevendeg.android.scaladays.ui.commons.AnalyticStrings._
 
 import scala.concurrent.ExecutionContext.Implicits.global
 import com.fortysevendeg.android.scaladays.ui.commons.IntegerResults._
@@ -53,7 +54,8 @@ class ScheduleFragment
   }
 
   override def onCreateView(inflater: LayoutInflater, container: ViewGroup, savedInstanceState: Bundle): View = {
-    val fLayout = new ListLayout(Some(R.color.background_list_schedule_header))
+    analyticsServices.sendScreenName(analyticsScheduleListScreen)
+    val fLayout = new ListLayout
     fragmentLayout = Some(fLayout)
     runUi(
       (fLayout.recyclerView
@@ -75,22 +77,30 @@ class ScheduleFragment
     super.onCreateOptionsMenu(menu, inflater)
   }
 
-  override def onOptionsItemSelected(item: MenuItem): Boolean = {
-    item.getItemId match {
-      case R.id.action_filter =>
-        new AlertDialog.Builder(getActivity)
-          .setCancelable(true)
-          .setItems(R.array.filter_menu, new OnClickListener() {
-          override def onClick(dialog: DialogInterface, which: Int): Unit = {
-            which match {
-              case 0 => loadSchedule()
-              case 1 => loadSchedule(true)
-            }
+  override def onOptionsItemSelected(item: MenuItem): Boolean = item.getItemId match {
+    case R.id.action_filter =>
+      new AlertDialog.Builder(getActivity)
+        .setCancelable(true)
+        .setItems(R.array.filter_menu, new OnClickListener() {
+        override def onClick(dialog: DialogInterface, which: Int): Unit = {
+          which match {
+            case 0 =>
+              analyticsServices.sendEvent(
+                Some(analyticsScheduleListScreen),
+                analyticsCategoryFilter,
+                analyticsScheduleActionFilterAll)
+              loadSchedule()
+            case 1 =>
+              analyticsServices.sendEvent(
+                Some(analyticsScheduleListScreen),
+                analyticsCategoryFilter,
+                analyticsScheduleActionFilterFavorites)
+              loadSchedule(true)
           }
-        }).create().show()
-        true
-      case _ => super.onOptionsItemSelected(item)
-    }
+        }
+      }).create().show()
+      true
+    case _ => super.onOptionsItemSelected(item)
   }
 
   override def onActivityResult(requestCode: Int, resultCode: Int, data: Intent): Unit = {
@@ -117,24 +127,30 @@ class ScheduleFragment
   }
 
   def reloadList(timeZone: String, events: Seq[Event], favorites: Boolean = false) = {
-    events.length match {
+    val scheduleItems = toScheduleItem(timeZone, events,
+      if (favorites) {
+        event => {
+          preferenceServices.fetchBooleanPreference(PreferenceRequest[Boolean](
+            getNamePreferenceFavorite(event.id), false)).value
+        }
+      } else {
+        event => true
+      })
+    scheduleItems.length match {
+      case length if length == 0 && favorites => fragmentLayout map (_.noFavorites())
       case 0 => fragmentLayout map (_.empty())
       case _ =>
-        val scheduleItems = toScheduleItem(timeZone, events,
-          if (favorites) {
-            event => {
-              preferenceServices.fetchBooleanPreference(PreferenceRequest[Boolean](
-                getNamePreferenceFavorite(event.id), false)).value
-            }
-          } else {
-            event => true
-          })
         val adapter = new ScheduleAdapter(timeZone, scheduleItems, new RecyclerClickListener {
           override def onClick(scheduleItem: ScheduleItem): Unit = {
             if (!scheduleItem.isHeader) {
               scheduleItem.event map {
                 event =>
                   if (event.eventType == 1 || event.eventType == 2) {
+                    analyticsServices.sendEvent(
+                      Some(analyticsScheduleListScreen),
+                      analyticsCategoryNavigate,
+                      analyticsScheduleActionGoToDetail,
+                      Some(event.title))
                     val intent = new Intent(fragmentActivityContext.get, classOf[ScheduleDetailActivity])
                     intent.putExtra(ScheduleDetailActivity.scheduleItemKey, event)
                     intent.putExtra(ScheduleDetailActivity.timeZoneKey, timeZone)

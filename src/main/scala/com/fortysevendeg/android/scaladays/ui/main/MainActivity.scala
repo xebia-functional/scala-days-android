@@ -32,19 +32,20 @@ import com.fortysevendeg.android.scaladays.ui.schedule.ScheduleFragment
 import com.fortysevendeg.android.scaladays.ui.social.SocialFragment
 import com.fortysevendeg.android.scaladays.ui.speakers.SpeakersFragment
 import com.fortysevendeg.android.scaladays.ui.sponsors.SponsorsFragment
+import com.fortysevendeg.android.scaladays.utils.AlarmUtils
 import com.fortysevendeg.macroid.extras.DrawerLayoutTweaks._
 import com.fortysevendeg.macroid.extras.FragmentExtras._
 import com.fortysevendeg.macroid.extras.ToolbarTweaks._
+import com.localytics.android.{LocalyticsActivityLifecycleCallbacks, Localytics}
 import macroid.FullDsl._
 import macroid._
 import com.crashlytics.android.Crashlytics
 
-
 class MainActivity
-    extends ActionBarActivity
-    with Contexts[FragmentActivity]
-    with Layout
-    with IdGeneration {
+  extends ActionBarActivity
+  with Contexts[FragmentActivity]
+  with Layout
+  with IdGeneration {
 
   var actionBarDrawerToggle: Option[ActionBarDrawerToggle] = None
 
@@ -53,10 +54,18 @@ class MainActivity
     Crashlytics.start(this)
     setContentView(layout)
 
+    getApplication.registerActivityLifecycleCallbacks(
+      new LocalyticsActivityLifecycleCallbacks(this)
+    )
+
+    Localytics.registerPush(getString(R.string.google_project_number))
+
     toolBar map setSupportActionBar
 
     getSupportActionBar.setDisplayHomeAsUpEnabled(true)
     getSupportActionBar.setHomeButtonEnabled(true)
+
+    AlarmUtils.setReloadJsonService()
 
     drawerLayout map { drawerLayout =>
       val drawerToggle = new ActionBarDrawerToggle(this, drawerLayout, R.string.openMenu, R.string.clodeMenu) {
@@ -82,6 +91,11 @@ class MainActivity
           id = Id.menuFragment,
           tag = Some(Tag.menuFragment)))
     }
+  }
+
+  override def onNewIntent(intent: Intent): Unit = {
+    super.onNewIntent(intent)
+    setIntent(intent)
   }
 
   override def onActivityResult(requestCode: Int, resultCode: Int, data: Intent): Unit =

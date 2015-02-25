@@ -70,7 +70,7 @@ trait AdapterStyles {
 
   def hourStyle(implicit appContext: AppContext): Tweak[TextView] =
     lp[LinearLayout](resGetDimensionPixelSize(R.dimen.width_schedule_hour), MATCH_PARENT) +
-      tvSize(resGetInteger(R.integer.text_medium)) +
+      tvSize(resGetInteger(R.integer.text_small)) +
       vPadding(0, resGetDimensionPixelSize(R.dimen.padding_default_small), 0, 0) +
       vBackgroundColorResource(R.color.background_list_schedule_hour) +
       tvGravity(Gravity.CENTER_HORIZONTAL) +

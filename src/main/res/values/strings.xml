@@ -17,7 +17,7 @@
 
 <resources>
 
-    <string name="app_name">ScalaDays</string>
+    <string name="app_name">Scala Days</string>
 
     <string name="schedule">Schedule</string>
     <string name="social">Social</string>
@@ -33,6 +33,10 @@
 
     <string name="filter">Filter</string>
 
+    <string name="newTweet">New tweet</string>
+
+    <string name="roomName">Room: %s</string>
+
     <string-array name="filter_menu">
         <item>All</item>
         <item>Favorites</item>
@@ -42,6 +46,7 @@
 
     <string name="generalMessageError">There was an error while trying to retrieve the latest Scala Days information. Please tap on the \"Reload\" button to try again</string>
     <string name="generalMessageEmpty">We haven\'t found enough data for this section yet. Please tap on the \"Reload\" button to try again</string>
+    <string name="noFavoritesMessage">You haven\'t selected any favorite events. You can select an event and mark it as favorite by tapping on the button at the upper-right part of the screen</string>
     <string name="reload">Reload</string>
 
     <string name="scanMessage">You can scan the QR Code in the conference and add it to your contacts</string>
