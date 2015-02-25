@@ -31,6 +31,7 @@ import com.fortysevendeg.macroid.extras.ResourcesExtras._
 import com.fortysevendeg.macroid.extras.ScrollViewTweaks._
 import com.fortysevendeg.macroid.extras.TextTweaks._
 import com.fortysevendeg.macroid.extras.ViewTweaks._
+import com.fortysevendeg.macroid.extras.DeviceVersion._
 import macroid.FullDsl._
 import macroid.{ActivityContext, AppContext, Tweak}
 
@@ -90,7 +91,8 @@ trait ActivityStyles {
         defaultIcon = if (favorite) IconTypes.CHECK else IconTypes.ADD,
         defaultStroke = resGetDimensionPixelSize(R.dimen.stroke_schedule_detail_fab),
         defaultColor = Color.WHITE
-      ))
+      )) +
+      (Lollipop >= vElevation(20 dp) getOrElse Tweak.blank)
   }
 
   def iconCalendarStyle(implicit appContext: AppContext): Tweak[ImageView] =
