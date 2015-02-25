@@ -44,6 +44,10 @@
                 android:name="LOCALYTICS_NOTIFICATION_ICON"
                 android:value="@drawable/icon_default_notification" />
 
+        <meta-data
+                android:name="com.crashlytics.ApiKey"
+                android:value="@string/crashlytics_key"/>
+
         <activity
                 android:name=".ui.main.MainActivity">
             <intent-filter>

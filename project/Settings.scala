@@ -15,7 +15,8 @@ object Settings {
       "jcenter" at "http://jcenter.bintray.com",
       "Scalaz Bintray Repo" at "http://dl.bintray.com/scalaz/releases",
       "47deg Public" at "http://clinker.47deg.com/nexus/content/groups/public",
-      "zxing Android Minimal" at "https://raw.github.com/embarkmobile/zxing-android-minimal/mvn-repo/maven-repository/"
+      "zxing Android Minimal" at "https://raw.github.com/embarkmobile/zxing-android-minimal/mvn-repo/maven-repository/",
+      "Crashlytics" at "http://download.crashlytics.com/maven"
     )
 
   lazy val proguardCommons = Seq(
@@ -30,6 +31,7 @@ object Settings {
     "-keep class com.google.** { *; }",
     "-keep class com.localytics.android.** { *; }",
     "-keep class com.google.android.gms.ads.** { *; }",
+    "-keep class com.crashlytics.** { *; }",
     "-keep class * extends java.util.ListResourceBundle { protected Object[][] getContents(); }",
     "-keep public class com.google.android.gms.common.internal.safeparcel.SafeParcelable { public static final *** NULL; }",
     "-keepnames @com.google.android.gms.common.annotation.KeepName class *",
