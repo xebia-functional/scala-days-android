@@ -31,7 +31,7 @@ object AsyncImageTweaks {
 
   def roundedImage(url: String,
         placeHolder: Int,
-        size: Int)(implicit appContext: AppContext, activityContext: ActivityContext) = currentVersion match {
+        size: Int)(implicit appContext: AppContext, activityContext: ActivityContext) = CurrentVersion match {
     case sdk if sdk >= Lollipop =>
       srcImage(url, placeHolder) + vCircleOutlineProvider
     case _ =>

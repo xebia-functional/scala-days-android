@@ -52,7 +52,7 @@ class SpeakersFragment
         <~ rvLayoutManager(new LinearLayoutManager(appContextProvider.get))
         <~ rvAddItemDecoration(new LineItemDecorator())) ~
         (fLayout.reloadButton <~ On.click(Ui {
-          loadSpeakers()
+          loadSpeakers(forceDownload = true)
         })))
     fLayout.content
   }
@@ -62,10 +62,10 @@ class SpeakersFragment
     loadSpeakers()
   }
 
-  def loadSpeakers(): Unit = {
+  def loadSpeakers(forceDownload: Boolean = false): Unit = {
     fragmentLayout map (_.loading())
     val result = for {
-      conference <- loadSelectedConference()
+      conference <- loadSelectedConference(forceDownload)
     } yield reloadList(conference.speakers)
 
     result recover {

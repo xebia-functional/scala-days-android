@@ -54,7 +54,7 @@ class SponsorsFragment
       (fLayout.recyclerView
         <~ rvLayoutManager(new LinearLayoutManager(appContextProvider.get))) ~
         (fLayout.reloadButton <~ On.click(Ui {
-          loadSponsors()
+          loadSponsors(forceDownload = true)
         })))
     fLayout.content
   }
@@ -64,10 +64,10 @@ class SponsorsFragment
     loadSponsors()
   }
 
-  def loadSponsors() = {
+  def loadSponsors(forceDownload: Boolean = false) = {
     fragmentLayout map (_.loading())
     val result = for {
-      conference <- loadSelectedConference()
+      conference <- loadSelectedConference(forceDownload)
     } yield reloadList(conference.sponsors)
 
     result recover {
