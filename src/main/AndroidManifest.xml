@@ -16,8 +16,8 @@
 
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
           package="com.fortysevendeg.android.scaladays"
-          android:versionCode="1"
-          android:versionName="0.9">
+          android:versionCode="2"
+          android:versionName="1.0-RC1">
 
     <uses-sdk
             android:minSdkVersion="14"
