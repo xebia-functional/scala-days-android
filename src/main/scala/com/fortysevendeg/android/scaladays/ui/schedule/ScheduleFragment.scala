@@ -62,7 +62,7 @@ class ScheduleFragment
         <~ rvLayoutManager(new LinearLayoutManager(appContextProvider.get))
         <~ rvAddItemDecoration(new ScheduleItemDecorator())) ~
         (fLayout.reloadButton <~ On.click(Ui {
-          loadSchedule()
+          loadSchedule(favorites = false, forceDownload = true)
         })))
     fLayout.content
   }
@@ -95,7 +95,7 @@ class ScheduleFragment
                 Some(analyticsScheduleListScreen),
                 analyticsCategoryFilter,
                 analyticsScheduleActionFilterFavorites)
-              loadSchedule(true)
+              loadSchedule(favorites = true)
           }
         }
       }).create().show()
@@ -115,10 +115,10 @@ class ScheduleFragment
     }
   }
 
-  def loadSchedule(favorites: Boolean = false): Unit = {
+  def loadSchedule(favorites: Boolean = false, forceDownload: Boolean = false): Unit = {
     fragmentLayout map (_.loading())
     val result = for {
-      conference <- loadSelectedConference()
+      conference <- loadSelectedConference(forceDownload)
     } yield reloadList(conference.info.utcTimezoneOffset, conference.schedule, favorites)
 
     result recover {

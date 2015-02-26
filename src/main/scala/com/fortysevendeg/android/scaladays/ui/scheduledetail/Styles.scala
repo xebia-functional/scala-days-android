@@ -31,6 +31,7 @@ import com.fortysevendeg.macroid.extras.ResourcesExtras._
 import com.fortysevendeg.macroid.extras.ScrollViewTweaks._
 import com.fortysevendeg.macroid.extras.TextTweaks._
 import com.fortysevendeg.macroid.extras.ViewTweaks._
+import com.fortysevendeg.macroid.extras.DeviceVersion._
 import macroid.FullDsl._
 import macroid.{ActivityContext, AppContext, Tweak}
 
@@ -65,7 +66,8 @@ trait ActivityStyles {
       llVertical +
       vPadding(0, resGetDimensionPixelSize(R.dimen.padding_schedule_detail_speaker_tb), 0, 0)
 
-  val verticalLayoutStyle = llWrapWeightHorizontal +
+  val verticalLayoutStyle =
+    llWrapWeightHorizontal +
     llVertical
 
   def toolBarTitleStyle(implicit appContext: AppContext): Tweak[TextView] = {
@@ -89,7 +91,8 @@ trait ActivityStyles {
         defaultIcon = if (favorite) IconTypes.CHECK else IconTypes.ADD,
         defaultStroke = resGetDimensionPixelSize(R.dimen.stroke_schedule_detail_fab),
         defaultColor = Color.WHITE
-      ))
+      )) +
+      (Lollipop whenGreaterOrEqualThen vElevation(resGetDimension(R.dimen.padding_default_extra_small)) getOrElse Tweak.blank)
   }
 
   def iconCalendarStyle(implicit appContext: AppContext): Tweak[ImageView] =

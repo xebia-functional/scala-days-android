@@ -32,11 +32,9 @@ trait UiServices {
     with NetServicesComponent 
     with AppContextProvider =>
 
-  val forceDownload = false
-
   def getNamePreferenceFavorite(eventId: Int) = "%d_%d".format(loadSelectedConferenceId, eventId)
   
-  def loadConferences(): Future[Seq[Conference]] = {
+  def loadConferences(forceDownload: Boolean = false): Future[Seq[Conference]] = {
     for {
       _ <- netServices.saveJsonInLocal(NetRequest(forceDownload))
       jsonResponse <- jsonServices.loadJson(JsonRequest())
@@ -46,7 +44,7 @@ trait UiServices {
     }
   }
 
-  def loadSelectedConference(): Future[Conference] = {
+  def loadSelectedConference(forceDownload: Boolean = false): Future[Conference] = {
     val conferenceId = loadSelectedConferenceId
     for {
       _ <- netServices.saveJsonInLocal(NetRequest(forceDownload))

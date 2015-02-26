@@ -35,7 +35,6 @@ class ConferenceMenuAdapter(listener: ConferenceMenuClickListener)
 
   var list = Seq.empty[ConferenceMenuItem]
   
-  // TODO - Add logic to find the smallest picture
   def findIconImage(pictures: Seq[Picture]): Option[String] =
     pictures.headOption map (_.url)
 

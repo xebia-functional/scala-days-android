@@ -15,19 +15,15 @@
   ~  limitations under the License.
   -->
 
-<layer-list
-        xmlns:android="http://schemas.android.com/apk/res/android">
-
+<ripple xmlns:android="http://schemas.android.com/apk/res/android"
+        android:color="@color/fab_no_check_color_dark">
     <item
-            android:drawable="@drawable/fab_button_shadow"
-            android:top="@dimen/padding_fab_shadow"
-            android:left="@dimen/padding_default_extra_small"
-            android:right="@dimen/padding_default_extra_small"/>
-    <item
-            android:drawable="@drawable/fab_button_no_check_circle"
             android:top="@dimen/padding_default_extra_small"
             android:left="@dimen/padding_default_extra_small"
             android:right="@dimen/padding_default_extra_small"
-            android:bottom="@dimen/padding_default_extra_small"/>
-
-</layer-list>
+            android:bottom="@dimen/padding_default_extra_small">
+        <shape android:shape="oval">
+            <solid android:color="@color/fab_no_check_color" />
+        </shape>
+    </item>
+</ripple>
