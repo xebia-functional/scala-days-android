@@ -92,7 +92,7 @@ trait ActivityStyles {
         defaultStroke = resGetDimensionPixelSize(R.dimen.stroke_schedule_detail_fab),
         defaultColor = Color.WHITE
       )) +
-      (Lollipop whenGreaterOrEqualThen vElevation(resGetDimension(R.dimen.padding_default_extra_small)) getOrElse Tweak.blank)
+      (Lollipop isSupportedThen vElevation(resGetDimension(R.dimen.padding_default_extra_small)) getOrElse Tweak.blank)
   }
 
   def iconCalendarStyle(implicit appContext: AppContext): Tweak[ImageView] =
