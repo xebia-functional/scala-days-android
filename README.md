@@ -6,7 +6,7 @@ The official Scala Days App for Android handcrafted by [47 Degrees](http://www.4
 Scala on Android
 ==============
 
-This application is written entirely in Scala on Android. We are excited to make the application open source and share the code with you. We have used the [macroid](http://macroid.github.io/) library extensively in this project. In addition we have contributed our own Macroid extenions to this application, that can be found here: [macroid-extras](https://github.com/47deg/macroid-extras).
+This application is written entirely in Scala on Android. We are excited to make the application open source and share the code with you. We have used the [macroid](http://macroid.github.io/) library extensively in this project. In addition we have contributed our own Macroid extensions to this application, that can be found here: [macroid-extras](https://github.com/47deg/macroid-extras).
 
 Compile
 ======
