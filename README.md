@@ -33,7 +33,7 @@ You can use your favorite IDE. At 47 Degrees we use IntelliJ with the Scala plug
 Add Debug Keys
 ========
 
-You need to add `debug.properties` file to your root project with the necessary keys for compile. The contain should be:
+You need to add `debug.properties` file to your root project with the necessary keys for compile. The content should be:
 
 ```
 google.map.key=***
