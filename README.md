@@ -1,4 +1,4 @@
-Scala Days for Android
+Scala Days for Android [![Circle CI](https://circleci.com/gh/47deg/scala-days-android.svg?style=svg&circle-token=db18a415dd553b6fe385ce8fa0a5fa3503b0dda1)](https://circleci.com/gh/47deg/scala-days-android)
 ============================
 
 The official Scala Days App for Android handcrafted by [47 Degrees](http://www.47deg.com). You can download Scala Days from [Google Play](https://play.google.com/store/apps/details?id=com.fortysevendeg.android.scaladays)
