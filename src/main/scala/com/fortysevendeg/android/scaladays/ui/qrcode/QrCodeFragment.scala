@@ -84,7 +84,7 @@ class QrCodeFragment
         val addContactIntent = new Intent(ContactsContract.Intents.Insert.ACTION, ContactsContract.Contacts.CONTENT_URI)
         addContactIntent.setType(ContactsContract.Contacts.CONTENT_TYPE)
         Option(vcard.getNames) map {
-          case names if names.size > 0 => addContactIntent.putExtra(ContactsContract.Intents.Insert.NAME, names(0))
+          case names if names.size > 0 => addContactIntent.putExtra(ContactsContract.Intents.Insert.NAME, names(0).replace(";", " "))
         }
         Option(vcard.getTitle) map {
           addContactIntent.putExtra(ContactsContract.Intents.Insert.JOB_TITLE, _)
