@@ -44,7 +44,11 @@ class SpeakersFragment
 
   override def onCreateView(inflater: LayoutInflater, container: ViewGroup, savedInstanceState: Bundle): View = {
     analyticsServices.sendScreenName(analyticsSpeakersScreen)
-    val root = content
+    content
+  }
+
+  override def onViewCreated(view: View, savedInstanceState: Bundle): Unit = {
+    super.onViewCreated(view, savedInstanceState)
     runUi(
       (recyclerView
         <~ rvLayoutManager(new LinearLayoutManager(appContextProvider.get))
@@ -52,11 +56,6 @@ class SpeakersFragment
         (reloadButton <~ On.click(Ui {
           loadSpeakers(forceDownload = true)
         })))
-    root
-  }
-
-  override def onViewCreated(view: View, savedInstanceState: Bundle): Unit = {
-    super.onViewCreated(view, savedInstanceState)
     loadSpeakers()
   }
 

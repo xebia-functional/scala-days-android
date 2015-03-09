@@ -54,7 +54,11 @@ class ScheduleFragment
 
   override def onCreateView(inflater: LayoutInflater, container: ViewGroup, savedInstanceState: Bundle): View = {
     analyticsServices.sendScreenName(analyticsScheduleListScreen)
-    val root = content
+    content
+  }
+
+  override def onViewCreated(view: View, savedInstanceState: Bundle): Unit = {
+    super.onViewCreated(view, savedInstanceState)
     runUi(
       (recyclerView
         <~ rvLayoutManager(new LinearLayoutManager(appContextProvider.get))
@@ -62,11 +66,6 @@ class ScheduleFragment
         (reloadButton <~ On.click(Ui {
           loadSchedule(favorites = false, forceDownload = true)
         })))
-    root
-  }
-
-  override def onViewCreated(view: View, savedInstanceState: Bundle): Unit = {
-    super.onViewCreated(view, savedInstanceState)
     loadSchedule()
   }
 

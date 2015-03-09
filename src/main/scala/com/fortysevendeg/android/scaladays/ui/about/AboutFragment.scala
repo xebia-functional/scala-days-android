@@ -44,7 +44,11 @@ class AboutFragment
 
   override def onCreateView(inflater: LayoutInflater, container: ViewGroup, savedInstanceState: Bundle): View = {
     analyticsServices.sendScreenName(analyticsAboutScreen)
-    val root = content
+    content
+  }
+
+  override def onViewCreated(view: View, savedInstanceState: Bundle): Unit = {
+    super.onViewCreated(view, savedInstanceState)
     runUi(
       aboutContent <~ On.click {
         Ui {
@@ -57,11 +61,6 @@ class AboutFragment
         }
       }
     )
-    root
-  }
-
-  override def onViewCreated(view: View, savedInstanceState: Bundle): Unit = {
-    super.onViewCreated(view, savedInstanceState)
     val result = for {
       conference <- loadSelectedConference()
     } yield show(conference.codeOfConduct)

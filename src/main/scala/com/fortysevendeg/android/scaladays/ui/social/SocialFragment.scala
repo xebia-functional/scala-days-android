@@ -57,7 +57,11 @@ class SocialFragment
 
   override def onCreateView(inflater: LayoutInflater, container: ViewGroup, savedInstanceState: Bundle): View = {
     analyticsServices.sendScreenName(analyticsSocialScreen)
-    val root = content
+    content
+  }
+
+  override def onViewCreated(view: View, savedInstanceState: Bundle): Unit = {
+    super.onViewCreated(view, savedInstanceState)
     runUi(
       (recyclerView
         <~ rvLayoutManager(new LinearLayoutManager(appContextProvider.get))
@@ -65,12 +69,6 @@ class SocialFragment
         (reloadButton <~ On.click(Ui {
           search()
         })))
-    root
-  }
-
-  override def onViewCreated(view: View, savedInstanceState: Bundle): Unit = {
-    super.onViewCreated(view, savedInstanceState)
-
     if (twitterServices.isConnected()) {
       search()
     } else {

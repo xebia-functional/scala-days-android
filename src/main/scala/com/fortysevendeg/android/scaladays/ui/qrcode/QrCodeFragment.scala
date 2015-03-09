@@ -43,7 +43,17 @@ class QrCodeFragment
 
   override def onCreateView(inflater: LayoutInflater, container: ViewGroup, savedInstanceState: Bundle): View = {
     analyticsServices.sendScreenName(analyticsContactsScreen)
-    val root = content
+    content
+  }
+
+  val defaultDisplayMs: Long = 0L
+
+  val captureActionScan: String = "com.google.zxing.client.android.SCAN"
+
+  val displayDurationKey: String = "RESULT_DISPLAY_DURATION_MS"
+
+  override def onViewCreated(view: View, savedInstanceState: Bundle): Unit = {
+    super.onViewCreated(view, savedInstanceState)
     runUi(
       scanButton <~ On.click {
         Ui {
@@ -52,13 +62,12 @@ class QrCodeFragment
             category = analyticsCategoryNavigate,
             action = analyticsContactsActionScanContact)
           val intent = new Intent(getActivity, classOf[CaptureActivity])
-          intent.setAction("com.google.zxing.client.android.SCAN")
-          intent.putExtra("RESULT_DISPLAY_DURATION_MS", 0L)
+          intent.setAction(captureActionScan)
+          intent.putExtra(displayDurationKey, defaultDisplayMs)
           startActivityForResult(intent, scanResult)
         }
       }
     )
-    root
   }
 
   override def onActivityResult(requestCode: Int, resultCode: Int, data: Intent): Unit = {
@@ -75,8 +84,7 @@ class QrCodeFragment
   }
 
   def loadVCard(requestCode: Int, resultCode: Int, data: Intent) = {
-    val contents = Option(data.getStringExtra("SCAN_RESULT"))
-    contents map {
+    Option(data.getStringExtra("SCAN_RESULT")) map {
       case contents if contents.startsWith("BEGIN:VCARD") =>
         val result = new Result(contents, null, null, null)
         val vCardResultParser = new VCardResultParser()

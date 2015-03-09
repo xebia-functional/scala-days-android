@@ -43,18 +43,17 @@ class SponsorsFragment
 
   override def onCreateView(inflater: LayoutInflater, container: ViewGroup, savedInstanceState: Bundle): View = {
     analyticsServices.sendScreenName(analyticsSponsorsScreen)
-    val root = content
+    content
+  }
+
+  override def onViewCreated(view: View, savedInstanceState: Bundle): Unit = {
+    super.onViewCreated(view, savedInstanceState)
     runUi(
       (recyclerView
         <~ rvLayoutManager(new LinearLayoutManager(appContextProvider.get))) ~
         (reloadButton <~ On.click(Ui {
           loadSponsors(forceDownload = true)
         })))
-    root
-  }
-
-  override def onViewCreated(view: View, savedInstanceState: Bundle): Unit = {
-    super.onViewCreated(view, savedInstanceState)
     loadSponsors()
   }
 
