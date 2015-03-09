@@ -24,7 +24,7 @@ import com.fortysevendeg.android.scaladays.ui.commons.PlaceHolderLayout
 import macroid.FullDsl._
 import macroid.{Ui, ActivityContext, AppContext}
 
-class Layout(implicit appContext: AppContext, context: ActivityContext)
+trait Layout
     extends Styles
     with PlaceHolderLayout {
 
@@ -36,7 +36,7 @@ class Layout(implicit appContext: AppContext, context: ActivityContext)
 
   var aboutContent = slot[LinearLayout]
 
-  val content = getUi(
+  def content(implicit appContext: AppContext, context: ActivityContext) = getUi(
     l[FrameLayout](
       l[LinearLayout](
         l[ScrollView](
@@ -53,7 +53,5 @@ class Layout(implicit appContext: AppContext, context: ActivityContext)
       placeholder <~ wire(placeholderContent)
     )
   )
-
-  def layout = content
 
 }

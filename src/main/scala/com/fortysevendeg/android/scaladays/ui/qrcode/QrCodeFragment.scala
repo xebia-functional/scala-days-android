@@ -34,20 +34,18 @@ import com.fortysevendeg.macroid.extras.UIActionsExtras._
 import com.fortysevendeg.android.scaladays.ui.commons.IntegerResults._
 
 class QrCodeFragment
-    extends Fragment
-    with Contexts[Fragment]
-    with ComponentRegistryImpl {
+  extends Fragment
+  with Contexts[Fragment]
+  with ComponentRegistryImpl
+  with Layout {
 
   override implicit lazy val appContextProvider: AppContext = fragmentAppContext
 
-  private var fragmentLayout: Option[Layout] = None
-
   override def onCreateView(inflater: LayoutInflater, container: ViewGroup, savedInstanceState: Bundle): View = {
     analyticsServices.sendScreenName(analyticsContactsScreen)
-    val fLayout = new Layout
-    fragmentLayout = Some(fLayout)
+    val root = content
     runUi(
-      fLayout.scanButton <~ On.click {
+      scanButton <~ On.click {
         Ui {
           analyticsServices.sendEvent(
             screenName = Some(analyticsContactsScreen),
@@ -60,7 +58,7 @@ class QrCodeFragment
         }
       }
     )
-    fLayout.content
+    root
   }
 
   override def onActivityResult(requestCode: Int, resultCode: Int, data: Intent): Unit = {
@@ -88,9 +86,15 @@ class QrCodeFragment
         Option(vcard.getNames) map {
           case names if names.size > 0 => addContactIntent.putExtra(ContactsContract.Intents.Insert.NAME, names(0))
         }
-        Option(vcard.getTitle) map { addContactIntent.putExtra(ContactsContract.Intents.Insert.JOB_TITLE, _) }
-        Option(vcard.getOrg) map { addContactIntent.putExtra(ContactsContract.Intents.Insert.COMPANY, _) }
-        Option(vcard.getNote) map { addContactIntent.putExtra(ContactsContract.Intents.Insert.NOTES, _) }
+        Option(vcard.getTitle) map {
+          addContactIntent.putExtra(ContactsContract.Intents.Insert.JOB_TITLE, _)
+        }
+        Option(vcard.getOrg) map {
+          addContactIntent.putExtra(ContactsContract.Intents.Insert.COMPANY, _)
+        }
+        Option(vcard.getNote) map {
+          addContactIntent.putExtra(ContactsContract.Intents.Insert.NOTES, _)
+        }
         val phoneNumbers = Option(vcard.getPhoneNumbers) map (_.toList) getOrElse List.empty
         val phoneNumberCounter = (1 until phoneNumbers.size + 1).zip(phoneNumbers)
         phoneNumberCounter map {
@@ -116,8 +120,6 @@ class QrCodeFragment
     }
   }
 
-  def failed() = {
-    runUi(uiShortToast(R.string.scanError))
-  }
+  def failed() = runUi(uiShortToast(R.string.scanError))
 
 }

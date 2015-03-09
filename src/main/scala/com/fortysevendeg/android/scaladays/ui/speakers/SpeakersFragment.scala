@@ -37,24 +37,22 @@ class SpeakersFragment
   extends Fragment
   with Contexts[Fragment]
   with ComponentRegistryImpl
-  with UiServices {
+  with UiServices
+  with ListLayout {
 
   override implicit lazy val appContextProvider: AppContext = fragmentAppContext
 
-  private var fragmentLayout: Option[ListLayout] = None
-
   override def onCreateView(inflater: LayoutInflater, container: ViewGroup, savedInstanceState: Bundle): View = {
     analyticsServices.sendScreenName(analyticsSpeakersScreen)
-    val fLayout = new ListLayout
-    fragmentLayout = Some(fLayout)
+    val root = content
     runUi(
-      (fLayout.recyclerView
+      (recyclerView
         <~ rvLayoutManager(new LinearLayoutManager(appContextProvider.get))
         <~ rvAddItemDecoration(new LineItemDecorator())) ~
-        (fLayout.reloadButton <~ On.click(Ui {
+        (reloadButton <~ On.click(Ui {
           loadSpeakers(forceDownload = true)
         })))
-    fLayout.content
+    root
   }
 
   override def onViewCreated(view: View, savedInstanceState: Bundle): Unit = {
@@ -63,21 +61,21 @@ class SpeakersFragment
   }
 
   def loadSpeakers(forceDownload: Boolean = false): Unit = {
-    fragmentLayout map (_.loading())
+    loading()
     val result = for {
       conference <- loadSelectedConference(forceDownload)
     } yield reloadList(conference.speakers)
 
     result recover {
-      case _ => fragmentLayout map (_.failed())
+      case _ => failed()
     }
   }
 
   def reloadList(speakers: Seq[Speaker]) = {
     speakers.length match {
-      case 0 => fragmentLayout map (_.empty())
+      case 0 => empty()
       case _ =>
-        val adapter = new SpeakersAdapter(speakers, new RecyclerClickListener {
+        val speakersAdapter = new SpeakersAdapter(speakers, new RecyclerClickListener {
           override def onClick(speaker: Speaker): Unit = {
             speaker.twitter map {
               twitterName =>
@@ -89,7 +87,7 @@ class SpeakersFragment
             }
           }
         })
-        fragmentLayout map (_.adapter(adapter))
+        adapter(speakersAdapter)
     }
   }
 

@@ -23,7 +23,7 @@ import macroid.FullDsl._
 import macroid.{ActivityContext, AppContext}
 import com.fortysevendeg.macroid.extras.ViewTweaks._
 
-class ListLayout(backgroundColor: Option[Int] = None)(implicit appContext: AppContext, context: ActivityContext)
+trait ListLayout
   extends ListStyles
   with PlaceHolderLayout {
 
@@ -33,15 +33,13 @@ class ListLayout(backgroundColor: Option[Int] = None)(implicit appContext: AppCo
 
   var placeholderContent = slot[LinearLayout]
 
-  val content = getUi(
+  def content(implicit appContext: AppContext, context: ActivityContext) = getUi(
     l[FrameLayout](
       w[ProgressBar] <~ wire(progressBar) <~ progressBarStyle,
       w[RecyclerView] <~ wire(recyclerView) <~ recyclerViewStyle,
       placeholder <~ wire(placeholderContent)
-    ) <~ rootStyle(backgroundColor)
+    ) <~ rootStyle
   )
-
-  def layout = content
 
   def loading() = {
     runUi(
