@@ -33,7 +33,7 @@ You can use your favorite IDE. At 47 Degrees we use IntelliJ with the Scala plug
 Add Debug Keys
 ========
 
-You need to add `debug.properties` file to your root project with the necessary keys for compile. The content should be:
+You need to add a `debug.properties` file to the root project with the necessary keys to compile. The content should be:
 
 ```
 google.map.key=***
@@ -46,14 +46,14 @@ twitter.app.callback.host=***
 crashlytics.key=***
 ```
 
-and `crashlytics.properties` file with secret keys like that:
+add a `crashlytics.properties` file with the following secret keys:
 
 ```
 apiKey=***
 apiSecret=***
 ``` 
 
-If you don't want to use `crashlytics` you should remove the `Crashlytics.start(this)` line in `MainActivity.scala`
+If you do not want to utilize the `Crashlytics` service, you should remove the `Crashlytics.start(this)` line in `MainActivity.scala`
 
 
 Contribute
