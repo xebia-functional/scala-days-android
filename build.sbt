@@ -31,8 +31,6 @@ unmanagedBase := baseDirectory.value / "src" / "main" / "libs"
 
 scalacOptions ++= Seq("-feature", "-deprecation")
 
-credentials += Credentials(new File(Path.userHome.absolutePath + "/.ivy2/.credentials"))
-
 resolvers ++= Settings.resolvers
 
 libraryDependencies ++= Seq(
