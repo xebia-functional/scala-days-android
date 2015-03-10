@@ -22,7 +22,7 @@ import com.fortysevendeg.android.scaladays.ui.components.CheckableFrameLayout
 import macroid.FullDsl._
 import macroid.{ActivityContext, AppContext}
 
-class Layout(implicit appContext: AppContext, context: ActivityContext)
+trait Layout
     extends Styles {
 
   var drawerMenuLayout = slot[LinearLayout]
@@ -37,7 +37,7 @@ class Layout(implicit appContext: AppContext, context: ActivityContext)
 
   var recyclerView = slot[RecyclerView]
 
-  val content = getUi(
+  def content(implicit appContext: AppContext, context: ActivityContext) = getUi(
     l[LinearLayout](
       l[FrameLayout](
         w[ImageView] <~ wire(bigImage) <~ bigImageStyle,
@@ -50,7 +50,6 @@ class Layout(implicit appContext: AppContext, context: ActivityContext)
     ) <~ menuStyle
   )
 
-  def layout = content
 }
 
 class MainMenuAdapterLayout(implicit context: ActivityContext, appContext: AppContext) 

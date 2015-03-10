@@ -43,13 +43,12 @@ class MenuFragment
   with Contexts[Fragment]
   with ComponentRegistryImpl
   with UiServices
-  with IdGeneration {
+  with IdGeneration
+  with Layout {
 
   override implicit lazy val appContextProvider: AppContext = fragmentAppContext
 
   val defaultItem = 0
-
-  private var fragmentLayout: Option[Layout] = None
 
   private var mainActivity: Option[MainActivity] = None
 
@@ -94,36 +93,30 @@ class MenuFragment
   }
 
   override def onCreateView(inflater: LayoutInflater, container: ViewGroup, savedInstanceState: Bundle): View = {
-    val fLayout = new Layout
-    fragmentLayout = Some(fLayout)
+    val root = content
     runUi(
-      fLayout.recyclerView <~ rvLayoutManager(new LinearLayoutManager(appContextProvider.get))
+      recyclerView <~ rvLayoutManager(new LinearLayoutManager(appContextProvider.get))
     )
-    fLayout.content
+    root
   }
 
   override def onViewCreated(view: View, savedInstanceState: Bundle) = {
     super.onViewCreated(view, savedInstanceState)
+    runUi(
+      (recyclerView <~ rvAdapter(mainMenuAdapter)) ~
+        (bigImageLayout <~ On.click {
+          Ui {
+            toggleMenu()
+          }
+        })
+    )
+    val defaultSection = Option(savedInstanceState) map (_.getInt(previousItemSelectedKey, defaultItem)) getOrElse defaultItem
+    itemSelected(mainMenuAdapter.list(defaultSection), savedInstanceState == null)
 
-    for {
-      layout <- fragmentLayout
-      bigImageLayout <- layout.bigImageLayout
-    } yield {
-      bigImageLayout.setOnClickListener(new View.OnClickListener {
-        override def onClick(v: View) =
-          toggleMenu()
-      })
-      runUi(layout.recyclerView <~ rvAdapter(mainMenuAdapter))
-      val defaultSection = Option(savedInstanceState) map (_.getInt(previousItemSelectedKey, defaultItem)) getOrElse defaultItem
-      itemSelected(mainMenuAdapter.list(defaultSection), savedInstanceState == null)
-    }
-
-    val conferenceId = loadSelectedConferenceId
     val result = for {
       conferences <- loadConferences()
-      selectedConference <- findConference(conferences, conferenceId)
+      selectedConference <- findConference(conferences, loadSelectedConferenceId)
     } yield {
-      conferenceMenuAdapter.loadConferences(conferences map (_.info))
       showConference(selectedConference.info)
       urlTickets = Some(selectedConference.info.registrationSite)
     }
@@ -146,20 +139,20 @@ class MenuFragment
     super.onDetach()
   }
 
-  def toggleMenu() =
-    for {
-      layout <- fragmentLayout
-      recyclerView <- layout.recyclerView
-      selectorImageView <- layout.conferenceSelector
+  def toggleMenu() = {
+    mainMenuVisible = !mainMenuVisible
+    if (mainMenuVisible) runUi(
+      (conferenceSelector <~ ivSrc(R.drawable.menu_header_select_arrow)) ~
+        (recyclerView <~ rvAdapter(mainMenuAdapter)))
+    else for {
+      conferences <- loadConferences()
     } yield {
-      mainMenuVisible = !mainMenuVisible
-      if (mainMenuVisible) runUi(
-        (selectorImageView <~ ivSrc(R.drawable.menu_header_select_arrow)) ~
-          (recyclerView <~ rvAdapter(mainMenuAdapter)))
-      else runUi(
-        (selectorImageView <~ ivSrc(R.drawable.menu_header_select_arrow_up)) ~
+      conferenceMenuAdapter.loadConferences(conferences map (_.info))
+      runUi(
+        (conferenceSelector <~ ivSrc(R.drawable.menu_header_select_arrow_up)) ~
           (recyclerView <~ rvAdapter(conferenceMenuAdapter)))
     }
+  }
 
   def showMainMenu =
     if (!mainMenuVisible) toggleMenu()
@@ -176,14 +169,8 @@ class MenuFragment
   }
 
   def showConference(information: Information) =
-    for {
-      layout <- fragmentLayout
-      imageView <- layout.bigImage
-      textView <- layout.conferenceTitle
-    } yield {
-      runUi(
-        (imageView <~ srcImage(information.pictures(0).url, R.drawable.placeholder_square)) ~
-          (textView <~ tvText(information.longName)))
-    }
+    runUi(
+      (bigImage <~ srcImage(information.pictures(0).url, R.drawable.placeholder_square)) ~
+        (conferenceTitle <~ tvText(information.longName)))
 
 }

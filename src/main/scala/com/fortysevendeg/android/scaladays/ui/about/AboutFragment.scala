@@ -37,17 +37,20 @@ class AboutFragment
   extends Fragment
   with Contexts[Fragment]
   with ComponentRegistryImpl
-  with UiServices {
+  with UiServices
+  with Layout {
 
   override implicit lazy val appContextProvider: AppContext = fragmentAppContext
 
-  private var fragmentLayout: Option[Layout] = None
-
   override def onCreateView(inflater: LayoutInflater, container: ViewGroup, savedInstanceState: Bundle): View = {
     analyticsServices.sendScreenName(analyticsAboutScreen)
-    val fLayout = new Layout
+    content
+  }
+
+  override def onViewCreated(view: View, savedInstanceState: Bundle): Unit = {
+    super.onViewCreated(view, savedInstanceState)
     runUi(
-      fLayout.aboutContent <~ On.click {
+      aboutContent <~ On.click {
         Ui {
           analyticsServices.sendEvent(
             screenName = Some(analyticsAboutScreen),
@@ -58,12 +61,6 @@ class AboutFragment
         }
       }
     )
-    fragmentLayout = Some(fLayout)
-    fLayout.content
-  }
-
-  override def onViewCreated(view: View, savedInstanceState: Bundle): Unit = {
-    super.onViewCreated(view, savedInstanceState)
     val result = for {
       conference <- loadSelectedConference()
     } yield show(conference.codeOfConduct)
@@ -72,20 +69,8 @@ class AboutFragment
     }
   }
 
-  def show(codeOfConduct: Option[String]) = {
-    fragmentLayout map {
-      layout =>
-        runUi(layout.description <~ (codeOfConduct map (tvText(_) + vVisible) getOrElse vGone))
-    }
-  }
+  def show(codeOfConduct: Option[String]) =  runUi(description <~ (codeOfConduct map (tvText(_) + vVisible) getOrElse vGone))
 
-  def failed() = {
-    fragmentLayout map {
-      layout =>
-        runUi(
-          (layout.mainContent <~ vGone) ~
-            (layout.placeholderContent <~ vVisible))
-    }
-  }
+  def failed() = runUi((mainContent <~ vGone) ~ (placeholderContent <~ vVisible))
 
 }

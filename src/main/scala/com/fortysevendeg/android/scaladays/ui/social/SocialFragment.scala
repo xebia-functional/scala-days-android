@@ -43,11 +43,10 @@ class SocialFragment
   extends Fragment
   with Contexts[Fragment]
   with ComponentRegistryImpl
-  with UiServices {
+  with UiServices
+  with ListLayout {
 
   override implicit lazy val appContextProvider: AppContext = fragmentAppContext
-
-  private var fragmentLayout: Option[ListLayout] = None
 
   private var hashtag: Option[String] = None
 
@@ -58,21 +57,18 @@ class SocialFragment
 
   override def onCreateView(inflater: LayoutInflater, container: ViewGroup, savedInstanceState: Bundle): View = {
     analyticsServices.sendScreenName(analyticsSocialScreen)
-    val fLayout = new ListLayout
-    fragmentLayout = Some(fLayout)
-    runUi(
-      (fLayout.recyclerView
-        <~ rvLayoutManager(new LinearLayoutManager(appContextProvider.get))
-        <~ rvAddItemDecoration(new LineItemDecorator())) ~
-        (fLayout.reloadButton <~ On.click(Ui {
-          search()
-        })))
-    fLayout.content
+    content
   }
 
   override def onViewCreated(view: View, savedInstanceState: Bundle): Unit = {
     super.onViewCreated(view, savedInstanceState)
-
+    runUi(
+      (recyclerView
+        <~ rvLayoutManager(new LinearLayoutManager(appContextProvider.get))
+        <~ rvAddItemDecoration(new LineItemDecorator())) ~
+        (reloadButton <~ On.click(Ui {
+          search()
+        })))
     if (twitterServices.isConnected()) {
       search()
     } else {
@@ -111,13 +107,13 @@ class SocialFragment
           case Activity.RESULT_OK =>
             search()
           case Activity.RESULT_CANCELED =>
-            fragmentLayout map (_.failed())
+            failed()
         }
     }
   }
 
   def search() = {
-    fragmentLayout map (_.loading())
+    loading()
     val result = for {
       conference <- loadSelectedConference()
       searchResponse <- twitterServices.search(SearchRequest(conference.info.query))
@@ -127,15 +123,15 @@ class SocialFragment
     }
 
     result.recover {
-      case _ => fragmentLayout map (_.failed())
+      case _ => failed()
     }
   }
 
   def reloadList(messages: Seq[TwitterMessage]) = {
     messages.length match {
-      case 0 => fragmentLayout map (_.empty())
+      case 0 => empty()
       case _ =>
-        val adapter = new SocialAdapter(messages, new RecyclerClickListener {
+        val socialAdapter = new SocialAdapter(messages, new RecyclerClickListener {
           override def onClick(message: TwitterMessage): Unit = {
             analyticsServices.sendEvent(
               screenName = Some(analyticsSocialScreen),
@@ -145,7 +141,7 @@ class SocialFragment
               Uri.parse(resGetString(R.string.url_twitter_status, message.screenName, message.id.toString))))
           }
         })
-        fragmentLayout map (_.adapter(adapter))
+        adapter(socialAdapter)
     }
   }
 

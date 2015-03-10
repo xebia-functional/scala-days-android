@@ -20,19 +20,17 @@ import android.widget._
 import macroid.FullDsl._
 import macroid.{ActivityContext, AppContext}
 
-class Layout(implicit appContext: AppContext, context: ActivityContext)
-    extends Styles {
+trait Layout
+  extends Styles {
 
   var scanButton = slot[Button]
 
-  val content = getUi(
+  def content(implicit appContext: AppContext, context: ActivityContext) = getUi(
     l[LinearLayout](
       w[ImageView] <~ qrImageStyle,
       w[TextView] <~ qrMessageStyle,
       w[Button] <~ qrButtonStyle <~ wire(scanButton)
     ) <~ qrContentStyle
   )
-
-  def layout = content
 
 }

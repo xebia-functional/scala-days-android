@@ -42,11 +42,10 @@ class ScheduleFragment
   with Contexts[Fragment]
   with ComponentRegistryImpl
   with UiServices
-  with ScheduleConversion {
+  with ScheduleConversion
+  with ListLayout {
 
   override implicit lazy val appContextProvider: AppContext = fragmentAppContext
-
-  private var fragmentLayout: Option[ListLayout] = None
 
   override def onCreate(savedInstanceState: Bundle): Unit = {
     super.onCreate(savedInstanceState)
@@ -55,20 +54,18 @@ class ScheduleFragment
 
   override def onCreateView(inflater: LayoutInflater, container: ViewGroup, savedInstanceState: Bundle): View = {
     analyticsServices.sendScreenName(analyticsScheduleListScreen)
-    val fLayout = new ListLayout
-    fragmentLayout = Some(fLayout)
-    runUi(
-      (fLayout.recyclerView
-        <~ rvLayoutManager(new LinearLayoutManager(appContextProvider.get))
-        <~ rvAddItemDecoration(new ScheduleItemDecorator())) ~
-        (fLayout.reloadButton <~ On.click(Ui {
-          loadSchedule(favorites = false, forceDownload = true)
-        })))
-    fLayout.content
+    content
   }
 
   override def onViewCreated(view: View, savedInstanceState: Bundle): Unit = {
     super.onViewCreated(view, savedInstanceState)
+    runUi(
+      (recyclerView
+        <~ rvLayoutManager(new LinearLayoutManager(appContextProvider.get))
+        <~ rvAddItemDecoration(new ScheduleItemDecorator())) ~
+        (reloadButton <~ On.click(Ui {
+          loadSchedule(favorites = false, forceDownload = true)
+        })))
     loadSchedule()
   }
 
@@ -116,13 +113,13 @@ class ScheduleFragment
   }
 
   def loadSchedule(favorites: Boolean = false, forceDownload: Boolean = false): Unit = {
-    fragmentLayout map (_.loading())
+    loading()
     val result = for {
       conference <- loadSelectedConference(forceDownload)
     } yield reloadList(conference.info.utcTimezoneOffset, conference.schedule, favorites)
 
     result recover {
-      case _ => fragmentLayout map (_.failed())
+      case _ => failed()
     }
   }
 
@@ -137,10 +134,10 @@ class ScheduleFragment
         event => true
       })
     scheduleItems.length match {
-      case length if length == 0 && favorites => fragmentLayout map (_.noFavorites())
-      case 0 => fragmentLayout map (_.empty())
+      case length if length == 0 && favorites => noFavorites()
+      case 0 => empty()
       case _ =>
-        val adapter = new ScheduleAdapter(timeZone, scheduleItems, new RecyclerClickListener {
+        val scheduleAdapter = new ScheduleAdapter(timeZone, scheduleItems, new RecyclerClickListener {
           override def onClick(scheduleItem: ScheduleItem): Unit = {
             if (!scheduleItem.isHeader) {
               scheduleItem.event map {
@@ -160,7 +157,7 @@ class ScheduleFragment
             }
           }
         })
-        fragmentLayout map (_.adapter(adapter))
+        adapter(scheduleAdapter)
     }
   }
 

@@ -25,6 +25,7 @@
     <color name="toolbar_title">#ffffff</color>
     <color name="menu_conference_title">#ffffff</color>
     <color name="ripple_mask">#22000000</color>
+    <color name="background_app">#ffffff</color>
 
     <!-- Placeholder -->
     <color name="text_error_message">#87364550</color>
@@ -65,9 +66,6 @@
     <color name="fab_check_color">#ff52e0a3</color>
     <color name="fab_shadow_color">#46000000</color>
 
-    <!-- Sponsors -->
-    <color name="background_sponsors">#ffffff</color>
-    
     <!-- Places -->
     <color name="info_window_title">#E05F5E</color>
     <color name="info_window_snippet">#364550</color>

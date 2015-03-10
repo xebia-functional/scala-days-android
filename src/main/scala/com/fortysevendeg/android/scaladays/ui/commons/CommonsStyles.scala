@@ -91,9 +91,7 @@ trait HeaderAdapterStyles {
 
 trait ListStyles {
 
-  def rootStyle(backgroundColor: Option[Int] = None)(implicit appContext: AppContext): Tweak[FrameLayout] =
-    vMatchParent +
-      (backgroundColor map vBackgroundColorResource getOrElse vBlankBackground)
+  def rootStyle(implicit appContext: AppContext): Tweak[FrameLayout] = vMatchParent
 
   val recyclerViewStyle: Tweak[RecyclerView] =
     vMatchParent +

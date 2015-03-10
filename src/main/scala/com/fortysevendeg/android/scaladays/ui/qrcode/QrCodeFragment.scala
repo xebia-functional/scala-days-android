@@ -34,33 +34,40 @@ import com.fortysevendeg.macroid.extras.UIActionsExtras._
 import com.fortysevendeg.android.scaladays.ui.commons.IntegerResults._
 
 class QrCodeFragment
-    extends Fragment
-    with Contexts[Fragment]
-    with ComponentRegistryImpl {
+  extends Fragment
+  with Contexts[Fragment]
+  with ComponentRegistryImpl
+  with Layout {
 
   override implicit lazy val appContextProvider: AppContext = fragmentAppContext
 
-  private var fragmentLayout: Option[Layout] = None
-
   override def onCreateView(inflater: LayoutInflater, container: ViewGroup, savedInstanceState: Bundle): View = {
     analyticsServices.sendScreenName(analyticsContactsScreen)
-    val fLayout = new Layout
-    fragmentLayout = Some(fLayout)
+    content
+  }
+
+  val defaultDisplayMs: Long = 0L
+
+  val captureActionScan: String = "com.google.zxing.client.android.SCAN"
+
+  val displayDurationKey: String = "RESULT_DISPLAY_DURATION_MS"
+
+  override def onViewCreated(view: View, savedInstanceState: Bundle): Unit = {
+    super.onViewCreated(view, savedInstanceState)
     runUi(
-      fLayout.scanButton <~ On.click {
+      scanButton <~ On.click {
         Ui {
           analyticsServices.sendEvent(
             screenName = Some(analyticsContactsScreen),
             category = analyticsCategoryNavigate,
             action = analyticsContactsActionScanContact)
           val intent = new Intent(getActivity, classOf[CaptureActivity])
-          intent.setAction("com.google.zxing.client.android.SCAN")
-          intent.putExtra("RESULT_DISPLAY_DURATION_MS", 0L)
+          intent.setAction(captureActionScan)
+          intent.putExtra(displayDurationKey, defaultDisplayMs)
           startActivityForResult(intent, scanResult)
         }
       }
     )
-    fLayout.content
   }
 
   override def onActivityResult(requestCode: Int, resultCode: Int, data: Intent): Unit = {
@@ -77,8 +84,7 @@ class QrCodeFragment
   }
 
   def loadVCard(requestCode: Int, resultCode: Int, data: Intent) = {
-    val contents = Option(data.getStringExtra("SCAN_RESULT"))
-    contents map {
+    Option(data.getStringExtra("SCAN_RESULT")) map {
       case contents if contents.startsWith("BEGIN:VCARD") =>
         val result = new Result(contents, null, null, null)
         val vCardResultParser = new VCardResultParser()
@@ -86,11 +92,11 @@ class QrCodeFragment
         val addContactIntent = new Intent(ContactsContract.Intents.Insert.ACTION, ContactsContract.Contacts.CONTENT_URI)
         addContactIntent.setType(ContactsContract.Contacts.CONTENT_TYPE)
         Option(vcard.getNames) map {
-          case names if names.size > 0 => addContactIntent.putExtra(ContactsContract.Intents.Insert.NAME, names(0))
+          case names if names.size > 0 => addContactIntent.putExtra(ContactsContract.Intents.Insert.NAME, names(0).replace(";", " "))
         }
-        Option(vcard.getTitle) map { addContactIntent.putExtra(ContactsContract.Intents.Insert.JOB_TITLE, _) }
-        Option(vcard.getOrg) map { addContactIntent.putExtra(ContactsContract.Intents.Insert.COMPANY, _) }
-        Option(vcard.getNote) map { addContactIntent.putExtra(ContactsContract.Intents.Insert.NOTES, _) }
+        Option(vcard.getTitle) map (addContactIntent.putExtra(ContactsContract.Intents.Insert.JOB_TITLE, _))
+        Option(vcard.getOrg) map (addContactIntent.putExtra(ContactsContract.Intents.Insert.COMPANY, _))
+        Option(vcard.getNote) map (addContactIntent.putExtra(ContactsContract.Intents.Insert.NOTES, _))
         val phoneNumbers = Option(vcard.getPhoneNumbers) map (_.toList) getOrElse List.empty
         val phoneNumberCounter = (1 until phoneNumbers.size + 1).zip(phoneNumbers)
         phoneNumberCounter map {
@@ -116,8 +122,6 @@ class QrCodeFragment
     }
   }
 
-  def failed() = {
-    runUi(uiShortToast(R.string.scanError))
-  }
+  def failed() = runUi(uiShortToast(R.string.scanError))
 
 }
