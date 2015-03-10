@@ -94,15 +94,9 @@ class QrCodeFragment
         Option(vcard.getNames) map {
           case names if names.size > 0 => addContactIntent.putExtra(ContactsContract.Intents.Insert.NAME, names(0).replace(";", " "))
         }
-        Option(vcard.getTitle) map {
-          addContactIntent.putExtra(ContactsContract.Intents.Insert.JOB_TITLE, _)
-        }
-        Option(vcard.getOrg) map {
-          addContactIntent.putExtra(ContactsContract.Intents.Insert.COMPANY, _)
-        }
-        Option(vcard.getNote) map {
-          addContactIntent.putExtra(ContactsContract.Intents.Insert.NOTES, _)
-        }
+        Option(vcard.getTitle) map (addContactIntent.putExtra(ContactsContract.Intents.Insert.JOB_TITLE, _))
+        Option(vcard.getOrg) map (addContactIntent.putExtra(ContactsContract.Intents.Insert.COMPANY, _))
+        Option(vcard.getNote) map (addContactIntent.putExtra(ContactsContract.Intents.Insert.NOTES, _))
         val phoneNumbers = Option(vcard.getPhoneNumbers) map (_.toList) getOrElse List.empty
         val phoneNumberCounter = (1 until phoneNumbers.size + 1).zip(phoneNumbers)
         phoneNumberCounter map {
