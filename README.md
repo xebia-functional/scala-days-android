@@ -30,6 +30,32 @@ $ ./activator
 
 You can use your favorite IDE. At 47 Degrees we use IntelliJ with the Scala plugin. If you want to run this project from IntelliJ you only need to import the project.
 
+Add Debug Keys
+========
+
+You need to add a `debug.properties` file to the root project with the necessary keys to compile. The content should be:
+
+```
+google.map.key=***
+localytics.key=***
+google.project.number=***
+google.analytics.key=***
+twitter.app.key=***
+twitter.app.secret=***
+twitter.app.callback.host=***
+crashlytics.key=***
+```
+
+add a `crashlytics.properties` file with the following secret keys:
+
+```
+apiKey=***
+apiSecret=***
+``` 
+
+If you do not want to utilize the `Crashlytics` service, you should remove the `Crashlytics.start(this)` line in `MainActivity.scala`
+
+
 Contribute
 ========
 
