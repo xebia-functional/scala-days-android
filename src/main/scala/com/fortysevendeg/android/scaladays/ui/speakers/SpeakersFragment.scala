@@ -78,11 +78,12 @@ class SpeakersFragment
           override def onClick(speaker: Speaker): Unit = {
             speaker.twitter map {
               twitterName =>
+                val twitterUser = if (twitterName.startsWith("@")) twitterName.substring(1) else twitterName
                 analyticsServices.sendEvent(
                   screenName = Some(analyticsSpeakersScreen),
                   category = analyticsCategoryNavigate,
                   action = analyticsSpeakersActionGoToUser)
-                startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(resGetString(R.string.url_twitter_user, twitterName))))
+                startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(resGetString(R.string.url_twitter_user, twitterUser))))
             }
           }
         })
