@@ -96,7 +96,7 @@ trait AdapterStyles {
   def trackItemStyle(implicit appContext: AppContext): Tweak[TextView] =
     vWrapContent +
       tvSize(resGetInteger(R.integer.text_small)) +
-      tvColorResource(R.color.text_twitter_default) +
+      tvColorResource(R.color.text_schedule_room) +
       vPadding(0, 0, 0, resGetDimensionPixelSize(R.dimen.padding_default_extra_small))
 
   def nameItemStyle(implicit appContext: AppContext): Tweak[TextView] =
