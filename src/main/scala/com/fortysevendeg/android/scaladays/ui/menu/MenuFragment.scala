@@ -163,6 +163,7 @@ class MenuFragment
   }
 
   def conferenceSelected(menuItem: ConferenceMenuItem) = {
+    urlTickets = Some(menuItem.information.registrationSite)
     showConference(menuItem.information)
     saveSelectedConferenceId(menuItem.id)
     mainMenuAdapter.selectedItem map (itemSelected(_))
