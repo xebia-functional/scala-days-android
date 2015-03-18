@@ -84,6 +84,9 @@ class ScheduleAdapter(timeZone: String, scheduleItems: Seq[ScheduleItem], listen
             runUi(
               (vh.hour <~ tvDateTimeHourMinute(event.startTime, timeZone)) ~
                   (vh.name <~ tvText(event.title)) ~
+                  (vh.track <~ (event.track map (
+                    track => tvText(track.name) + vVisible)
+                    getOrElse vGone)) ~
                   (vh.room <~ (event.location map (
                     location => tvText(appContextProvider.get.getString(R.string.roomName, location.name)) + vVisible)
                     getOrElse vGone)) ~
