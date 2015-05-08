@@ -6,17 +6,17 @@ import com.fortysevendeg.android.scaladays.model.{Root, Conference}
 import com.fortysevendeg.android.scaladays.modules.json.impl.JsonServicesComponentImpl
 import com.fortysevendeg.android.scaladays.modules.json.models.{ApiConference, ApiRoot}
 import com.fortysevendeg.android.scaladays.utils.AsyncUtils._
-import com.fortysevendeg.android.scaladays.{AppContextTestSupport, BaseTestSupport}
-import macroid.AppContext
+import com.fortysevendeg.android.scaladays.{ContextWrapperTestSupport, BaseTestSupport}
+import macroid.ContextWrapper
 import org.specs2.mutable.Specification
 
 import scala.util.{Success, Failure, Try}
 
 trait JsonServicesComponentSupport
   extends JsonServicesComponentImpl
-  with AppContextTestSupport {
+  with ContextWrapperTestSupport {
 
-  override def loadJsonFile(appContext: AppContext): File = {
+  override def loadJsonFile(context: ContextWrapper): File = {
     mock[File]
   }
 

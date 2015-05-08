@@ -4,21 +4,21 @@ import java.io.File
 
 import com.fortysevendeg.android.scaladays.modules.net.impl.NetServicesComponentImpl
 import com.fortysevendeg.android.scaladays.utils.AsyncUtils._
-import com.fortysevendeg.android.scaladays.{AppContextTestSupport, BaseTestSupport}
-import macroid.AppContext
+import com.fortysevendeg.android.scaladays.{ContextWrapperTestSupport, BaseTestSupport}
+import macroid.ContextWrapper
 import org.specs2.mutable.Specification
 
 import scala.util.{Failure, Success, Try}
 
 trait NetServicesComponentSupport
   extends NetServicesComponentImpl
-  with AppContextTestSupport {
+  with ContextWrapperTestSupport {
 
   override def loadJsonFileName: String = "jsonFile"
   
   val fileExists = true
 
-  override def loadJsonFile(appContext: AppContext): File = {
+  override def loadJsonFile(context: ContextWrapper): File = {
     val mockFile = mock[File]
     mockFile.exists() returns fileExists
     mockFile
@@ -89,7 +89,7 @@ class NetServicesComponentSpec
     "return a positive response indicating file downloaded when JSON file available and force download flag set to true" in
       new NetServicesComponentSupport {
 
-        override def loadJsonFile(appContext: AppContext): File = {
+        override def loadJsonFile(context: ContextWrapper): File = {
           val mockFile = mock[File]
           mockFile.exists() returns true
           mockFile.delete() returns true
