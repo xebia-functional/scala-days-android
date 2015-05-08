@@ -18,13 +18,12 @@ package com.fortysevendeg.android.scaladays.receivers
 
 import android.content.{BroadcastReceiver, Context, Intent}
 import com.fortysevendeg.android.scaladays.utils.AlarmUtils
-import macroid.AppContext
 
 class BootReceiver
   extends BroadcastReceiver {
 
   override def onReceive(context: Context, intent: Intent): Unit = {
-    AlarmUtils.setReloadJsonService()(AppContext(context.getApplicationContext))
+    AlarmUtils.setReloadJsonService(context)
   }
 
 }

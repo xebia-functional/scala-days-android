@@ -25,7 +25,7 @@ import com.fortysevendeg.macroid.extras.LinearLayoutTweaks._
 import com.fortysevendeg.macroid.extras.ResourcesExtras._
 import com.fortysevendeg.macroid.extras.TextTweaks._
 import com.fortysevendeg.macroid.extras.ViewTweaks._
-import macroid.{AppContext, Tweak}
+import macroid.{ContextWrapper, Tweak}
 
 import scala.language.postfixOps
 
@@ -41,7 +41,7 @@ trait Styles {
     vWrapContent +
       ivSrc(R.drawable.placeholder_contact)
 
-  def qrMessageStyle(implicit appContext: AppContext): Tweak[TextView] =
+  def qrMessageStyle(implicit context: ContextWrapper): Tweak[TextView] =
     vWrapContent +
       tvText(R.string.scanMessage) +
       tvGravity(Gravity.CENTER) +
@@ -49,7 +49,7 @@ trait Styles {
       tvSize(resGetInteger(R.integer.text_big)) +
       vPaddings(resGetDimensionPixelSize(R.dimen.padding_default_big))
 
-  def qrButtonStyle(implicit appContext: AppContext): Tweak[TextView] =
+  def qrButtonStyle(implicit context: ContextWrapper): Tweak[TextView] =
     vWrapContent +
       vMinWidth(resGetDimensionPixelSize(R.dimen.width_button)) +
       tvText(R.string.scan) +

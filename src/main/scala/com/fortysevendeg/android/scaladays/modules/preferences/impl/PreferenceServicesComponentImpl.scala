@@ -18,12 +18,12 @@ package com.fortysevendeg.android.scaladays.modules.preferences.impl
 
 import android.content.Context
 import com.fortysevendeg.android.scaladays.modules.preferences._
-import com.fortysevendeg.macroid.extras.AppContextProvider
+import com.fortysevendeg.android.scaladays.commons.ContextWrapperProvider
 
 trait PreferenceServicesComponentImpl
     extends PreferenceServicesComponent {
 
-  self: AppContextProvider =>
+  self: ContextWrapperProvider =>
 
   val preferenceServices = new PreferenceServicesImpl
   
@@ -32,7 +32,7 @@ trait PreferenceServicesComponentImpl
   class PreferenceServicesImpl
       extends PreferenceServices {
     
-    lazy val sharedPreferences = appContextProvider.get.getSharedPreferences(preferencesName, Context.MODE_PRIVATE)
+    lazy val sharedPreferences = contextProvider.application.getSharedPreferences(preferencesName, Context.MODE_PRIVATE)
 
     def fetchIntPreference(request: PreferenceRequest[Int]): PreferenceResponse[Int] =
         PreferenceResponse(sharedPreferences.getInt(request.name, request.value))

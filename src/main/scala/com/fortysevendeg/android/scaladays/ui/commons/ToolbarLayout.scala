@@ -21,7 +21,7 @@ import android.view.{ContextThemeWrapper, View}
 import com.fortysevendeg.android.scaladays.R
 import com.fortysevendeg.macroid.extras.ResourcesExtras._
 import macroid.FullDsl._
-import macroid.{ActivityContext, AppContext, Ui}
+import macroid.{ActivityContextWrapper, Ui}
 
 import scala.language.postfixOps
 
@@ -29,7 +29,7 @@ trait ToolbarLayout extends ToolbarStyles {
 
   var toolBar = slot[Toolbar]
 
-  def toolBarLayout(children: Ui[View]*)(implicit appContext: AppContext, activityContext: ActivityContext): Ui[Toolbar] =
+  def toolBarLayout(children: Ui[View]*)(implicit context: ActivityContextWrapper): Ui[Toolbar] =
     Ui {
       val darkToolBar = getToolbarThemeDarkActionBar
       children foreach (uiView => darkToolBar.addView(uiView.get))
@@ -39,7 +39,7 @@ trait ToolbarLayout extends ToolbarStyles {
 
   def expandedToolBarLayout(children: Ui[View]*)
       (height: Int)
-      (implicit appContext: AppContext, activityContext: ActivityContext): Ui[Toolbar] =
+      (implicit context: ActivityContextWrapper): Ui[Toolbar] =
     Ui {
       val darkToolBar = getToolbarThemeDarkActionBar
       children foreach (uiView => darkToolBar.addView(uiView.get))
@@ -48,8 +48,8 @@ trait ToolbarLayout extends ToolbarStyles {
     } <~ toolbarStyle(height)
 
 
-  private def getToolbarThemeDarkActionBar(implicit activityContext: ActivityContext) = {
-    val contextTheme = new ContextThemeWrapper(activityContext.get, R.style.ThemeOverlay_AppCompat_Dark_ActionBar)
+  private def getToolbarThemeDarkActionBar(implicit context: ActivityContextWrapper) = {
+    val contextTheme = new ContextThemeWrapper(context.getOriginal, R.style.ThemeOverlay_AppCompat_Dark_ActionBar)
     val darkToolBar = new Toolbar(contextTheme)
     darkToolBar.setPopupTheme(R.style.ThemeOverlay_AppCompat_Light)
     darkToolBar

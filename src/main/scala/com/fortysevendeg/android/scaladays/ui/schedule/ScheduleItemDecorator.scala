@@ -21,14 +21,14 @@ import android.graphics.drawable.ColorDrawable
 import android.support.v7.widget.RecyclerView
 import android.support.v7.widget.RecyclerView.State
 import com.fortysevendeg.android.scaladays.R
-import macroid.AppContext
+import macroid.ContextWrapper
 import macroid.FullDsl._
 
 import scala.language.postfixOps
 
-class ScheduleItemDecorator(implicit appContext: AppContext) extends RecyclerView.ItemDecoration {
+class ScheduleItemDecorator(implicit context: ContextWrapper) extends RecyclerView.ItemDecoration {
 
-  val divider = new ColorDrawable(appContext.get.getResources.getColor(R.color.list_line_schedule))
+  val divider = new ColorDrawable(context.application.getResources.getColor(R.color.list_line_schedule))
 
   override def onDrawOver(c: Canvas, parent: RecyclerView, state: State): Unit = {
     val left = parent.getPaddingLeft

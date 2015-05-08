@@ -31,7 +31,7 @@ import com.fortysevendeg.android.scaladays.ui.commons.{ListLayout, UiServices}
 import com.fortysevendeg.android.scaladays.ui.scheduledetail.ScheduleDetailActivity
 import com.fortysevendeg.macroid.extras.RecyclerViewTweaks._
 import macroid.FullDsl._
-import macroid.{AppContext, Contexts, Ui}
+import macroid.{ContextWrapper, Contexts, Ui}
 import com.fortysevendeg.android.scaladays.ui.commons.AnalyticStrings._
 
 import scala.concurrent.ExecutionContext.Implicits.global
@@ -45,7 +45,7 @@ class ScheduleFragment
   with ScheduleConversion
   with ListLayout {
 
-  override implicit lazy val appContextProvider: AppContext = fragmentAppContext
+  override lazy val contextProvider: ContextWrapper = fragmentContextWrapper
 
   override def onCreate(savedInstanceState: Bundle): Unit = {
     super.onCreate(savedInstanceState)
@@ -61,7 +61,7 @@ class ScheduleFragment
     super.onViewCreated(view, savedInstanceState)
     runUi(
       (recyclerView
-        <~ rvLayoutManager(new LinearLayoutManager(appContextProvider.get))
+        <~ rvLayoutManager(new LinearLayoutManager(fragmentContextWrapper.getOriginal))
         <~ rvAddItemDecoration(new ScheduleItemDecorator())) ~
         (reloadButton <~ On.click(Ui {
           loadSchedule(favorites = false, forceDownload = true)
@@ -148,7 +148,7 @@ class ScheduleFragment
                       analyticsCategoryNavigate,
                       analyticsScheduleActionGoToDetail,
                       Some(event.title))
-                    val intent = new Intent(fragmentActivityContext.get, classOf[ScheduleDetailActivity])
+                    val intent = new Intent(fragmentContextWrapper.getOriginal, classOf[ScheduleDetailActivity])
                     intent.putExtra(ScheduleDetailActivity.scheduleItemKey, event)
                     intent.putExtra(ScheduleDetailActivity.timeZoneKey, timeZone)
                     startActivityForResult(intent, detailResult)

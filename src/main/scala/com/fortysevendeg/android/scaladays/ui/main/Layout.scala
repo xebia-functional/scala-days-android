@@ -20,7 +20,7 @@ import android.support.v4.widget.DrawerLayout
 import android.widget.{FrameLayout, LinearLayout}
 import com.fortysevendeg.android.scaladays.ui.commons.ToolbarLayout
 import macroid.FullDsl._
-import macroid.{ActivityContext, AppContext, IdGeneration}
+import macroid.{ActivityContextWrapper, IdGeneration}
 
 trait Layout
     extends ToolbarLayout
@@ -33,7 +33,7 @@ trait Layout
 
   var fragmentContent = slot[FrameLayout]
 
-  def layout(implicit appContext: AppContext, context: ActivityContext) = {
+  def layout(implicit context: ActivityContextWrapper) = {
     getUi(
       l[DrawerLayout](
         l[LinearLayout](

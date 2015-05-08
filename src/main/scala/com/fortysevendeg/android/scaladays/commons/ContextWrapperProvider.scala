@@ -5,7 +5,7 @@
  * not use this file except in compliance with the License. You may obtain
  * a copy of the License at
  *
- *   http://www.apache.org/licenses/LICENSE-2.0
+ *     http://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -14,27 +14,12 @@
  * limitations under the License.
  */
 
-package com.fortysevendeg.android.scaladays.ui.places
+package com.fortysevendeg.android.scaladays.commons
 
-import android.widget.{LinearLayout, TextView}
-import macroid.FullDsl._
-import macroid.ActivityContextWrapper
+import macroid.ContextWrapper
 
-class PlacesInfoWindowLayout(implicit context: ActivityContextWrapper)
-  extends PlacesInfoWindowStyles {
+trait ContextWrapperProvider {
 
-  var title = slot[TextView]
-  
-  var snippet = slot[TextView]
-
-  val content = getUi(
-    l[LinearLayout](
-      w[TextView] <~ wire(title) <~ titleStyle,
-      w[TextView] <~ wire(snippet) <~ snippetStyle
-    ) <~ windowStyle
-  )
-
-  def layout = content
-  
+  implicit val contextProvider : ContextWrapper
 
 }

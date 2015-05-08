@@ -26,10 +26,10 @@ import com.fortysevendeg.macroid.extras.ImageViewTweaks._
 import com.fortysevendeg.macroid.extras.TextTweaks._
 import com.fortysevendeg.macroid.extras.ViewTweaks._
 import macroid.FullDsl._
-import macroid.{ActivityContext, AppContext}
+import macroid.ActivityContextWrapper
 
 class SpeakersAdapter(speakers: Seq[Speaker], listener: RecyclerClickListener)
-    (implicit context: ActivityContext, appContext: AppContext)
+    (implicit context: ActivityContextWrapper)
     extends RecyclerView.Adapter[ViewHolderSpeakersAdapter] {
 
   val recyclerClickListener = listener
@@ -46,7 +46,7 @@ class SpeakersAdapter(speakers: Seq[Speaker], listener: RecyclerClickListener)
 
   override def onBindViewHolder(viewHolder: ViewHolderSpeakersAdapter, position: Int): Unit = {
     val speaker = speakers(position)
-    val avatarSize = appContext.get.getResources.getDimensionPixelSize(R.dimen.size_avatar)
+    val avatarSize = context.application.getResources.getDimensionPixelSize(R.dimen.size_avatar)
     viewHolder.content.setTag(position)
     runUi(
       (viewHolder.avatar <~ speaker.picture.map(roundedImage(_, R.drawable.placeholder_circle, avatarSize)).getOrElse(ivSrc(R.drawable.placeholder_avatar_failed))) ~

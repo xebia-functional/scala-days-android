@@ -20,7 +20,7 @@ import com.fortysevendeg.android.scaladays.model.Conference
 import com.fortysevendeg.android.scaladays.modules.json.{JsonRequest, JsonServicesComponent}
 import com.fortysevendeg.android.scaladays.modules.net.{NetRequest, NetServicesComponent}
 import com.fortysevendeg.android.scaladays.modules.preferences.{PreferenceRequest, PreferenceServicesComponent}
-import com.fortysevendeg.macroid.extras.AppContextProvider
+import com.fortysevendeg.android.scaladays.commons.ContextWrapperProvider
 
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
@@ -30,7 +30,7 @@ trait UiServices {
   self : PreferenceServicesComponent 
     with JsonServicesComponent 
     with NetServicesComponent 
-    with AppContextProvider =>
+    with ContextWrapperProvider =>
 
   def getNamePreferenceFavorite(eventId: Int) = "%d_%d".format(loadSelectedConferenceId, eventId)
   

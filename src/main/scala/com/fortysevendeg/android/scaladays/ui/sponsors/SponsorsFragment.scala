@@ -28,7 +28,7 @@ import com.fortysevendeg.android.scaladays.ui.commons.AnalyticStrings._
 import com.fortysevendeg.android.scaladays.ui.commons.{ListLayout, UiServices}
 import com.fortysevendeg.macroid.extras.RecyclerViewTweaks._
 import macroid.FullDsl._
-import macroid.{AppContext, Contexts, Ui}
+import macroid.{ContextWrapper, Contexts, Ui}
 
 import scala.concurrent.ExecutionContext.Implicits.global
 
@@ -39,7 +39,7 @@ class SponsorsFragment
   with UiServices
   with ListLayout {
 
-  override implicit lazy val appContextProvider: AppContext = fragmentAppContext
+  override lazy val contextProvider: ContextWrapper = fragmentContextWrapper
 
   override def onCreateView(inflater: LayoutInflater, container: ViewGroup, savedInstanceState: Bundle): View = {
     analyticsServices.sendScreenName(analyticsSponsorsScreen)
@@ -50,7 +50,7 @@ class SponsorsFragment
     super.onViewCreated(view, savedInstanceState)
     runUi(
       (recyclerView
-        <~ rvLayoutManager(new LinearLayoutManager(appContextProvider.get))) ~
+        <~ rvLayoutManager(new LinearLayoutManager(fragmentContextWrapper.application))) ~
         (reloadButton <~ On.click(Ui {
           loadSponsors(forceDownload = true)
         })))

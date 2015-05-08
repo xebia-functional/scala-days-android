@@ -20,7 +20,7 @@ import android.support.v7.widget.RecyclerView
 import android.widget._
 import com.fortysevendeg.android.scaladays.ui.components.CheckableFrameLayout
 import macroid.FullDsl._
-import macroid.{ActivityContext, AppContext}
+import macroid.ActivityContextWrapper
 
 trait Layout
     extends Styles {
@@ -37,7 +37,7 @@ trait Layout
 
   var recyclerView = slot[RecyclerView]
 
-  def content(implicit appContext: AppContext, context: ActivityContext) = getUi(
+  def content(implicit context: ActivityContextWrapper) = getUi(
     l[LinearLayout](
       l[FrameLayout](
         w[ImageView] <~ wire(bigImage) <~ bigImageStyle,
@@ -52,14 +52,14 @@ trait Layout
 
 }
 
-class MainMenuAdapterLayout(implicit context: ActivityContext, appContext: AppContext) 
+class MainMenuAdapterLayout(implicit context: ActivityContextWrapper)
   extends MainMenuAdapterStyles {
 
   var menuItem = slot[TextView]
 
   val content = layout
 
-  private def layout(implicit appContext: AppContext, context: ActivityContext) = getUi(
+  private def layout(implicit context: ActivityContextWrapper) = getUi(
     l[CheckableFrameLayout](
       w[TextView] <~ wire(menuItem) <~ textMenuItemStyle
     ) <~ mainMenuItemStyle
@@ -67,7 +67,7 @@ class MainMenuAdapterLayout(implicit context: ActivityContext, appContext: AppCo
 }
 
 class ViewHolderMainMenuAdapter(adapterLayout: MainMenuAdapterLayout)
-  (implicit context: ActivityContext, appContext: AppContext)
+  (implicit context: ActivityContextWrapper)
     extends RecyclerView.ViewHolder(adapterLayout.content) {
 
   val content = adapterLayout.content
@@ -76,7 +76,7 @@ class ViewHolderMainMenuAdapter(adapterLayout: MainMenuAdapterLayout)
 
 }
 
-class ConferenceMenuAdapterLayout(implicit context: ActivityContext, appContext: AppContext) 
+class ConferenceMenuAdapterLayout(implicit context: ActivityContextWrapper)
   extends ConferenceMenuAdapterStyles {
 
   var menuItem = slot[TextView]
@@ -85,7 +85,7 @@ class ConferenceMenuAdapterLayout(implicit context: ActivityContext, appContext:
 
   val content = layout
 
-  private def layout(implicit appContext: AppContext, context: ActivityContext) = getUi(
+  private def layout(implicit context: ActivityContextWrapper) = getUi(
     l[LinearLayout](
       w[ImageView] <~ wire(menuIcon) <~ conferenceMenuItemIconStyle,
       w[TextView] <~ wire(menuItem) <~ conferenceMenuItemStyle
@@ -94,7 +94,7 @@ class ConferenceMenuAdapterLayout(implicit context: ActivityContext, appContext:
 }
 
 class ViewHolderConferenceMenuAdapter(adapterLayout: ConferenceMenuAdapterLayout)
-  (implicit context: ActivityContext, appContext: AppContext)
+  (implicit context: ActivityContextWrapper)
     extends RecyclerView.ViewHolder(adapterLayout.content) {
 
   val content = adapterLayout.content

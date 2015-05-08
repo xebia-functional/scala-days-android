@@ -25,40 +25,40 @@ import com.fortysevendeg.macroid.extras.ResourcesExtras._
 import com.fortysevendeg.macroid.extras.TextTweaks._
 import com.fortysevendeg.macroid.extras.ViewTweaks._
 import macroid.FullDsl._
-import macroid.{AppContext, Tweak}
+import macroid.{ContextWrapper, Tweak}
 
 import scala.language.postfixOps
 
 trait AdapterStyles {
 
-  def itemContentStyle(implicit appContext: AppContext): Tweak[LinearLayout] =
+  def itemContentStyle(implicit context: ContextWrapper): Tweak[LinearLayout] =
     vMatchParent +
       llHorizontal +
       vPaddings(resGetDimensionPixelSize(R.dimen.padding_default)) +
       vBackground(R.drawable.background_list_default)
 
-  def avatarStyle(implicit appContext: AppContext): Tweak[ImageView] = {
+  def avatarStyle(implicit context: ContextWrapper): Tweak[ImageView] = {
     val avatarSize = resGetDimensionPixelSize(R.dimen.size_avatar)
     lp[LinearLayout](avatarSize, avatarSize) +
       ivScaleType(ScaleType.CENTER_CROP)
   }
 
-  def itemNoAvatarContentStyle(implicit appContext: AppContext): Tweak[LinearLayout] =
+  def itemNoAvatarContentStyle(implicit context: ContextWrapper): Tweak[LinearLayout] =
     vMatchWidth +
       llVertical +
       vPadding(resGetDimensionPixelSize(R.dimen.padding_default), 0, 0, 0)
 
-  def nameItemStyle(implicit appContext: AppContext): Tweak[TextView] =
+  def nameItemStyle(implicit context: ContextWrapper): Tweak[TextView] =
     vWrapContent +
       tvSize(resGetInteger(R.integer.text_big)) +
       tvColorResource(R.color.text_title_default)
 
-  def twitterItemStyle(implicit appContext: AppContext): Tweak[TextView] =
+  def twitterItemStyle(implicit context: ContextWrapper): Tweak[TextView] =
     vWrapContent +
       tvSize(resGetInteger(R.integer.text_small)) +
       tvColorResource(R.color.text_twitter_default)
 
-  def bioItemStyle(implicit appContext: AppContext): Tweak[TextView] =
+  def bioItemStyle(implicit context: ContextWrapper): Tweak[TextView] =
     vWrapContent +
       tvSize(resGetInteger(R.integer.text_medium)) +
       tvColorResource(R.color.text_title_default) +

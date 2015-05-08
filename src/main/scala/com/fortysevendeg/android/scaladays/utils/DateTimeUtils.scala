@@ -18,7 +18,7 @@ package com.fortysevendeg.android.scaladays.utils
 
 import android.text.format.DateFormat
 import com.fortysevendeg.macroid.extras.ResourcesExtras._
-import macroid.AppContext
+import macroid.ContextWrapper
 import org.joda.time.format.{DateTimeFormat, DateTimeFormatterBuilder, DateTimeFormatter, ISODateTimeFormat}
 import org.joda.time.{DateTimeFieldType, DateTime, DateTimeZone}
 import org.ocpsoft.prettytime.PrettyTime
@@ -48,15 +48,15 @@ object DateTimeUtils {
   def convertTimeZone(fromDateTime: DateTime, toTimeZone: String): DateTime =
     new DateTime(fromDateTime, DateTimeZone.forID(toTimeZone))
 
-  def parseTime(dateTime: DateTime, timeZone: String)(implicit appContext: AppContext): String = {
-    if (DateFormat.is24HourFormat(appContext.get)) {
+  def parseTime(dateTime: DateTime, timeZone: String)(implicit context: ContextWrapper): String = {
+    if (DateFormat.is24HourFormat(context.application)) {
       convertTimeZone(dateTime, timeZone).toString(ISODateFormatter24hTime)
     } else {
       convertTimeZone(dateTime, timeZone).toString(ISODateFormatter12hTime)
     }
   }
 
-  def parseDateSchedule(dateTime: DateTime, timeZone: String)(implicit appContext: AppContext): String = {
+  def parseDateSchedule(dateTime: DateTime, timeZone: String)(implicit context: ContextWrapper): String = {
     val dateTimeZone = convertTimeZone(dateTime, timeZone)
     val dayOfMonth = dateTimeZone.toString(ISODateFormatterDayOfMonth)
     val monthOfYear = resGetString("monthOfYear%s".format(dateTimeZone.toString(ISODateFormatterMonthOfYear))).getOrElse("")
@@ -64,7 +64,7 @@ object DateTimeUtils {
     "%s (%s %s)".format(dayOfWeek, dayOfMonth, monthOfYear)
   }
 
-  def parseDateScheduleTime(dateTime: DateTime, timeZone: String)(implicit appContext: AppContext): String = {
+  def parseDateScheduleTime(dateTime: DateTime, timeZone: String)(implicit context: ContextWrapper): String = {
     val dateTimeZone = convertTimeZone(dateTime, timeZone)
     val dayOfMonth = dateTimeZone.toString(ISODateFormatterDayOfMonth)
     val monthOfYear = resGetString("monthOfYear%s".format(dateTimeZone.toString(ISODateFormatterMonthOfYear))).getOrElse("")

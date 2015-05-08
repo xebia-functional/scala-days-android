@@ -22,7 +22,7 @@ import com.fortysevendeg.android.scaladays.R
 import com.fortysevendeg.android.scaladays.modules.net.{NetResponse, NetRequest, NetServices, NetServicesComponent}
 import com.fortysevendeg.android.scaladays.scaladays.Service
 import com.fortysevendeg.android.scaladays.utils.{FileUtils, NetUtils}
-import com.fortysevendeg.macroid.extras.AppContextProvider
+import com.fortysevendeg.android.scaladays.commons.ContextWrapperProvider
 
 import scala.concurrent.Future
 import scala.concurrent.ExecutionContext.Implicits.global
@@ -33,19 +33,19 @@ trait NetServicesComponentImpl
     with FileUtils
     with NetUtils {
 
-  self: AppContextProvider =>
+  self: ContextWrapperProvider =>
 
   val netServices = new NetServicesImpl
   
   def loadJsonFileName: String =
-    appContextProvider.get.getString(R.string.url_json_conference)
+    contextProvider.application.getString(R.string.url_json_conference)
 
   class NetServicesImpl
       extends NetServices {
 
     override def saveJsonInLocal: Service[NetRequest, NetResponse] = request =>
       Future {
-        val file = loadJsonFile(appContextProvider)
+        val file = loadJsonFile(contextProvider)
         if (request.forceDownload || !file.exists()) {
           val result = getJson(loadJsonFileName) map (writeJsonFile(file, _))
           result match {

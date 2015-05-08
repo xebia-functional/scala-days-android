@@ -34,7 +34,7 @@ import com.fortysevendeg.android.scaladays.ui.commons.{ListLayout, LineItemDecor
 import com.fortysevendeg.macroid.extras.RecyclerViewTweaks._
 import com.fortysevendeg.macroid.extras.ResourcesExtras._
 import macroid.FullDsl._
-import macroid.{AppContext, Contexts, Ui}
+import macroid.{ContextWrapper, Contexts, Ui}
 
 import scala.concurrent.ExecutionContext.Implicits.global
 import com.fortysevendeg.android.scaladays.ui.commons.IntegerResults._
@@ -46,7 +46,7 @@ class SocialFragment
   with UiServices
   with ListLayout {
 
-  override implicit lazy val appContextProvider: AppContext = fragmentAppContext
+  override lazy val contextProvider: ContextWrapper = fragmentContextWrapper
 
   private var hashtag: Option[String] = None
 
@@ -64,7 +64,7 @@ class SocialFragment
     super.onViewCreated(view, savedInstanceState)
     runUi(
       (recyclerView
-        <~ rvLayoutManager(new LinearLayoutManager(appContextProvider.get))
+        <~ rvLayoutManager(new LinearLayoutManager(fragmentContextWrapper.application))
         <~ rvAddItemDecoration(new LineItemDecorator())) ~
         (reloadButton <~ On.click(Ui {
           search()

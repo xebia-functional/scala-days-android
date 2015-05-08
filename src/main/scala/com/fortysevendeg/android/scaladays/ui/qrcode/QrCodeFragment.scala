@@ -29,7 +29,7 @@ import com.google.zxing.Result
 import com.google.zxing.client.android.CaptureActivity
 import com.google.zxing.client.result.VCardResultParser
 import macroid.FullDsl._
-import macroid.{Ui, AppContext, Contexts}
+import macroid.{Ui, ContextWrapper, Contexts}
 import com.fortysevendeg.macroid.extras.UIActionsExtras._
 import com.fortysevendeg.android.scaladays.ui.commons.IntegerResults._
 
@@ -39,7 +39,7 @@ class QrCodeFragment
   with ComponentRegistryImpl
   with Layout {
 
-  override implicit lazy val appContextProvider: AppContext = fragmentAppContext
+  override lazy val contextProvider: ContextWrapper = fragmentContextWrapper
 
   override def onCreateView(inflater: LayoutInflater, container: ViewGroup, savedInstanceState: Bundle): View = {
     analyticsServices.sendScreenName(analyticsContactsScreen)

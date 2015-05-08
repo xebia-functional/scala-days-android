@@ -21,12 +21,12 @@ import android.view.View.OnClickListener
 import android.view.{View, ViewGroup}
 import com.fortysevendeg.android.scaladays.R
 import MenuSection._
-import macroid.{IdGeneration, ActivityContext, AppContext}
+import macroid.{IdGeneration, ActivityContextWrapper}
 import com.fortysevendeg.macroid.extras.TextTweaks._
 import macroid.FullDsl._
 
 class MainMenuAdapter(listener: MainMenuClickListener)
-    (implicit context: ActivityContext, appContext: AppContext)
+    (implicit context: ActivityContextWrapper)
     extends RecyclerView.Adapter[ViewHolderMainMenuAdapter]
     with IdGeneration {
   
@@ -36,28 +36,28 @@ class MainMenuAdapter(listener: MainMenuClickListener)
 
   val list = List(
     MainMenuItem(Id.schedule,
-      appContext.app.getString(R.string.schedule), 
+      context.application.getString(R.string.schedule), 
       R.drawable.menu_icon_schedule, SCHEDULE),
     MainMenuItem(Id.social,
-      appContext.app.getString(R.string.social), 
+      context.application.getString(R.string.social), 
       R.drawable.menu_icon_social, SOCIAL),
     MainMenuItem(Id.speaker,
-      appContext.app.getString(R.string.speakers), 
+      context.application.getString(R.string.speakers), 
       R.drawable.menu_icon_speakers, SPEAKERS),
     MainMenuItem(Id.tickets,
-      appContext.app.getString(R.string.tickets), 
+      context.application.getString(R.string.tickets), 
       R.drawable.menu_icon_tickets, TICKETS),
     MainMenuItem(Id.contacts,
-      appContext.app.getString(R.string.contacts), 
+      context.application.getString(R.string.contacts), 
       R.drawable.menu_icon_contact, CONTACTS),
     MainMenuItem(Id.sponsors,
-      appContext.app.getString(R.string.sponsors), 
+      context.application.getString(R.string.sponsors), 
       R.drawable.menu_icon_sponsors, SPONSORS),
     MainMenuItem(Id.places,
-      appContext.app.getString(R.string.places), 
+      context.application.getString(R.string.places), 
       R.drawable.menu_icon_places, PLACES),
     MainMenuItem(Id.about,
-      appContext.app.getString(R.string.about), 
+      context.application.getString(R.string.about), 
       R.drawable.menu_icon_about, ABOUT))
 
   override def onCreateViewHolder(parentViewGroup: ViewGroup, i: Int): ViewHolderMainMenuAdapter = {

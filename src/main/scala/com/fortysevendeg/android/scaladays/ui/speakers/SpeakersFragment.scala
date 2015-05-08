@@ -27,7 +27,7 @@ import com.fortysevendeg.android.scaladays.model.Speaker
 import com.fortysevendeg.android.scaladays.modules.ComponentRegistryImpl
 import com.fortysevendeg.android.scaladays.ui.commons.AnalyticStrings._
 import com.fortysevendeg.android.scaladays.ui.commons.{ListLayout, UiServices, LineItemDecorator}
-import macroid.{Ui, AppContext, Contexts}
+import macroid.{Ui, ContextWrapper, Contexts}
 import scala.concurrent.ExecutionContext.Implicits.global
 import macroid.FullDsl._
 import com.fortysevendeg.macroid.extras.ResourcesExtras._
@@ -40,7 +40,7 @@ class SpeakersFragment
   with UiServices
   with ListLayout {
 
-  override implicit lazy val appContextProvider: AppContext = fragmentAppContext
+  override lazy val contextProvider: ContextWrapper = fragmentContextWrapper
 
   override def onCreateView(inflater: LayoutInflater, container: ViewGroup, savedInstanceState: Bundle): View = {
     analyticsServices.sendScreenName(analyticsSpeakersScreen)
@@ -51,7 +51,7 @@ class SpeakersFragment
     super.onViewCreated(view, savedInstanceState)
     runUi(
       (recyclerView
-        <~ rvLayoutManager(new LinearLayoutManager(appContextProvider.get))
+        <~ rvLayoutManager(new LinearLayoutManager(fragmentContextWrapper.application))
         <~ rvAddItemDecoration(new LineItemDecorator())) ~
         (reloadButton <~ On.click(Ui {
           loadSpeakers(forceDownload = true)

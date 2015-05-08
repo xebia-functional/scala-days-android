@@ -26,10 +26,10 @@ import com.fortysevendeg.android.scaladays.ui.sponsors.SponsorsAdapter._
 import com.fortysevendeg.macroid.extras.TextTweaks._
 import com.fortysevendeg.macroid.extras.ViewTweaks._
 import macroid.FullDsl._
-import macroid.{ActivityContext, AppContext}
+import macroid.ActivityContextWrapper
 
 class SponsorsAdapter(sponsorItems: Seq[SponsorItem], listener: RecyclerClickListener)
-    (implicit context: ActivityContext, appContext: AppContext)
+    (implicit context: ActivityContextWrapper)
     extends RecyclerView.Adapter[RecyclerView.ViewHolder] {
 
   val recyclerClickListener = listener

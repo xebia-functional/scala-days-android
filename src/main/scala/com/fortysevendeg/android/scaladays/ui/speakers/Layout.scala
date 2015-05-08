@@ -19,9 +19,9 @@ package com.fortysevendeg.android.scaladays.ui.speakers
 import android.support.v7.widget.RecyclerView
 import android.widget._
 import macroid.FullDsl._
-import macroid.{ActivityContext, AppContext}
+import macroid.ActivityContextWrapper
 
-class SpeakersLayoutAdapter(implicit context: ActivityContext, appContext: AppContext)
+class SpeakersLayoutAdapter(implicit context: ActivityContextWrapper)
     extends AdapterStyles {
 
   var avatar = slot[ImageView]
@@ -34,7 +34,7 @@ class SpeakersLayoutAdapter(implicit context: ActivityContext, appContext: AppCo
 
   val content = layout
 
-  private def layout(implicit appContext: AppContext, context: ActivityContext) = getUi(
+  private def layout(implicit context: ActivityContextWrapper) = getUi(
     l[LinearLayout](
       w[ImageView] <~ wire(avatar) <~ avatarStyle,
       l[LinearLayout](
@@ -46,7 +46,7 @@ class SpeakersLayoutAdapter(implicit context: ActivityContext, appContext: AppCo
   )
 }
 
-class ViewHolderSpeakersAdapter(adapter: SpeakersLayoutAdapter)(implicit context: ActivityContext, appContext: AppContext)
+class ViewHolderSpeakersAdapter(adapter: SpeakersLayoutAdapter)(implicit context: ActivityContextWrapper)
     extends RecyclerView.ViewHolder(adapter.content) {
 
   val content = adapter.content

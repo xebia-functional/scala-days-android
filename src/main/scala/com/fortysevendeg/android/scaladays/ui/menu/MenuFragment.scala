@@ -46,7 +46,7 @@ class MenuFragment
   with IdGeneration
   with Layout {
 
-  override implicit lazy val appContextProvider: AppContext = fragmentAppContext
+  override implicit lazy val contextProvider: ContextWrapper = fragmentContextWrapper
 
   val defaultItem = 0
 
@@ -68,7 +68,7 @@ class MenuFragment
             url =>
               val intent = new Intent(Intent.ACTION_VIEW,
                 Uri.parse(url))
-              fragmentActivityContext.get.startActivity(intent)
+              fragmentContextWrapper.getOriginal.startActivity(intent)
           }
         case _ => itemSelected(mainMenuItem)
       }
@@ -95,7 +95,7 @@ class MenuFragment
   override def onCreateView(inflater: LayoutInflater, container: ViewGroup, savedInstanceState: Bundle): View = {
     val root = content
     runUi(
-      recyclerView <~ rvLayoutManager(new LinearLayoutManager(appContextProvider.get))
+      recyclerView <~ rvLayoutManager(new LinearLayoutManager(fragmentContextWrapper.application))
     )
     root
   }

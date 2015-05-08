@@ -22,11 +22,11 @@ import com.fortysevendeg.macroid.extras.ResourcesExtras._
 import com.fortysevendeg.macroid.extras.TextTweaks._
 import com.fortysevendeg.macroid.extras.ViewTweaks._
 import com.fortysevendeg.macroid.extras.LinearLayoutTweaks._
-import macroid.{AppContext, Tweak}
+import macroid.{ContextWrapper, Tweak}
 
 trait PlacesInfoWindowStyles {
 
-  def windowStyle(implicit appContext: AppContext): Tweak[LinearLayout] =
+  def windowStyle(implicit context: ContextWrapper): Tweak[LinearLayout] =
     vWrapContent +
       llVertical +
       vPadding(
@@ -36,13 +36,13 @@ trait PlacesInfoWindowStyles {
         resGetDimensionPixelSize(R.dimen.padding_info_window_bottom)) +
       vBackground(R.drawable.map_popover)
 
-  def titleStyle(implicit appContext: AppContext): Tweak[TextView] =
+  def titleStyle(implicit context: ContextWrapper): Tweak[TextView] =
     vWrapContent +
       tvSize(resGetInteger(R.integer.text_small)) +
       tvColorResource(R.color.info_window_title) +
       vPadding(0, 0, 0, resGetDimensionPixelSize(R.dimen.padding_info_window_inner))
 
-  def snippetStyle(implicit appContext: AppContext): Tweak[TextView] =
+  def snippetStyle(implicit context: ContextWrapper): Tweak[TextView] =
     vWrapContent +
       tvSize(resGetInteger(R.integer.text_info_window_snippet)) +
       tvColorResource(R.color.info_window_snippet) +

@@ -18,14 +18,14 @@ package com.fortysevendeg.android.scaladays.ui.qrcode
 
 import android.widget._
 import macroid.FullDsl._
-import macroid.{ActivityContext, AppContext}
+import macroid.ActivityContextWrapper
 
 trait Layout
   extends Styles {
 
   var scanButton = slot[Button]
 
-  def content(implicit appContext: AppContext, context: ActivityContext) = getUi(
+  def content(implicit context: ActivityContextWrapper) = getUi(
     l[LinearLayout](
       w[ImageView] <~ qrImageStyle,
       w[TextView] <~ qrMessageStyle,

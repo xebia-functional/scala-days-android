@@ -19,16 +19,15 @@ package com.fortysevendeg.android.scaladays.utils
 import android.app.{PendingIntent, AlarmManager}
 import android.content.{Intent, Context}
 import com.fortysevendeg.android.scaladays.services.ReloadJsonService
-import macroid.AppContext
 
 object AlarmUtils {
 
   val fourHours = 1000 * 60 * 60 * 4
 
-  def setReloadJsonService()(implicit appContext: AppContext): Unit = {
-    val am = appContext.get.getSystemService(Context.ALARM_SERVICE).asInstanceOf[AlarmManager]
-    val i = new Intent(appContext.get, classOf[ReloadJsonService])
-    val pendingIntent = PendingIntent.getService(appContext.get, 0, i, 0)
+  def setReloadJsonService(context: Context): Unit = {
+    val am = context.getSystemService(Context.ALARM_SERVICE).asInstanceOf[AlarmManager]
+    val i = new Intent(context, classOf[ReloadJsonService])
+    val pendingIntent = PendingIntent.getService(context, 0, i, 0)
     am.setInexactRepeating(AlarmManager.RTC_WAKEUP, System.currentTimeMillis() + fourHours, fourHours, pendingIntent)
   }
 

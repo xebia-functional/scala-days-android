@@ -20,7 +20,7 @@ import android.support.v7.widget.RecyclerView
 import android.widget.{FrameLayout, LinearLayout, ProgressBar}
 import com.fortysevendeg.macroid.extras.RecyclerViewTweaks._
 import macroid.FullDsl._
-import macroid.{ActivityContext, AppContext}
+import macroid.ActivityContextWrapper
 import com.fortysevendeg.macroid.extras.ViewTweaks._
 
 trait ListLayout
@@ -33,7 +33,7 @@ trait ListLayout
 
   var placeholderContent = slot[LinearLayout]
 
-  def content(implicit appContext: AppContext, context: ActivityContext) = getUi(
+  def content(implicit context: ActivityContextWrapper) = getUi(
     l[FrameLayout](
       w[ProgressBar] <~ wire(progressBar) <~ progressBarStyle,
       w[RecyclerView] <~ wire(recyclerView) <~ recyclerViewStyle,

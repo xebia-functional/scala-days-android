@@ -18,7 +18,7 @@ package com.fortysevendeg.android.scaladays.ui.places
 
 import android.content.Intent
 import android.net.Uri
-import android.os.{Handler, Bundle}
+import android.os.Bundle
 import android.support.v4.app.Fragment
 import com.fortysevendeg.android.scaladays.model.Venue
 import com.fortysevendeg.android.scaladays.modules.ComponentRegistryImpl
@@ -26,9 +26,9 @@ import com.fortysevendeg.android.scaladays.ui.commons.AnalyticStrings._
 import com.fortysevendeg.android.scaladays.ui.commons.UiServices
 import com.google.android.gms.maps.GoogleMap.OnInfoWindowClickListener
 import com.google.android.gms.maps._
-import com.google.android.gms.maps.model.{Marker, BitmapDescriptorFactory, LatLng, MarkerOptions}
+import com.google.android.gms.maps.model.{BitmapDescriptorFactory, LatLng, Marker, MarkerOptions}
 import macroid.FullDsl._
-import macroid.{Ui, AppContext, Contexts}
+import macroid.{ContextWrapper, Contexts, Ui}
 
 import scala.concurrent.ExecutionContext.Implicits.global
 
@@ -39,7 +39,7 @@ class PlacesFragment
   with UiServices
   with OnMapReadyCallback {
 
-  override implicit lazy val appContextProvider: AppContext = fragmentAppContext
+  override implicit lazy val contextProvider: ContextWrapper = fragmentContextWrapper
 
   val defaultZoom = 12
 

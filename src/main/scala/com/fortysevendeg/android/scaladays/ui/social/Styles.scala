@@ -29,50 +29,50 @@ import com.fortysevendeg.macroid.extras.ResourcesExtras._
 import com.fortysevendeg.macroid.extras.TextTweaks._
 import com.fortysevendeg.macroid.extras.ViewTweaks._
 import macroid.FullDsl._
-import macroid.{AppContext, Tweak}
+import macroid.{ContextWrapper, Tweak}
 
 import scala.language.postfixOps
 
 trait AdapterStyles {
   
-  def itemContentStyle(implicit appContext: AppContext): Tweak[LinearLayout] =
+  def itemContentStyle(implicit context: ContextWrapper): Tweak[LinearLayout] =
     vMatchParent +
       llHorizontal +
       vPaddings(resGetDimensionPixelSize(R.dimen.padding_default)) +
       vBackground(R.drawable.background_list_default)
 
-  def avatarStyle(implicit appContext: AppContext): Tweak[ImageView] = {
+  def avatarStyle(implicit context: ContextWrapper): Tweak[ImageView] = {
     val size = resGetDimensionPixelSize(R.dimen.size_avatar)
     lp[LinearLayout](size, size) +
       ivScaleType(ScaleType.CENTER_CROP)
   }
 
-  def itemNoAvatarContentStyle(implicit appContext: AppContext): Tweak[LinearLayout] =
+  def itemNoAvatarContentStyle(implicit context: ContextWrapper): Tweak[LinearLayout] =
     vMatchWidth +
       llVertical +
       vPadding(resGetDimensionPixelSize(R.dimen.padding_default), 0, 0, 0)
 
-  def titlesContentStyle(implicit appContext: AppContext): Tweak[LinearLayout] =
+  def titlesContentStyle(implicit context: ContextWrapper): Tweak[LinearLayout] =
     vMatchWidth +
       llHorizontal +
       vPadding(0, 0, 0, resGetDimensionPixelSize(R.dimen.padding_default_extra_small))
 
-  def nameItemStyle(implicit appContext: AppContext): Tweak[TextView] =
+  def nameItemStyle(implicit context: ContextWrapper): Tweak[TextView] =
     lp[LinearLayout](0, WRAP_CONTENT, 1) +
       tvSize(resGetInteger(R.integer.text_big)) +
       tvColorResource(R.color.text_title_default)
 
-  def dateItemStyle(implicit appContext: AppContext): Tweak[TextView] =
+  def dateItemStyle(implicit context: ContextWrapper): Tweak[TextView] =
     vWrapContent +
       tvSize(resGetInteger(R.integer.text_small)) +
       tvColorResource(R.color.text_date_default)
 
-  def twitterItemStyle(implicit appContext: AppContext): Tweak[TextView] =
+  def twitterItemStyle(implicit context: ContextWrapper): Tweak[TextView] =
     vWrapContent +
       tvSize(resGetInteger(R.integer.text_small)) +
       tvColorResource(R.color.text_twitter_default)
 
-  def messageItemStyle(implicit appContext: AppContext): Tweak[TextView] =
+  def messageItemStyle(implicit context: ContextWrapper): Tweak[TextView] =
     vWrapContent +
       tvSize(resGetInteger(R.integer.text_medium)) +
       tvColorResource(R.color.text_title_default) +

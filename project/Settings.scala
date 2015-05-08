@@ -27,7 +27,6 @@ object Settings {
     "-keep class org.joda.** { *; }",
     "-keep class org.ocpsoft.prettytime.i18n.**",
     "-keep class macroid.** { *; }",
-    "-keep class android.** { *; }",
     "-keep class com.google.** { *; }",
     "-keep class com.localytics.android.** { *; }",
     "-keep class com.google.android.gms.ads.** { *; }",

@@ -26,7 +26,7 @@ import com.fortysevendeg.macroid.extras.LinearLayoutTweaks._
 import com.fortysevendeg.macroid.extras.ResourcesExtras._
 import com.fortysevendeg.macroid.extras.ViewTweaks._
 import macroid.FullDsl._
-import macroid.{AppContext, Tweak}
+import macroid.{ContextWrapper, Tweak}
 
 import scala.language.postfixOps
 
@@ -34,7 +34,7 @@ trait Styles {
 
   val drawerStyle: Tweak[DrawerLayout] = vMatchParent
 
-  def drawerLayoutStyle(implicit appContext: AppContext): Tweak[FrameLayout] =
+  def drawerLayoutStyle(implicit context: ContextWrapper): Tweak[FrameLayout] =
     lp[FrameLayout](resGetDimensionPixelSize(R.dimen.width_drawer), MATCH_PARENT) +
       dlLayoutGravity(Gravity.START)
 
