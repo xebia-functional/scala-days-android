@@ -29,15 +29,15 @@ import com.fortysevendeg.macroid.extras.TextTweaks._
 import com.fortysevendeg.macroid.extras.ViewGroupTweaks._
 import com.fortysevendeg.macroid.extras.ViewTweaks._
 import macroid.FullDsl._
-import macroid.{ActivityContext, AppContext}
+import macroid.{ActivityContextWrapper,ContextWrapper}
 
 class ScheduleAdapter(timeZone: String, scheduleItems: Seq[ScheduleItem], listener: RecyclerClickListener)
-    (implicit context: ActivityContext, appContext: AppContext)
+    (implicit context: ActivityContextWrapper)
     extends RecyclerView.Adapter[RecyclerView.ViewHolder]
     with ComponentRegistryImpl
     with UiServices {
 
-  override val appContextProvider: AppContext = appContext
+  override val contextProvider: ContextWrapper = context
 
   val recyclerClickListener = listener
 
@@ -88,7 +88,7 @@ class ScheduleAdapter(timeZone: String, scheduleItems: Seq[ScheduleItem], listen
                     track => tvText(track.name) + vVisible)
                     getOrElse vGone)) ~
                   (vh.room <~ (event.location map (
-                    location => tvText(appContextProvider.get.getString(R.string.roomName, location.name)) + vVisible)
+                    location => tvText(context.application.getString(R.string.roomName, location.name)) + vVisible)
                     getOrElse vGone)) ~
                   (vh.tagFavorite <~ (if (isFavorite) vVisible else vGone))
             )

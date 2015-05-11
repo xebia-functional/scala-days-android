@@ -20,7 +20,7 @@ import android.content.Intent
 import android.content.res.Configuration
 import android.os.Bundle
 import android.support.v4.app.FragmentActivity
-import android.support.v7.app.{ActionBarActivity, ActionBarDrawerToggle}
+import android.support.v7.app.{AppCompatActivity, ActionBarDrawerToggle}
 import android.view.{Menu, MenuItem, View}
 import com.fortysevendeg.android.scaladays.R
 import com.fortysevendeg.android.scaladays.ui.about.AboutFragment
@@ -42,7 +42,7 @@ import macroid._
 import com.crashlytics.android.Crashlytics
 
 class MainActivity
-  extends ActionBarActivity
+  extends AppCompatActivity
   with Contexts[FragmentActivity]
   with Layout
   with IdGeneration {
@@ -65,7 +65,7 @@ class MainActivity
     getSupportActionBar.setDisplayHomeAsUpEnabled(true)
     getSupportActionBar.setHomeButtonEnabled(true)
 
-    AlarmUtils.setReloadJsonService()
+    AlarmUtils.setReloadJsonService(this)
 
     drawerLayout map { drawerLayout =>
       val drawerToggle = new ActionBarDrawerToggle(this, drawerLayout, R.string.openMenu, R.string.clodeMenu) {

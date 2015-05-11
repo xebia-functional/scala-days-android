@@ -21,7 +21,7 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.support.v4.app.FragmentActivity
-import android.support.v7.app.ActionBarActivity
+import android.support.v7.app.AppCompatActivity
 import android.text.SpannableString
 import android.text.style.UnderlineSpan
 import android.view.MenuItem
@@ -39,16 +39,16 @@ import com.fortysevendeg.macroid.extras.TextTweaks._
 import com.fortysevendeg.macroid.extras.ViewGroupTweaks._
 import com.fortysevendeg.macroid.extras.ViewTweaks._
 import macroid.FullDsl._
-import macroid.{Ui, AppContext, Contexts}
+import macroid.{Ui, ContextWrapper, Contexts}
 
 class ScheduleDetailActivity
-  extends ActionBarActivity
+  extends AppCompatActivity
   with Contexts[FragmentActivity]
   with ComponentRegistryImpl
   with UiServices
   with Layout {
 
-  override implicit lazy val appContextProvider: AppContext = activityAppContext
+  override lazy val contextProvider: ContextWrapper = activityContextWrapper
 
   private var favoriteChanged = false
 

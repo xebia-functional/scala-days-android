@@ -30,7 +30,7 @@ import com.fortysevendeg.macroid.extras.TextTweaks._
 import com.fortysevendeg.macroid.extras.ViewTweaks._
 import com.fortysevendeg.macroid.extras.ResourcesExtras._
 import macroid.FullDsl._
-import macroid.{AppContext, Tweak}
+import macroid.{ContextWrapper, Tweak}
 
 import scala.language.postfixOps
 
@@ -40,11 +40,11 @@ trait Styles {
     vMatchParent +
       llVertical
 
-  def drawerMenuStyle(implicit appContext: AppContext): Tweak[RecyclerView] =
+  def drawerMenuStyle(implicit context: ContextWrapper): Tweak[RecyclerView] =
     lp[AbsListView](MATCH_PARENT, MATCH_PARENT) +
       vBackgroundColorResource(R.color.background_main_menu)
 
-  def bigImageLayoutStyle(implicit appContext: AppContext): Tweak[FrameLayout] =
+  def bigImageLayoutStyle(implicit context: ContextWrapper): Tweak[FrameLayout] =
     lp[FrameLayout](MATCH_PARENT, resGetDimensionPixelSize(R.dimen.height_menu_image_header)) +
       flForeground(resGetDrawable(R.drawable.foreground_list_dark))
 
@@ -52,7 +52,7 @@ trait Styles {
     vMatchParent +
       ivScaleType(ScaleType.CENTER_CROP)
 
-  def bigImageActionLayout(implicit appContext: AppContext): Tweak[LinearLayout] =
+  def bigImageActionLayout(implicit context: ContextWrapper): Tweak[LinearLayout] =
     vMatchWidth +
       llGravity(Gravity.CENTER_VERTICAL) +
       flLayoutGravity(Gravity.BOTTOM) +
@@ -60,7 +60,7 @@ trait Styles {
         resGetDimensionPixelSize(R.dimen.padding_default), 
         resGetDimensionPixelSize(R.dimen.padding_menu_image_action_tb))
 
-  def conferenceTitleStyle(implicit appContext: AppContext): Tweak[TextView] =
+  def conferenceTitleStyle(implicit context: ContextWrapper): Tweak[TextView] =
     llWrapWeightHorizontal +
       tvSize(resGetInteger(R.integer.text_medium)) +
       tvColor(Color.WHITE) +
@@ -73,13 +73,13 @@ trait Styles {
 
 trait MainMenuAdapterStyles {
 
-  def mainMenuItemStyle(implicit appContext: AppContext): Tweak[FrameLayout] =
+  def mainMenuItemStyle(implicit context: ContextWrapper): Tweak[FrameLayout] =
     lp[AbsListView](MATCH_PARENT, resGetDimensionPixelSize(R.dimen.height_menu_item)) +
       vPaddings(paddingLeftRight = resGetDimensionPixelSize(R.dimen.padding_menu_item_lr), paddingTopBottom = 0) +
       vBackground(R.drawable.background_list_menu) +
       flForeground(resGetDrawable(R.drawable.foreground_list_dark))
 
-  def textMenuItemStyle(implicit appContext: AppContext): Tweak[TextView] =
+  def textMenuItemStyle(implicit context: ContextWrapper): Tweak[TextView] =
     vMatchParent +
       tvSize(resGetInteger(R.integer.text_medium)) +
       tvColor(Color.WHITE) +
@@ -91,20 +91,20 @@ trait MainMenuAdapterStyles {
 
 trait ConferenceMenuAdapterStyles {
 
-  def conferenceMenuItemLayoutStyle(implicit appContext: AppContext): Tweak[LinearLayout] =
+  def conferenceMenuItemLayoutStyle(implicit context: ContextWrapper): Tweak[LinearLayout] =
     lp[AbsListView](MATCH_PARENT, resGetDimensionPixelSize(R.dimen.height_menu_conference_item)) +
       llHorizontal +
       llGravity(Gravity.CENTER_VERTICAL) +
       vPaddings(paddingLeftRight = resGetDimensionPixelSize(R.dimen.padding_menu_item_lr), paddingTopBottom = 0) +
       vBackground(R.drawable.foreground_list_dark)
 
-  def conferenceMenuItemIconStyle(implicit appContext: AppContext): Tweak[ImageView] = {
+  def conferenceMenuItemIconStyle(implicit context: ContextWrapper): Tweak[ImageView] = {
     val size = resGetDimensionPixelSize(R.dimen.size_menu_conference_icon)
     lp[LinearLayout](size, size) +
       ivScaleType(ScaleType.CENTER_CROP)
   }
 
-  def conferenceMenuItemStyle(implicit appContext: AppContext): Tweak[TextView] =
+  def conferenceMenuItemStyle(implicit context: ContextWrapper): Tweak[TextView] =
     vWrapContent +
       tvSize(resGetInteger(R.integer.text_medium)) +
       tvColor(Color.WHITE) +

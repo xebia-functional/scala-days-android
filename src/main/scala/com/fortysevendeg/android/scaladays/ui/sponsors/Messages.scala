@@ -17,7 +17,6 @@
 package com.fortysevendeg.android.scaladays.ui.sponsors
 
 import com.fortysevendeg.android.scaladays.model.{SponsorType, Sponsor}
-import macroid.AppContext
 
 import scala.annotation.tailrec
 

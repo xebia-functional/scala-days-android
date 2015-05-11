@@ -53,6 +53,8 @@ libraryDependencies ++= Seq(
   crashlytics,
   compilerPlugin(Libraries.wartRemover))
 
+dexMaxHeap in Android := "2048m"
+
 run <<= (run in Android).dependsOn(setDebugTask(true))
 
 apkSigningConfig in Android := Option(

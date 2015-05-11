@@ -23,19 +23,19 @@ import com.fortysevendeg.macroid.extras.LinearLayoutTweaks._
 import com.fortysevendeg.macroid.extras.ResourcesExtras._
 import com.fortysevendeg.macroid.extras.ViewTweaks._
 import macroid.FullDsl._
-import macroid.{AppContext, Tweak}
+import macroid.{ContextWrapper, Tweak}
 
 import scala.language.postfixOps
 
 trait AdapterStyles {
 
-  def itemContentStyle(implicit appContext: AppContext): Tweak[LinearLayout] =
+  def itemContentStyle(implicit context: ContextWrapper): Tweak[LinearLayout] =
     vMatchParent +
       vPaddings(resGetDimensionPixelSize(R.dimen.padding_default)) +
       llGravity(Gravity.CENTER) +
       vBackground(R.drawable.background_list_default)
 
-  def logoStyle(implicit appContext: AppContext): Tweak[ImageView] = 
+  def logoStyle(implicit context: ContextWrapper): Tweak[ImageView] =
     lp[LinearLayout](
       resGetDimensionPixelSize(R.dimen.width_sponsors_logo),
       resGetDimensionPixelSize(R.dimen.height_sponsors_logo))

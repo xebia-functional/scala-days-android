@@ -20,7 +20,7 @@ import com.fortysevendeg.android.scaladays.model.Event
 import com.fortysevendeg.android.scaladays.modules.preferences.{PreferenceRequest, PreferenceServicesComponent}
 import com.fortysevendeg.android.scaladays.ui.commons.UiServices
 import com.fortysevendeg.android.scaladays.utils.DateTimeUtils
-import macroid.AppContext
+import macroid.ContextWrapper
 
 import scala.annotation.tailrec
 
@@ -36,7 +36,7 @@ trait ScheduleConversion {
   def toScheduleItem(
     timeZone: String,
     events: Seq[Event],
-    func: (Event) => Boolean)(implicit appContext: AppContext): Seq[ScheduleItem] = {
+    func: (Event) => Boolean)(implicit context: ContextWrapper): Seq[ScheduleItem] = {
 
     @tailrec
     def loop(events: Seq[Event], date: String = "", acc: Seq[ScheduleItem] = Nil): Seq[ScheduleItem] =

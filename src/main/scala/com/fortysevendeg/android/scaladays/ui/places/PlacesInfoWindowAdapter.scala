@@ -19,10 +19,10 @@ package com.fortysevendeg.android.scaladays.ui.places
 import android.view.View
 import com.google.android.gms.maps.GoogleMap.InfoWindowAdapter
 import com.google.android.gms.maps.model.Marker
-import macroid.{ActivityContext, AppContext}
+import macroid.ActivityContextWrapper
 import macroid.FullDsl._
 
-class PlacesInfoWindowAdapter(implicit appContext: AppContext, context: ActivityContext) 
+class PlacesInfoWindowAdapter(implicit context: ActivityContextWrapper)
   extends InfoWindowAdapter {
 
   lazy val layout = new PlacesInfoWindowLayout

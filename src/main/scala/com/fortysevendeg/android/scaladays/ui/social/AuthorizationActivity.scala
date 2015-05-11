@@ -21,7 +21,7 @@ import android.net.Uri
 import android.net.http.SslError
 import android.os.{Build, Bundle}
 import android.support.v4.app.FragmentActivity
-import android.support.v7.app.ActionBarActivity
+import android.support.v7.app.AppCompatActivity
 import android.webkit._
 import com.fortysevendeg.android.scaladays.R
 import com.fortysevendeg.android.scaladays.modules.ComponentRegistryImpl
@@ -30,19 +30,19 @@ import com.fortysevendeg.macroid.extras.DeviceVersion._
 import com.fortysevendeg.macroid.extras.ViewTweaks._
 import com.fortysevendeg.macroid.extras.WebViewTweaks._
 import macroid.FullDsl._
-import macroid.{AppContext, Contexts}
+import macroid.{ContextWrapper, Contexts}
 
 import scala.concurrent.ExecutionContext.Implicits.global
 
 class AuthorizationActivity
-    extends ActionBarActivity
+    extends AppCompatActivity
     with Contexts[FragmentActivity]
     with AuthorizationLayout
     with ComponentRegistryImpl {
 
-  override implicit lazy val appContextProvider: AppContext = activityAppContext
+  override lazy val contextProvider: ContextWrapper = activityContextWrapper
 
-  lazy val twitterHost = activityAppContext.get.getString(R.string.twitter_app_callback_host)
+  lazy val twitterHost = activityContextWrapper.application.getString(R.string.twitter_app_callback_host)
 
   val webViewClient: WebViewClient = new WebViewClient {
     override def onLoadResource(view: WebView, url: String) {

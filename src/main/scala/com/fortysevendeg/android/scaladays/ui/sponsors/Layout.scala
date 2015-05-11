@@ -19,23 +19,23 @@ package com.fortysevendeg.android.scaladays.ui.sponsors
 import android.support.v7.widget.RecyclerView
 import android.widget._
 import macroid.FullDsl._
-import macroid.{ActivityContext, AppContext}
+import macroid.ActivityContextWrapper
 
-class SponsorsLayoutAdapter(implicit context: ActivityContext, appContext: AppContext)
+class SponsorsLayoutAdapter(implicit context: ActivityContextWrapper)
     extends AdapterStyles {
 
   var logo = slot[ImageView]
 
   val content = layout
 
-  private def layout(implicit appContext: AppContext, context: ActivityContext) = getUi(
+  private def layout(implicit context: ActivityContextWrapper) = getUi(
     l[LinearLayout](
       w[ImageView] <~ wire(logo) <~ logoStyle
     ) <~ itemContentStyle
   )
 }
 
-class ViewHolderSponsorsAdapter(adapter: SponsorsLayoutAdapter)(implicit context: ActivityContext, appContext: AppContext)
+class ViewHolderSponsorsAdapter(adapter: SponsorsLayoutAdapter)(implicit context: ActivityContextWrapper)
     extends RecyclerView.ViewHolder(adapter.content) {
 
   val content = adapter.content

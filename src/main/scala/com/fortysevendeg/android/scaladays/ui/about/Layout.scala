@@ -16,13 +16,10 @@
 
 package com.fortysevendeg.android.scaladays.ui.about
 
-import android.content.Intent
-import android.net.Uri
 import android.widget._
-import com.fortysevendeg.android.scaladays.R
 import com.fortysevendeg.android.scaladays.ui.commons.PlaceHolderLayout
+import macroid.ActivityContextWrapper
 import macroid.FullDsl._
-import macroid.{Ui, ActivityContext, AppContext}
 
 trait Layout
     extends Styles
@@ -36,7 +33,7 @@ trait Layout
 
   var aboutContent = slot[LinearLayout]
 
-  def content(implicit appContext: AppContext, context: ActivityContext) = getUi(
+  def content(implicit context: ActivityContextWrapper) = getUi(
     l[FrameLayout](
       l[LinearLayout](
         l[ScrollView](

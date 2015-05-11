@@ -29,7 +29,7 @@ import com.fortysevendeg.macroid.extras.TextTweaks._
 import com.fortysevendeg.macroid.extras.ViewTweaks._
 import com.fortysevendeg.macroid.extras.ResourcesExtras._
 import macroid.FullDsl._
-import macroid.{Ui, AppContext, Contexts}
+import macroid.{Ui, ContextWrapper, Contexts}
 
 import scala.concurrent.ExecutionContext.Implicits.global
 
@@ -40,7 +40,7 @@ class AboutFragment
   with UiServices
   with Layout {
 
-  override implicit lazy val appContextProvider: AppContext = fragmentAppContext
+  override lazy val contextProvider: ContextWrapper = fragmentContextWrapper
 
   override def onCreateView(inflater: LayoutInflater, container: ViewGroup, savedInstanceState: Bundle): View = {
     analyticsServices.sendScreenName(analyticsAboutScreen)

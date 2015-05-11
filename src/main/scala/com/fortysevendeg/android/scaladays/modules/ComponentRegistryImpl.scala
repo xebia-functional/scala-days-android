@@ -21,11 +21,11 @@ import com.fortysevendeg.android.scaladays.modules.json.impl.JsonServicesCompone
 import com.fortysevendeg.android.scaladays.modules.net.impl.NetServicesComponentImpl
 import com.fortysevendeg.android.scaladays.modules.preferences.impl.PreferenceServicesComponentImpl
 import com.fortysevendeg.android.scaladays.modules.twitter.impl.TwitterServicesComponentImpl
-import com.fortysevendeg.macroid.extras.AppContextProvider
+import com.fortysevendeg.android.scaladays.commons.ContextWrapperProvider
 
 trait ComponentRegistryImpl
     extends ComponentRegistry
-    with AppContextProvider
+    with ContextWrapperProvider
     with PreferenceServicesComponentImpl
     with NetServicesComponentImpl
     with JsonServicesComponentImpl

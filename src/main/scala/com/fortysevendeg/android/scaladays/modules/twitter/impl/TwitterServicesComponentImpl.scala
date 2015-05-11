@@ -19,7 +19,7 @@ package com.fortysevendeg.android.scaladays.modules.twitter.impl
 import android.content.{Context, SharedPreferences}
 import com.fortysevendeg.android.scaladays.R
 import com.fortysevendeg.android.scaladays.scaladays.Service
-import com.fortysevendeg.macroid.extras.AppContextProvider
+import com.fortysevendeg.android.scaladays.commons.ContextWrapperProvider
 import twitter4j.{Twitter, Query, TwitterFactory}
 import com.fortysevendeg.android.scaladays.modules.twitter._
 import twitter4j.auth.AccessToken
@@ -34,7 +34,7 @@ trait TwitterServicesComponentImpl
     extends TwitterServicesComponent
     with TwitterConversions {
 
-  self: AppContextProvider =>
+  self: ContextWrapperProvider =>
 
   val twitterServices = new TwitterServicesImpl
 
@@ -47,7 +47,7 @@ trait TwitterServicesComponentImpl
 
     val authSecretKey = "twitter_auth_secret_key"
 
-    lazy val sharedPreferences: SharedPreferences = appContextProvider.get.
+    lazy val sharedPreferences: SharedPreferences = contextProvider.application.
         getSharedPreferences(namePreferencesKey, Context.MODE_PRIVATE)
 
     lazy val (twitterOAuth, requestTokenOAuth) = {
@@ -58,8 +58,8 @@ trait TwitterServicesComponentImpl
 
     private def getConfiguration() = {
       val configurationBuilder = new ConfigurationBuilder()
-      configurationBuilder.setOAuthConsumerKey(appContextProvider.get.getString(R.string.twitter_app_key))
-      configurationBuilder.setOAuthConsumerSecret(appContextProvider.get.getString(R.string.twitter_app_secret))
+      configurationBuilder.setOAuthConsumerKey(contextProvider.application.getString(R.string.twitter_app_key))
+      configurationBuilder.setOAuthConsumerSecret(contextProvider.application.getString(R.string.twitter_app_secret))
       configurationBuilder.build()
     }
 

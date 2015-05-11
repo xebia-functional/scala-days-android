@@ -18,13 +18,13 @@ package com.fortysevendeg.android.scaladays.modules.analytics.impl
 
 import com.fortysevendeg.android.scaladays.R
 import com.fortysevendeg.android.scaladays.modules.analytics.{AnalyticsServices, AnalyticsServicesComponent}
-import com.fortysevendeg.macroid.extras.AppContextProvider
+import com.fortysevendeg.android.scaladays.commons.ContextWrapperProvider
 import com.google.android.gms.analytics.{HitBuilders, GoogleAnalytics}
 
 trait AnalyticsServicesComponentImpl
   extends AnalyticsServicesComponent {
 
-  self: AppContextProvider =>
+  self: ContextWrapperProvider =>
 
   lazy val analyticsServices = new AnalyticsServicesImpl
 
@@ -33,9 +33,9 @@ trait AnalyticsServicesComponentImpl
 
     lazy val tracker = {
       val track = GoogleAnalytics
-        .getInstance(appContextProvider.get)
-        .newTracker(appContextProvider.get.getString(R.string.google_analytics_key))
-      track.setAppName(appContextProvider.get.getString(R.string.app_name))
+        .getInstance(contextProvider.application)
+        .newTracker(contextProvider.application.getString(R.string.google_analytics_key))
+      track.setAppName(contextProvider.application.getString(R.string.app_name))
       track.enableAutoActivityTracking(false)
       track
     }

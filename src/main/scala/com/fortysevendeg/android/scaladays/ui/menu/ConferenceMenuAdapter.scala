@@ -24,11 +24,11 @@ import com.fortysevendeg.android.scaladays.model.{Picture, Information}
 import com.fortysevendeg.android.scaladays.ui.commons.AsyncImageTweaks._
 import com.fortysevendeg.macroid.extras.ImageViewTweaks._
 import com.fortysevendeg.macroid.extras.TextTweaks._
-import macroid.{ActivityContext, AppContext}
+import macroid.ActivityContextWrapper
 import macroid.FullDsl._
 
 class ConferenceMenuAdapter(listener: ConferenceMenuClickListener)
-    (implicit context: ActivityContext, appContext: AppContext)
+    (implicit context: ActivityContextWrapper)
     extends RecyclerView.Adapter[ViewHolderConferenceMenuAdapter] {
 
   val recyclerClickListener = listener
@@ -50,7 +50,7 @@ class ConferenceMenuAdapter(listener: ConferenceMenuClickListener)
 
   override def onBindViewHolder(viewHolder: ViewHolderConferenceMenuAdapter, position: Int): Unit = {
     val conferenceMenuItem = list(position)
-    val iconSize = appContext.get.getResources.getDimensionPixelSize(R.dimen.size_menu_conference_icon)
+    val iconSize = context.application.getResources.getDimensionPixelSize(R.dimen.size_menu_conference_icon)
     viewHolder.content.setTag(position)
     runUi(
       (viewHolder.title <~ tvText(conferenceMenuItem.name)) ~

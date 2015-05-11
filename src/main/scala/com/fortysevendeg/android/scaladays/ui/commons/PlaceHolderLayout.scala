@@ -21,7 +21,7 @@ import com.fortysevendeg.android.scaladays.R
 import com.fortysevendeg.macroid.extras.TextTweaks._
 import com.fortysevendeg.macroid.extras.ImageViewTweaks._
 import com.fortysevendeg.macroid.extras.ViewTweaks._
-import macroid.{ActivityContext, AppContext}
+import macroid.ActivityContextWrapper
 import macroid.FullDsl._
 
 trait PlaceHolderLayout
@@ -33,7 +33,7 @@ trait PlaceHolderLayout
 
   var text = slot[TextView]
 
-  def placeholder(implicit appContext: AppContext, context: ActivityContext) = {
+  def placeholder(implicit context: ActivityContextWrapper) = {
     l[LinearLayout](
       w[ImageView] <~ placeholderImageStyle <~ wire(image),
       w[TextView] <~ placeholderMessageStyle <~ wire(text),

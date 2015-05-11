@@ -27,14 +27,14 @@ import com.fortysevendeg.macroid.extras.ViewTweaks._
 import com.fortysevendeg.macroid.extras.RecyclerViewTweaks._
 import com.fortysevendeg.macroid.extras.TextTweaks._
 import com.fortysevendeg.macroid.extras.ResourcesExtras._
-import macroid.{Tweak, AppContext}
+import macroid.{Tweak, ContextWrapper}
 import macroid.FullDsl._
 
 import scala.language.postfixOps
 
 trait ToolbarStyles {
 
-  def toolbarStyle(height: Int)(implicit appContext: AppContext): Tweak[Toolbar] =
+  def toolbarStyle(height: Int)(implicit context: ContextWrapper): Tweak[Toolbar] =
     vContentSizeMatchWidth(height) +
       vBackground(R.color.primary)
 
@@ -52,14 +52,14 @@ trait PlaceHolderStyles {
   val placeholderImageStyle: Tweak[ImageView] =
     vWrapContent
 
-  def placeholderMessageStyle(implicit appContext: AppContext): Tweak[TextView] =
+  def placeholderMessageStyle(implicit context: ContextWrapper): Tweak[TextView] =
     vWrapContent +
       tvGravity(Gravity.CENTER) +
       tvColorResource(R.color.text_error_message) +
       tvSize(resGetInteger(R.integer.text_big)) +
       vPaddings(resGetDimensionPixelSize(R.dimen.padding_default_big))
 
-  def placeholderButtonStyle(implicit appContext: AppContext): Tweak[TextView] =
+  def placeholderButtonStyle(implicit context: ContextWrapper): Tweak[TextView] =
     vWrapContent +
       vMinWidth(resGetDimensionPixelSize(R.dimen.width_button)) +
       tvText(R.string.reload) +
@@ -73,12 +73,12 @@ trait PlaceHolderStyles {
 
 trait HeaderAdapterStyles {
 
-  def headerContentStyle(implicit appContext: AppContext): Tweak[LinearLayout] =
+  def headerContentStyle(implicit context: ContextWrapper): Tweak[LinearLayout] =
     lp[ViewGroup](MATCH_PARENT, resGetDimensionPixelSize(R.dimen.height_header)) +
       llHorizontal +
       vBackgroundColorResource(R.color.background_list_schedule_header)
 
-  def headerNameStyle(implicit appContext: AppContext): Tweak[TextView] =
+  def headerNameStyle(implicit context: ContextWrapper): Tweak[TextView] =
     vWrapContent +
       tvSize(resGetInteger(R.integer.text_medium)) +
       llLayoutGravity(Gravity.CENTER_VERTICAL) +
@@ -91,7 +91,7 @@ trait HeaderAdapterStyles {
 
 trait ListStyles {
 
-  def rootStyle(implicit appContext: AppContext): Tweak[FrameLayout] = vMatchParent
+  def rootStyle(implicit context: ContextWrapper): Tweak[FrameLayout] = vMatchParent
 
   val recyclerViewStyle: Tweak[RecyclerView] =
     vMatchParent +

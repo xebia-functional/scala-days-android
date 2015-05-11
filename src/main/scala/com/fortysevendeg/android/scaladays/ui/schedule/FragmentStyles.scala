@@ -27,26 +27,26 @@ import com.fortysevendeg.macroid.extras.TextTweaks._
 import com.fortysevendeg.macroid.extras.ImageViewTweaks._
 import com.fortysevendeg.macroid.extras.ViewTweaks._
 import macroid.FullDsl._
-import macroid.{AppContext, Tweak}
+import macroid.{ContextWrapper, Tweak}
 
 import scala.language.postfixOps
 
 trait SpeakersLayoutStyles {
 
-  def speakerNameItemStyle(name: String)(implicit appContext: AppContext): Tweak[TextView] =
+  def speakerNameItemStyle(name: String)(implicit context: ContextWrapper): Tweak[TextView] =
     vWrapContent +
       tvSize(resGetInteger(R.integer.text_medium)) +
       vPadding(0, 0, resGetDimensionPixelSize(R.dimen.padding_default_extra_small), 0) +
       tvColorResource(R.color.text_schedule_name) +
       tvText(name)
 
-  def speakerTwitterItemStyle(twitter: Option[String])(implicit appContext: AppContext): Tweak[TextView] =
+  def speakerTwitterItemStyle(twitter: Option[String])(implicit context: ContextWrapper): Tweak[TextView] =
     vWrapContent +
       tvSize(resGetInteger(R.integer.text_medium)) +
       tvColorResource(R.color.text_schedule_twitter) +
       twitter.map(tvText(_) + vVisible).getOrElse(vGone)
 
-  def itemSpeakerContentStyle(implicit appContext: AppContext): Tweak[LinearLayout] =
+  def itemSpeakerContentStyle(implicit context: ContextWrapper): Tweak[LinearLayout] =
     vMatchWidth +
       llHorizontal +
       vPadding(0, resGetDimensionPixelSize(R.dimen.padding_default_extra_small), 0, 0)
@@ -54,21 +54,21 @@ trait SpeakersLayoutStyles {
 
 trait AdapterStyles {
 
-  def itemRootContentStyle(implicit appContext: AppContext): Tweak[FrameLayout] =
+  def itemRootContentStyle(implicit context: ContextWrapper): Tweak[FrameLayout] =
     vMatchParent +
       flForeground(resGetDrawable(R.drawable.foreground_list_dark))
 
-  def tagFavoriteStyle(implicit appContext: AppContext): Tweak[ImageView] =
+  def tagFavoriteStyle(implicit context: ContextWrapper): Tweak[ImageView] =
     vWrapContent +
       ivSrc(R.drawable.shedule_tag_favorite) +
       flLayoutGravity(Gravity.RIGHT) +
       vPadding(paddingRight = resGetDimensionPixelSize(R.dimen.padding_default_small))
 
-  def itemContentStyle(implicit appContext: AppContext): Tweak[LinearLayout] =
+  def itemContentStyle(implicit context: ContextWrapper): Tweak[LinearLayout] =
     vMatchParent +
       llHorizontal
 
-  def hourStyle(implicit appContext: AppContext): Tweak[TextView] =
+  def hourStyle(implicit context: ContextWrapper): Tweak[TextView] =
     lp[LinearLayout](resGetDimensionPixelSize(R.dimen.width_schedule_hour), MATCH_PARENT) +
       tvSize(resGetInteger(R.integer.text_small)) +
       vPadding(0, resGetDimensionPixelSize(R.dimen.padding_default_small), 0, 0) +
@@ -77,7 +77,7 @@ trait AdapterStyles {
       tvColorResource(R.color.text_schedule_name) +
       tvBold
 
-  def itemInfoContentStyle(implicit appContext: AppContext): Tweak[LinearLayout] =
+  def itemInfoContentStyle(implicit context: ContextWrapper): Tweak[LinearLayout] =
     vMatchWidth +
       llVertical +
       vPaddings(resGetDimensionPixelSize(R.dimen.padding_default), resGetDimensionPixelSize(R.dimen.padding_default_small)) +
@@ -87,19 +87,19 @@ trait AdapterStyles {
     vMatchWidth +
       llVertical
 
-  def roomItemStyle(implicit appContext: AppContext): Tweak[TextView] =
+  def roomItemStyle(implicit context: ContextWrapper): Tweak[TextView] =
     vWrapContent +
       tvSize(resGetInteger(R.integer.text_small)) +
       tvColorResource(R.color.text_schedule_room) +
       vPadding(0, 0, 0, resGetDimensionPixelSize(R.dimen.padding_default_extra_small))
 
-  def trackItemStyle(implicit appContext: AppContext): Tweak[TextView] =
+  def trackItemStyle(implicit context: ContextWrapper): Tweak[TextView] =
     vWrapContent +
       tvSize(resGetInteger(R.integer.text_small)) +
       tvColorResource(R.color.text_schedule_room) +
       vPadding(0, 0, 0, resGetDimensionPixelSize(R.dimen.padding_default_extra_small))
 
-  def nameItemStyle(implicit appContext: AppContext): Tweak[TextView] =
+  def nameItemStyle(implicit context: ContextWrapper): Tweak[TextView] =
     vWrapContent +
       tvSize(resGetInteger(R.integer.text_medium)) +
       tvColorResource(R.color.text_schedule_name) +

@@ -22,7 +22,7 @@ import com.fortysevendeg.android.scaladays.model.Speaker
 import com.fortysevendeg.android.scaladays.ui.commons.ToolbarLayout
 import com.fortysevendeg.macroid.extras.ResourcesExtras._
 import macroid.FullDsl._
-import macroid.{ActivityContext, AppContext}
+import macroid.ActivityContextWrapper
 
 import scala.language.postfixOps
 
@@ -46,7 +46,7 @@ trait Layout
 
   var fabFavorite = slot[ImageView]
 
-  def layout(favorite: Boolean)(implicit appContext: AppContext, context: ActivityContext) = {
+  def layout(favorite: Boolean)(implicit context: ActivityContextWrapper) = {
     getUi(
       l[FrameLayout](
         l[ScrollView](
@@ -75,12 +75,12 @@ trait Layout
 
 }
 
-class SpeakersDetailLayout(speaker: Speaker)(implicit context: ActivityContext, appContext: AppContext)
+class SpeakersDetailLayout(speaker: Speaker)(implicit context: ActivityContextWrapper)
     extends SpeakersDetailStyles {
 
   val content = layout
 
-  private def layout(implicit appContext: AppContext, context: ActivityContext) = getUi(
+  private def layout(implicit context: ActivityContextWrapper) = getUi(
     l[LinearLayout](
       w[ImageView] <~ speakerAvatarStyle(speaker.picture),
       l[LinearLayout](

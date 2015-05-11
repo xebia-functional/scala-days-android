@@ -20,7 +20,7 @@ import com.fortysevendeg.android.scaladays.modules.json._
 import com.fortysevendeg.android.scaladays.modules.json.models._
 import com.fortysevendeg.android.scaladays.scaladays.Service
 import com.fortysevendeg.android.scaladays.utils.FileUtils
-import com.fortysevendeg.macroid.extras.AppContextProvider
+import com.fortysevendeg.android.scaladays.commons.ContextWrapperProvider
 import play.api.libs.json.Json
 
 import scala.concurrent.ExecutionContext.Implicits.global
@@ -47,7 +47,7 @@ trait JsonServicesComponentImpl
     extends JsonServicesComponent
     with FileUtils {
 
-  self: AppContextProvider =>
+  self: ContextWrapperProvider =>
 
   val jsonServices = new JsonServicesImpl
 
@@ -59,7 +59,7 @@ trait JsonServicesComponentImpl
     override def loadJson: Service[JsonRequest, JsonResponse] = request =>
       Future {
         (for {
-          json <- getJson(loadJsonFile(appContextProvider))
+          json <- getJson(loadJsonFile(contextProvider))
           apiRoot <- Try(Json.parse(json).as[ApiRoot])
         } yield apiRoot) match {
           case Success(apiRoot) => JsonResponse(Some(toRoot(apiRoot)))

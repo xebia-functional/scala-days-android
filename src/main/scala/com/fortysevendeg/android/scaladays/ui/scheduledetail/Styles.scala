@@ -33,7 +33,7 @@ import com.fortysevendeg.macroid.extras.TextTweaks._
 import com.fortysevendeg.macroid.extras.ViewTweaks._
 import com.fortysevendeg.macroid.extras.DeviceVersion._
 import macroid.FullDsl._
-import macroid.{ActivityContext, AppContext, Tweak}
+import macroid.{ActivityContextWrapper, ContextWrapper, Tweak}
 
 import scala.language.postfixOps
 
@@ -41,7 +41,7 @@ trait ActivityStyles {
 
   val rootStyle: Tweak[FrameLayout] = vMatchParent
 
-  def scrollContentStyle(implicit appContext: AppContext): Tweak[ScrollView] = {
+  def scrollContentStyle(implicit context: ContextWrapper): Tweak[ScrollView] = {
     val paddingLeftRight = resGetDimensionPixelSize(R.dimen.padding_default)
     vMatchParent +
       vPadding(
@@ -56,12 +56,12 @@ trait ActivityStyles {
     vMatchParent +
       llVertical
 
-  def descriptionContentLayoutStyle(implicit appContext: AppContext): Tweak[LinearLayout] =
+  def descriptionContentLayoutStyle(implicit context: ContextWrapper): Tweak[LinearLayout] =
     vMatchWidth +
       llHorizontal +
       vPadding(0, resGetDimensionPixelSize(R.dimen.padding_schedule_detail_description_top), 0, 0)
 
-  def speakersContentLayoutStyle(implicit appContext: AppContext): Tweak[LinearLayout] =
+  def speakersContentLayoutStyle(implicit context: ContextWrapper): Tweak[LinearLayout] =
     vMatchWidth +
       llVertical +
       vPadding(0, resGetDimensionPixelSize(R.dimen.padding_schedule_detail_speaker_tb), 0, 0)
@@ -70,7 +70,7 @@ trait ActivityStyles {
     llWrapWeightHorizontal +
     llVertical
 
-  def toolBarTitleStyle(implicit appContext: AppContext): Tweak[TextView] = {
+  def toolBarTitleStyle(implicit context: ContextWrapper): Tweak[TextView] = {
     val padding = resGetDimensionPixelSize(R.dimen.padding_default)
     vMatchHeight +
       tvGravity(Gravity.BOTTOM) +
@@ -81,7 +81,7 @@ trait ActivityStyles {
       vPadding(padding, 0, padding, padding)
   }
 
-  def fabStyle(favorite: Boolean)(implicit appContext: AppContext): Tweak[ImageView] = {
+  def fabStyle(favorite: Boolean)(implicit context: ContextWrapper): Tweak[ImageView] = {
     val size = resGetDimensionPixelSize(R.dimen.size_schedule_detail_fab)
     lp[FrameLayout](size, size) +
       vMargin(resGetDimensionPixelSize(R.dimen.margin_schedule_detail_fab_left), resGetDimensionPixelSize(R.dimen.margin_schedule_detail_fab_top), 0, 0) +
@@ -95,40 +95,40 @@ trait ActivityStyles {
       (Lollipop ifSupportedThen vElevation(resGetDimension(R.dimen.padding_default_extra_small)) getOrElse Tweak.blank)
   }
 
-  def iconCalendarStyle(implicit appContext: AppContext): Tweak[ImageView] =
+  def iconCalendarStyle(implicit context: ContextWrapper): Tweak[ImageView] =
     lp[LinearLayout](resGetDimensionPixelSize(R.dimen.width_schedule_detail_calendar), WRAP_CONTENT) +
       ivSrc(R.drawable.detail_icon_schedule) +
       ivScaleType(ScaleType.FIT_START)
 
-  def dateStyle(implicit appContext: AppContext): Tweak[TextView] =
+  def dateStyle(implicit context: ContextWrapper): Tweak[TextView] =
     vWrapContent +
       tvSize(resGetInteger(R.integer.text_big)) +
-      tvColor(appContext.get.getResources.getColor(R.color.primary)) +
+      tvColor(context.application.getResources.getColor(R.color.primary)) +
       vPadding(0, 0, 0, resGetDimensionPixelSize(R.dimen.padding_default_extra_small))
 
-  def roomStyle(implicit appContext: AppContext): Tweak[TextView] =
+  def roomStyle(implicit context: ContextWrapper): Tweak[TextView] =
     vWrapContent +
       tvSize(resGetInteger(R.integer.text_medium)) +
       tvColorResource(R.color.text_schedule_detail_secondary) +
       vPadding(0, 0, 0, resGetDimensionPixelSize(R.dimen.padding_default_small))
 
-  def trackStyle(implicit appContext: AppContext): Tweak[TextView] =
+  def trackStyle(implicit context: ContextWrapper): Tweak[TextView] =
     vWrapContent +
       tvSize(resGetInteger(R.integer.text_medium)) +
       tvColorResource(R.color.text_schedule_detail_secondary) +
       vPadding(0, 0, 0, resGetDimensionPixelSize(R.dimen.padding_default_small))
 
-  def descriptionStyle(implicit appContext: AppContext): Tweak[TextView] =
+  def descriptionStyle(implicit context: ContextWrapper): Tweak[TextView] =
     vWrapContent +
       tvSize(resGetInteger(R.integer.text_medium)) +
       tvColorResource(R.color.primary) +
       vPadding(0, 0, 0, resGetDimensionPixelSize(R.dimen.padding_default))
 
-  def lineStyle(implicit appContext: AppContext): Tweak[ImageView] =
+  def lineStyle(implicit context: ContextWrapper): Tweak[ImageView] =
     lp[LinearLayout](MATCH_PARENT, 1) +
       vBackgroundColorResource(R.color.list_line_default)
 
-  def speakerTitleStyle(implicit appContext: AppContext): Tweak[TextView] =
+  def speakerTitleStyle(implicit context: ContextWrapper): Tweak[TextView] =
     vWrapContent +
       tvSize(resGetInteger(R.integer.text_small)) +
       tvText(R.string.speakers) +
@@ -139,12 +139,12 @@ trait ActivityStyles {
 
 trait SpeakersDetailStyles {
 
-  def itemSpeakerContentStyle(implicit appContext: AppContext): Tweak[LinearLayout] =
+  def itemSpeakerContentStyle(implicit context: ContextWrapper): Tweak[LinearLayout] =
     vMatchWidth +
       llHorizontal +
       vPadding(0, resGetDimensionPixelSize(R.dimen.padding_default), 0, resGetDimensionPixelSize(R.dimen.padding_schedule_detail_speaker_tb))
 
-  def speakerAvatarStyle(picture: Option[String])(implicit appContext: AppContext, activityContext: ActivityContext): Tweak[ImageView] = {
+  def speakerAvatarStyle(picture: Option[String])(implicit context: ContextWrapper, activityContext: ActivityContextWrapper): Tweak[ImageView] = {
     val size = resGetDimensionPixelSize(R.dimen.size_avatar)
     lp[LinearLayout](size, size) +
       ivScaleType(ScaleType.CENTER_CROP) +
@@ -152,27 +152,27 @@ trait SpeakersDetailStyles {
       picture.map(roundedImage(_, R.drawable.placeholder_circle, size.toInt)).getOrElse(ivSrc(R.drawable.placeholder_avatar_failed))
   }
 
-  def speakerNameItemStyle(name: String)(implicit appContext: AppContext): Tweak[TextView] =
+  def speakerNameItemStyle(name: String)(implicit context: ContextWrapper): Tweak[TextView] =
     vWrapContent +
       tvSize(resGetInteger(R.integer.text_big)) +
       vPadding(0, 0, resGetDimensionPixelSize(R.dimen.padding_default_extra_small), 0) +
       tvColorResource(R.color.primary) +
       tvText(name)
 
-  def speakerCompanyItemStyle(company: String)(implicit appContext: AppContext): Tweak[TextView] =
+  def speakerCompanyItemStyle(company: String)(implicit context: ContextWrapper): Tweak[TextView] =
     vWrapContent +
       tvSize(resGetInteger(R.integer.text_medium)) +
       vPadding(0, 0, resGetDimensionPixelSize(R.dimen.padding_default_extra_small), 0) +
       tvColorResource(R.color.text_schedule_detail_secondary) +
       tvText(company)
 
-  def speakerTwitterItemStyle(twitter: Option[String])(implicit appContext: AppContext): Tweak[TextView] =
+  def speakerTwitterItemStyle(twitter: Option[String])(implicit context: ContextWrapper): Tweak[TextView] =
     vWrapContent +
       tvSize(resGetInteger(R.integer.text_small)) +
       tvColorResource(R.color.text_twitter_default) +
       twitter.map(tvText(_) + vVisible).getOrElse(vGone)
 
-  def speakerBioItemStyle(bio: String)(implicit appContext: AppContext): Tweak[TextView] =
+  def speakerBioItemStyle(bio: String)(implicit context: ContextWrapper): Tweak[TextView] =
     vWrapContent +
       tvSize(resGetInteger(R.integer.text_medium)) +
       vPadding(0, 0, resGetDimensionPixelSize(R.dimen.padding_default_extra_small), 0) +

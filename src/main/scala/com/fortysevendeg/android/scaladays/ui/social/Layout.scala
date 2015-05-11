@@ -20,9 +20,9 @@ import android.support.v7.widget.RecyclerView
 import android.webkit.WebView
 import android.widget._
 import macroid.FullDsl._
-import macroid.{ActivityContext, AppContext}
+import macroid.ActivityContextWrapper
 
-class SocialLayoutAdapter(implicit context: ActivityContext, appContext: AppContext)
+class SocialLayoutAdapter(implicit context: ActivityContextWrapper)
     extends AdapterStyles {
 
   var avatar = slot[ImageView]
@@ -37,7 +37,7 @@ class SocialLayoutAdapter(implicit context: ActivityContext, appContext: AppCont
 
   val content = layout
 
-  private def layout(implicit appContext: AppContext, context: ActivityContext) = getUi(
+  private def layout(implicit context: ActivityContextWrapper) = getUi(
     l[LinearLayout](
       w[ImageView] <~ wire(avatar) <~ avatarStyle,
       l[LinearLayout](
@@ -52,7 +52,7 @@ class SocialLayoutAdapter(implicit context: ActivityContext, appContext: AppCont
   )
 }
 
-class ViewHolderSocialAdapter(adapter: SocialLayoutAdapter)(implicit context: ActivityContext, appContext: AppContext)
+class ViewHolderSocialAdapter(adapter: SocialLayoutAdapter)(implicit context: ActivityContextWrapper)
     extends RecyclerView.ViewHolder(adapter.content) {
 
   val content = adapter.content
@@ -76,7 +76,7 @@ trait AuthorizationLayout
 
   var progressBar = slot[ProgressBar]
 
-  def layout(implicit appContext: AppContext, context: ActivityContext) = {
+  def layout(implicit context: ActivityContextWrapper) = {
     getUi(
       l[FrameLayout](
         w[ProgressBar] <~ wire(progressBar) <~ progressBarAuthStyle,

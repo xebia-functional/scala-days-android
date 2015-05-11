@@ -19,11 +19,10 @@ package com.fortysevendeg.android.scaladays.ui.schedule
 import android.support.v7.widget.RecyclerView
 import android.widget._
 import com.fortysevendeg.android.scaladays.model.Speaker
-import com.fortysevendeg.android.scaladays.ui.commons.PlaceHolderLayout
 import macroid.FullDsl._
-import macroid.{ActivityContext, AppContext}
+import macroid.ActivityContextWrapper
 
-class SpeakersLayout(speaker: Speaker)(implicit context: ActivityContext, appContext: AppContext)
+class SpeakersLayout(speaker: Speaker)(implicit context: ActivityContextWrapper)
   extends SpeakersLayoutStyles {
 
   val content = layout
@@ -32,7 +31,7 @@ class SpeakersLayout(speaker: Speaker)(implicit context: ActivityContext, appCon
 
   var speakerTwitter = slot[TextView]
 
-  private def layout(implicit appContext: AppContext, context: ActivityContext) = getUi(
+  private def layout(implicit context: ActivityContextWrapper) = getUi(
     l[LinearLayout](
       w[TextView] <~ wire(speakerName) <~ speakerNameItemStyle(speaker.name),
       w[TextView] <~ wire(speakerTwitter) <~ speakerTwitterItemStyle(speaker.twitter)
@@ -41,7 +40,7 @@ class SpeakersLayout(speaker: Speaker)(implicit context: ActivityContext, appCon
 
 }
 
-class ScheduleLayoutAdapter(implicit context: ActivityContext, appContext: AppContext)
+class ScheduleLayoutAdapter(implicit context: ActivityContextWrapper)
   extends AdapterStyles {
 
   var hour = slot[TextView]
@@ -58,7 +57,7 @@ class ScheduleLayoutAdapter(implicit context: ActivityContext, appContext: AppCo
 
   val content = layout
 
-  private def layout(implicit appContext: AppContext, context: ActivityContext) = getUi(
+  private def layout(implicit context: ActivityContextWrapper) = getUi(
     l[FrameLayout](
       l[LinearLayout](
         w[TextView] <~ wire(hour) <~ hourStyle,
@@ -74,7 +73,7 @@ class ScheduleLayoutAdapter(implicit context: ActivityContext, appContext: AppCo
   )
 }
 
-class ViewHolderScheduleAdapter(adapter: ScheduleLayoutAdapter)(implicit context: ActivityContext, appContext: AppContext)
+class ViewHolderScheduleAdapter(adapter: ScheduleLayoutAdapter)(implicit context: ActivityContextWrapper)
   extends RecyclerView.ViewHolder(adapter.content) {
 
   val content = adapter.content

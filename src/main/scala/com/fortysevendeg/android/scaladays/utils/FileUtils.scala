@@ -20,14 +20,14 @@ import java.io._
 
 import com.fortysevendeg.android.scaladays.commons.StringRes
 import com.fortysevendeg.android.scaladays.utils.ResourceUtils._
-import macroid.AppContext
+import macroid.ContextWrapper
 
 import scala.util.Try
 
 trait FileUtils {
 
-  def loadJsonFile(appContext: AppContext): File =
-    new File(appContext.get.getFilesDir, StringRes.jsonFilename)
+  def loadJsonFile(appContext: ContextWrapper): File =
+    new File(appContext.application.getFilesDir, StringRes.jsonFilename)
 
   def getJson(file: File): Try[String] =
     Try {

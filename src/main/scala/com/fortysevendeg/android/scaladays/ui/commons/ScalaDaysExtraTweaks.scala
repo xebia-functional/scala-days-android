@@ -21,7 +21,7 @@ import android.widget.{TextView, ImageView}
 import com.fortysevendeg.android.scaladays.ui.components.CircularTransformation
 import com.fortysevendeg.android.scaladays.utils.DateTimeUtils
 import com.squareup.picasso.Picasso
-import macroid.{ActivityContext, AppContext, Tweak}
+import macroid.{ContextWrapper, ActivityContextWrapper, Tweak}
 import org.joda.time.DateTime
 import com.fortysevendeg.macroid.extras.ViewTweaks._
 import com.fortysevendeg.macroid.extras.DeviceVersion._
@@ -31,9 +31,9 @@ object AsyncImageTweaks {
 
   def roundedImage(url: String,
         placeHolder: Int,
-        size: Int)(implicit appContext: AppContext, activityContext: ActivityContext) = CurrentVersion match {
+        size: Int)(implicit context: ActivityContextWrapper) = CurrentVersion match {
     case sdk if sdk >= Lollipop =>
-      srcImage(url, placeHolder) + vCircleOutlineProvider
+      srcImage(url, placeHolder) + vCircleOutlineProvider(0)
     case _ =>
       roundedImageTweak(url, placeHolder, size)
   }
@@ -42,9 +42,9 @@ object AsyncImageTweaks {
       url: String,
       placeHolder: Int,
       size: Int
-      )(implicit appContext: AppContext, activityContext: ActivityContext): Tweak[W] = Tweak[W](
+      )(implicit activityContext: ActivityContextWrapper): Tweak[W] = Tweak[W](
     imageView => {
-      Picasso.`with`(activityContext.get)
+      Picasso.`with`(activityContext.getOriginal)
           .load(url)
           .transform(new CircularTransformation(size))
           .placeholder(placeHolder)
@@ -55,18 +55,18 @@ object AsyncImageTweaks {
   def srcImage(
       url: String,
       placeHolder: Int
-      )(implicit appContext: AppContext, activityContext: ActivityContext): Tweak[W] = Tweak[W](
+      )(implicit context: ActivityContextWrapper): Tweak[W] = Tweak[W](
     imageView => {
-      Picasso.`with`(activityContext.get)
+      Picasso.`with`(context.getOriginal)
           .load(url)
           .placeholder(placeHolder)
           .into(imageView)
     }
   )
 
-  def srcImage(url: String)(implicit appContext: AppContext, activityContext: ActivityContext): Tweak[W] = Tweak[W](
+  def srcImage(url: String)(implicit context: ActivityContextWrapper): Tweak[W] = Tweak[W](
     imageView => {
-      Picasso.`with`(activityContext.get)
+      Picasso.`with`(context.getOriginal)
           .load(url)
           .into(imageView)
     }
@@ -80,13 +80,13 @@ object DateTimeTextViewTweaks {
 
   import DateTimeUtils._
 
-  def tvDateTimeHourMinute(dateTime: DateTime, timeZone: String = defaultTimeZone)(implicit appContext: AppContext): Tweak[W] =
+  def tvDateTimeHourMinute(dateTime: DateTime, timeZone: String = defaultTimeZone)(implicit context: ContextWrapper): Tweak[W] =
     Tweak[W](_.setText(parseTime(dateTime, timeZone)))
 
-  def tvDateDay(dateTime: DateTime, timeZone: String = defaultTimeZone)(implicit appContext: AppContext): Tweak[W] =
+  def tvDateDay(dateTime: DateTime, timeZone: String = defaultTimeZone)(implicit context: ContextWrapper): Tweak[W] =
     Tweak[W](_.setText(parseDateSchedule(dateTime, timeZone)))
 
-  def tvDateDateTime(dateTime: DateTime, timeZone: String = defaultTimeZone)(implicit appContext: AppContext): Tweak[W] =
+  def tvDateDateTime(dateTime: DateTime, timeZone: String = defaultTimeZone)(implicit context: ContextWrapper): Tweak[W] =
     Tweak[W](_.setText(parseDateScheduleTime(dateTime, timeZone)))
 
   def tvPrettyTime(dateTime: DateTime): Tweak[W] =
