@@ -52,6 +52,10 @@ class ScheduleDetailActivity
 
   private var favoriteChanged = false
 
+  private var idEvent: Option[Int] = None
+
+  private var isFavoriteEvent: Boolean = false
+
   override def onCreate(savedInstanceState: Bundle) = {
     super.onCreate(savedInstanceState)
 
@@ -70,6 +74,7 @@ class ScheduleDetailActivity
       event <- maybeScheduleItem
       timeZone <- maybeTimeZone
     } yield {
+      idEvent = Option(event.id)
       analyticsServices.sendScreenName(analyticsScheduleDetailScreen)
       val namePreferenceFavorite = getNamePreferenceFavorite(event.id)
       val isFavorite = preferenceServices.fetchBooleanPreference(PreferenceRequest[Boolean](
@@ -126,6 +131,7 @@ class ScheduleDetailActivity
   private def favoriteClick(eventTitle: String, name: String) = {
     favoriteChanged = true
     val isFavorite = preferenceServices.fetchBooleanPreference(PreferenceRequest[Boolean](name, false)).value
+    isFavoriteEvent = !isFavorite
     if (isFavorite) {
       analyticsServices.sendEvent(
         screenName = Some(analyticsScheduleDetailScreen),

@@ -58,9 +58,14 @@ trait UiServices {
     val conference = conferences.find(conferenceId == 0 || _.info.id == conferenceId)
     (conferences, conference) match {
       case (Nil, None) => throw ConferenceSequenceEmptyException()
-      case (_, Some(conf)) => Future.successful(conf)
-      case (_, None) => Future.successful(conferences(0))
+      case (_, Some(conf)) => conferenceSelected(conf, conferenceId == 0)
+      case (_, None) => conferenceSelected(conferences.head, true)
     }
+  }
+
+  private def conferenceSelected(conference: Conference, saveConferenceId: Boolean) = {
+    if (saveConferenceId) saveSelectedConferenceId(conference.info.id)
+    Future.successful(conference)
   }
   
   val conferenceIdPreference = "conferenceId"

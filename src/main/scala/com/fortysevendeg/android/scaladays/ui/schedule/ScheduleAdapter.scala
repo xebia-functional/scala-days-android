@@ -29,9 +29,9 @@ import com.fortysevendeg.macroid.extras.TextTweaks._
 import com.fortysevendeg.macroid.extras.ViewGroupTweaks._
 import com.fortysevendeg.macroid.extras.ViewTweaks._
 import macroid.FullDsl._
-import macroid.{ActivityContextWrapper,ContextWrapper}
+import macroid.{Tweak, Ui, ActivityContextWrapper, ContextWrapper}
 
-class ScheduleAdapter(timeZone: String, scheduleItems: Seq[ScheduleItem], listener: RecyclerClickListener)
+case class ScheduleAdapter(timeZone: String, scheduleItems: Seq[ScheduleItem], listener: RecyclerClickListener)
     (implicit context: ActivityContextWrapper)
     extends RecyclerView.Adapter[RecyclerView.ViewHolder]
     with ComponentRegistryImpl
@@ -46,13 +46,15 @@ class ScheduleAdapter(timeZone: String, scheduleItems: Seq[ScheduleItem], listen
       case `itemViewTypeTalk` =>
         val adapter = new ScheduleLayoutAdapter()
         adapter.content.setOnClickListener(new OnClickListener {
-          override def onClick(v: View): Unit = recyclerClickListener.onClick(scheduleItems(v.getTag.asInstanceOf[Int]))
+          override def onClick(v: View): Unit =
+            recyclerClickListener.onClick(scheduleItems(v.getTag.asInstanceOf[Int]))
         })
         new ViewHolderScheduleAdapter(adapter)
       case `itemViewTypeHeader` =>
         val adapter = new HeaderLayoutAdapter()
         adapter.content.setOnClickListener(new OnClickListener {
-          override def onClick(v: View): Unit = recyclerClickListener.onClick(scheduleItems(v.getTag.asInstanceOf[Int]))
+          override def onClick(v: View): Unit =
+            recyclerClickListener.onClick(scheduleItems(v.getTag.asInstanceOf[Int]))
         })
         new ViewHolderHeaderAdapter(adapter)
     }
