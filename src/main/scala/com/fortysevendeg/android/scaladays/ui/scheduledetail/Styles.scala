@@ -142,7 +142,8 @@ trait SpeakersDetailStyles {
   def itemSpeakerContentStyle(implicit context: ContextWrapper): Tweak[LinearLayout] =
     vMatchWidth +
       llHorizontal +
-      vPadding(0, resGetDimensionPixelSize(R.dimen.padding_default), 0, resGetDimensionPixelSize(R.dimen.padding_schedule_detail_speaker_tb))
+      vPadding(0, resGetDimensionPixelSize(R.dimen.padding_default), 0, resGetDimensionPixelSize(R.dimen.padding_schedule_detail_speaker_tb)) +
+      vBackground(R.drawable.background_list_default)
 
   def speakerAvatarStyle(picture: Option[String])(implicit context: ContextWrapper, activityContext: ActivityContextWrapper): Tweak[ImageView] = {
     val size = resGetDimensionPixelSize(R.dimen.size_avatar)

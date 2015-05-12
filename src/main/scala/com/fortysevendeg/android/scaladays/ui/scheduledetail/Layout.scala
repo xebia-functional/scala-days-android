@@ -16,13 +16,18 @@
 
 package com.fortysevendeg.android.scaladays.ui.scheduledetail
 
+import android.content.Intent
+import android.net.Uri
 import android.widget._
 import com.fortysevendeg.android.scaladays.R
 import com.fortysevendeg.android.scaladays.model.Speaker
+import com.fortysevendeg.android.scaladays.modules.ComponentRegistryImpl
+import com.fortysevendeg.android.scaladays.modules.analytics.AnalyticsServicesComponent
+import com.fortysevendeg.android.scaladays.ui.commons.AnalyticStrings._
 import com.fortysevendeg.android.scaladays.ui.commons.ToolbarLayout
 import com.fortysevendeg.macroid.extras.ResourcesExtras._
 import macroid.FullDsl._
-import macroid.ActivityContextWrapper
+import macroid.{ContextWrapper, Ui, ActivityContextWrapper}
 
 import scala.language.postfixOps
 
@@ -76,7 +81,8 @@ trait Layout
 }
 
 class SpeakersDetailLayout(speaker: Speaker)(implicit context: ActivityContextWrapper)
-    extends SpeakersDetailStyles {
+    extends SpeakersDetailStyles
+    with ComponentRegistryImpl {
 
   val content = layout
 
@@ -89,7 +95,20 @@ class SpeakersDetailLayout(speaker: Speaker)(implicit context: ActivityContextWr
         w[TextView] <~ speakerTwitterItemStyle(speaker.twitter),
         w[TextView] <~ speakerBioItemStyle(speaker.bio)
       ) <~ verticalLayoutStyle
-    ) <~ itemSpeakerContentStyle
+    ) <~ itemSpeakerContentStyle <~ On.click {
+      Ui {
+        speaker.twitter map {
+          twitterName =>
+            val twitterUser = if (twitterName.startsWith("@")) twitterName.substring(1) else twitterName
+            analyticsServices.sendEvent(
+              screenName = Some(analyticsScheduleDetailScreen),
+              category = analyticsCategoryNavigate,
+              action = analyticsSpeakersActionGoToUser)
+            context.getOriginal.startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(resGetString(R.string.url_twitter_user, twitterUser))))
+        }
+      }
+    }
   )
 
+  override val contextProvider: ContextWrapper = context
 }
