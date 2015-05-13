@@ -58,6 +58,9 @@
     <color name="text_schedule_twitter">#364550</color>
     <color name="list_line_schedule">#6CCFE9</color>
 
+    <color name="background_speaker_avatar_schedule">#4695AE</color>
+    <color name="stroke_speaker_avatar_schedule">#ffffff</color>
+
     <!-- Schedule Detail -->
     <color name="text_schedule_detail_secondary">#ad364550</color>
     <color name="fab_no_check_color_dark">#ffa14746</color>

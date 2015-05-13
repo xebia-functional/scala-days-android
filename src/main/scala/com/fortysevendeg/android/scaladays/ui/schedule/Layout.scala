@@ -27,14 +27,21 @@ class SpeakersLayout(speaker: Speaker)(implicit context: ActivityContextWrapper)
 
   val content = layout
 
+  var avatar = slot[ImageView]
+
   var speakerName = slot[TextView]
 
   var speakerTwitter = slot[TextView]
 
   private def layout(implicit context: ActivityContextWrapper) = getUi(
     l[LinearLayout](
-      w[TextView] <~ wire(speakerName) <~ speakerNameItemStyle(speaker.name),
-      w[TextView] <~ wire(speakerTwitter) <~ speakerTwitterItemStyle(speaker.twitter)
+      l[FrameLayout](
+        w[ImageView] <~ wire(avatar) <~ avatarStyle(speaker.picture)
+      ) <~ backgroundAvatar,
+      l[LinearLayout](
+        w[TextView] <~ wire(speakerName) <~ speakerNameItemStyle(speaker.name),
+        w[TextView] <~ wire(speakerTwitter) <~ speakerTwitterItemStyle(speaker.twitter)
+      ) <~ itemSpeakerContentNamesStyle
     ) <~ itemSpeakerContentStyle
   )
 

@@ -16,9 +16,12 @@
 
 <resources>
 
+    <dimen name="size_schedule_avatar">28dp</dimen>
+
     <dimen name="size_avatar">40dp</dimen>
     <dimen name="size_menu_conference_icon">38dp</dimen>
     <dimen name="size_schedule_detail_fab">44dp</dimen>
+    <dimen name="stroke_avatar_schedule">2dp</dimen>
 
     <dimen name="padding_default_extra_small">4dp</dimen>
     <dimen name="padding_default_small">12dp</dimen>

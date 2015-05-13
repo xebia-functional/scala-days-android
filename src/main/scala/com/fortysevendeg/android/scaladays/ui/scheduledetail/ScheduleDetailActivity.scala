@@ -52,6 +52,8 @@ class ScheduleDetailActivity
 
   private var favoriteChanged = false
 
+  private var idEvent: Option[Int] = None
+
   override def onCreate(savedInstanceState: Bundle) = {
     super.onCreate(savedInstanceState)
 
@@ -70,6 +72,7 @@ class ScheduleDetailActivity
       event <- maybeScheduleItem
       timeZone <- maybeTimeZone
     } yield {
+      idEvent = Option(event.id)
       analyticsServices.sendScreenName(analyticsScheduleDetailScreen)
       val namePreferenceFavorite = getNamePreferenceFavorite(event.id)
       val isFavorite = preferenceServices.fetchBooleanPreference(PreferenceRequest[Boolean](

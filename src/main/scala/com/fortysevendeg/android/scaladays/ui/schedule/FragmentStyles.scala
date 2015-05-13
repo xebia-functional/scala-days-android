@@ -18,8 +18,10 @@ package com.fortysevendeg.android.scaladays.ui.schedule
 
 import android.view.Gravity
 import android.view.ViewGroup.LayoutParams._
+import android.widget.ImageView.ScaleType
 import android.widget._
 import com.fortysevendeg.android.scaladays.R
+import com.fortysevendeg.android.scaladays.ui.commons.AsyncImageTweaks._
 import com.fortysevendeg.macroid.extras.FrameLayoutTweaks._
 import com.fortysevendeg.macroid.extras.LinearLayoutTweaks._
 import com.fortysevendeg.macroid.extras.ResourcesExtras._
@@ -27,11 +29,23 @@ import com.fortysevendeg.macroid.extras.TextTweaks._
 import com.fortysevendeg.macroid.extras.ImageViewTweaks._
 import com.fortysevendeg.macroid.extras.ViewTweaks._
 import macroid.FullDsl._
-import macroid.{ContextWrapper, Tweak}
+import macroid.{ActivityContextWrapper, ContextWrapper, Tweak}
 
 import scala.language.postfixOps
 
 trait SpeakersLayoutStyles {
+
+  def backgroundAvatar(implicit context: ActivityContextWrapper): Tweak[FrameLayout] =
+    vWrapContent +
+      vBackground(R.drawable.background_speaker_avatar_schedule) +
+      vPaddings(resGetDimensionPixelSize(R.dimen.stroke_avatar_schedule))
+
+  def avatarStyle(picture: Option[String])(implicit context: ActivityContextWrapper): Tweak[ImageView] = {
+    val avatarSize = resGetDimensionPixelSize(R.dimen.size_schedule_avatar)
+    lp[LinearLayout](avatarSize, avatarSize) +
+      ivScaleType(ScaleType.CENTER_CROP) +
+      picture.map(roundedImage(_, android.R.color.transparent, avatarSize)).getOrElse(ivSrc(R.drawable.placeholder_avatar_failed))
+  }
 
   def speakerNameItemStyle(name: String)(implicit context: ContextWrapper): Tweak[TextView] =
     vWrapContent +
@@ -49,7 +63,13 @@ trait SpeakersLayoutStyles {
   def itemSpeakerContentStyle(implicit context: ContextWrapper): Tweak[LinearLayout] =
     vMatchWidth +
       llHorizontal +
-      vPadding(0, resGetDimensionPixelSize(R.dimen.padding_default_extra_small), 0, 0)
+      vPadding(0, resGetDimensionPixelSize(R.dimen.padding_default_extra_small), 0, 0) +
+      llGravity(Gravity.CENTER_VERTICAL)
+
+  def itemSpeakerContentNamesStyle(implicit context: ContextWrapper): Tweak[LinearLayout] =
+    vMatchWidth +
+      llVertical +
+      vPadding(paddingLeft = resGetDimensionPixelSize(R.dimen.padding_default))
 }
 
 trait AdapterStyles {

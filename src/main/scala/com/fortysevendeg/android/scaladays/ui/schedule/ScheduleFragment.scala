@@ -21,7 +21,7 @@ import android.content.DialogInterface.OnClickListener
 import android.content.{DialogInterface, Intent}
 import android.os.Bundle
 import android.support.v4.app.Fragment
-import android.support.v7.widget.LinearLayoutManager
+import android.support.v7.widget.{RecyclerView, LinearLayoutManager}
 import android.view._
 import com.fortysevendeg.android.scaladays.R
 import com.fortysevendeg.android.scaladays.model.Event
@@ -31,7 +31,7 @@ import com.fortysevendeg.android.scaladays.ui.commons.{ListLayout, UiServices}
 import com.fortysevendeg.android.scaladays.ui.scheduledetail.ScheduleDetailActivity
 import com.fortysevendeg.macroid.extras.RecyclerViewTweaks._
 import macroid.FullDsl._
-import macroid.{ContextWrapper, Contexts, Ui}
+import macroid.{Tweak, ContextWrapper, Contexts, Ui}
 import com.fortysevendeg.android.scaladays.ui.commons.AnalyticStrings._
 
 import scala.concurrent.ExecutionContext.Implicits.global
@@ -103,10 +103,18 @@ class ScheduleFragment
   override def onActivityResult(requestCode: Int, resultCode: Int, data: Intent): Unit = {
     super.onActivityResult(requestCode, resultCode, data)
     requestCode match {
-      case request if request == detailResult =>
+      case `detailResult` =>
         resultCode match {
           case Activity.RESULT_OK =>
-            loadSchedule()
+            runUi(
+              recyclerView <~ Tweak[RecyclerView] {
+                rv =>
+                  rv.getAdapter match {
+                    case adapter: ScheduleAdapter => rv.swapAdapter(adapter, false)
+                    case _ =>
+                  }
+              }
+            )
           case _ => ()
         }
     }
@@ -137,7 +145,7 @@ class ScheduleFragment
       case length if length == 0 && favorites => noFavorites()
       case 0 => empty()
       case _ =>
-        val scheduleAdapter = new ScheduleAdapter(timeZone, scheduleItems, new RecyclerClickListener {
+        val scheduleAdapter = ScheduleAdapter(timeZone, scheduleItems, new RecyclerClickListener {
           override def onClick(scheduleItem: ScheduleItem): Unit = {
             if (!scheduleItem.isHeader) {
               scheduleItem.event map {
