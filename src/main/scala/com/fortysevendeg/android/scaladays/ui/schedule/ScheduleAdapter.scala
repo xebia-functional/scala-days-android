@@ -84,7 +84,9 @@ case class ScheduleAdapter(timeZone: String, scheduleItems: Seq[ScheduleItem], l
             val isFavorite = preferenceServices.fetchBooleanPreference(PreferenceRequest[Boolean](
               getNamePreferenceFavorite(event.id), false)).value
             runUi(
-              (vh.hour <~ tvDateTimeHourMinute(event.startTime, timeZone)) ~
+              (vh.hour <~
+                tvDateTimeHourMinute(event.startTime, timeZone) <~
+                vBackgroundColorResource(if (event.isCurrentEvent()) R.color.background_list_schedule_hour_current_event else R.color.background_list_schedule_hour)) ~
                   (vh.name <~ tvText(event.title)) ~
                   (vh.track <~ (event.track map (
                     track => tvText(track.name) + vVisible)

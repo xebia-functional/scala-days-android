@@ -52,6 +52,7 @@
     <!-- Schedule -->
     <color name="background_list_schedule_header">#6CCFE9</color>
     <color name="background_list_schedule_hour">#4695AE</color>
+    <color name="background_list_schedule_hour_current_event">#337488</color>
     <color name="background_list_schedule_info">#55B2CE</color>
     <color name="text_schedule_room">#427E91</color>
     <color name="text_schedule_name">#ffffff</color>

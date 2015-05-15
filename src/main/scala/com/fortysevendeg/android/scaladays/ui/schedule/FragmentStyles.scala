@@ -44,7 +44,9 @@ trait SpeakersLayoutStyles {
     val avatarSize = resGetDimensionPixelSize(R.dimen.size_schedule_avatar)
     lp[LinearLayout](avatarSize, avatarSize) +
       ivScaleType(ScaleType.CENTER_CROP) +
-      picture.map(roundedImage(_, android.R.color.transparent, avatarSize)).getOrElse(ivSrc(R.drawable.placeholder_avatar_failed))
+      (picture map {
+        roundedImage(_, android.R.color.transparent, avatarSize, Some(R.drawable.placeholder_avatar_failed))
+      } getOrElse ivSrc(R.drawable.placeholder_avatar_failed))
   }
 
   def speakerNameItemStyle(name: String)(implicit context: ContextWrapper): Tweak[TextView] =

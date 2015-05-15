@@ -59,7 +59,11 @@ case class Event(
   date: String,
   track: Option[Track],
   location: Option[Location],
-  speakers: Seq[Speaker])
+  speakers: Seq[Speaker]) {
+
+  def isCurrentEvent(): Boolean = endTime.isAfterNow() && startTime.isBeforeNow()
+
+}
 
 case class Track(
   id: Int,

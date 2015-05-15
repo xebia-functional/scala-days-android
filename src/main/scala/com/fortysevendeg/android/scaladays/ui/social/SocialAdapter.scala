@@ -49,7 +49,8 @@ class SocialAdapter(messages: Seq[TwitterMessage], listener: RecyclerClickListen
     val avatarSize = context.application.getResources.getDimensionPixelSize(R.dimen.size_avatar)
     viewHolder.content.setTag(position)
     runUi(
-      (viewHolder.avatar <~ roundedImage(message.avatar, R.drawable.placeholder_circle, avatarSize)) ~
+      (viewHolder.avatar <~
+        roundedImage(message.avatar, R.drawable.placeholder_circle, avatarSize, Some(R.drawable.placeholder_avatar_failed))) ~
           (viewHolder.name <~ tvText(message.fullName)) ~
           (viewHolder.date <~ tvPrettyTime(message.date)) ~
           (viewHolder.twitter <~ tvText("@%s".format(message.screenName))) ~
