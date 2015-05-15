@@ -54,7 +54,7 @@ class ConferenceMenuAdapter(listener: ConferenceMenuClickListener)
     viewHolder.content.setTag(position)
     runUi(
       (viewHolder.title <~ tvText(conferenceMenuItem.name)) ~
-        (viewHolder.icon <~ conferenceMenuItem.icon.map(roundedImage(_, R.drawable.placeholder_circle, iconSize)).getOrElse(ivSrc(R.drawable.placeholder_circle)))
+        (viewHolder.icon <~ (conferenceMenuItem.icon map (roundedImage(_, R.drawable.placeholder_circle, iconSize)) getOrElse ivSrc(R.drawable.placeholder_circle)))
     )
   }
   

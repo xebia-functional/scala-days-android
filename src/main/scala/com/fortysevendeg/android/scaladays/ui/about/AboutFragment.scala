@@ -16,20 +16,16 @@
 
 package com.fortysevendeg.android.scaladays.ui.about
 
-import android.content.Intent
-import android.net.Uri
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.view.{LayoutInflater, View, ViewGroup}
-import com.fortysevendeg.android.scaladays.R
 import com.fortysevendeg.android.scaladays.modules.ComponentRegistryImpl
 import com.fortysevendeg.android.scaladays.ui.commons.AnalyticStrings._
 import com.fortysevendeg.android.scaladays.ui.commons.UiServices
 import com.fortysevendeg.macroid.extras.TextTweaks._
 import com.fortysevendeg.macroid.extras.ViewTweaks._
-import com.fortysevendeg.macroid.extras.ResourcesExtras._
 import macroid.FullDsl._
-import macroid.{Ui, ContextWrapper, Contexts}
+import macroid.{ContextWrapper, Contexts, Ui}
 
 import scala.concurrent.ExecutionContext.Implicits.global
 
@@ -49,28 +45,16 @@ class AboutFragment
 
   override def onViewCreated(view: View, savedInstanceState: Bundle): Unit = {
     super.onViewCreated(view, savedInstanceState)
-    runUi(
-      aboutContent <~ On.click {
-        Ui {
-          analyticsServices.sendEvent(
-            screenName = Some(analyticsAboutScreen),
-            category = analyticsCategoryNavigate,
-            action = analyticsAboutActionGoTo47Deg)
-          startActivity(new Intent(Intent.ACTION_VIEW,
-            Uri.parse(resGetString(R.string.url_47deg))))
-        }
-      }
-    )
-    val result = for {
-      conference <- loadSelectedConference()
-    } yield show(conference.codeOfConduct)
-    result.recover {
+    loadSelectedConference() mapUi {
+      conference =>
+        conference.codeOfConduct map show getOrElse Ui.nop
+    } recoverUi {
       case _ => failed()
     }
   }
 
-  def show(codeOfConduct: Option[String]) =  runUi(description <~ (codeOfConduct map (tvText(_) + vVisible) getOrElse vGone))
+  def show(codeOfConduct: String): Ui[_] =  description <~ tvText(codeOfConduct)
 
-  def failed() = runUi((mainContent <~ vGone) ~ (placeholderContent <~ vVisible))
+  def failed(): Ui[_] = (mainContent <~ vGone) ~ (placeholderContent <~ vVisible)
 
 }

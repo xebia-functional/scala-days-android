@@ -46,30 +46,6 @@ class QrCodeFragment
     content
   }
 
-  val defaultDisplayMs: Long = 0L
-
-  val captureActionScan: String = "com.google.zxing.client.android.SCAN"
-
-  val displayDurationKey: String = "RESULT_DISPLAY_DURATION_MS"
-
-  override def onViewCreated(view: View, savedInstanceState: Bundle): Unit = {
-    super.onViewCreated(view, savedInstanceState)
-    runUi(
-      scanButton <~ On.click {
-        Ui {
-          analyticsServices.sendEvent(
-            screenName = Some(analyticsContactsScreen),
-            category = analyticsCategoryNavigate,
-            action = analyticsContactsActionScanContact)
-          val intent = new Intent(getActivity, classOf[CaptureActivity])
-          intent.setAction(captureActionScan)
-          intent.putExtra(displayDurationKey, defaultDisplayMs)
-          startActivityForResult(intent, scanResult)
-        }
-      }
-    )
-  }
-
   override def onActivityResult(requestCode: Int, resultCode: Int, data: Intent): Unit = {
     super.onActivityResult(requestCode, resultCode, data)
     requestCode match {

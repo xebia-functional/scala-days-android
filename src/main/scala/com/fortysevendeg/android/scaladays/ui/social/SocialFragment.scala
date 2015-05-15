@@ -62,15 +62,13 @@ class SocialFragment
 
   override def onViewCreated(view: View, savedInstanceState: Bundle): Unit = {
     super.onViewCreated(view, savedInstanceState)
-    runUi(
-      (recyclerView
-        <~ rvLayoutManager(new LinearLayoutManager(fragmentContextWrapper.application))
-        <~ rvAddItemDecoration(new LineItemDecorator())) ~
-        (reloadButton <~ On.click(Ui {
-          search()
-        })))
     if (twitterServices.isConnected()) {
-      search()
+      runUi(
+        (recyclerView
+          <~ rvLayoutManager(new LinearLayoutManager(fragmentContextWrapper.application))
+          <~ rvAddItemDecoration(new LineItemDecorator())) ~
+          (reloadButton <~ On.click(search())) ~
+          search())
     } else {
       val intent = new Intent(getActivity, classOf[AuthorizationActivity])
       startActivityForResult(intent, authResult)
@@ -101,19 +99,16 @@ class SocialFragment
 
   override def onActivityResult(requestCode: Int, resultCode: Int, data: Intent): Unit = {
     super.onActivityResult(requestCode, resultCode, data)
-    requestCode match {
+    runUi(requestCode match {
       case request if request == authResult =>
         resultCode match {
-          case Activity.RESULT_OK =>
-            search()
-          case Activity.RESULT_CANCELED =>
-            failed()
+          case Activity.RESULT_OK => search()
+          case Activity.RESULT_CANCELED => failed()
         }
-    }
+    })
   }
 
-  def search() = {
-    loading()
+  def search(): Ui[_] = {
     val result = for {
       conference <- loadSelectedConference()
       searchResponse <- twitterServices.search(SearchRequest(conference.info.query))
@@ -121,13 +116,13 @@ class SocialFragment
       hashtag = Some(conference.info.hashTag)
       reloadList(searchResponse.messages)
     }
-
-    result.recover {
+    result mapUi (ui => ui) recoverUi {
       case _ => failed()
     }
+    loading()
   }
 
-  def reloadList(messages: Seq[TwitterMessage]) = {
+  def reloadList(messages: Seq[TwitterMessage]): Ui[_] = {
     messages.length match {
       case 0 => empty()
       case _ =>

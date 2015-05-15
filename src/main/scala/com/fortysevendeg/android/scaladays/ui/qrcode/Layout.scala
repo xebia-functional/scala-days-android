@@ -16,20 +16,43 @@
 
 package com.fortysevendeg.android.scaladays.ui.qrcode
 
+import android.content.Intent
+import android.support.v4.app.Fragment
 import android.widget._
+import com.fortysevendeg.android.scaladays.modules.analytics.AnalyticsServicesComponent
+import com.fortysevendeg.android.scaladays.ui.commons.AnalyticStrings._
+import com.fortysevendeg.android.scaladays.ui.commons.IntegerResults._
+import com.google.zxing.client.android.CaptureActivity
 import macroid.FullDsl._
-import macroid.ActivityContextWrapper
+import macroid.{Ui, ActivityContextWrapper}
 
 trait Layout
   extends Styles {
 
-  var scanButton = slot[Button]
+  self : Fragment with AnalyticsServicesComponent =>
+
+  val defaultDisplayMs: Long = 0L
+
+  val captureActionScan: String = "com.google.zxing.client.android.SCAN"
+
+  val displayDurationKey: String = "RESULT_DISPLAY_DURATION_MS"
 
   def content(implicit context: ActivityContextWrapper) = getUi(
     l[LinearLayout](
       w[ImageView] <~ qrImageStyle,
       w[TextView] <~ qrMessageStyle,
-      w[Button] <~ qrButtonStyle <~ wire(scanButton)
+      w[Button] <~ qrButtonStyle <~ On.click {
+        Ui {
+          analyticsServices.sendEvent(
+            screenName = Some(analyticsContactsScreen),
+            category = analyticsCategoryNavigate,
+            action = analyticsContactsActionScanContact)
+          val intent = new Intent(getActivity, classOf[CaptureActivity])
+          intent.setAction(captureActionScan)
+          intent.putExtra(displayDurationKey, defaultDisplayMs)
+          startActivityForResult(intent, scanResult)
+        }
+      }
     ) <~ qrContentStyle
   )
 

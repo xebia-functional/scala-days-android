@@ -16,14 +16,23 @@
 
 package com.fortysevendeg.android.scaladays.ui.about
 
+import android.content.Intent
+import android.net.Uri
+import android.support.v4.app.Fragment
 import android.widget._
+import com.fortysevendeg.android.scaladays.R
+import com.fortysevendeg.android.scaladays.modules.analytics.AnalyticsServicesComponent
+import com.fortysevendeg.android.scaladays.ui.commons.AnalyticStrings._
 import com.fortysevendeg.android.scaladays.ui.commons.PlaceHolderLayout
-import macroid.ActivityContextWrapper
+import com.fortysevendeg.macroid.extras.ResourcesExtras._
+import macroid.{Ui, ActivityContextWrapper}
 import macroid.FullDsl._
 
 trait Layout
-    extends Styles
-    with PlaceHolderLayout {
+  extends Styles
+  with PlaceHolderLayout {
+
+  self: Fragment with AnalyticsServicesComponent =>
 
   var description = slot[TextView]
 
@@ -45,7 +54,16 @@ trait Layout
         l[LinearLayout](
           w[ImageView] <~ about47ImageStyle,
           w[TextView] <~ about47TextStyle
-        ) <~ about47ContentStyle <~ wire(aboutContent)
+        ) <~ about47ContentStyle <~ wire(aboutContent) <~ On.click {
+          Ui {
+            analyticsServices.sendEvent(
+              screenName = Some(analyticsAboutScreen),
+              category = analyticsCategoryNavigate,
+              action = analyticsAboutActionGoTo47Deg)
+            startActivity(new Intent(Intent.ACTION_VIEW,
+              Uri.parse(resGetString(R.string.url_47deg))))
+          }
+        }
       ) <~ wire(mainContent) <~ rootStyle,
       placeholder <~ wire(placeholderContent)
     )

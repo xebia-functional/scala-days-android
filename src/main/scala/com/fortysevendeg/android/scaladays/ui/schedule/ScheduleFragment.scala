@@ -69,10 +69,10 @@ class ScheduleFragment
       (recyclerView
         <~ rvLayoutManager(layoutManager)
         <~ rvAddItemDecoration(new ScheduleItemDecorator())) ~
-        (reloadButton <~ On.click(Ui {
+        loadSchedule() ~
+        (reloadButton <~ On.click(
           loadSchedule(favorites = false, forceDownload = true)
-        })))
-    loadSchedule()
+        )))
   }
 
   override def onCreateOptionsMenu(menu: Menu, inflater: MenuInflater): Unit = {
@@ -92,7 +92,7 @@ class ScheduleFragment
         .setCancelable(true)
         .setItems(R.array.filter_menu, new OnClickListener() {
         override def onClick(dialog: DialogInterface, which: Int): Unit = {
-          which match {
+          runUi(which match {
             case 0 =>
               analyticsServices.sendEvent(
                 Some(analyticsScheduleListScreen),
@@ -105,7 +105,7 @@ class ScheduleFragment
                 analyticsCategoryFilter,
                 analyticsScheduleActionFilterFavorites)
               loadSchedule(favorites = true)
-          }
+          })
         }
       }).create().show()
       true
@@ -138,18 +138,17 @@ class ScheduleFragment
     }
   }
 
-  def loadSchedule(favorites: Boolean = false, forceDownload: Boolean = false): Unit = {
-    loading()
-    val result = for {
-      conference <- loadSelectedConference(forceDownload)
-    } yield reloadList(conference.info.utcTimezoneOffset, conference.schedule, favorites)
-
-    result recover {
+  def loadSchedule(favorites: Boolean = false, forceDownload: Boolean = false): Ui[_] = {
+    loadSelectedConference(forceDownload) mapUi {
+      conference =>
+        reloadList(conference.info.utcTimezoneOffset, conference.schedule, favorites)
+    } recoverUi {
       case _ => failed()
     }
+    loading()
   }
 
-  def reloadList(timeZone: String, events: Seq[Event], favorites: Boolean = false) = {
+  def reloadList(timeZone: String, events: Seq[Event], favorites: Boolean = false): Ui[_] = {
     val scheduleItems = toScheduleItem(timeZone, events,
       if (favorites) {
         event => {

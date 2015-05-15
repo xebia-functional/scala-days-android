@@ -78,32 +78,32 @@ class PlacesFragment
     startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(link)))
   }
 
-  def showVenueMarkers(venues: Seq[Venue]) = {
-    venues map createMarker
-    venues.headOption map { venue =>
-      runUi(Ui {
+  private def showVenueMarkers(venues: Seq[Venue]) = {
+    val uis = (venues map createMarker) :+ (venues.headOption map { venue =>
+      Ui {
         googleMap map (_.moveCamera(toCameraUpdate(venue)))
-      })
-    }
+      }
+    } getOrElse Ui.nop)
+    runUi(Ui.sequence(uis :_*))
   }
 
-  def createMarker(venue: Venue) {
+  private def createMarker(venue: Venue): Ui[_] = {
     val markerOptions = new MarkerOptions()
       .title(venue.name)
       .snippet(venue.address)
       .icon(BitmapDescriptorFactory.fromResource(com.fortysevendeg.android.scaladays.R.drawable.map_pushpin))
       .position(new LatLng(venue.latitude, venue.longitude))
-    runUi(addMarkerToMap(venue, markerOptions))
+    addMarkerToMap(venue, markerOptions)
   }
 
-  def addMarkerToMap(venue: Venue, markerOptions: MarkerOptions) =
+  private def addMarkerToMap(venue: Venue, markerOptions: MarkerOptions): Ui[_] =
     Ui {
       googleMap map { googleMapValue =>
         markersMap.put(googleMapValue.addMarker(markerOptions).getId, venue.website)
       }
     }
 
-  def toCameraUpdate(venue: Venue): CameraUpdate =
+  private def toCameraUpdate(venue: Venue): CameraUpdate =
     CameraUpdateFactory.newLatLngZoom(new LatLng(venue.latitude, venue.longitude), defaultZoom)
 
   def failed() = {}

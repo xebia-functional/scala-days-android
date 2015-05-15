@@ -21,7 +21,7 @@ import com.fortysevendeg.android.scaladays.R
 import com.fortysevendeg.macroid.extras.TextTweaks._
 import com.fortysevendeg.macroid.extras.ImageViewTweaks._
 import com.fortysevendeg.macroid.extras.ViewTweaks._
-import macroid.ActivityContextWrapper
+import macroid.{Ui, ActivityContextWrapper}
 import macroid.FullDsl._
 
 trait PlaceHolderLayout
@@ -41,17 +41,15 @@ trait PlaceHolderLayout
     ) <~ placeholderContentStyle
   }
 
-  def loadFailed() = load(R.string.generalMessageError, R.drawable.placeholder_error)
+  def loadFailed(): Ui[_] = load(R.string.generalMessageError, R.drawable.placeholder_error)
 
-  def loadEmpty() = load(R.string.generalMessageEmpty, R.drawable.placeholder_general)
+  def loadEmpty(): Ui[_] = load(R.string.generalMessageEmpty, R.drawable.placeholder_general)
 
-  def loadNoFavorites() = load(R.string.noFavoritesMessage, R.drawable.placeholder_favorite, false)
+  def loadNoFavorites(): Ui[_] = load(R.string.noFavoritesMessage, R.drawable.placeholder_favorite, false)
 
-  private def load(messageRes: Int, imageRes: Int, showButton: Boolean = true) = {
-    runUi(
-      (text <~ tvText(messageRes)) ~
-        (image <~ ivSrc(imageRes)) ~
-        (reloadButton <~ (if (showButton) vVisible else vGone)))
-  }
+  private def load(messageRes: Int, imageRes: Int, showButton: Boolean = true): Ui[_] =
+    (text <~ tvText(messageRes)) ~
+      (image <~ ivSrc(imageRes)) ~
+      (reloadButton <~ (if (showButton) vVisible else vGone))
 
 }
