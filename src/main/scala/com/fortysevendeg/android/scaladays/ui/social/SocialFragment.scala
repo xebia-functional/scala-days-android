@@ -75,12 +75,6 @@ class SocialFragment
       }
     })
 
-//    refreshLayout map (_.setOnRefreshListener(new OnRefreshListener {
-//      override def onRefresh(): Unit = {
-//        runUi(getSinceId map addTweets getOrElse(refreshLayout <~ srlRefreshing(false)))
-//      }
-//    }))
-
     runUi(
       (recyclerView
         <~ rvLayoutManager(new LinearLayoutManager(fragmentContextWrapper.application))
