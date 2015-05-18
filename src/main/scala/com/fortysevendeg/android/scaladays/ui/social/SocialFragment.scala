@@ -50,6 +50,17 @@ class SocialFragment
 
   private var hashtag: Option[String] = None
 
+  lazy val socialAdapter = SocialAdapter(Seq.empty, new RecyclerClickListener {
+    override def onClick(message: TwitterMessage): Unit = {
+      analyticsServices.sendEvent(
+        screenName = Some(analyticsSocialScreen),
+        category = analyticsCategoryNavigate,
+        action = analyticsSocialActionGoToTweet)
+      startActivity(new Intent(Intent.ACTION_VIEW,
+        Uri.parse(resGetString(R.string.url_twitter_status, message.screenName, message.id.toString))))
+    }
+  })
+
   override def onCreate(savedInstanceState: Bundle): Unit = {
     super.onCreate(savedInstanceState)
     setHasOptionsMenu(true)
@@ -62,14 +73,13 @@ class SocialFragment
 
   override def onViewCreated(view: View, savedInstanceState: Bundle): Unit = {
     super.onViewCreated(view, savedInstanceState)
-    if (twitterServices.isConnected()) {
-      runUi(
-        (recyclerView
-          <~ rvLayoutManager(new LinearLayoutManager(fragmentContextWrapper.application))
-          <~ rvAddItemDecoration(new LineItemDecorator())) ~
-          (reloadButton <~ On.click(search())) ~
-          search())
-    } else {
+    runUi(
+      (recyclerView
+        <~ rvLayoutManager(new LinearLayoutManager(fragmentContextWrapper.application))
+        <~ rvAddItemDecoration(new LineItemDecorator())) ~
+        (reloadButton <~ On.click(search())) ~
+        search())
+    if (!twitterServices.isConnected()) {
       val intent = new Intent(getActivity, classOf[AuthorizationActivity])
       startActivityForResult(intent, authResult)
     }
@@ -99,13 +109,13 @@ class SocialFragment
 
   override def onActivityResult(requestCode: Int, resultCode: Int, data: Intent): Unit = {
     super.onActivityResult(requestCode, resultCode, data)
-    runUi(requestCode match {
+    requestCode match {
       case request if request == authResult =>
         resultCode match {
-          case Activity.RESULT_OK => search()
-          case Activity.RESULT_CANCELED => failed()
+          case Activity.RESULT_OK => runUi(search())
+          case Activity.RESULT_CANCELED => runUi(failed())
         }
-    })
+    }
   }
 
   def search(): Ui[_] = {
@@ -125,18 +135,7 @@ class SocialFragment
   def reloadList(messages: Seq[TwitterMessage]): Ui[_] = {
     messages.length match {
       case 0 => empty()
-      case _ =>
-        val socialAdapter = new SocialAdapter(messages, new RecyclerClickListener {
-          override def onClick(message: TwitterMessage): Unit = {
-            analyticsServices.sendEvent(
-              screenName = Some(analyticsSocialScreen),
-              category = analyticsCategoryNavigate,
-              action = analyticsSocialActionGoToTweet)
-            startActivity(new Intent(Intent.ACTION_VIEW,
-              Uri.parse(resGetString(R.string.url_twitter_status, message.screenName, message.id.toString))))
-          }
-        })
-        adapter(socialAdapter)
+      case _ => adapter(socialAdapter.copy(messages = messages))
     }
   }
 

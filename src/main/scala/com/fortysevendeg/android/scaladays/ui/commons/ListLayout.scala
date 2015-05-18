@@ -18,9 +18,10 @@ package com.fortysevendeg.android.scaladays.ui.commons
 
 import android.support.v7.widget.RecyclerView
 import android.widget.{FrameLayout, LinearLayout, ProgressBar}
+import com.fortysevendeg.android.scaladays.ui.schedule.ScheduleAdapter
 import com.fortysevendeg.macroid.extras.RecyclerViewTweaks._
 import macroid.FullDsl._
-import macroid.{Ui, ActivityContextWrapper}
+import macroid.{Tweak, Ui, ActivityContextWrapper}
 import com.fortysevendeg.macroid.extras.ViewTweaks._
 
 trait ListLayout

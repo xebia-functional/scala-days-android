@@ -51,8 +51,7 @@ libraryDependencies ++= Seq(
   prettytime,
   zxingCore,
   aar(zxingAndroid),
-  crashlytics,
-  compilerPlugin(Libraries.wartRemover))
+  crashlytics)
 
 dexMulti in Android := true
 

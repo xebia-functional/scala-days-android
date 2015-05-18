@@ -28,7 +28,7 @@ import com.fortysevendeg.macroid.extras.TextTweaks._
 import macroid.FullDsl._
 import macroid.ActivityContextWrapper
 
-class SocialAdapter(messages: Seq[TwitterMessage], listener: RecyclerClickListener)
+case class SocialAdapter(messages: Seq[TwitterMessage], listener: RecyclerClickListener)
     (implicit context: ActivityContextWrapper)
     extends RecyclerView.Adapter[ViewHolderSocialAdapter] {
 
