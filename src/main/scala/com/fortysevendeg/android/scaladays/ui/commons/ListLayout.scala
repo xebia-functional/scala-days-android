@@ -16,9 +16,10 @@
 
 package com.fortysevendeg.android.scaladays.ui.commons
 
+import android.support.v4.widget.SwipeRefreshLayout
+import android.support.v4.widget.SwipeRefreshLayout.OnRefreshListener
 import android.support.v7.widget.RecyclerView
 import android.widget.{FrameLayout, LinearLayout, ProgressBar}
-import com.fortysevendeg.android.scaladays.ui.schedule.ScheduleAdapter
 import com.fortysevendeg.macroid.extras.RecyclerViewTweaks._
 import macroid.FullDsl._
 import macroid.{Tweak, Ui, ActivityContextWrapper}
@@ -32,12 +33,16 @@ trait ListLayout
 
   var progressBar = slot[ProgressBar]
 
+  var refreshLayout = slot[SwipeRefreshLayout]
+
   var placeholderContent = slot[LinearLayout]
 
   def content(implicit context: ActivityContextWrapper) = getUi(
     l[FrameLayout](
       w[ProgressBar] <~ wire(progressBar) <~ progressBarStyle,
-      w[RecyclerView] <~ wire(recyclerView) <~ recyclerViewStyle,
+      l[SwipeRefreshLayout](
+        w[RecyclerView] <~ wire(recyclerView) <~ recyclerViewStyle
+      ) <~ wire(refreshLayout),
       placeholder <~ wire(placeholderContent)
     ) <~ rootStyle
   )
@@ -64,5 +69,13 @@ trait ListLayout
   def adapter[VH <: RecyclerView.ViewHolder](adapter: RecyclerView.Adapter[VH]): Ui[_] = (progressBar <~ vGone) ~
     (placeholderContent <~ vGone) ~
     (recyclerView <~ vVisible <~ rvAdapter(adapter))
+
+  def srlRefreshing(refreshing: Boolean) = Tweak[SwipeRefreshLayout] (_.setRefreshing(refreshing))
+
+  def srlOnRefreshListener(f: => Ui[_]) = Tweak[SwipeRefreshLayout] (_.setOnRefreshListener(new OnRefreshListener {
+    override def onRefresh(): Unit = {
+      runUi(f)
+    }
+  }))
 
 }

@@ -23,6 +23,7 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.support.v4.app.Fragment
+import android.support.v4.widget.SwipeRefreshLayout.OnRefreshListener
 import android.support.v7.widget.LinearLayoutManager
 import android.view._
 import com.fortysevendeg.android.scaladays.R
@@ -50,17 +51,6 @@ class SocialFragment
 
   private var hashtag: Option[String] = None
 
-  lazy val socialAdapter = SocialAdapter(Seq.empty, new RecyclerClickListener {
-    override def onClick(message: TwitterMessage): Unit = {
-      analyticsServices.sendEvent(
-        screenName = Some(analyticsSocialScreen),
-        category = analyticsCategoryNavigate,
-        action = analyticsSocialActionGoToTweet)
-      startActivity(new Intent(Intent.ACTION_VIEW,
-        Uri.parse(resGetString(R.string.url_twitter_status, message.screenName, message.id.toString))))
-    }
-  })
-
   override def onCreate(savedInstanceState: Bundle): Unit = {
     super.onCreate(savedInstanceState)
     setHasOptionsMenu(true)
@@ -73,12 +63,33 @@ class SocialFragment
 
   override def onViewCreated(view: View, savedInstanceState: Bundle): Unit = {
     super.onViewCreated(view, savedInstanceState)
+
+    val socialAdapter = SocialAdapter(Seq.empty, new RecyclerClickListener {
+      override def onClick(message: TwitterMessage): Unit = {
+        analyticsServices.sendEvent(
+          screenName = Some(analyticsSocialScreen),
+          category = analyticsCategoryNavigate,
+          action = analyticsSocialActionGoToTweet)
+        startActivity(new Intent(Intent.ACTION_VIEW,
+          Uri.parse(resGetString(R.string.url_twitter_status, message.screenName, message.id.toString))))
+      }
+    })
+
+//    refreshLayout map (_.setOnRefreshListener(new OnRefreshListener {
+//      override def onRefresh(): Unit = {
+//        runUi(getSinceId map addTweets getOrElse(refreshLayout <~ srlRefreshing(false)))
+//      }
+//    }))
+
     runUi(
       (recyclerView
         <~ rvLayoutManager(new LinearLayoutManager(fragmentContextWrapper.application))
+        <~ rvAdapter(socialAdapter)
         <~ rvAddItemDecoration(new LineItemDecorator())) ~
+        (refreshLayout <~ srlOnRefreshListener(getSinceId map addTweets getOrElse(refreshLayout <~ srlRefreshing(false)))) ~
         (reloadButton <~ On.click(search())) ~
         search())
+
     if (!twitterServices.isConnected()) {
       val intent = new Intent(getActivity, classOf[AuthorizationActivity])
       startActivityForResult(intent, authResult)
@@ -124,19 +135,45 @@ class SocialFragment
       searchResponse <- twitterServices.search(SearchRequest(conference.info.query))
     } yield {
       hashtag = Some(conference.info.hashTag)
-      reloadList(searchResponse.messages)
+      searchResponse.messages
     }
-    result mapUi (ui => ui) recoverUi {
+    result mapUi {
+      messages =>
+        messages.length match {
+          case 0 => empty()
+          case _ =>
+            getAdapter map (a => adapter(a.copy(messages = messages))) getOrElse Ui.nop
+        }
+    } recoverUi {
       case _ => failed()
     }
     loading()
   }
 
-  def reloadList(messages: Seq[TwitterMessage]): Ui[_] = {
-    messages.length match {
-      case 0 => empty()
-      case _ => adapter(socialAdapter.copy(messages = messages))
+  def addTweets(sinceId: Long): Ui[_] = {
+    val result = for {
+      conference <- loadSelectedConference()
+      searchResponse <- twitterServices.search(SearchRequest(conference.info.query, Option(sinceId)))
+    } yield {
+        hashtag = Some(conference.info.hashTag)
+        searchResponse.messages
+      }
+    result mapUi {
+      messages =>
+        (if (messages.length > 0) {
+            getAdapter map (a => adapter(a.copy(messages = messages ++ getMessages))) getOrElse Ui.nop
+        } else Ui.nop) ~ (refreshLayout <~ srlRefreshing(false))
+    } recoverUi {
+      case _ => failed()
     }
+    Ui.nop
   }
+
+  private def getSinceId: Option[Long] = getAdapter flatMap (_.messages.headOption map (_.id))
+
+  private def getMessages: Seq[TwitterMessage] = getAdapter map (_.messages) getOrElse Seq.empty
+
+  private def getAdapter = recyclerView map (_.getAdapter.asInstanceOf[SocialAdapter])
+
 
 }
