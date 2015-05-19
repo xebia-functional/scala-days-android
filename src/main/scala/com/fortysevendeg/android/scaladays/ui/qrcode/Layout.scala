@@ -31,11 +31,11 @@ trait Layout
 
   self : Fragment with AnalyticsServicesComponent =>
 
-  val defaultDisplayMs: Long = 0L
+  val DefaultDisplayMs: Long = 0L
 
-  val captureActionScan: String = "com.google.zxing.client.android.SCAN"
+  val CaptureActionScan: String = "com.google.zxing.client.android.SCAN"
 
-  val displayDurationKey: String = "RESULT_DISPLAY_DURATION_MS"
+  val DisplayDurationKey: String = "RESULT_DISPLAY_DURATION_MS"
 
   def content(implicit context: ActivityContextWrapper) = getUi(
     l[LinearLayout](
@@ -48,8 +48,8 @@ trait Layout
             category = analyticsCategoryNavigate,
             action = analyticsContactsActionScanContact)
           val intent = new Intent(getActivity, classOf[CaptureActivity])
-          intent.setAction(captureActionScan)
-          intent.putExtra(displayDurationKey, defaultDisplayMs)
+          intent.setAction(CaptureActionScan)
+          intent.putExtra(DisplayDurationKey, DefaultDisplayMs)
           startActivityForResult(intent, scanResult)
         }
       }
