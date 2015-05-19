@@ -16,11 +16,13 @@
 
 package com.fortysevendeg.android.scaladays.ui.commons
 
+import android.support.v4.widget.SwipeRefreshLayout
+import android.support.v4.widget.SwipeRefreshLayout.OnRefreshListener
 import android.support.v7.widget.RecyclerView
 import android.widget.{FrameLayout, LinearLayout, ProgressBar}
 import com.fortysevendeg.macroid.extras.RecyclerViewTweaks._
 import macroid.FullDsl._
-import macroid.ActivityContextWrapper
+import macroid.{Tweak, Ui, ActivityContextWrapper}
 import com.fortysevendeg.macroid.extras.ViewTweaks._
 
 trait ListLayout
@@ -31,54 +33,49 @@ trait ListLayout
 
   var progressBar = slot[ProgressBar]
 
+  var refreshLayout = slot[SwipeRefreshLayout]
+
   var placeholderContent = slot[LinearLayout]
 
   def content(implicit context: ActivityContextWrapper) = getUi(
     l[FrameLayout](
       w[ProgressBar] <~ wire(progressBar) <~ progressBarStyle,
-      w[RecyclerView] <~ wire(recyclerView) <~ recyclerViewStyle,
+      l[SwipeRefreshLayout](
+        w[RecyclerView] <~ wire(recyclerView) <~ recyclerViewStyle
+      ) <~ wire(refreshLayout),
       placeholder <~ wire(placeholderContent)
     ) <~ rootStyle
   )
 
-  def loading() = {
-    runUi(
-      (progressBar <~ vVisible) ~
-        (recyclerView <~ vGone) ~
-        (placeholderContent <~ vGone))
-  }
+  def loading(): Ui[_] = (progressBar <~ vVisible) ~
+    (recyclerView <~ vGone) ~
+    (placeholderContent <~ vGone)
 
-  def failed() = {
-    loadFailed()
-    runUi(
-      (progressBar <~ vGone) ~
-        (recyclerView <~ vGone) ~
-        (placeholderContent <~ vVisible))
-  }
+  def failed(): Ui[_] = loadFailed() ~
+    (progressBar <~ vGone) ~
+    (recyclerView <~ vGone) ~
+    (placeholderContent <~ vVisible)
 
-  def empty() = {
-    loadEmpty()
-    runUi(
-      (progressBar <~ vGone) ~
-        (recyclerView <~ vGone) ~
-        (placeholderContent <~ vVisible))
-  }
+  def empty(): Ui[_] = loadEmpty() ~
+    (progressBar <~ vGone) ~
+    (recyclerView <~ vGone) ~
+    (placeholderContent <~ vVisible)
 
-  def noFavorites() = {
-    loadNoFavorites()
-    runUi(
-      (progressBar <~ vGone) ~
-        (recyclerView <~ vGone) ~
-        (placeholderContent <~ vVisible))
-  }
+  def noFavorites(): Ui[_] = loadNoFavorites() ~
+    (progressBar <~ vGone) ~
+    (recyclerView <~ vGone) ~
+    (placeholderContent <~ vVisible)
 
-  def adapter[VH <: RecyclerView.ViewHolder](adapter: RecyclerView.Adapter[VH]) = {
-    runUi(
-      (progressBar <~ vGone) ~
-        (placeholderContent <~ vGone) ~
-        (recyclerView <~ vVisible) ~
-        (recyclerView <~ rvAdapter(adapter))
-    )
-  }
+  def adapter[VH <: RecyclerView.ViewHolder](adapter: RecyclerView.Adapter[VH]): Ui[_] = (progressBar <~ vGone) ~
+    (placeholderContent <~ vGone) ~
+    (recyclerView <~ vVisible <~ rvAdapter(adapter))
+
+  def srlRefreshing(refreshing: Boolean) = Tweak[SwipeRefreshLayout] (_.setRefreshing(refreshing))
+
+  def srlOnRefreshListener(f: => Ui[_]) = Tweak[SwipeRefreshLayout] (_.setOnRefreshListener(new OnRefreshListener {
+    override def onRefresh(): Unit = {
+      runUi(f)
+    }
+  }))
 
 }

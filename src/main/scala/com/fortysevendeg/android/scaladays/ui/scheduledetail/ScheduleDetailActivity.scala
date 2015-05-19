@@ -72,57 +72,31 @@ class ScheduleDetailActivity
       event <- maybeScheduleItem
       timeZone <- maybeTimeZone
     } yield {
-      idEvent = Option(event.id)
-      analyticsServices.sendScreenName(analyticsScheduleDetailScreen)
-      val namePreferenceFavorite = getNamePreferenceFavorite(event.id)
-      val isFavorite = preferenceServices.fetchBooleanPreference(PreferenceRequest[Boolean](
-        namePreferenceFavorite, false)).value
+        idEvent = Option(event.id)
+        analyticsServices.sendScreenName(analyticsScheduleDetailScreen)
+        val namePreferenceFavorite = getNamePreferenceFavorite(event.id)
+        val isFavorite = preferenceServices.fetchBooleanPreference(PreferenceRequest[Boolean](
+          namePreferenceFavorite, false)).value
 
-      setContentView(layout(isFavorite))
-      toolBar map setSupportActionBar
-      getSupportActionBar.setDisplayHomeAsUpEnabled(true)
+        setContentView(layout(isFavorite))
+        toolBar map setSupportActionBar
+        getSupportActionBar.setDisplayHomeAsUpEnabled(true)
 
-      runUi(
-        (fabFavorite <~ On.click {
-          favoriteClick(event.title, namePreferenceFavorite)
-        }) ~
-          (titleToolbar <~ tvText(event.title)) ~
-          (date <~ tvDateDateTime(event.startTime, timeZone)) ~
-          (track <~ (event.track map (track => tvText(track.name) + vVisible) getOrElse vGone)) ~
-          (room <~ (event.location map (
-            location =>
-                vVisible +
-                (if (location.mapUrl == "") {
-                  tvText(getString(R.string.roomName, location.name))
-                } else {
-                  val content = new SpannableString(getString(R.string.roomName, location.name))
-                  content.setSpan(new UnderlineSpan(), 0, content.length(), 0)
-                  tvText(content) + On.click {
-                    Ui {
-                      val intent = new Intent(Intent.ACTION_VIEW,
-                        Uri.parse(location.mapUrl))
-                     startActivity(intent)
-                    }
-                  }
-                })
-            )
-            getOrElse vGone)) ~
-          (description <~ tvText(event.description))
-      )
-      if (event.speakers.size == 0) {
-        runUi(
-          (speakersContent <~ vGone) ~
-            (speakerTitle <~ vGone))
-      } else {
-        runUi(speakersContent <~ vVisible <~ vgRemoveAllViews)
-        event.speakers.map(
-          speaker => {
+        val uis = if (event.speakers.size == 0) {
+          Seq(
+            speakersContent <~ vGone,
+            speakerTitle <~ vGone)
+        } else {
+          (speakersContent <~ vVisible <~ vgRemoveAllViews) +: (event.speakers map (speaker => {
             val speakerLayout = new SpeakersDetailLayout(speaker)
-            runUi(speakersContent <~ vgAddView(speakerLayout.content))
-          }
+            speakersContent <~ vgAddView(speakerLayout.content)
+          }))
+        }
+        runUi(
+          headerUi(event, namePreferenceFavorite, timeZone) ~
+          Ui.sequence(uis :_*)
         )
-      }
-    }) getOrElse finish()
+      }) getOrElse finish()
 
   }
 
@@ -166,6 +140,33 @@ class ScheduleDetailActivity
       super.onBackPressed()
     }
   }
+
+  private def headerUi(event: Event, namePreferenceFavorite: String, timeZone: String): Ui[_] = (fabFavorite <~ On.click {
+    favoriteClick(event.title, namePreferenceFavorite)
+  }) ~
+    (titleToolbar <~ tvText(event.title)) ~
+    (date <~ tvDateDateTime(event.startTime, timeZone)) ~
+    (track <~ (event.track map (track => tvText(track.name) + vVisible) getOrElse vGone)) ~
+    (room <~ (event.location map (
+      location =>
+        vVisible +
+          (if (location.mapUrl == "") {
+            tvText(getString(R.string.roomName, location.name))
+          } else {
+            val content = new SpannableString(getString(R.string.roomName, location.name))
+            content.setSpan(new UnderlineSpan(), 0, content.length(), 0)
+            tvText(content) + On.click {
+              Ui {
+                val intent = new Intent(Intent.ACTION_VIEW,
+                  Uri.parse(location.mapUrl))
+                startActivity(intent)
+              }
+            }
+          })
+      )
+      getOrElse vGone)) ~
+    (description <~ tvText(event.description))
+
 }
 
 object ScheduleDetailActivity {

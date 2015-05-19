@@ -113,6 +113,7 @@ trait TwitterServicesComponentImpl
             val query: Query = new Query
             query.setQuery(request.search)
             query.setCount(100)
+            request.sinceId map query.setSinceId
 
             (getTwitter map {
               twitter =>

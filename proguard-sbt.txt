@@ -111,6 +111,9 @@
     scala.concurrent.forkjoin.LinkedTransferQueue$PaddedAtomicReference tail;
     scala.concurrent.forkjoin.LinkedTransferQueue$PaddedAtomicReference cleanMe;
 }
+# view res/layout/abc_alert_dialog_material.xml #generated:130
+-keep class android.support.v4.widget.Space { <init>(...); }
+
 # view res/layout/abc_action_menu_item_layout.xml #generated:17
 -keep class android.support.v7.internal.view.menu.ActionMenuItemView { <init>(...); }
 
@@ -131,12 +134,19 @@
 # view res/layout/abc_screen_toolbar.xml #generated:17
 -keep class android.support.v7.internal.widget.ActionBarOverlayLayout { <init>(...); }
 
+# view res/layout/abc_activity_chooser_view.xml #generated:19
+-keep class android.support.v7.internal.widget.ActivityChooserView$InnerLayout { <init>(...); }
+
 # view res/layout/abc_screen_content_include.xml #generated:19
 -keep class android.support.v7.internal.widget.ContentFrameLayout { <init>(...); }
+
+# view res/layout/abc_alert_dialog_material.xml #generated:48
+-keep class android.support.v7.internal.widget.DialogTitle { <init>(...); }
 
 # view res/layout/abc_screen_simple_overlay_action_mode.xml #generated:23
 -keep class android.support.v7.internal.widget.FitWindowsFrameLayout { <init>(...); }
 
+# view res/layout/abc_dialog_title_material.xml #generated:22
 # view res/layout/abc_screen_simple.xml #generated:17
 -keep class android.support.v7.internal.widget.FitWindowsLinearLayout { <init>(...); }
 
@@ -161,9 +171,6 @@
 # view res/layout/abc_action_menu_layout.xml #generated:17
 -keep class android.support.v7.widget.ActionMenuView { <init>(...); }
 
-# view res/layout/abc_activity_chooser_view.xml #generated:19
--keep class android.support.v7.widget.LinearLayoutCompat { <init>(...); }
-
 # view res/layout/abc_search_view.xml #generated:78
 -keep class android.support.v7.widget.SearchView$SearchAutoComplete { <init>(...); }
 
@@ -181,6 +188,9 @@
 
 # view AndroidManifest.xml #generated:52
 -keep class com.fortysevendeg.android.scaladays.services.ReloadJsonService { <init>(...); }
+
+# view AndroidManifest.xml #generated:33
+-keep class com.fortysevendeg.android.scaladays.ui.ScalaDaysApplication { <init>(...); }
 
 # view AndroidManifest.xml #generated:40
 -keep class com.fortysevendeg.android.scaladays.ui.main.MainActivity { <init>(...); }
@@ -211,7 +221,6 @@
 -keep class org.joda.** { *; }
 -keep class org.ocpsoft.prettytime.i18n.**
 -keep class macroid.** { *; }
--keep class android.** { *; }
 -keep class com.google.** { *; }
 -keep class com.localytics.android.** { *; }
 -keep class com.google.android.gms.ads.** { *; }

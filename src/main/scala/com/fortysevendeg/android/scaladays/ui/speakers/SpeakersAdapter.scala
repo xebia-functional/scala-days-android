@@ -49,7 +49,10 @@ class SpeakersAdapter(speakers: Seq[Speaker], listener: RecyclerClickListener)
     val avatarSize = context.application.getResources.getDimensionPixelSize(R.dimen.size_avatar)
     viewHolder.content.setTag(position)
     runUi(
-      (viewHolder.avatar <~ speaker.picture.map(roundedImage(_, R.drawable.placeholder_circle, avatarSize)).getOrElse(ivSrc(R.drawable.placeholder_avatar_failed))) ~
+      (viewHolder.avatar <~
+        (speaker.picture map {
+          roundedImage(_, R.drawable.placeholder_circle, avatarSize, Some(R.drawable.placeholder_avatar_failed))
+        } getOrElse ivSrc(R.drawable.placeholder_avatar_failed))) ~
           (viewHolder.name <~ tvText(speaker.name)) ~
           (viewHolder.twitter <~ speaker.twitter.map(tvText(_) + vVisible).getOrElse(vGone)) ~
           (viewHolder.bio <~ tvText(speaker.bio))

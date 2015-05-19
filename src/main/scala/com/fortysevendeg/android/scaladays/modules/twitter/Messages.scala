@@ -27,6 +27,6 @@ case class FinalizeAuthenticationRequest(uri: Uri)
 
 case class FinalizeAuthenticationResponse()
 
-case class SearchRequest(search: String)
+case class SearchRequest(search: String, sinceId: Option[Long] = None)
 
 case class SearchResponse(messages: Seq[TwitterMessage])

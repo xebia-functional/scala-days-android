@@ -51,24 +51,21 @@ class SponsorsFragment
     runUi(
       (recyclerView
         <~ rvLayoutManager(new LinearLayoutManager(fragmentContextWrapper.application))) ~
-        (reloadButton <~ On.click(Ui {
-          loadSponsors(forceDownload = true)
-        })))
-    loadSponsors()
+        loadSponsors() ~
+        (reloadButton <~ On.click(loadSponsors(forceDownload = true))))
   }
 
-  def loadSponsors(forceDownload: Boolean = false) = {
-    loading()
-    val result = for {
-      conference <- loadSelectedConference(forceDownload)
-    } yield reloadList(conference.sponsors)
-
-    result recover {
+  def loadSponsors(forceDownload: Boolean = false): Ui[_] = {
+    loadSelectedConference(forceDownload) mapUi {
+      conference =>
+        reloadList(conference.sponsors)
+    } recoverUi {
       case _ => failed()
     }
+    loading()
   }
 
-  def reloadList(sponsors: Seq[SponsorType]) = {
+  def reloadList(sponsors: Seq[SponsorType]): Ui[_] = {
     sponsors.length match {
       case 0 => empty()
       case _ =>

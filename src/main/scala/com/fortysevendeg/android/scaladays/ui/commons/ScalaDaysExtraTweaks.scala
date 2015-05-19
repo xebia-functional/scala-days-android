@@ -31,36 +31,42 @@ object AsyncImageTweaks {
 
   def roundedImage(url: String,
         placeHolder: Int,
-        size: Int)(implicit context: ActivityContextWrapper) = CurrentVersion match {
+        size: Int,
+        error: Option[Int] = None)(implicit context: ActivityContextWrapper) = CurrentVersion match {
     case sdk if sdk >= Lollipop =>
-      srcImage(url, placeHolder) + vCircleOutlineProvider(0)
+      srcImage(url, placeHolder, error) + vCircleOutlineProvider(0)
     case _ =>
-      roundedImageTweak(url, placeHolder, size)
+      roundedImageTweak(url, placeHolder, size, error)
   }
 
   private def roundedImageTweak(
       url: String,
       placeHolder: Int,
-      size: Int
+      size: Int,
+      error: Option[Int] = None
       )(implicit activityContext: ActivityContextWrapper): Tweak[W] = Tweak[W](
     imageView => {
-      Picasso.`with`(activityContext.getOriginal)
+      val request = Picasso.`with`(activityContext.getOriginal)
           .load(url)
           .transform(new CircularTransformation(size))
           .placeholder(placeHolder)
-          .into(imageView)
+      error map request.error
+      request.into(imageView)
     }
   )
 
   def srcImage(
       url: String,
-      placeHolder: Int
+      placeHolder: Int,
+      error: Option[Int] = None
       )(implicit context: ActivityContextWrapper): Tweak[W] = Tweak[W](
     imageView => {
-      Picasso.`with`(context.getOriginal)
+      val request =
+        Picasso.`with`(context.getOriginal)
           .load(url)
           .placeholder(placeHolder)
-          .into(imageView)
+      error map request.error
+      request.into(imageView)
     }
   )
 

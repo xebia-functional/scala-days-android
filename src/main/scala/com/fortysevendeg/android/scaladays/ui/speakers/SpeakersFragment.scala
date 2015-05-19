@@ -53,24 +53,23 @@ class SpeakersFragment
       (recyclerView
         <~ rvLayoutManager(new LinearLayoutManager(fragmentContextWrapper.application))
         <~ rvAddItemDecoration(new LineItemDecorator())) ~
-        (reloadButton <~ On.click(Ui {
+        loadSpeakers() ~
+        (reloadButton <~ On.click(
           loadSpeakers(forceDownload = true)
-        })))
-    loadSpeakers()
+        )))
   }
 
-  def loadSpeakers(forceDownload: Boolean = false): Unit = {
-    loading()
-    val result = for {
-      conference <- loadSelectedConference(forceDownload)
-    } yield reloadList(conference.speakers)
-
-    result recover {
+  def loadSpeakers(forceDownload: Boolean = false): Ui[_] = {
+    loadSelectedConference(forceDownload) mapUi {
+      conference =>
+        reloadList(conference.speakers)
+    } recoverUi {
       case _ => failed()
     }
+    loading()
   }
 
-  def reloadList(speakers: Seq[Speaker]) = {
+  def reloadList(speakers: Seq[Speaker]): Ui[_] = {
     speakers.length match {
       case 0 => empty()
       case _ =>

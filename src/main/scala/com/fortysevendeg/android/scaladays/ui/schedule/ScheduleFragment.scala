@@ -45,7 +45,13 @@ class ScheduleFragment
   with ScheduleConversion
   with ListLayout {
 
+  var clockMenu: Option[MenuItem] = None
+
+  var indexEventNow: Option[Int] = None
+
   override lazy val contextProvider: ContextWrapper = fragmentContextWrapper
+
+  lazy val layoutManager = new LinearLayoutManager(fragmentContextWrapper.getOriginal)
 
   override def onCreate(savedInstanceState: Bundle): Unit = {
     super.onCreate(savedInstanceState)
@@ -61,17 +67,23 @@ class ScheduleFragment
     super.onViewCreated(view, savedInstanceState)
     runUi(
       (recyclerView
-        <~ rvLayoutManager(new LinearLayoutManager(fragmentContextWrapper.getOriginal))
+        <~ rvLayoutManager(layoutManager)
         <~ rvAddItemDecoration(new ScheduleItemDecorator())) ~
-        (reloadButton <~ On.click(Ui {
+        loadSchedule() ~
+        (reloadButton <~ On.click(
           loadSchedule(favorites = false, forceDownload = true)
-        })))
-    loadSchedule()
+        )))
   }
 
   override def onCreateOptionsMenu(menu: Menu, inflater: MenuInflater): Unit = {
     inflater.inflate(R.menu.schedule_menu, menu)
+    clockMenu = Option(menu.findItem(R.id.action_clock))
     super.onCreateOptionsMenu(menu, inflater)
+  }
+
+  override def onPrepareOptionsMenu(menu: Menu): Unit = {
+    super.onPrepareOptionsMenu(menu)
+    clockMenu map (_.setVisible(indexEventNow.isDefined))
   }
 
   override def onOptionsItemSelected(item: MenuItem): Boolean = item.getItemId match {
@@ -80,7 +92,7 @@ class ScheduleFragment
         .setCancelable(true)
         .setItems(R.array.filter_menu, new OnClickListener() {
         override def onClick(dialog: DialogInterface, which: Int): Unit = {
-          which match {
+          runUi(which match {
             case 0 =>
               analyticsServices.sendEvent(
                 Some(analyticsScheduleListScreen),
@@ -93,9 +105,15 @@ class ScheduleFragment
                 analyticsCategoryFilter,
                 analyticsScheduleActionFilterFavorites)
               loadSchedule(favorites = true)
-          }
+          })
         }
       }).create().show()
+      true
+    case R.id.action_clock =>
+      indexEventNow map {
+        index =>
+          runUi(recyclerView <~ Tweak[RecyclerView](_.smoothScrollToPosition(index)))
+      }
       true
     case _ => super.onOptionsItemSelected(item)
   }
@@ -120,18 +138,17 @@ class ScheduleFragment
     }
   }
 
-  def loadSchedule(favorites: Boolean = false, forceDownload: Boolean = false): Unit = {
-    loading()
-    val result = for {
-      conference <- loadSelectedConference(forceDownload)
-    } yield reloadList(conference.info.utcTimezoneOffset, conference.schedule, favorites)
-
-    result recover {
+  def loadSchedule(favorites: Boolean = false, forceDownload: Boolean = false): Ui[_] = {
+    loadSelectedConference(forceDownload) mapUi {
+      conference =>
+        reloadList(conference.info.utcTimezoneOffset, conference.schedule, favorites)
+    } recoverUi {
       case _ => failed()
     }
+    loading()
   }
 
-  def reloadList(timeZone: String, events: Seq[Event], favorites: Boolean = false) = {
+  def reloadList(timeZone: String, events: Seq[Event], favorites: Boolean = false): Ui[_] = {
     val scheduleItems = toScheduleItem(timeZone, events,
       if (favorites) {
         event => {
@@ -141,32 +158,32 @@ class ScheduleFragment
       } else {
         event => true
       })
+    val eventNow: Option[ScheduleItem] = scheduleItems find (_.event exists (_.isCurrentEvent()))
+    indexEventNow = eventNow map scheduleItems.indexOf
+    Option(getActivity) map (_.supportInvalidateOptionsMenu())
     scheduleItems.length match {
       case length if length == 0 && favorites => noFavorites()
       case 0 => empty()
       case _ =>
         val scheduleAdapter = ScheduleAdapter(timeZone, scheduleItems, new RecyclerClickListener {
-          override def onClick(scheduleItem: ScheduleItem): Unit = {
-            if (!scheduleItem.isHeader) {
-              scheduleItem.event map {
-                event =>
-                  if (event.eventType == 1 || event.eventType == 2) {
-                    analyticsServices.sendEvent(
-                      Some(analyticsScheduleListScreen),
-                      analyticsCategoryNavigate,
-                      analyticsScheduleActionGoToDetail,
-                      Some(event.title))
-                    val intent = new Intent(fragmentContextWrapper.getOriginal, classOf[ScheduleDetailActivity])
-                    intent.putExtra(ScheduleDetailActivity.scheduleItemKey, event)
-                    intent.putExtra(ScheduleDetailActivity.timeZoneKey, timeZone)
-                    startActivityForResult(intent, detailResult)
-                  }
-              }
+          override def onClick(scheduleItem: ScheduleItem): Unit = if (!scheduleItem.isHeader) {
+              scheduleItem.event map (event => clickEvent(event, timeZone))
             }
-          }
         })
         adapter(scheduleAdapter)
     }
+  }
+
+  private def clickEvent(event: Event, timeZone: String) = if (event.eventType == 1 || event.eventType == 2) {
+    analyticsServices.sendEvent(
+      Some(analyticsScheduleListScreen),
+      analyticsCategoryNavigate,
+      analyticsScheduleActionGoToDetail,
+      Some(event.title))
+    val intent = new Intent(fragmentContextWrapper.getOriginal, classOf[ScheduleDetailActivity])
+    intent.putExtra(ScheduleDetailActivity.scheduleItemKey, event)
+    intent.putExtra(ScheduleDetailActivity.timeZoneKey, timeZone)
+    startActivityForResult(intent, detailResult)
   }
 
 }

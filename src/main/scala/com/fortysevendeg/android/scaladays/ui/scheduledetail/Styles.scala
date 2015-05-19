@@ -150,7 +150,9 @@ trait SpeakersDetailStyles {
     lp[LinearLayout](size, size) +
       ivScaleType(ScaleType.CENTER_CROP) +
       vMargin(0, 0, resGetDimensionPixelSize(R.dimen.padding_default), 0) +
-      picture.map(roundedImage(_, R.drawable.placeholder_circle, size.toInt)).getOrElse(ivSrc(R.drawable.placeholder_avatar_failed))
+      (picture map {
+        roundedImage(_, R.drawable.placeholder_circle, size.toInt, Some(R.drawable.placeholder_avatar_failed))
+      } getOrElse ivSrc(R.drawable.placeholder_avatar_failed))
   }
 
   def speakerNameItemStyle(name: String)(implicit context: ContextWrapper): Tweak[TextView] =
