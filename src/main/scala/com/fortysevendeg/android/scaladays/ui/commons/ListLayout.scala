@@ -33,16 +33,12 @@ trait ListLayout
 
   var progressBar = slot[ProgressBar]
 
-  var refreshLayout = slot[SwipeRefreshLayout]
-
   var placeholderContent = slot[LinearLayout]
 
   def content(implicit context: ActivityContextWrapper) = getUi(
     l[FrameLayout](
       w[ProgressBar] <~ wire(progressBar) <~ progressBarStyle,
-      l[SwipeRefreshLayout](
-        w[RecyclerView] <~ wire(recyclerView) <~ recyclerViewStyle
-      ) <~ wire(refreshLayout),
+      w[RecyclerView] <~ wire(recyclerView) <~ recyclerViewStyle,
       placeholder <~ wire(placeholderContent)
     ) <~ rootStyle
   )
@@ -70,9 +66,9 @@ trait ListLayout
     (placeholderContent <~ vGone) ~
     (recyclerView <~ vVisible <~ rvAdapter(adapter))
 
-  def srlRefreshing(refreshing: Boolean) = Tweak[SwipeRefreshLayout] (_.setRefreshing(refreshing))
+  def srlRefreshing(refreshing: Boolean) = Tweak[SwipeRefreshLayout](_.setRefreshing(refreshing))
 
-  def srlOnRefreshListener(f: => Ui[_]) = Tweak[SwipeRefreshLayout] (_.setOnRefreshListener(new OnRefreshListener {
+  def srlOnRefreshListener(f: => Ui[_]) = Tweak[SwipeRefreshLayout](_.setOnRefreshListener(new OnRefreshListener {
     override def onRefresh(): Unit = {
       runUi(f)
     }
