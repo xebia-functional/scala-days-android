@@ -45,7 +45,7 @@ class SocialFragment
   with Contexts[Fragment]
   with ComponentRegistryImpl
   with UiServices
-  with ListLayout {
+  with SocialLayout {
 
   override lazy val contextProvider: ContextWrapper = fragmentContextWrapper
 
