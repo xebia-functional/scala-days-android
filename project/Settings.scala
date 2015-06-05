@@ -23,7 +23,6 @@ object Settings {
   lazy val proguardCommons = Seq(
     "-ignorewarnings",
     "-keep class scala.Dynamic",
-    "-keep class com.fortysevendeg.** { *; }",
     "-keep class twitter4j.** { *; }",
     "-keep class org.joda.** { *; }",
     "-keep class org.ocpsoft.prettytime.i18n.**",
@@ -37,18 +36,5 @@ object Settings {
     "-keepnames @com.google.android.gms.common.annotation.KeepName class *",
     "-keepclassmembernames class * { @com.google.android.gms.common.annotation.KeepName *; }",
     "-keepnames class * implements android.os.Parcelable { public static final ** CREATOR; }")
-
-  lazy val multiDexClasses = Seq(
-    "com/fortysevendeg/ninecardslauncher/NineCardsApplication.class",
-    "android/support/multidex/BuildConfig.class",
-    "android/support/multidex/MultiDex$V14.class",
-    "android/support/multidex/MultiDex$V19.class",
-    "android/support/multidex/MultiDex$V4.class",
-    "android/support/multidex/MultiDex.class",
-    "android/support/multidex/MultiDexApplication.class",
-    "android/support/multidex/MultiDexExtractor$1.class",
-    "android/support/multidex/MultiDexExtractor.class",
-    "android/support/multidex/ZipUtil$CentralDirectory.class",
-    "android/support/multidex/ZipUtil.class")
 
 }

@@ -16,24 +16,32 @@
 
 package com.fortysevendeg.android.scaladays.ui.scheduledetail
 
+import android.content.Intent
 import android.graphics.Color
+import android.net.Uri
+import android.text.SpannableString
 import android.text.TextUtils.TruncateAt
+import android.text.style.UnderlineSpan
 import android.view.Gravity
 import android.view.ViewGroup.LayoutParams._
 import android.widget.ImageView.ScaleType
 import android.widget._
 import com.fortysevendeg.android.scaladays.R
+import com.fortysevendeg.android.scaladays.model.{Location, Track, Speaker}
 import com.fortysevendeg.android.scaladays.ui.commons.AsyncImageTweaks._
+import com.fortysevendeg.android.scaladays.ui.commons.DateTimeTextViewTweaks._
 import com.fortysevendeg.android.scaladays.ui.components.{IconTypes, PathMorphDrawable}
 import com.fortysevendeg.macroid.extras.ImageViewTweaks._
 import com.fortysevendeg.macroid.extras.LinearLayoutTweaks._
 import com.fortysevendeg.macroid.extras.ResourcesExtras._
 import com.fortysevendeg.macroid.extras.ScrollViewTweaks._
 import com.fortysevendeg.macroid.extras.TextTweaks._
+import com.fortysevendeg.macroid.extras.ViewGroupTweaks._
 import com.fortysevendeg.macroid.extras.ViewTweaks._
 import com.fortysevendeg.macroid.extras.DeviceVersion._
 import macroid.FullDsl._
-import macroid.{ActivityContextWrapper, ContextWrapper, Tweak}
+import macroid.{Ui, ActivityContextWrapper, ContextWrapper, Tweak}
+import org.joda.time.DateTime
 
 import scala.language.postfixOps
 
@@ -61,18 +69,25 @@ trait ActivityStyles {
       llHorizontal +
       vPadding(0, resGetDimensionPixelSize(R.dimen.padding_schedule_detail_description_top), 0, 0)
 
-  def speakersContentLayoutStyle(implicit context: ContextWrapper): Tweak[LinearLayout] =
+  def speakersContentLayoutStyle(speakers: Seq[Speaker])(implicit context: ActivityContextWrapper): Tweak[LinearLayout] =
     vMatchWidth +
-      llVertical +
-      vPadding(0, resGetDimensionPixelSize(R.dimen.padding_schedule_detail_speaker_tb), 0, 0)
+      (if (speakers.nonEmpty)
+        llVertical +
+          vPadding(0, resGetDimensionPixelSize(R.dimen.padding_schedule_detail_speaker_tb), 0, 0) +
+          vgAddViews(speakers map (speaker => {
+            val speakerLayout = new SpeakersDetailLayout(speaker)
+            speakerLayout.content
+          }))
+      else vGone)
 
   val verticalLayoutStyle =
     llWrapWeightHorizontal +
-    llVertical
+      llVertical
 
-  def toolBarTitleStyle(implicit context: ContextWrapper): Tweak[TextView] = {
+  def toolBarTitleStyle(title: String)(implicit context: ContextWrapper): Tweak[TextView] = {
     val padding = resGetDimensionPixelSize(R.dimen.padding_default)
     vMatchHeight +
+      tvText(title) +
       tvGravity(Gravity.BOTTOM) +
       tvColorResource(R.color.toolbar_title) +
       tvSize(resGetInteger(R.integer.text_huge)) +
@@ -100,40 +115,63 @@ trait ActivityStyles {
       ivSrc(R.drawable.detail_icon_schedule) +
       ivScaleType(ScaleType.FIT_START)
 
-  def dateStyle(implicit context: ContextWrapper): Tweak[TextView] =
+  def dateStyle(startTime: DateTime, timeZone: String)(implicit context: ContextWrapper): Tweak[TextView] =
     vWrapContent +
       tvSize(resGetInteger(R.integer.text_big)) +
       tvColor(context.application.getResources.getColor(R.color.primary)) +
-      vPadding(0, 0, 0, resGetDimensionPixelSize(R.dimen.padding_default_extra_small))
+      vPadding(0, 0, 0, resGetDimensionPixelSize(R.dimen.padding_default_extra_small)) +
+      tvDateDateTime(startTime, timeZone)
 
-  def roomStyle(implicit context: ContextWrapper): Tweak[TextView] =
+  def roomStyle(location: Option[Location])(implicit context: ContextWrapper): Tweak[TextView] =
     vWrapContent +
       tvSize(resGetInteger(R.integer.text_medium)) +
       tvColorResource(R.color.text_schedule_detail_secondary) +
-      vPadding(0, 0, 0, resGetDimensionPixelSize(R.dimen.padding_default_small))
+      vPadding(0, 0, 0, resGetDimensionPixelSize(R.dimen.padding_default_small)) +
+      (location map (
+        location =>
+          vVisible +
+            (if (location.mapUrl == "") {
+              tvText(context.application.getString(R.string.roomName, location.name))
+            } else {
+              val content = new SpannableString(context.application.getString(R.string.roomName, location.name))
+              content.setSpan(new UnderlineSpan(), 0, content.length(), 0)
+              tvText(content) + On.click {
+                Ui {
+                  val intent = new Intent(Intent.ACTION_VIEW,
+                    Uri.parse(location.mapUrl))
+                  context.application.startActivity(intent)
+                }
+              }
+            })
+        )
+        getOrElse vGone)
 
-  def trackStyle(implicit context: ContextWrapper): Tweak[TextView] =
+  def trackStyle(track: Option[Track])(implicit context: ContextWrapper): Tweak[TextView] =
     vWrapContent +
       tvSize(resGetInteger(R.integer.text_medium)) +
       tvColorResource(R.color.text_schedule_detail_secondary) +
-      vPadding(0, 0, 0, resGetDimensionPixelSize(R.dimen.padding_default_small))
+      vPadding(0, 0, 0, resGetDimensionPixelSize(R.dimen.padding_default_small)) +
+      (track map (track => tvText(track.name) + vVisible) getOrElse vGone)
 
-  def descriptionStyle(implicit context: ContextWrapper): Tweak[TextView] =
+  def descriptionStyle(description: String)(implicit context: ContextWrapper): Tweak[TextView] =
     vWrapContent +
       tvSize(resGetInteger(R.integer.text_medium)) +
       tvColorResource(R.color.primary) +
-      vPadding(0, 0, 0, resGetDimensionPixelSize(R.dimen.padding_default))
+      vPadding(0, 0, 0, resGetDimensionPixelSize(R.dimen.padding_default)) +
+      tvText(description)
 
   def lineStyle(implicit context: ContextWrapper): Tweak[ImageView] =
     lp[LinearLayout](MATCH_PARENT, 1) +
       vBackgroundColorResource(R.color.list_line_default)
 
-  def speakerTitleStyle(implicit context: ContextWrapper): Tweak[TextView] =
+  def speakerTitleStyle(show: Boolean)(implicit context: ContextWrapper): Tweak[TextView] =
     vWrapContent +
-      tvSize(resGetInteger(R.integer.text_small)) +
-      tvText(R.string.speakers) +
-      vPadding(0, resGetDimensionPixelSize(R.dimen.padding_default_small), 0, 0) +
-      tvColorResource(R.color.text_schedule_detail_secondary)
+      (if (show)
+        tvSize(resGetInteger(R.integer.text_small)) +
+          tvText(R.string.speakers) +
+          vPadding(0, resGetDimensionPixelSize(R.dimen.padding_default_small), 0, 0) +
+          tvColorResource(R.color.text_schedule_detail_secondary)
+      else vGone)
 
 }
 

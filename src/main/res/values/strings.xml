@@ -56,13 +56,13 @@
     <string name="codeOfConduct">Code Of Conduct</string>
     <string name="about47">The official Scala Days App for Android handcrafted by 47 Degrees</string>
 
-    <string name="dayOfWeek0">Sunday</string>
     <string name="dayOfWeek1">Monday</string>
     <string name="dayOfWeek2">Tuesday</string>
     <string name="dayOfWeek3">Wednesday</string>
     <string name="dayOfWeek4">Thursday</string>
     <string name="dayOfWeek5">Friday</string>
     <string name="dayOfWeek6">Saturday</string>
+    <string name="dayOfWeek7">Sunday</string>
 
     <string name="monthOfYear1">January</string>
     <string name="monthOfYear2">February</string>

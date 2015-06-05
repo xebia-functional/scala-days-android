@@ -25,6 +25,8 @@ import org.ocpsoft.prettytime.PrettyTime
 
 object DateTimeUtils {
 
+  val ordinalPrefix = List("th", "st", "nd", "rd", "th", "th", "th", "th", "th", "th")
+
   val ISODateFormatterDay = ISODateTimeFormat.date
   val ISODateFormatterDateTime = ISODateTimeFormat.dateTimeNoMillis
   val ISODateFormatter24hTime = ISODateTimeFormat.hourMinute
@@ -58,21 +60,26 @@ object DateTimeUtils {
 
   def parseDateSchedule(dateTime: DateTime, timeZone: String)(implicit context: ContextWrapper): String = {
     val dateTimeZone = convertTimeZone(dateTime, timeZone)
-    val dayOfMonth = dateTimeZone.toString(ISODateFormatterDayOfMonth)
+    val dayOfMonth = dateTimeZone.toString(ISODateFormatterDayOfMonth).toInt
     val monthOfYear = resGetString("monthOfYear%s".format(dateTimeZone.toString(ISODateFormatterMonthOfYear))).getOrElse("")
     val dayOfWeek = resGetString("dayOfWeek%s".format(dateTimeZone.toString(ISODateFormatterDayOfWeek))).getOrElse("")
-    "%s (%s %s)".format(dayOfWeek, dayOfMonth, monthOfYear)
+    "%s (%s %s)".format(dayOfWeek, ordinal(dayOfMonth), monthOfYear)
   }
 
   def parseDateScheduleTime(dateTime: DateTime, timeZone: String)(implicit context: ContextWrapper): String = {
     val dateTimeZone = convertTimeZone(dateTime, timeZone)
-    val dayOfMonth = dateTimeZone.toString(ISODateFormatterDayOfMonth)
+    val dayOfMonth = dateTimeZone.toString(ISODateFormatterDayOfMonth).toInt
     val monthOfYear = resGetString("monthOfYear%s".format(dateTimeZone.toString(ISODateFormatterMonthOfYear))).getOrElse("")
     val dayOfWeek = resGetString("dayOfWeek%s".format(dateTimeZone.toString(ISODateFormatterDayOfWeek))).getOrElse("")
     val hour = parseTime(dateTime, timeZone)
-    "%s (%s %s) %s".format(dayOfWeek, dayOfMonth, monthOfYear, hour)
+    "%s (%s %s) %s".format(dayOfWeek, ordinal(dayOfMonth), monthOfYear, hour)
   }
 
   def parsePrettyTime(dateTime: DateTime): String = new PrettyTime().format(dateTime.toDate)
+
+  private def ordinal(number: Int): String = number match {
+    case n if n % 100 == 11 || n % 100 == 12 || n % 100 == 13 => n + "th"
+    case _ => number + ordinalPrefix(number % 10)
+  }
 
 }
