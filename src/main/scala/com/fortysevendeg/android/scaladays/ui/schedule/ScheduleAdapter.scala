@@ -70,7 +70,7 @@ case class ScheduleAdapter(timeZone: String, scheduleItems: Seq[ScheduleItem], l
         scheduleItem.event map {
           event =>
             vh.content.setTag(position)
-            if (event.speakers.size == 0) {
+            if (event.speakers.isEmpty) {
               runUi(vh.speakerContent <~ vGone)
             } else {
               runUi(vh.speakerContent <~ vVisible <~ vgRemoveAllViews)

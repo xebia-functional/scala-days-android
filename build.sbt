@@ -34,7 +34,6 @@ scalacOptions ++= Seq("-feature", "-deprecation")
 resolvers ++= Settings.resolvers
 
 libraryDependencies ++= Seq(
-  aar(multiDexLib),
   aar(macroidRoot),
   aar(androidAppCompat),
   aar(androidCardView),
@@ -52,12 +51,6 @@ libraryDependencies ++= Seq(
   zxingCore,
   aar(zxingAndroid),
   crashlytics)
-
-dexMulti in Android := true
-
-dexMinimizeMainFile in Android := true
-
-dexMainFileClasses in Android := Settings.multiDexClasses
 
 proguardCache in Android := Seq.empty
 
