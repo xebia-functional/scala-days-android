@@ -60,7 +60,7 @@ class ScheduleFragment
 
   override def onCreateView(inflater: LayoutInflater, container: ViewGroup, savedInstanceState: Bundle): View = {
     analyticsServices.sendScreenName(analyticsScheduleListScreen)
-    content
+    contentWithSwipeRefresh
   }
 
   override def onViewCreated(view: View, savedInstanceState: Bundle): Unit = {
@@ -70,6 +70,7 @@ class ScheduleFragment
         <~ rvLayoutManager(layoutManager)
         <~ rvAddItemDecoration(new ScheduleItemDecorator())) ~
         loadSchedule() ~
+        (refreshLayout <~ srlOnRefreshListener(loadSchedule(favorites = false, forceDownload = true, swipe = true))) ~
         (reloadButton <~ On.click(
           loadSchedule(favorites = false, forceDownload = true)
         )))
@@ -138,14 +139,17 @@ class ScheduleFragment
     }
   }
 
-  def loadSchedule(favorites: Boolean = false, forceDownload: Boolean = false): Ui[_] = {
+  def loadSchedule(favorites: Boolean = false, forceDownload: Boolean = false, swipe: Boolean = false): Ui[_] = {
     loadSelectedConference(forceDownload) mapUi {
       conference =>
+        if (swipe) runUi(refreshLayout <~ srlRefreshing(false))
         reloadList(conference.info.utcTimezoneOffset, conference.schedule, favorites)
     } recoverUi {
-      case _ => failed()
+      case _ =>
+        if (swipe) runUi(refreshLayout <~ srlRefreshing(false))
+        failed()
     }
-    loading()
+    if (swipe) Ui.nop else loading()
   }
 
   def reloadList(timeZone: String, events: Seq[Event], favorites: Boolean = false): Ui[_] = {

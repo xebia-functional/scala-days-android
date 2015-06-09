@@ -16,6 +16,7 @@
 
 package com.fortysevendeg.android.scaladays.ui.schedule
 
+import android.support.v4.widget.SwipeRefreshLayout
 import android.support.v7.widget.RecyclerView
 import android.widget._
 import com.fortysevendeg.android.scaladays.model.Speaker

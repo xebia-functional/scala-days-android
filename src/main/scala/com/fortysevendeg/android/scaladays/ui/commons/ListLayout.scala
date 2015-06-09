@@ -35,10 +35,22 @@ trait ListLayout
 
   var placeholderContent = slot[LinearLayout]
 
+  var refreshLayout = slot[SwipeRefreshLayout]
+
   def content(implicit context: ActivityContextWrapper) = getUi(
     l[FrameLayout](
       w[ProgressBar] <~ wire(progressBar) <~ progressBarStyle,
       w[RecyclerView] <~ wire(recyclerView) <~ recyclerViewStyle,
+      placeholder <~ wire(placeholderContent)
+    ) <~ rootStyle
+  )
+
+  def contentWithSwipeRefresh(implicit context: ActivityContextWrapper) = getUi(
+    l[FrameLayout](
+      w[ProgressBar] <~ wire(progressBar) <~ progressBarStyle,
+      l[SwipeRefreshLayout](
+        w[RecyclerView] <~ wire(recyclerView) <~ recyclerViewStyle
+      ) <~ wire(refreshLayout),
       placeholder <~ wire(placeholderContent)
     ) <~ rootStyle
   )
