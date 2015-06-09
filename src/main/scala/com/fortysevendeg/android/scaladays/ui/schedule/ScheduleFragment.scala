@@ -70,7 +70,7 @@ class ScheduleFragment
         <~ rvLayoutManager(layoutManager)
         <~ rvAddItemDecoration(new ScheduleItemDecorator())) ~
         loadSchedule() ~
-        (refreshLayout <~ srlOnRefreshListener(loadSchedule(favorites = false, forceDownload = true))) ~
+        (refreshLayout <~ srlOnRefreshListener(loadSchedule(favorites = false, forceDownload = true, swipe = true))) ~
         (reloadButton <~ On.click(
           loadSchedule(favorites = false, forceDownload = true)
         )))
