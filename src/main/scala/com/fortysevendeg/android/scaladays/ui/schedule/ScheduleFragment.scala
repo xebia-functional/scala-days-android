@@ -60,7 +60,7 @@ class ScheduleFragment
 
   override def onCreateView(inflater: LayoutInflater, container: ViewGroup, savedInstanceState: Bundle): View = {
     analyticsServices.sendScreenName(analyticsScheduleListScreen)
-    content
+    contentWithSwipeRefresh
   }
 
   override def onViewCreated(view: View, savedInstanceState: Bundle): Unit = {
@@ -70,6 +70,7 @@ class ScheduleFragment
         <~ rvLayoutManager(layoutManager)
         <~ rvAddItemDecoration(new ScheduleItemDecorator())) ~
         loadSchedule() ~
+        (refreshLayout <~ srlOnRefreshListener(loadSchedule(favorites = false, forceDownload = true))) ~
         (reloadButton <~ On.click(
           loadSchedule(favorites = false, forceDownload = true)
         )))

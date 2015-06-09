@@ -45,7 +45,7 @@ class SocialFragment
   with Contexts[Fragment]
   with ComponentRegistryImpl
   with UiServices
-  with SocialLayout {
+  with ListLayout {
 
   override lazy val contextProvider: ContextWrapper = fragmentContextWrapper
 
@@ -58,7 +58,7 @@ class SocialFragment
 
   override def onCreateView(inflater: LayoutInflater, container: ViewGroup, savedInstanceState: Bundle): View = {
     analyticsServices.sendScreenName(analyticsSocialScreen)
-    content
+    contentWithSwipeRefresh
   }
 
   override def onViewCreated(view: View, savedInstanceState: Bundle): Unit = {

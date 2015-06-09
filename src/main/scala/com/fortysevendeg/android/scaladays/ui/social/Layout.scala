@@ -16,30 +16,11 @@
 
 package com.fortysevendeg.android.scaladays.ui.social
 
-import android.support.v4.widget.SwipeRefreshLayout
 import android.support.v7.widget.RecyclerView
 import android.webkit.WebView
 import android.widget._
-import com.fortysevendeg.android.scaladays.ui.commons.ListLayout
-import macroid.FullDsl._
 import macroid.ActivityContextWrapper
-
-trait SocialLayout
-  extends ListLayout {
-
-  var refreshLayout = slot[SwipeRefreshLayout]
-
-  override def content(implicit context: ActivityContextWrapper) = getUi(
-    l[FrameLayout](
-      w[ProgressBar] <~ wire(progressBar) <~ progressBarStyle,
-      l[SwipeRefreshLayout](
-        w[RecyclerView] <~ wire(recyclerView) <~ recyclerViewStyle
-      ) <~ wire(refreshLayout),
-      placeholder <~ wire(placeholderContent)
-    ) <~ rootStyle
-  )
-
-}
+import macroid.FullDsl._
 
 class SocialLayoutAdapter(implicit context: ActivityContextWrapper)
     extends AdapterStyles {
