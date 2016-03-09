@@ -2,8 +2,8 @@ object Versions {
 
   val appV = "1.0.0"
   val scalaV = "2.11.4"
-  val androidPlatformV = "android-22"
-  val androidV = "22.1.1"
+  val androidPlatformV = "android-23"
+  val androidV = "23.1.1"
   val multiDexV = "0.1"
   val macroidExtrasV = "0.2"
   val macroidV = "2.0.0-20150427"
@@ -15,6 +15,5 @@ object Versions {
   val zxingAndroidV = "1.2.0"
   val picassoV = "2.5.0"
   val playServicesV = "6.5.87"
-  val crashlyticsV = "1.+"
   val mockitoV = "3.0-M2"
 }

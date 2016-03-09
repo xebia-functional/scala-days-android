@@ -16,11 +16,8 @@
 
 package com.fortysevendeg.android.scaladays.utils
 
-import java.io.{BufferedReader, InputStream, InputStreamReader}
-
-import org.apache.http.client.methods.HttpGet
-import org.apache.http.impl.client.DefaultHttpClient
-import org.apache.http.{HttpEntity, HttpResponse}
+import java.io._
+import java.net.{HttpURLConnection, URL}
 
 import scala.util.{Failure, Success, Try}
 
@@ -28,22 +25,23 @@ trait NetUtils {
 
   def getJson(url: String): Try[String] = {
     Try {
-      val httpClient: DefaultHttpClient = new DefaultHttpClient
-      val httpPost: HttpGet = new HttpGet(url)
-      val httpResponse: HttpResponse = httpClient.execute(httpPost)
-      val httpEntity: HttpEntity = httpResponse.getEntity
-      val is: InputStream = httpEntity.getContent
-      val reader: BufferedReader = new BufferedReader(new InputStreamReader(is, "iso-8859-1"), 8)
-      val sb: StringBuilder = new StringBuilder
+      val uri = new URL(url)
+      val conn = uri.openConnection().asInstanceOf[HttpURLConnection]
+      conn.setReadTimeout(15000)
+      conn.setRequestMethod("GET")
+      conn.connect()
+
+      val reader = new BufferedReader(new InputStreamReader(conn.getInputStream))
+      val sb = new StringBuilder()
+
       var line: String = null
-      while ( {
+      while ({
         line = reader.readLine
         line
       } != null) {
         sb.append(line + "\n")
       }
-      is.close()
-
+      reader.close()
       sb.toString()
     } match {
       case Success(response) => Success(response)

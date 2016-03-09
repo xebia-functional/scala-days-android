@@ -39,7 +39,6 @@ import com.fortysevendeg.macroid.extras.ToolbarTweaks._
 import com.localytics.android.{LocalyticsActivityLifecycleCallbacks, Localytics}
 import macroid.FullDsl._
 import macroid._
-import com.crashlytics.android.Crashlytics
 
 class MainActivity
   extends AppCompatActivity
@@ -51,7 +50,7 @@ class MainActivity
 
   override def onCreate(savedInstanceState: Bundle) = {
     super.onCreate(savedInstanceState)
-    Crashlytics.start(this)
+
     setContentView(layout)
 
     getApplication.registerActivityLifecycleCallbacks(
@@ -60,14 +59,14 @@ class MainActivity
 
     Localytics.registerPush(getString(R.string.google_project_number))
 
-    toolBar map setSupportActionBar
+    toolBar foreach setSupportActionBar
 
     getSupportActionBar.setDisplayHomeAsUpEnabled(true)
     getSupportActionBar.setHomeButtonEnabled(true)
 
     AlarmUtils.setReloadJsonService(this)
 
-    drawerLayout map { drawerLayout =>
+    drawerLayout foreach { drawerLayout =>
       val drawerToggle = new ActionBarDrawerToggle(this, drawerLayout, R.string.openMenu, R.string.clodeMenu) {
         override def onDrawerClosed(drawerView: View): Unit = {
           super.onDrawerClosed(drawerView)
@@ -105,13 +104,13 @@ class MainActivity
 
   override def onPostCreate(savedInstanceState: Bundle): Unit = {
     super.onPostCreate(savedInstanceState)
-    actionBarDrawerToggle map (_.syncState)
+    actionBarDrawerToggle foreach (_.syncState)
 
   }
 
   override def onConfigurationChanged(newConfig: Configuration): Unit = {
     super.onConfigurationChanged(newConfig)
-    actionBarDrawerToggle map (_.onConfigurationChanged(newConfig))
+    actionBarDrawerToggle foreach (_.onConfigurationChanged(newConfig))
   }
 
   override def onOptionsItemSelected(item: MenuItem): Boolean = {

@@ -4,7 +4,7 @@ object Settings {
 
   lazy val resolvers =
     Seq(
-      Resolver.mavenLocal,
+      "Maven Central Server" at "http://repo1.maven.org/maven2",
       DefaultMavenRepository,
       "jcenter" at "http://jcenter.bintray.com",
       "47 Degrees Bintray Repo" at "http://dl.bintray.com/47deg/maven",
@@ -15,9 +15,7 @@ object Settings {
       Resolver.sonatypeRepo("snapshots"),
       Resolver.defaultLocal,
       "Scalaz Bintray Repo" at "http://dl.bintray.com/scalaz/releases",
-      "47deg Public" at "http://clinker.47deg.com/nexus/content/groups/public",
-      "zxing Android Minimal" at "https://raw.github.com/embarkmobile/zxing-android-minimal/mvn-repo/maven-repository/",
-      "Crashlytics" at "http://download.crashlytics.com/maven"
+      "zxing Android Minimal" at "https://raw.github.com/embarkmobile/zxing-android-minimal/mvn-repo/maven-repository/"
     )
 
   lazy val proguardCommons = Seq(
@@ -30,7 +28,6 @@ object Settings {
     "-keep class com.google.** { *; }",
     "-keep class com.localytics.android.** { *; }",
     "-keep class com.google.android.gms.ads.** { *; }",
-    "-keep class com.crashlytics.** { *; }",
     "-keep class * extends java.util.ListResourceBundle { protected Object[][] getContents(); }",
     "-keep public class com.google.android.gms.common.internal.safeparcel.SafeParcelable { public static final *** NULL; }",
     "-keepnames @com.google.android.gms.common.annotation.KeepName class *",

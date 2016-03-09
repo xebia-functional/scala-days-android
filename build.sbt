@@ -8,8 +8,8 @@ import Libraries.date._
 import Libraries.qr._
 import Libraries.playServices._
 import ReplacePropertiesGenerator._
+import android.Keys._
 import android.PromptPasswordsSigningConfig
-import Libraries.crashlytics._
 
 android.Plugin.androidBuild
 
@@ -49,8 +49,9 @@ libraryDependencies ++= Seq(
   twitter4j,
   prettytime,
   zxingCore,
-  aar(zxingAndroid),
-  crashlytics)
+  aar(zxingAndroid))
+
+javacOptions in Compile ++= Seq("-target", "1.7", "-source", "1.7")
 
 proguardCache in Android := Seq.empty
 
@@ -71,10 +72,10 @@ useProguard in Android := true
 
 proguardOptions in Android ++= Settings.proguardCommons
 
-apkbuildExcludes in Android ++= Seq(
+packagingOptions in Android := PackagingOptions(excludes = Seq(
   "META-INF/LICENSE",
   "META-INF/LICENSE.txt",
   "META-INF/NOTICE",
-  "META-INF/NOTICE.txt")
+  "META-INF/NOTICE.txt"))
 
 packageResources in Android <<= (packageResources in Android).dependsOn(replaceValuesTask)
