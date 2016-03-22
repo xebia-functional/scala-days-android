@@ -7,6 +7,8 @@ import Libraries.social._
 import Libraries.date._
 import Libraries.qr._
 import Libraries.playServices._
+import Libraries.debug._
+import Crashlytics._
 import ReplacePropertiesGenerator._
 import android.Keys._
 import android.PromptPasswordsSigningConfig
@@ -41,6 +43,7 @@ libraryDependencies ++= Seq(
   aar(macroidExtras),
   aar(playServicesBase),
   aar(playServicesMaps),
+  crashlytics,
   playJson,
   specs2,
   mockito,
@@ -79,3 +82,13 @@ packagingOptions in Android := PackagingOptions(excludes = Seq(
   "META-INF/NOTICE.txt"))
 
 packageResources in Android <<= (packageResources in Android).dependsOn(replaceValuesTask)
+
+collectResources in Android <<= (collectResources in Android) dependsOn
+  fixNameSpace dependsOn
+  crashlyticsPreBuild dependsOn
+  createFiles
+
+zipalign in Android <<= (zipalign in Android) map { result =>
+  crashlyticsPostPackage
+  result
+}

@@ -16,4 +16,5 @@ object Versions {
   val picassoV = "2.5.0"
   val playServicesV = "6.5.87"
   val mockitoV = "3.0-M2"
+  val crashlyticsV = "2.5.2"
 }

@@ -68,4 +68,8 @@ object Libraries {
     lazy val playServicesBase = playServicesDep("play-services-base")
   }
 
+  object debug {
+    lazy val crashlytics = "com.crashlytics.sdk.android" % "crashlytics" % Versions.crashlyticsV
+  }
+
 }
