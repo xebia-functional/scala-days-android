@@ -43,17 +43,11 @@ google.analytics.key=***
 twitter.app.key=***
 twitter.app.secret=***
 twitter.app.callback.host=***
-crashlytics.key=***
+crashlytics.apikey=***
+crashlytics.apisecret=***
 ```
 
-add a `crashlytics.properties` file with the following secret keys:
-
-```
-apiKey=***
-apiSecret=***
-``` 
-
-If you do not want to utilize the `Crashlytics` service, you should remove the `Crashlytics.start(this)` line in `MainActivity.scala`
+If you do not want to utilize the `Crashlytics` service, you should remove the `startCrashlytics()` line in `MainActivity.scala`
 
 
 Contribute
