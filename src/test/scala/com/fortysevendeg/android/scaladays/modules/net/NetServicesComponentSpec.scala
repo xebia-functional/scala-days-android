@@ -2,20 +2,27 @@ package com.fortysevendeg.android.scaladays.modules.net
 
 import java.io.File
 
+import com.fortysevendeg.android.scaladays.modules.net.client.ServiceClient
+import com.fortysevendeg.android.scaladays.modules.net.client.messages.{ServiceClientStringRequest, ServiceClientStringResponse}
 import com.fortysevendeg.android.scaladays.modules.net.impl.NetServicesComponentImpl
 import com.fortysevendeg.android.scaladays.utils.AsyncUtils._
-import com.fortysevendeg.android.scaladays.{ContextWrapperTestSupport, BaseTestSupport}
+import com.fortysevendeg.android.scaladays.{BaseTestSupport, ContextWrapperTestSupport}
 import macroid.ContextWrapper
 import org.specs2.mutable.Specification
 
-import scala.util.{Failure, Success, Try}
+import scala.concurrent.Future
+import scala.util.{Success, Try}
+
+import scala.concurrent.ExecutionContext.Implicits.global
 
 trait NetServicesComponentSupport
   extends NetServicesComponentImpl
   with ContextWrapperTestSupport {
 
   override def loadJsonFileName: String = "jsonFile"
-  
+
+  override val serviceClient = mock[ServiceClient]
+
   val fileExists = true
 
   override def loadJsonFile(context: ContextWrapper): File = {
@@ -29,8 +36,12 @@ trait NetServicesComponentSupport
 class NetServicesComponentSpec
     extends Specification
     with BaseTestSupport {
-  
+
   val jsonFileContent = """{"message": "Hello World!"}"""
+
+  val stringRequest = ServiceClientStringRequest("jsonFile")
+
+  val stringResponse = ServiceClientStringResponse(statusCode = 200, data = Some(jsonFileContent))
 
   "NetServices component" should {
     
@@ -38,7 +49,7 @@ class NetServicesComponentSpec
       new NetServicesComponentSupport {
 
         override val fileExists = true
-        
+
         netServices.saveJsonInLocal(new NetRequest(false)) *=== NetResponse(success = true, downloaded = false)
     }
 
@@ -46,8 +57,10 @@ class NetServicesComponentSpec
       new NetServicesComponentSupport {
 
         override val fileExists = false
-        
-        override def getJson(url: String): Try[String] = Failure[String](new RuntimeException)
+
+        serviceClient.getString returns {
+          (stringRequest) => Future.failed(new RuntimeException(""))
+        }
 
         netServices.saveJsonInLocal(new NetRequest(false)) *=== NetResponse(success = false, downloaded = false)
     }
@@ -57,7 +70,9 @@ class NetServicesComponentSpec
 
         override val fileExists = false
 
-        override def getJson(url: String): Try[String] = Failure[String](new RuntimeException)
+        serviceClient.getString returns {
+          (stringRequest) => Future.failed(new RuntimeException(""))
+        }
 
         netServices.saveJsonInLocal(new NetRequest(true)) *=== NetResponse(success = false, downloaded = false)
     }
@@ -67,7 +82,9 @@ class NetServicesComponentSpec
 
         override val fileExists = false
 
-        override def getJson(url: String): Try[String] = Success[String](jsonFileContent)
+        serviceClient.getString returns {
+          (stringRequest) => Future.successful(stringResponse)
+        }
 
         override def writeText(file: File, text: String): Try[Unit] = Success[Unit](None)
 
@@ -79,7 +96,9 @@ class NetServicesComponentSpec
 
         override val fileExists = false
 
-        override def getJson(url: String): Try[String] = Success[String](jsonFileContent)
+        serviceClient.getString returns {
+          (stringRequest) => Future.successful(stringResponse)
+        }
 
         override def writeText(file: File, text: String): Try[Unit] = Success[Unit](None)
 
@@ -96,8 +115,9 @@ class NetServicesComponentSpec
           mockFile
         }
 
-        override def getJson(url: String): Try[String] = Success[String](jsonFileContent)
-
+        serviceClient.getString returns {
+          (stringRequest) => Future.successful(stringResponse)
+        }
         override def writeText(file: File, text: String): Try[Unit] = Success[Unit](None)
 
         netServices.saveJsonInLocal(new NetRequest(true)) *=== NetResponse(success = true, downloaded = true)

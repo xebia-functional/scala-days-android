@@ -30,6 +30,7 @@ import com.squareup.{okhttp => okHttp}
 
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
+import scala.util.control.NonFatal
 import scala.util.{Failure, Success, Try}
 
 trait NetServicesComponentImpl
@@ -39,6 +40,8 @@ trait NetServicesComponentImpl
   self: ContextWrapperProvider =>
 
   val netServices = new NetServicesImpl
+
+  val serviceClient = new ServiceClient(createHttpClient)
   
   def loadJsonFileName: String =
     contextProvider.application.getString(R.string.url_json_conference)
@@ -46,12 +49,10 @@ trait NetServicesComponentImpl
   class NetServicesImpl
       extends NetServices {
 
-    val serviceClient = new ServiceClient(createHttpClient)
-
     override def saveJsonInLocal: Service[NetRequest, NetResponse] = request => {
       val file = loadJsonFile(contextProvider)
       if (request.forceDownload || !file.exists()) {
-        for {
+        val future = for {
           clientRequest <- serviceClient.getString(ServiceClientStringRequest(path = loadJsonFileName))
           result <- Future {
             clientRequest.data map (writeJsonFile(file, _)) match {
@@ -60,8 +61,13 @@ trait NetServicesComponentImpl
             }
           }
         } yield result
+        future.recoverWith {
+          case NonFatal(e) =>
+            // log
+            Future.successful(NetResponse(success = false, downloaded = false))
+        }
       } else {
-        Future(NetResponse(success = true, downloaded = false))
+        Future.successful(NetResponse(success = true, downloaded = false))
       }
     }
 
@@ -75,11 +81,11 @@ trait NetServicesComponentImpl
       }
     }
 
-    private[this] def createHttpClient = {
-      val okHttpClient = new okHttp.OkHttpClient
-      new OkHttpClient(okHttpClient)
-    }
+  }
 
+  private[this] def createHttpClient = {
+    val okHttpClient = new okHttp.OkHttpClient
+    new OkHttpClient(okHttpClient)
   }
 
 }
