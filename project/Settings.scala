@@ -15,7 +15,8 @@ object Settings {
       Resolver.sonatypeRepo("snapshots"),
       Resolver.defaultLocal,
       "Scalaz Bintray Repo" at "http://dl.bintray.com/scalaz/releases",
-      "zxing Android Minimal" at "https://raw.github.com/embarkmobile/zxing-android-minimal/mvn-repo/maven-repository/"
+      "zxing Android Minimal" at "https://raw.github.com/embarkmobile/zxing-android-minimal/mvn-repo/maven-repository/",
+      "crashlytics" at "https://maven.fabric.io/public"
     )
 
   lazy val proguardCommons = Seq(
@@ -32,6 +33,8 @@ object Settings {
     "-keep public class com.google.android.gms.common.internal.safeparcel.SafeParcelable { public static final *** NULL; }",
     "-keepnames @com.google.android.gms.common.annotation.KeepName class *",
     "-keepclassmembernames class * { @com.google.android.gms.common.annotation.KeepName *; }",
-    "-keepnames class * implements android.os.Parcelable { public static final ** CREATOR; }")
+    "-keepnames class * implements android.os.Parcelable { public static final ** CREATOR; }",
+    "-keep class com.crashlytics.** { *; }",
+    "-dontwarn com.crashlytics.**")
 
 }
