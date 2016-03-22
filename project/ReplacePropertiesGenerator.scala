@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2015 47 Degrees, LLC http://47deg.com hello@47deg.com
+ *  Copyright (C) 2015 47 Degrees, LLC http://47deg.com hello@47deg.com
  *
  *  Licensed under the Apache License, Version 2.0 (the "License"); you may
  *  not use this file except in compliance with the License. You may obtain
@@ -19,6 +19,7 @@ import java.util.Properties
 
 import android.Keys._
 import sbt.KeyRanks._
+import sbt.Keys._
 import sbt._
 
 import scala.annotation.tailrec
@@ -48,10 +49,9 @@ object ReplacePropertiesGenerator {
     if (file.exists()) Some(file) else None
   }
 
-  def replaceContent(valuesFile: File) = {
-    val properties = propertiesMap()
-    val content = IO.readLines(valuesFile) map (replaceLine(properties, _))
-    IO.write(valuesFile, content.mkString("\n"))
+  def replaceContent(origin: File, target: File) = {
+    val content = IO.readLines(origin) map (replaceLine(propertiesMap, _))
+    IO.write(target, content.mkString("\n"))
   }
 
   private def replaceLine(properties: Map[String, String], line: String) = {
@@ -69,14 +69,16 @@ object ReplacePropertiesGenerator {
   }
 
   def replaceValuesTask = Def.task[Seq[File]] {
+    val log = streams.value.log
+    println("Replacing values")
     try {
-      val dir: File = (binPath in Android).value
-      val valuesFile: File =  new File(dir, "resources/res/values/values.xml")
-      replaceContent(valuesFile)
+      val dir: (File, File) = (collectResources in Android).value
+      val valuesFile: File =  new File(dir._2, "/values/values.xml")
+      replaceContent(valuesFile, valuesFile)
       Seq(valuesFile)
     } catch {
       case e: Throwable =>
-        println("An error occurred loading values.xml")
+        log.error("An error occurred replacing values")
         throw e
     }
   }

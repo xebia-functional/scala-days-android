@@ -1,3 +1,19 @@
+/*
+ *  Copyright (C) 2015 47 Degrees, LLC http://47deg.com hello@47deg.com
+ *
+ *  Licensed under the Apache License, Version 2.0 (the "License"); you may
+ *  not use this file except in compliance with the License. You may obtain
+ *  a copy of the License at
+ *
+ *    http://www.apache.org/licenses/LICENSE-2.0
+ *
+ *  Unless required by applicable law or agreed to in writing, software
+ *  distributed under the License is distributed on an "AS IS" BASIS,
+ *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *  See the License for the specific language governing permissions and
+ *  limitations under the License.
+ */
+
 import sbt._
 
 object Libraries {
@@ -58,11 +74,6 @@ object Libraries {
     lazy val zxingCore = "com.google.zxing" % "core" % Versions.zxingCoreV
     lazy val zxingAndroid = "com.embarkmobile" % "zxing-android-minimal" % Versions.zxingAndroidV
   }
-  
-  object crashlytics {
-    lazy val crashlytics = "com.crashlytics.android" % "crashlytics" % Versions.crashlyticsV
-    
-  }
 
   object playServices {
 
@@ -71,6 +82,10 @@ object Libraries {
     lazy val playServicesMaps = playServicesDep("play-services-maps")
     // Google Actions, Google Analytics and Google Cloud Messaging
     lazy val playServicesBase = playServicesDep("play-services-base")
+  }
+
+  object debug {
+    lazy val crashlytics = "com.crashlytics.sdk.android" % "crashlytics" % Versions.crashlyticsV
   }
 
 }

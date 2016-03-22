@@ -18,10 +18,11 @@ package com.fortysevendeg.android.scaladays.ui.main
 
 import android.content.Intent
 import android.content.res.Configuration
-import android.os.Bundle
+import android.os.{Handler, Bundle}
 import android.support.v4.app.FragmentActivity
 import android.support.v7.app.{AppCompatActivity, ActionBarDrawerToggle}
 import android.view.{Menu, MenuItem, View}
+import com.crashlytics.android.Crashlytics
 import com.fortysevendeg.android.scaladays.R
 import com.fortysevendeg.android.scaladays.ui.about.AboutFragment
 import com.fortysevendeg.android.scaladays.ui.places.PlacesFragment
@@ -37,37 +38,39 @@ import com.fortysevendeg.macroid.extras.DrawerLayoutTweaks._
 import com.fortysevendeg.macroid.extras.FragmentExtras._
 import com.fortysevendeg.macroid.extras.ToolbarTweaks._
 import com.localytics.android.{LocalyticsActivityLifecycleCallbacks, Localytics}
+import io.fabric.sdk.android.Fabric
 import macroid.FullDsl._
 import macroid._
-import com.crashlytics.android.Crashlytics
 
 class MainActivity
   extends AppCompatActivity
   with Contexts[FragmentActivity]
   with Layout
-  with IdGeneration {
+  with IdGeneration { self =>
 
   var actionBarDrawerToggle: Option[ActionBarDrawerToggle] = None
 
   override def onCreate(savedInstanceState: Bundle) = {
     super.onCreate(savedInstanceState)
-    Crashlytics.start(this)
+
     setContentView(layout)
 
     getApplication.registerActivityLifecycleCallbacks(
       new LocalyticsActivityLifecycleCallbacks(this)
     )
 
+    startCrashlytics()
+
     Localytics.registerPush(getString(R.string.google_project_number))
 
-    toolBar map setSupportActionBar
+    toolBar foreach setSupportActionBar
 
     getSupportActionBar.setDisplayHomeAsUpEnabled(true)
     getSupportActionBar.setHomeButtonEnabled(true)
 
     AlarmUtils.setReloadJsonService(this)
 
-    drawerLayout map { drawerLayout =>
+    drawerLayout foreach { drawerLayout =>
       val drawerToggle = new ActionBarDrawerToggle(this, drawerLayout, R.string.openMenu, R.string.clodeMenu) {
         override def onDrawerClosed(drawerView: View): Unit = {
           super.onDrawerClosed(drawerView)
@@ -105,13 +108,13 @@ class MainActivity
 
   override def onPostCreate(savedInstanceState: Bundle): Unit = {
     super.onPostCreate(savedInstanceState)
-    actionBarDrawerToggle map (_.syncState)
+    actionBarDrawerToggle foreach (_.syncState)
 
   }
 
   override def onConfigurationChanged(newConfig: Configuration): Unit = {
     super.onConfigurationChanged(newConfig)
-    actionBarDrawerToggle map (_.onConfigurationChanged(newConfig))
+    actionBarDrawerToggle foreach (_.onConfigurationChanged(newConfig))
   }
 
   override def onOptionsItemSelected(item: MenuItem): Boolean = {
@@ -139,4 +142,15 @@ class MainActivity
           tag = Some(Tag.mainFragment))
     )
   }
+
+  private[this] def startCrashlytics() = {
+    new Handler().post(new Runnable {
+      override def run(): Unit = try {
+        Fabric.`with`(self, new Crashlytics())
+      } catch {
+        case e: Throwable => e.printStackTrace()
+      }
+    })
+  }
+
 }
