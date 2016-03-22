@@ -83,6 +83,8 @@ packagingOptions in Android := PackagingOptions(excludes = Seq(
 
 packageResources in Android <<= (packageResources in Android).dependsOn(replaceValuesTask)
 
+crashlyticsEnabled := (sys.env.getOrElse("CRASHLYTICS_ENABLED", default = "true") == "true")
+
 collectResources in Android <<= (collectResources in Android) dependsOn
   fixNameSpace dependsOn
   crashlyticsPreBuild dependsOn

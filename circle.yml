@@ -1,6 +1,7 @@
 machine:
   environment:
     ANDROID_HOME: /usr/local/android-sdk-linux
+    CRASHLYTICS_ENABLED: false
 
 dependencies:
   pre:

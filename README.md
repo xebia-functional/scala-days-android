@@ -47,7 +47,7 @@ crashlytics.apikey=***
 crashlytics.apisecret=***
 ```
 
-If you do not want to utilize the `Crashlytics` service, you should remove the `startCrashlytics()` line in `MainActivity.scala`
+If you do not want to utilize the `Crashlytics` service, you should create an environment variable `CRASHLYTICS_ENABLED=false`
 
 
 Contribute
