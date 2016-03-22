@@ -145,7 +145,11 @@ class MainActivity
 
   private[this] def startCrashlytics() = {
     new Handler().post(new Runnable {
-      override def run(): Unit = Fabric.`with`(self, new Crashlytics())
+      override def run(): Unit = try {
+        Fabric.`with`(self, new Crashlytics())
+      } catch {
+        case e: Throwable => e.printStackTrace()
+      }
     })
   }
 

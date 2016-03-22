@@ -1,23 +1,45 @@
+/*
+ *  Copyright (C) 2015 47 Degrees, LLC http://47deg.com hello@47deg.com
+ *
+ *  Licensed under the Apache License, Version 2.0 (the "License"); you may
+ *  not use this file except in compliance with the License. You may obtain
+ *  a copy of the License at
+ *
+ *    http://www.apache.org/licenses/LICENSE-2.0
+ *
+ *  Unless required by applicable law or agreed to in writing, software
+ *  distributed under the License is distributed on an "AS IS" BASIS,
+ *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *  See the License for the specific language governing permissions and
+ *  limitations under the License.
+ */
+
 import ReplacePropertiesGenerator._
 import sbt.Keys._
 import sbt._
 
 object Crashlytics {
 
+  val crashlyticsEnabled = settingKey[Boolean]("If Crashlytics is enabled")
+
   def createFiles = Def.task[Seq[File]] {
-    val log = streams.value.log
-    log.info("Creating crashlytics files")
-    try {
-      val templates = loadTemplates(baseDirectory.value / "crashlytics" / "templates")
-      templates map { file =>
-        val target = baseDirectory.value / "crashlytics" / file.getName
-        replaceContent(file, target)
-        target
+    if (crashlyticsEnabled.value) {
+      val log = streams.value.log
+      log.info("Creating crashlytics files")
+      try {
+        val templates = loadTemplates(baseDirectory.value / "crashlytics" / "templates")
+        templates map { file =>
+          val target = baseDirectory.value / "crashlytics" / file.getName
+          replaceContent(file, target)
+          target
+        }
+      } catch {
+        case e: Throwable =>
+          log.error("An error occurred loading creating files")
+          throw e
       }
-    } catch {
-      case e: Throwable =>
-        log.error("An error occurred loading creating files")
-        throw e
+    } else {
+      Seq.empty
     }
   }
 
@@ -28,65 +50,74 @@ object Crashlytics {
    * with namespace
    */
   def fixNameSpace = Def.task[Unit] {
-    crashlyticsCodeGen.value
-    val file = baseDirectory.value / "src/main/res/values/com_crashlytics_export_strings.xml"
-    if (file.exists()) {
-      val xml = scala.xml.XML.loadFile(file)
+    if (crashlyticsEnabled.value) {
+      crashlyticsCodeGen.value
+      val file = baseDirectory.value / "src/main/res/values/com_crashlytics_export_strings.xml"
+      if (file.exists()) {
+        val xml = scala.xml.XML.loadFile(file)
 
-      val rewriteRule = new scala.xml.transform.RewriteRule {
-        override def transform(node: scala.xml.Node) = node match {
-          case elem: scala.xml.Elem if elem.label == "resources" =>
-            elem.copy(child = fixChilds(elem.child))
-          case x => x
+        val rewriteRule = new scala.xml.transform.RewriteRule {
+          override def transform(node: scala.xml.Node) = node match {
+            case elem: scala.xml.Elem if elem.label == "resources" =>
+              elem.copy(child = fixChilds(elem.child))
+            case x => x
+          }
         }
-      }
 
-      scala.xml.XML.save(
-        filename = file.getAbsolutePath,
-        node = rewriteRule(xml),
-        enc = "UTF-8",
-        xmlDecl = true)
+        scala.xml.XML.save(
+          filename = file.getAbsolutePath,
+          node = rewriteRule(xml),
+          enc = "UTF-8",
+          xmlDecl = true)
+      }
     }
   }
 
   def crashlyticsPreBuild = Def.task[Unit] {
-    val log = streams.value.log
-    log.info("Crashlytics pre build")
+    if (crashlyticsEnabled.value) {
+      val log = streams.value.log
+      log.info("Crashlytics pre build")
 
-    // Cleanup
-    crashlyticsCleanupResources.value
+      // Cleanup
+      crashlyticsCleanupResources.value
 
-    // Upload deobs - Disabled
-    // crashlyticsUploadDeobs.value
+      // Upload deobs - Disabled
+      // crashlyticsUploadDeobs.value
+    }
   }
 
   def crashlyticsCodeGen = Def.task[Unit] {
-    val log = streams.value.log
-    log.info("Crashlytics code gen")
+    if (crashlyticsEnabled.value) {
+      val log = streams.value.log
+      log.info("Crashlytics code gen")
 
-    // Generate resources
-    crashlyticsGenerateResources.value
+      // Generate resources
+      crashlyticsGenerateResources.value
+    }
   }
 
   def crashlyticsPostPackage = Def.task[Unit] {
-    val log = streams.value.log
-    log.info("Crashlytics post package")
+    if (crashlyticsEnabled.value) {
+      val log = streams.value.log
+      log.info("Crashlytics post package")
 
-    // Store deobs - Disabled
-    // crashlyticsStoreDeobs.value
+      // Store deobs - Disabled
+      // crashlyticsStoreDeobs.value
 
-    // Upload deobs - Disabled
-    // crashlyticsUploadDeobs.value
+      // Upload deobs - Disabled
+      // crashlyticsUploadDeobs.value
 
-    // Cleanup
-    crashlyticsCleanupResources.value
+      // Cleanup
+      crashlyticsCleanupResources.value
+    }
   }
 
   def crashlyticsCleanupResources = Def.task[Unit] {
     crashlyticsTask(
       log = streams.value.log,
       task = Crashlytics.CleanupResources,
-      projectPath = baseDirectory.value.getAbsolutePath)
+      projectPath = baseDirectory.value.getAbsolutePath,
+      enabled = crashlyticsEnabled.value)
   }
 
   def crashlyticsGenerateResources = Def.task[Unit] {
@@ -97,7 +128,8 @@ object Crashlytics {
       extraArgs = Seq(
         "-buildEvent",
         "-tool", "com.crashlytics.tools.ant",
-        "-version", "1.20.0"))
+        "-version", "1.20.0"),
+      enabled = crashlyticsEnabled.value)
   }
 
   def crashlyticsStoreDeobs = Def.task[Unit] {
@@ -112,7 +144,8 @@ object Crashlytics {
         "proguard",
         "-obVer",
         "4.7",
-        "-verbose"))
+        "-verbose"),
+      enabled = crashlyticsEnabled.value)
   }
 
   def crashlyticsUploadDeobs = Def.task[Unit] {
@@ -120,7 +153,8 @@ object Crashlytics {
       log = streams.value.log,
       task = Crashlytics.UploadDeobs,
       projectPath = baseDirectory.value.getAbsolutePath,
-      extraArgs = Seq("-verbose"))
+      extraArgs = Seq("-verbose"),
+      enabled = crashlyticsEnabled.value)
   }
 
   object Crashlytics {
@@ -151,26 +185,30 @@ object Crashlytics {
     log: Logger,
     task: Crashlytics.Task,
     projectPath: String,
-    extraArgs: Seq[String] = Seq.empty) = {
+    extraArgs: Seq[String] = Seq.empty,
+    enabled: Boolean) = {
 
-    log.info(s"Crashlytics task: ${task.toString}")
+    if (enabled) {
+      log.info(s"Crashlytics task: ${task.toString}")
 
-    val args = Seq(
-      "-projectPath", projectPath,
-      "-androidManifest", s"$projectPath/crashlytics/CrashlyticsManifest.xml",
-      "-androidRes", s"$projectPath/src/main/res",
-      "-androidAssets", s"$projectPath/src/main/assets",
-      task.param,
-      "-properties", s"$projectPath/crashlytics/fabric.properties") ++ extraArgs
+      val args = Seq(
+        "-projectPath", projectPath,
+        "-androidManifest", s"$projectPath/crashlytics/CrashlyticsManifest.xml",
+        "-androidRes", s"$projectPath/src/main/res",
+        "-androidAssets", s"$projectPath/src/main/assets",
+        task.param,
+        "-properties", s"$projectPath/crashlytics/fabric.properties") ++ extraArgs
 
-    log.debug(s"Arguments: $args")
-    try {
-      com.crashlytics.tools.android.DeveloperTools.main(args.toArray)
-    } catch {
-      case e: Throwable =>
-        log.error(s"Error executing crashlytics task: ${e.getMessage}")
-        throw e
+      log.debug(s"Arguments: $args")
+      try {
+        com.crashlytics.tools.android.DeveloperTools.main(args.toArray)
+      } catch {
+        case e: Throwable =>
+          log.error(s"Error executing crashlytics task: ${e.getMessage}")
+          throw e
+      }
     }
+    
   }
 
   private[this] def loadTemplates(folder: File): Seq[File] = {
