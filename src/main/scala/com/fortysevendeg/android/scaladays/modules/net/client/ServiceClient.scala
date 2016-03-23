@@ -99,7 +99,9 @@ class ServiceClient(httpClient: HttpClient) {
     ): Option[T] =
     Try(Json.parse(content).as[T](reads)) match {
       case Success(s) => Some(s)
-      case Failure(e) => None
+      case Failure(e) =>
+        e.printStackTrace()
+        None
     }
 
 }

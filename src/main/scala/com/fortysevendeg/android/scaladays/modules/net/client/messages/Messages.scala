@@ -17,8 +17,8 @@ case class ServiceClientRequest[Res](
 
 case class ServiceClientWithBodyRequest[Res](
   path: String,
-  headers: Seq[(String, String)] = Seq.empty,
   body: Map[String, String],
+  headers: Seq[(String, String)] = Seq.empty,
   reads: Option[Reads[Res]] = None,
   emptyResponse: Boolean = false)
 

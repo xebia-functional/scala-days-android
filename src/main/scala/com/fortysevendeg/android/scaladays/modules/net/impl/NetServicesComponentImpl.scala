@@ -18,6 +18,7 @@ package com.fortysevendeg.android.scaladays.modules.net.impl
 
 import java.io.File
 
+import android.util.Log
 import com.fortysevendeg.android.scaladays.R
 import com.fortysevendeg.android.scaladays.commons.ContextWrapperProvider
 import com.fortysevendeg.android.scaladays.modules.net.client.ServiceClient
@@ -63,7 +64,7 @@ trait NetServicesComponentImpl
         } yield result
         future.recoverWith {
           case NonFatal(e) =>
-            // log
+            Log.e("Error saving JSON", e.getMessage, e)
             Future.successful(NetResponse(success = false, downloaded = false))
         }
       } else {
