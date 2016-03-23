@@ -13,8 +13,6 @@ import org.specs2.mutable.Specification
 import scala.concurrent.Future
 import scala.util.{Success, Try}
 
-import scala.concurrent.ExecutionContext.Implicits.global
-
 trait NetServicesComponentSupport
   extends NetServicesComponentImpl
   with ContextWrapperTestSupport {

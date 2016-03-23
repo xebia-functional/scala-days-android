@@ -64,7 +64,7 @@ trait NetServicesComponentImpl
         } yield result
         future.recoverWith {
           case NonFatal(e) =>
-            Log.e("Error saving JSON", e.getMessage, e)
+            println(s"Error saving JSON: ${e.getMessage}")
             Future.successful(NetResponse(success = false, downloaded = false))
         }
       } else {
