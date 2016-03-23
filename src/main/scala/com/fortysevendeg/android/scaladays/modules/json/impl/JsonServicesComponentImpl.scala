@@ -43,6 +43,22 @@ trait ApiReads {
 
 }
 
+trait ApiWrites {
+
+  implicit val pictureWrites = Json.writes[ApiPicture]
+  implicit val conferenceWrites = Json.writes[ApiInformation]
+  implicit val trackWrites = Json.writes[ApiTrack]
+  implicit val locationWrites = Json.writes[ApiLocation]
+  implicit val speakerWrites = Json.writes[ApiSpeaker]
+  implicit val eventWrites = Json.writes[ApiEvent]
+  implicit val sponsorWrites = Json.writes[ApiSponsor]
+  implicit val sponsorTypeWrites = Json.writes[ApiSponsorType]
+  implicit val venuesWrites = Json.writes[ApiVenue]
+  implicit val responseWrites = Json.writes[ApiConference]
+  implicit val rootWrites = Json.writes[ApiRoot]
+
+}
+
 trait JsonServicesComponentImpl
     extends JsonServicesComponent
     with FileUtils {

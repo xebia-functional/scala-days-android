@@ -18,24 +18,31 @@ package com.fortysevendeg.android.scaladays.modules.net.impl
 
 import java.io.File
 
+import android.util.Log
 import com.fortysevendeg.android.scaladays.R
-import com.fortysevendeg.android.scaladays.modules.net.{NetResponse, NetRequest, NetServices, NetServicesComponent}
-import com.fortysevendeg.android.scaladays.scaladays.Service
-import com.fortysevendeg.android.scaladays.utils.{FileUtils, NetUtils}
 import com.fortysevendeg.android.scaladays.commons.ContextWrapperProvider
+import com.fortysevendeg.android.scaladays.modules.net.client.ServiceClient
+import com.fortysevendeg.android.scaladays.modules.net.client.http.OkHttpClient
+import com.fortysevendeg.android.scaladays.modules.net.client.messages.ServiceClientStringRequest
+import com.fortysevendeg.android.scaladays.modules.net.{NetRequest, NetResponse, NetServices, NetServicesComponent}
+import com.fortysevendeg.android.scaladays.scaladays.Service
+import com.fortysevendeg.android.scaladays.utils.FileUtils
+import com.squareup.{okhttp => okHttp}
 
-import scala.concurrent.Future
 import scala.concurrent.ExecutionContext.Implicits.global
-import scala.util.{Try, Failure, Success}
+import scala.concurrent.Future
+import scala.util.control.NonFatal
+import scala.util.{Failure, Success, Try}
 
 trait NetServicesComponentImpl
     extends NetServicesComponent
-    with FileUtils
-    with NetUtils {
+    with FileUtils {
 
   self: ContextWrapperProvider =>
 
   val netServices = new NetServicesImpl
+
+  val serviceClient = new ServiceClient(createHttpClient)
   
   def loadJsonFileName: String =
     contextProvider.application.getString(R.string.url_json_conference)
@@ -43,21 +50,29 @@ trait NetServicesComponentImpl
   class NetServicesImpl
       extends NetServices {
 
-    override def saveJsonInLocal: Service[NetRequest, NetResponse] = request =>
-      Future {
-        val file = loadJsonFile(contextProvider)
-        if (request.forceDownload || !file.exists()) {
-          val result = getJson(loadJsonFileName) map (writeJsonFile(file, _))
-          result match {
-            case Success(true) => NetResponse(success = true, downloaded = true)
-            case _ => NetResponse(success = false, downloaded = false)
+    override def saveJsonInLocal: Service[NetRequest, NetResponse] = request => {
+      val file = loadJsonFile(contextProvider)
+      if (request.forceDownload || !file.exists()) {
+        val future = for {
+          clientRequest <- serviceClient.getString(ServiceClientStringRequest(path = loadJsonFileName))
+          result <- Future {
+            clientRequest.data map (writeJsonFile(file, _)) match {
+              case Some(true) => NetResponse(success = true, downloaded = true)
+              case _ => NetResponse(success = false, downloaded = false)
+            }
           }
-        } else {
-          NetResponse(success = true, downloaded = false)
+        } yield result
+        future.recoverWith {
+          case NonFatal(e) =>
+            println(s"Error saving JSON: ${e.getMessage}")
+            Future.successful(NetResponse(success = false, downloaded = false))
         }
+      } else {
+        Future.successful(NetResponse(success = true, downloaded = false))
       }
-    
-    def writeJsonFile(file: File, jsonContent: String): Boolean = {
+    }
+
+    private[this] def writeJsonFile(file: File, jsonContent: String): Boolean = {
       if (file.exists()) file.delete()
       Try {
         writeText(file, jsonContent)
@@ -67,6 +82,11 @@ trait NetServicesComponentImpl
       }
     }
 
+  }
+
+  private[this] def createHttpClient = {
+    val okHttpClient = new okHttp.OkHttpClient
+    new OkHttpClient(okHttpClient)
   }
 
 }

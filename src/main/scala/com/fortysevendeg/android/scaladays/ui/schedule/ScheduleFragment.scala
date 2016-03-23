@@ -34,7 +34,6 @@ import macroid.FullDsl._
 import macroid.{Tweak, ContextWrapper, Contexts, Ui}
 import com.fortysevendeg.android.scaladays.ui.commons.AnalyticStrings._
 
-import scala.concurrent.ExecutionContext.Implicits.global
 import com.fortysevendeg.android.scaladays.ui.commons.IntegerResults._
 
 class ScheduleFragment

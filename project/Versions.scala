@@ -33,4 +33,5 @@ object Versions {
   val playServicesV = "6.5.87"
   val mockitoV = "3.0-M2"
   val crashlyticsV = "2.5.2"
+  val okHttpV = "2.3.0"
 }

@@ -8,6 +8,7 @@ import Libraries.date._
 import Libraries.qr._
 import Libraries.playServices._
 import Libraries.debug._
+import Libraries.net._
 import Crashlytics._
 import ReplacePropertiesGenerator._
 import android.Keys._
@@ -43,6 +44,7 @@ libraryDependencies ++= Seq(
   aar(macroidExtras),
   aar(playServicesBase),
   aar(playServicesMaps),
+  okHttp,
   crashlytics,
   playJson,
   specs2,
