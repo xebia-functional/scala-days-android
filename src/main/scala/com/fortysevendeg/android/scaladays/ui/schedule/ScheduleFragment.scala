@@ -27,6 +27,7 @@ import com.fortysevendeg.android.scaladays.R
 import com.fortysevendeg.android.scaladays.model.{Conference, Event}
 import com.fortysevendeg.android.scaladays.modules.ComponentRegistryImpl
 import com.fortysevendeg.android.scaladays.modules.preferences.PreferenceRequest
+import com.fortysevendeg.macroid.extras.UIActionsExtras._
 import com.fortysevendeg.android.scaladays.ui.commons.AnalyticStrings._
 import com.fortysevendeg.android.scaladays.ui.commons.IntegerResults._
 import com.fortysevendeg.android.scaladays.ui.commons.{ListLayout, UiServices}
@@ -42,7 +43,7 @@ class ScheduleFragment
   with ComponentRegistryImpl
   with UiServices
   with ScheduleConversion
-  with ListLayout {
+  with ListLayout { self =>
 
   val tagDialog = "dialog"
 
@@ -122,21 +123,22 @@ class ScheduleFragment
 
   override def onActivityResult(requestCode: Int, resultCode: Int, data: Intent): Unit = {
     super.onActivityResult(requestCode, resultCode, data)
-    requestCode match {
-      case `detailResult` =>
-        resultCode match {
-          case Activity.RESULT_OK =>
-            runUi(
-              recyclerView <~ Tweak[RecyclerView] {
-                rv =>
-                  rv.getAdapter match {
-                    case adapter: ScheduleAdapter => rv.swapAdapter(adapter, false)
-                    case _ =>
-                  }
+    (requestCode, resultCode) match {
+      case (`detailResult`, Activity.RESULT_OK) =>
+        runUi(
+          recyclerView <~ Tweak[RecyclerView] {
+            rv =>
+              rv.getAdapter match {
+                case adapter: ScheduleAdapter => rv.swapAdapter(adapter, false)
+                case _ =>
               }
-            )
-          case _ => ()
-        }
+          }
+        )
+      case (`voteResult`, Activity.RESULT_OK) =>
+        runUi(uiShortToast(R.string.voteSuccess))
+      case (`voteResult`, Activity.RESULT_CANCELED) =>
+        runUi(uiShortToast(R.string.voteFailed))
+      case _ =>
     }
   }
 
@@ -144,7 +146,7 @@ class ScheduleFragment
     loadSelectedConference(forceDownload) mapUi {
       conference =>
         if (swipe) runUi(refreshLayout <~ srlRefreshing(false))
-        reloadList(conference.info.utcTimezoneOffset, conference.schedule, favorites)
+        reloadList(conference.info.id, conference.info.utcTimezoneOffset, conference.schedule, favorites)
     } recoverUi {
       case _ =>
         if (swipe) runUi(refreshLayout <~ srlRefreshing(false))
@@ -153,7 +155,7 @@ class ScheduleFragment
     if (swipe) Ui.nop else loading()
   }
 
-  def reloadList(timeZone: String, events: Seq[Event], favorites: Boolean = false): Ui[_] = {
+  def reloadList(conferenceId: Int, timeZone: String, events: Seq[Event], favorites: Boolean = false): Ui[_] = {
     val scheduleItems = toScheduleItem(timeZone, events,
       if (favorites) {
         event => {
@@ -178,7 +180,8 @@ class ScheduleFragment
             val ft = getFragmentManager.beginTransaction()
             Option(getFragmentManager.findFragmentByTag(tagDialog)) foreach ft.remove
             ft.addToBackStack(null)
-            val dialog = new VoteDialog(event)
+            val dialog = new VoteDialog(conferenceId, event)
+            dialog.setTargetFragment(self, voteResult)
             dialog.show(ft, tagDialog)
           }
         })

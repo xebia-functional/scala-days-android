@@ -16,7 +16,19 @@
 
 package com.fortysevendeg.android.scaladays.modules.net
 
+import com.fortysevendeg.android.scaladays.ui.commons.Vote
+
 case class NetRequest(forceDownload: Boolean)
 
-case class NetResponse(success: Boolean, 
+case class NetResponse(
+  success: Boolean,
   downloaded: Boolean)
+
+case class VoteRequest(
+  vote: Vote,
+  uid: String,
+  talkId: String,
+  conferenceId: String)
+
+case class VoteResponse(
+  statusCode: Int)

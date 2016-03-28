@@ -41,6 +41,9 @@
 
     <string name="titleVoteConference">What do you think about this talk?</string>
 
+    <string name="voteSuccess">Vote added successful</string>
+    <string name="voteFailed">Vote failed. Try again later</string>
+
     <string-array name="filter_menu">
         <item>All</item>
         <item>Favorites</item>

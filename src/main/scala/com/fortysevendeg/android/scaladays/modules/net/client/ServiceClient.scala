@@ -32,12 +32,11 @@ class ServiceClient(httpClient: HttpClient) {
         response <- readResponse(clientResponse, request.reads, request.emptyResponse)
       } yield ServiceClientResponse(clientResponse.statusCode, response)
 
-  def post[Res]: Service[ServiceClientWithBodyRequest[Res], ServiceClientResponse[Res]] =
-    (request: ServiceClientWithBodyRequest[Res]) =>
+  def post[Res]: Service[ServiceClientWithBodyRequest, ServiceClientWithBodyResponse] =
+    (request: ServiceClientWithBodyRequest) =>
       for {
-        clientResponse <- httpClient.doPostWithBody(HttpClientWithBodyRequest(request.path, request.headers, request.body))
-        response <- readResponse(clientResponse, request.reads, request.emptyResponse)
-      } yield ServiceClientResponse(clientResponse.statusCode, response)
+        clientResponse <- httpClient.doPostWithBody(HttpClientWithBodyRequest(request.path, Seq.empty, request.body))
+      } yield ServiceClientWithBodyResponse(clientResponse.statusCode, clientResponse.body)
 
   def emptyPut[Res]: Service[ServiceClientRequest[Res], ServiceClientResponse[Res]] =
     (request: ServiceClientRequest[Res]) =>
@@ -45,13 +44,6 @@ class ServiceClient(httpClient: HttpClient) {
         clientResponse <- httpClient.doPut(HttpClientRequest(request.path, request.headers))
         response <- readResponse(clientResponse, request.reads, request.emptyResponse)
       } yield ServiceClientResponse(clientResponse.statusCode, response)
-
-  def put[Res]: Service[ServiceClientWithBodyRequest[Res], ServiceClientResponse[Res]] =
-    (request: ServiceClientWithBodyRequest[Res]) =>
-      for {
-        httpResponse <- httpClient.doPutWithBody(HttpClientWithBodyRequest(request.path, request.headers, request.body))
-        response <- readResponse(httpResponse, request.reads, request.emptyResponse)
-      } yield ServiceClientResponse(httpResponse.statusCode, response)
 
   def delete[Res]: Service[ServiceClientRequest[Res], ServiceClientResponse[Res]] =
     (request: ServiceClientRequest[Res]) =>

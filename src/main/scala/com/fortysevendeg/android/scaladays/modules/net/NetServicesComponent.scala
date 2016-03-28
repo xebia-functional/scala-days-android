@@ -20,6 +20,7 @@ import com.fortysevendeg.android.scaladays.scaladays.Service
 
 trait NetServices {
   def saveJsonInLocal: Service[NetRequest, NetResponse]
+  def addVote: Service[VoteRequest, VoteResponse]
 }
 
 trait NetServicesComponent {

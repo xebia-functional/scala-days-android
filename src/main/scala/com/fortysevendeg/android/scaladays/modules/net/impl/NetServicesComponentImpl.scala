@@ -23,8 +23,8 @@ import com.fortysevendeg.android.scaladays.R
 import com.fortysevendeg.android.scaladays.commons.ContextWrapperProvider
 import com.fortysevendeg.android.scaladays.modules.net.client.ServiceClient
 import com.fortysevendeg.android.scaladays.modules.net.client.http.OkHttpClient
-import com.fortysevendeg.android.scaladays.modules.net.client.messages.ServiceClientStringRequest
-import com.fortysevendeg.android.scaladays.modules.net.{NetRequest, NetResponse, NetServices, NetServicesComponent}
+import com.fortysevendeg.android.scaladays.modules.net.client.messages.{ServiceClientWithBodyRequest, ServiceClientStringRequest}
+import com.fortysevendeg.android.scaladays.modules.net._
 import com.fortysevendeg.android.scaladays.scaladays.Service
 import com.fortysevendeg.android.scaladays.utils.FileUtils
 import com.squareup.{okhttp => okHttp}
@@ -46,6 +46,9 @@ trait NetServicesComponentImpl
   
   def loadJsonFileName: String =
     contextProvider.application.getString(R.string.url_json_conference)
+
+  def getAddVoteEndpoint: String =
+    contextProvider.application.getString(R.string.add_vote_endpoint)
 
   class NetServicesImpl
       extends NetServices {
@@ -70,6 +73,19 @@ trait NetServicesComponentImpl
       } else {
         Future.successful(NetResponse(success = true, downloaded = false))
       }
+    }
+
+    override def addVote: Service[VoteRequest, VoteResponse] = request => {
+      val serviceRequest = ServiceClientWithBodyRequest(
+        path = getAddVoteEndpoint,
+        body = Map(
+          "vote" -> request.vote.value,
+          "talkId" -> request.talkId,
+          "conferenceId" -> request.conferenceId,
+          "deviceUID" -> request.uid
+        )
+      )
+      serviceClient.post(serviceRequest) map (response => VoteResponse(response.statusCode))
     }
 
     private[this] def writeJsonFile(file: File, jsonContent: String): Boolean = {

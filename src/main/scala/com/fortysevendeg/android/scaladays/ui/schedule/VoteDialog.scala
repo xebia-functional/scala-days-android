@@ -16,43 +16,96 @@
 
 package com.fortysevendeg.android.scaladays.ui.schedule
 
-import android.app.Dialog
+import android.app.{Activity, Dialog}
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.support.v4.app.DialogFragment
 import android.support.v7.app.AlertDialog
+import android.view.Gravity
 import android.view.ViewGroup.LayoutParams._
-import android.view.{Gravity, ViewGroup}
 import android.widget.ImageView.ScaleType
 import android.widget.{ImageView, LinearLayout, TextView}
 import com.fortysevendeg.android.scaladays.R
 import com.fortysevendeg.android.scaladays.model.Event
-import com.fortysevendeg.macroid.extras.ResourcesExtras._
+import com.fortysevendeg.android.scaladays.modules.ComponentRegistryImpl
+import com.fortysevendeg.android.scaladays.modules.net.VoteRequest
+import com.fortysevendeg.android.scaladays.ui.commons.{VoteNeutral, VoteLike, VoteUnlike}
 import com.fortysevendeg.macroid.extras.ImageViewTweaks._
 import com.fortysevendeg.macroid.extras.LinearLayoutTweaks._
+import com.fortysevendeg.macroid.extras.ResourcesExtras._
 import com.fortysevendeg.macroid.extras.TextTweaks._
 import com.fortysevendeg.macroid.extras.ViewTweaks._
-import macroid.ContextWrapper
+import macroid.{Ui, ContextWrapper}
 import macroid.FullDsl._
 
-class VoteDialog(event: Event)(implicit contextWrapper: ContextWrapper)
+import scala.concurrent.ExecutionContext.Implicits.global
+
+class VoteDialog(conferenceId: Int, event: Event)(implicit contextWrapper: ContextWrapper)
   extends DialogFragment
+  with ComponentRegistryImpl
   with Styles {
 
+  val defaultAndroidId = "not-found-android-id"
+
+  val statusCodeOk = 200
+
+  val androidId = "android_id"
+
+  val contentGServices = "content://com.google.android.gsf.gservices"
+
+  override val contextProvider: ContextWrapper = contextWrapper
+
   override def onCreateDialog(savedInstanceState: Bundle): Dialog = {
+    val voteRequest = VoteRequest(
+      vote = VoteUnlike,
+      uid = getAndroidId getOrElse defaultAndroidId,
+      talkId = event.id.toString,
+      conferenceId = conferenceId.toString)
 
     val rootView = getUi(
       l[LinearLayout](
         w[TextView] <~ titleStyle,
         w[TextView] <~ textStyle(event.title),
         l[LinearLayout](
-          w[ImageView] <~ voteStyle(R.drawable.popup_icon_vote_like),
-          w[ImageView] <~ voteStyle(R.drawable.popup_icon_vote_neutral),
-          w[ImageView] <~ voteStyle(R.drawable.popup_icon_vote_unlike)
+          w[ImageView] <~ voteStyle(R.drawable.popup_icon_vote_like) <~ On.click {
+            addVote(voteRequest.copy(vote = VoteLike))
+          },
+          w[ImageView] <~ voteStyle(R.drawable.popup_icon_vote_neutral) <~ On.click {
+            addVote(voteRequest.copy(vote = VoteNeutral))
+          },
+          w[ImageView] <~ voteStyle(R.drawable.popup_icon_vote_unlike) <~ On.click {
+            addVote(voteRequest.copy(vote = VoteUnlike))
+          }
         )
       ) <~ contentStyle
     )
 
     new AlertDialog.Builder(getActivity).setView(rootView).create()
+  }
+
+  private[this] def addVote(voteRequest: VoteRequest) = Ui {
+    val responseIntent = new Intent
+    netServices.addVote(voteRequest) map { response =>
+      if (response.statusCode == statusCodeOk) {
+        getTargetFragment.onActivityResult(getTargetRequestCode, Activity.RESULT_OK, responseIntent)
+        dismiss()
+      } else {
+        getTargetFragment.onActivityResult(getTargetRequestCode, Activity.RESULT_CANCELED, responseIntent)
+        dismiss()
+      }
+    } recover {
+      case _ =>
+        getTargetFragment.onActivityResult(getTargetRequestCode, Activity.RESULT_CANCELED, responseIntent)
+        dismiss()
+    }
+  }
+
+  private[this] def getAndroidId: Option[String] = {
+    val cursor = Option(contextWrapper.application.getContentResolver.query(Uri.parse(contentGServices), null, null, Array(androidId), null))
+    val result = cursor filter (c => c.moveToFirst && c.getColumnCount >= 2) map (_.getLong(1).toHexString.toUpperCase)
+    cursor foreach (_.close())
+    result
   }
 
 }
