@@ -50,7 +50,6 @@
     <dimen name="height_menu_conference_item">74dp</dimen>
     <dimen name="width_sponsors_logo">200dp</dimen>
 
-
     <dimen name="width_drawer">304dp</dimen>
     <dimen name="width_button">160dp</dimen>
     <dimen name="width_schedule_hour">70dp</dimen>
@@ -63,10 +62,10 @@
     
     <dimen name="stroke_schedule_detail_fab">2dp</dimen>
 
-    <integer name="text_huge">24</integer>
-    <integer name="text_big">16</integer>
-    <integer name="text_medium">14</integer>
-    <integer name="text_small">12</integer>
-    <integer name="text_info_window_snippet">11</integer>
+    <dimen name="text_huge">24sp</dimen>
+    <dimen name="text_big">16sp</dimen>
+    <dimen name="text_medium">14sp</dimen>
+    <dimen name="text_small">12sp</dimen>
+    <dimen name="text_info_window_snippet">11sp</dimen>
 
 </resources>

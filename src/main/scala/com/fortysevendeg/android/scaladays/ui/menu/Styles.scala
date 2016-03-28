@@ -62,7 +62,7 @@ trait Styles {
 
   def conferenceTitleStyle(implicit context: ContextWrapper): Tweak[TextView] =
     llWrapWeightHorizontal +
-      tvSize(resGetInteger(R.integer.text_medium)) +
+      tvSizeResource(R.dimen.text_medium) +
       tvColor(Color.WHITE) +
       tvBoldLight
 
@@ -81,7 +81,7 @@ trait MainMenuAdapterStyles {
 
   def textMenuItemStyle(implicit context: ContextWrapper): Tweak[TextView] =
     vMatchParent +
-      tvSize(resGetInteger(R.integer.text_medium)) +
+      tvSizeResource(R.dimen.text_medium) +
       tvColor(Color.WHITE) +
       tvGravity(Gravity.CENTER_VERTICAL) +
       tvDrawablePadding(resGetDimensionPixelSize(R.dimen.padding_menu_item_icon)) +
@@ -106,7 +106,7 @@ trait ConferenceMenuAdapterStyles {
 
   def conferenceMenuItemStyle(implicit context: ContextWrapper): Tweak[TextView] =
     vWrapContent +
-      tvSize(resGetInteger(R.integer.text_medium)) +
+      tvSizeResource(R.dimen.text_medium) +
       tvColor(Color.WHITE) +
       tvGravity(Gravity.CENTER_VERTICAL) +
       tvDrawablePadding(resGetDimensionPixelSize(R.dimen.padding_menu_item_icon)) +

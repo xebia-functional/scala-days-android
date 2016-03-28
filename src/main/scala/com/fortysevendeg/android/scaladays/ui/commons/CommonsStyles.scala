@@ -56,7 +56,7 @@ trait PlaceHolderStyles {
     vWrapContent +
       tvGravity(Gravity.CENTER) +
       tvColorResource(R.color.text_error_message) +
-      tvSize(resGetInteger(R.integer.text_big)) +
+      tvSizeResource(R.dimen.text_big) +
       vPaddings(resGetDimensionPixelSize(R.dimen.padding_default_big))
 
   def placeholderButtonStyle(implicit context: ContextWrapper): Tweak[TextView] =
@@ -66,7 +66,7 @@ trait PlaceHolderStyles {
       tvColorResource(R.color.text_error_button) +
       vBackground(R.drawable.background_error_button) +
       tvAllCaps +
-      tvSize(resGetInteger(R.integer.text_medium)) +
+      tvSizeResource(R.dimen.text_medium) +
       tvGravity(Gravity.CENTER)
 
 }
@@ -80,7 +80,7 @@ trait HeaderAdapterStyles {
 
   def headerNameStyle(implicit context: ContextWrapper): Tweak[TextView] =
     vWrapContent +
-      tvSize(resGetInteger(R.integer.text_medium)) +
+      tvSizeResource(R.dimen.text_medium) +
       llLayoutGravity(Gravity.CENTER_VERTICAL) +
       tvColorResource(R.color.text_schedule_name) +
       tvBold +

@@ -28,6 +28,8 @@
     <string name="places">Places</string>
     <string name="about">About</string>
 
+    <string name="vote">Vote</string>
+
     <string name="openMenu">Open</string>
     <string name="clodeMenu">Close</string>
 
@@ -36,6 +38,8 @@
     <string name="newTweet">New tweet</string>
 
     <string name="roomName">Room: %s</string>
+
+    <string name="titleVoteConference">What do you think about this talk?</string>
 
     <string-array name="filter_menu">
         <item>All</item>

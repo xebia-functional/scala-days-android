@@ -55,18 +55,18 @@ trait Styles {
     vWrapContent +
       tvText(R.string.about47) +
       tvColorResource(R.color.primary) +
-      tvSize(resGetInteger(R.integer.text_small))
+      tvSizeResource(R.dimen.text_small)
 
   def titleStyle(implicit context: ContextWrapper): Tweak[TextView] =
     vMatchParent +
       tvText(R.string.codeOfConduct) +
       tvColorResource(R.color.accent) +
-      tvSize(resGetInteger(R.integer.text_big))
+      tvSizeResource(R.dimen.text_big)
 
   def descriptionStyle(implicit context: ContextWrapper): Tweak[TextView] =
     vWrapContent +
       tvColorResource(R.color.primary) +
-      tvSize(context.application.getResources.getInteger(R.integer.text_medium)) +
+      tvSizeResource(R.dimen.text_medium) +
       vPadding(0, resGetDimensionPixelSize(R.dimen.padding_default), 0, 0)
 
 }

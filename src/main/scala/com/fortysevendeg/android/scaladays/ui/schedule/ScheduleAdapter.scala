@@ -20,16 +20,17 @@ import android.support.v7.widget.RecyclerView
 import android.view.View.OnClickListener
 import android.view.{View, ViewGroup}
 import com.fortysevendeg.android.scaladays.R
+import com.fortysevendeg.android.scaladays.model.Event
 import com.fortysevendeg.android.scaladays.modules.ComponentRegistryImpl
-import com.fortysevendeg.android.scaladays.modules.preferences.{PreferenceRequest, PreferenceServicesComponent}
+import com.fortysevendeg.android.scaladays.modules.preferences.PreferenceRequest
 import com.fortysevendeg.android.scaladays.ui.commons.DateTimeTextViewTweaks._
-import com.fortysevendeg.android.scaladays.ui.commons.{UiServices, ViewHolderHeaderAdapter, HeaderLayoutAdapter}
+import com.fortysevendeg.android.scaladays.ui.commons.{HeaderLayoutAdapter, UiServices, ViewHolderHeaderAdapter}
 import com.fortysevendeg.android.scaladays.ui.schedule.ScheduleAdapter._
 import com.fortysevendeg.macroid.extras.TextTweaks._
 import com.fortysevendeg.macroid.extras.ViewGroupTweaks._
 import com.fortysevendeg.macroid.extras.ViewTweaks._
 import macroid.FullDsl._
-import macroid.{Tweak, Ui, ActivityContextWrapper, ContextWrapper}
+import macroid.{Ui, ActivityContextWrapper, ContextWrapper}
 
 case class ScheduleAdapter(timeZone: String, scheduleItems: Seq[ScheduleItem], listener: RecyclerClickListener)
     (implicit context: ActivityContextWrapper)
@@ -83,18 +84,29 @@ case class ScheduleAdapter(timeZone: String, scheduleItems: Seq[ScheduleItem], l
             }
             val isFavorite = preferenceServices.fetchBooleanPreference(PreferenceRequest[Boolean](
               getNamePreferenceFavorite(event.id), false)).value
+
+            val currentEvent = event.isCurrentEvent()
+
+            val showVote = currentEvent && event.eventType == 2
+
             runUi(
-              (vh.hour <~
-                tvDateTimeHourMinute(event.startTime, timeZone) <~
-                vBackgroundColorResource(if (event.isCurrentEvent()) R.color.background_list_schedule_hour_current_event else R.color.background_list_schedule_hour)) ~
-                  (vh.name <~ tvText(event.title)) ~
-                  (vh.track <~ (event.track map (
-                    track => tvText(track.name) + vVisible)
-                    getOrElse vGone)) ~
-                  (vh.room <~ (event.location map (
-                    location => tvText(context.application.getString(R.string.roomName, location.name)) + vVisible)
-                    getOrElse vGone)) ~
-                  (vh.tagFavorite <~ (if (isFavorite) vVisible else vGone))
+              (vh.hourContent <~
+                vBackgroundColorResource(if (currentEvent) R.color.background_list_schedule_hour_current_event else R.color.background_list_schedule_hour)) ~
+                (vh.hour <~
+                  tvDateTimeHourMinute(event.startTime, timeZone)) ~
+                (vh.name <~ tvText(event.title)) ~
+                (vh.track <~ (event.track map (
+                  track => tvText(track.name) + vVisible)
+                  getOrElse vGone)) ~
+                (vh.room <~ (event.location map (
+                  location => tvText(context.application.getString(R.string.roomName, location.name)) + vVisible)
+                  getOrElse vGone)) ~
+                (vh.tagFavorite <~ (if (isFavorite) vVisible else vGone)) ~
+                (vh.voteAction <~ (if (showVote) {
+                  vVisible + On.click(Ui(listener.onVoteClick(event)))
+                } else {
+                  vGone
+                }))
             )
         }
       case `itemViewTypeHeader` =>
@@ -115,6 +127,7 @@ object ScheduleAdapter {
 }
 
 trait RecyclerClickListener {
-  def onClick(scheduleItem: ScheduleItem)
+  def onClick(scheduleItem: ScheduleItem): Unit
+  def onVoteClick(event: Event): Unit
 }
 

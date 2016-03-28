@@ -21,20 +21,20 @@ import android.content.DialogInterface.OnClickListener
 import android.content.{DialogInterface, Intent}
 import android.os.Bundle
 import android.support.v4.app.Fragment
-import android.support.v7.widget.{RecyclerView, LinearLayoutManager}
+import android.support.v7.widget.{LinearLayoutManager, RecyclerView}
 import android.view._
 import com.fortysevendeg.android.scaladays.R
-import com.fortysevendeg.android.scaladays.model.Event
+import com.fortysevendeg.android.scaladays.model.{Conference, Event}
 import com.fortysevendeg.android.scaladays.modules.ComponentRegistryImpl
 import com.fortysevendeg.android.scaladays.modules.preferences.PreferenceRequest
+import com.fortysevendeg.android.scaladays.ui.commons.AnalyticStrings._
+import com.fortysevendeg.android.scaladays.ui.commons.IntegerResults._
 import com.fortysevendeg.android.scaladays.ui.commons.{ListLayout, UiServices}
 import com.fortysevendeg.android.scaladays.ui.scheduledetail.ScheduleDetailActivity
 import com.fortysevendeg.macroid.extras.RecyclerViewTweaks._
 import macroid.FullDsl._
-import macroid.{Tweak, ContextWrapper, Contexts, Ui}
-import com.fortysevendeg.android.scaladays.ui.commons.AnalyticStrings._
-
-import com.fortysevendeg.android.scaladays.ui.commons.IntegerResults._
+import macroid.{ContextWrapper, Contexts, Tweak, Ui}
+import org.joda.time.DateTime
 
 class ScheduleFragment
   extends Fragment
@@ -43,6 +43,8 @@ class ScheduleFragment
   with UiServices
   with ScheduleConversion
   with ListLayout {
+
+  val tagDialog = "dialog"
 
   var clockMenu: Option[MenuItem] = None
 
@@ -163,15 +165,22 @@ class ScheduleFragment
       })
     val eventNow: Option[ScheduleItem] = scheduleItems find (_.event exists (_.isCurrentEvent()))
     indexEventNow = eventNow map scheduleItems.indexOf
-    Option(getActivity) map (_.supportInvalidateOptionsMenu())
+    Option(getActivity) foreach (_.supportInvalidateOptionsMenu())
     scheduleItems.length match {
-      case length if length == 0 && favorites => noFavorites()
+      case 0 if favorites => noFavorites()
       case 0 => empty()
       case _ =>
         val scheduleAdapter = ScheduleAdapter(timeZone, scheduleItems, new RecyclerClickListener {
           override def onClick(scheduleItem: ScheduleItem): Unit = if (!scheduleItem.isHeader) {
-              scheduleItem.event map (event => clickEvent(event, timeZone))
-            }
+            scheduleItem.event foreach (event => clickEvent(event, timeZone))
+          }
+          override def onVoteClick(event: Event): Unit = {
+            val ft = getFragmentManager.beginTransaction()
+            Option(getFragmentManager.findFragmentByTag(tagDialog)) foreach ft.remove
+            ft.addToBackStack(null)
+            val dialog = new VoteDialog(event)
+            dialog.show(ft, tagDialog)
+          }
         })
         adapter(scheduleAdapter)
     }
