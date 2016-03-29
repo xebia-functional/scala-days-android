@@ -100,11 +100,7 @@ case class ScheduleAdapter(conferenceId: Int, timeZone: String, scheduleItems: S
 
             val voteUi = if (canVote) {
               vote map { v =>
-                (vh.vote <~ vVisible <~ vAlpha(1f) <~ (v match {
-                  case VoteLike => ivSrc(R.drawable.list_icon_vote_like)
-                  case VoteUnlike => ivSrc(R.drawable.list_icon_vote_unlike)
-                  case VoteNeutral => ivSrc(R.drawable.list_icon_vote_neutral)
-                })) ~
+                (vh.vote <~ vVisible <~ vAlpha(1f) <~ ivSrc(getVoteDrawable(v))) ~
                   (vh.voteAction <~ vGone) ~
                   (vh.hourContent <~ On.click(Ui(listener.onVoteClick(event))))
               } getOrElse {
@@ -114,11 +110,7 @@ case class ScheduleAdapter(conferenceId: Int, timeZone: String, scheduleItems: S
               }
             } else {
               vote map { v =>
-                (vh.vote <~ vVisible <~ vAlpha(.5f) <~ (v match {
-                  case VoteLike => ivSrc(R.drawable.list_icon_vote_like)
-                  case VoteUnlike => ivSrc(R.drawable.list_icon_vote_unlike)
-                  case VoteNeutral => ivSrc(R.drawable.list_icon_vote_neutral)
-                })) ~
+                (vh.vote <~ vVisible <~ vAlpha(.5f) <~ ivSrc(getVoteDrawable(v))) ~
                   (vh.voteAction <~ vGone) ~
                   (vh.hourContent <~ On.click(Ui.nop))
               } getOrElse {
@@ -151,6 +143,12 @@ case class ScheduleAdapter(conferenceId: Int, timeZone: String, scheduleItems: S
   }
 
   override def getItemViewType(position: Int): Int = if (scheduleItems(position).isHeader) itemViewTypeHeader else itemViewTypeTalk
+
+  private[this] def getVoteDrawable(vote: Vote) = vote match {
+    case VoteLike => R.drawable.list_icon_vote_like
+    case VoteUnlike => R.drawable.list_icon_vote_unlike
+    case VoteNeutral => R.drawable.list_icon_vote_neutral
+  }
 
 }
 
