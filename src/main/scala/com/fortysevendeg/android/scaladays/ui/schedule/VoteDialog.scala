@@ -30,6 +30,7 @@ import com.fortysevendeg.android.scaladays.R
 import com.fortysevendeg.android.scaladays.model.Event
 import com.fortysevendeg.android.scaladays.modules.ComponentRegistryImpl
 import com.fortysevendeg.android.scaladays.modules.net.VoteRequest
+import com.fortysevendeg.android.scaladays.modules.preferences.PreferenceRequest
 import com.fortysevendeg.android.scaladays.ui.commons.{VoteNeutral, VoteLike, VoteUnlike}
 import com.fortysevendeg.macroid.extras.ImageViewTweaks._
 import com.fortysevendeg.macroid.extras.LinearLayoutTweaks._
@@ -88,6 +89,8 @@ class VoteDialog(conferenceId: Int, event: Event)(implicit contextWrapper: Conte
     val responseIntent = new Intent
     netServices.addVote(voteRequest) map { response =>
       if (response.statusCode == statusCodeOk) {
+        val key = ScheduleFragment.getPreferenceKeyForVote(conferenceId, event.id)
+        preferenceServices.saveStringPreference(PreferenceRequest[String](key, voteRequest.vote.value))
         getTargetFragment.onActivityResult(getTargetRequestCode, Activity.RESULT_OK, responseIntent)
         dismiss()
       } else {

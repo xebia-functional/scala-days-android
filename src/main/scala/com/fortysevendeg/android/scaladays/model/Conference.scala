@@ -16,7 +16,7 @@
 
 package com.fortysevendeg.android.scaladays.model
 
-import org.joda.time.DateTime
+import org.joda.time.{DateTimeZone, DateTime}
 
 case class Root(
     conferences: Seq[Conference])
@@ -61,7 +61,12 @@ case class Event(
   location: Option[Location],
   speakers: Seq[Speaker]) {
 
-  def isCurrentEvent(): Boolean = endTime.isAfterNow() && startTime.isBeforeNow()
+  def isCurrentEvent: Boolean = endTime.isAfterNow && startTime.isBeforeNow
+
+  def canVote(conferenceTimeZone: DateTimeZone): Boolean = {
+    val startDay = DateTime.now(conferenceTimeZone).withHourOfDay(0).withMinuteOfHour(0).withSecondOfMinute(0)
+    startDay.isBefore(startTime) && startTime.isBeforeNow
+  }
 
 }
 

@@ -24,15 +24,17 @@ import com.fortysevendeg.android.scaladays.model.Event
 import com.fortysevendeg.android.scaladays.modules.ComponentRegistryImpl
 import com.fortysevendeg.android.scaladays.modules.preferences.PreferenceRequest
 import com.fortysevendeg.android.scaladays.ui.commons.DateTimeTextViewTweaks._
-import com.fortysevendeg.android.scaladays.ui.commons.{HeaderLayoutAdapter, UiServices, ViewHolderHeaderAdapter}
+import com.fortysevendeg.android.scaladays.ui.commons._
 import com.fortysevendeg.android.scaladays.ui.schedule.ScheduleAdapter._
 import com.fortysevendeg.macroid.extras.TextTweaks._
 import com.fortysevendeg.macroid.extras.ViewGroupTweaks._
 import com.fortysevendeg.macroid.extras.ViewTweaks._
+import com.fortysevendeg.macroid.extras.ImageViewTweaks._
 import macroid.FullDsl._
 import macroid.{Ui, ActivityContextWrapper, ContextWrapper}
+import org.joda.time.{DateTimeZone, DateTime}
 
-case class ScheduleAdapter(timeZone: String, scheduleItems: Seq[ScheduleItem], listener: RecyclerClickListener)
+case class ScheduleAdapter(conferenceId: Int, timeZone: String, scheduleItems: Seq[ScheduleItem], listener: RecyclerClickListener)
     (implicit context: ActivityContextWrapper)
     extends RecyclerView.Adapter[RecyclerView.ViewHolder]
     with ComponentRegistryImpl
@@ -41,6 +43,8 @@ case class ScheduleAdapter(timeZone: String, scheduleItems: Seq[ScheduleItem], l
   override val contextProvider: ContextWrapper = context
 
   val recyclerClickListener = listener
+
+  val dateTimeZone = DateTimeZone.forID(timeZone)
 
   override def onCreateViewHolder(parentViewGroup: ViewGroup, viewType: Int): RecyclerView.ViewHolder = {
     viewType match {
@@ -85,9 +89,42 @@ case class ScheduleAdapter(timeZone: String, scheduleItems: Seq[ScheduleItem], l
             val isFavorite = preferenceServices.fetchBooleanPreference(PreferenceRequest[Boolean](
               getNamePreferenceFavorite(event.id), false)).value
 
-            val currentEvent = event.isCurrentEvent()
+            val voteValue = preferenceServices.fetchStringPreference(PreferenceRequest[String](
+              ScheduleFragment.getPreferenceKeyForVote(conferenceId, event.id), null)).value
 
-            val showVote = currentEvent && event.eventType == 2
+            val vote = Option(voteValue) map Vote.apply
+
+            val currentEvent = event.isCurrentEvent
+
+            val canVote = event.canVote(dateTimeZone) && event.eventType == 2
+
+            val voteUi = if (canVote) {
+              vote map { v =>
+                (vh.vote <~ vVisible <~ vAlpha(1f) <~ (v match {
+                  case VoteLike => ivSrc(R.drawable.list_icon_vote_like)
+                  case VoteUnlike => ivSrc(R.drawable.list_icon_vote_unlike)
+                  case VoteNeutral => ivSrc(R.drawable.list_icon_vote_neutral)
+                })) ~
+                  (vh.voteAction <~ vGone) ~
+                  (vh.hourContent <~ On.click(Ui(listener.onVoteClick(event))))
+              } getOrElse {
+                (vh.vote <~ vGone) ~
+                  (vh.voteAction <~ vVisible) ~
+                  (vh.hourContent <~ On.click(Ui(listener.onVoteClick(event))))
+              }
+            } else {
+              vote map { v =>
+                (vh.vote <~ vVisible <~ vAlpha(.5f) <~ (v match {
+                  case VoteLike => ivSrc(R.drawable.list_icon_vote_like)
+                  case VoteUnlike => ivSrc(R.drawable.list_icon_vote_unlike)
+                  case VoteNeutral => ivSrc(R.drawable.list_icon_vote_neutral)
+                })) ~
+                  (vh.voteAction <~ vGone) ~
+                  (vh.hourContent <~ On.click(Ui.nop))
+              } getOrElse {
+                (vh.vote <~ vGone) ~ (vh.voteAction <~ vGone) ~ (vh.hourContent <~ On.click(Ui.nop))
+              }
+            }
 
             runUi(
               (vh.hourContent <~
@@ -102,11 +139,7 @@ case class ScheduleAdapter(timeZone: String, scheduleItems: Seq[ScheduleItem], l
                   location => tvText(context.application.getString(R.string.roomName, location.name)) + vVisible)
                   getOrElse vGone)) ~
                 (vh.tagFavorite <~ (if (isFavorite) vVisible else vGone)) ~
-                (vh.voteAction <~ (if (showVote) {
-                  vVisible + On.click(Ui(listener.onVoteClick(event)))
-                } else {
-                  vGone
-                }))
+                voteUi
             )
         }
       case `itemViewTypeHeader` =>

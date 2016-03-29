@@ -24,18 +24,17 @@ import android.support.v4.app.Fragment
 import android.support.v7.widget.{LinearLayoutManager, RecyclerView}
 import android.view._
 import com.fortysevendeg.android.scaladays.R
-import com.fortysevendeg.android.scaladays.model.{Conference, Event}
+import com.fortysevendeg.android.scaladays.model.Event
 import com.fortysevendeg.android.scaladays.modules.ComponentRegistryImpl
 import com.fortysevendeg.android.scaladays.modules.preferences.PreferenceRequest
-import com.fortysevendeg.macroid.extras.UIActionsExtras._
 import com.fortysevendeg.android.scaladays.ui.commons.AnalyticStrings._
 import com.fortysevendeg.android.scaladays.ui.commons.IntegerResults._
 import com.fortysevendeg.android.scaladays.ui.commons.{ListLayout, UiServices}
 import com.fortysevendeg.android.scaladays.ui.scheduledetail.ScheduleDetailActivity
 import com.fortysevendeg.macroid.extras.RecyclerViewTweaks._
+import com.fortysevendeg.macroid.extras.UIActionsExtras._
 import macroid.FullDsl._
 import macroid.{ContextWrapper, Contexts, Tweak, Ui}
-import org.joda.time.DateTime
 
 class ScheduleFragment
   extends Fragment
@@ -135,7 +134,9 @@ class ScheduleFragment
           }
         )
       case (`voteResult`, Activity.RESULT_OK) =>
-        runUi(uiShortToast(R.string.voteSuccess))
+        runUi(
+          (recyclerView <~ Tweak[RecyclerView] (_.getAdapter.notifyDataSetChanged())) ~
+            uiShortToast(R.string.voteSuccess))
       case (`voteResult`, Activity.RESULT_CANCELED) =>
         runUi(uiShortToast(R.string.voteFailed))
       case _ =>
@@ -165,14 +166,14 @@ class ScheduleFragment
       } else {
         event => true
       })
-    val eventNow: Option[ScheduleItem] = scheduleItems find (_.event exists (_.isCurrentEvent()))
+    val eventNow: Option[ScheduleItem] = scheduleItems find (_.event exists (_.isCurrentEvent))
     indexEventNow = eventNow map scheduleItems.indexOf
     Option(getActivity) foreach (_.supportInvalidateOptionsMenu())
     scheduleItems.length match {
       case 0 if favorites => noFavorites()
       case 0 => empty()
       case _ =>
-        val scheduleAdapter = ScheduleAdapter(timeZone, scheduleItems, new RecyclerClickListener {
+        val scheduleAdapter = ScheduleAdapter(conferenceId, timeZone, scheduleItems, new RecyclerClickListener {
           override def onClick(scheduleItem: ScheduleItem): Unit = if (!scheduleItem.isHeader) {
             scheduleItem.event foreach (event => clickEvent(event, timeZone))
           }
@@ -200,5 +201,11 @@ class ScheduleFragment
     intent.putExtra(ScheduleDetailActivity.timeZoneKey, timeZone)
     startActivityForResult(intent, detailResult)
   }
+
+}
+
+object ScheduleFragment {
+
+  def getPreferenceKeyForVote(conferenceId: Int, talkId: Int) = s"${conferenceId}_${talkId}_vote"
 
 }
