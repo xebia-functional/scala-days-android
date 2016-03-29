@@ -21,20 +21,20 @@ import android.content.DialogInterface.OnClickListener
 import android.content.{DialogInterface, Intent}
 import android.os.Bundle
 import android.support.v4.app.Fragment
-import android.support.v7.widget.{RecyclerView, LinearLayoutManager}
+import android.support.v7.widget.{LinearLayoutManager, RecyclerView}
 import android.view._
 import com.fortysevendeg.android.scaladays.R
 import com.fortysevendeg.android.scaladays.model.Event
 import com.fortysevendeg.android.scaladays.modules.ComponentRegistryImpl
 import com.fortysevendeg.android.scaladays.modules.preferences.PreferenceRequest
+import com.fortysevendeg.android.scaladays.ui.commons.AnalyticStrings._
+import com.fortysevendeg.android.scaladays.ui.commons.IntegerResults._
 import com.fortysevendeg.android.scaladays.ui.commons.{ListLayout, UiServices}
 import com.fortysevendeg.android.scaladays.ui.scheduledetail.ScheduleDetailActivity
 import com.fortysevendeg.macroid.extras.RecyclerViewTweaks._
+import com.fortysevendeg.macroid.extras.UIActionsExtras._
 import macroid.FullDsl._
-import macroid.{Tweak, ContextWrapper, Contexts, Ui}
-import com.fortysevendeg.android.scaladays.ui.commons.AnalyticStrings._
-
-import com.fortysevendeg.android.scaladays.ui.commons.IntegerResults._
+import macroid.{ContextWrapper, Contexts, Tweak, Ui}
 
 class ScheduleFragment
   extends Fragment
@@ -42,7 +42,9 @@ class ScheduleFragment
   with ComponentRegistryImpl
   with UiServices
   with ScheduleConversion
-  with ListLayout {
+  with ListLayout { self =>
+
+  val tagDialog = "dialog"
 
   var clockMenu: Option[MenuItem] = None
 
@@ -120,21 +122,24 @@ class ScheduleFragment
 
   override def onActivityResult(requestCode: Int, resultCode: Int, data: Intent): Unit = {
     super.onActivityResult(requestCode, resultCode, data)
-    requestCode match {
-      case `detailResult` =>
-        resultCode match {
-          case Activity.RESULT_OK =>
-            runUi(
-              recyclerView <~ Tweak[RecyclerView] {
-                rv =>
-                  rv.getAdapter match {
-                    case adapter: ScheduleAdapter => rv.swapAdapter(adapter, false)
-                    case _ =>
-                  }
+    (requestCode, resultCode) match {
+      case (`detailResult`, Activity.RESULT_OK) =>
+        runUi(
+          recyclerView <~ Tweak[RecyclerView] {
+            rv =>
+              rv.getAdapter match {
+                case adapter: ScheduleAdapter => rv.swapAdapter(adapter, false)
+                case _ =>
               }
-            )
-          case _ => ()
-        }
+          }
+        )
+      case (`voteResult`, Activity.RESULT_OK) =>
+        runUi(
+          (recyclerView <~ Tweak[RecyclerView] (_.getAdapter.notifyDataSetChanged())) ~
+            uiShortToast(R.string.voteSuccess))
+      case (`voteResult`, Activity.RESULT_CANCELED) =>
+        runUi(uiShortToast(R.string.voteFailed))
+      case _ =>
     }
   }
 
@@ -142,7 +147,7 @@ class ScheduleFragment
     loadSelectedConference(forceDownload) mapUi {
       conference =>
         if (swipe) runUi(refreshLayout <~ srlRefreshing(false))
-        reloadList(conference.info.utcTimezoneOffset, conference.schedule, favorites)
+        reloadList(conference.info.id, conference.info.utcTimezoneOffset, conference.schedule, favorites)
     } recoverUi {
       case _ =>
         if (swipe) runUi(refreshLayout <~ srlRefreshing(false))
@@ -151,7 +156,7 @@ class ScheduleFragment
     if (swipe) Ui.nop else loading()
   }
 
-  def reloadList(timeZone: String, events: Seq[Event], favorites: Boolean = false): Ui[_] = {
+  def reloadList(conferenceId: Int, timeZone: String, events: Seq[Event], favorites: Boolean = false): Ui[_] = {
     val scheduleItems = toScheduleItem(timeZone, events,
       if (favorites) {
         event => {
@@ -161,17 +166,25 @@ class ScheduleFragment
       } else {
         event => true
       })
-    val eventNow: Option[ScheduleItem] = scheduleItems find (_.event exists (_.isCurrentEvent()))
+    val eventNow: Option[ScheduleItem] = scheduleItems find (_.event exists (_.isCurrentEvent))
     indexEventNow = eventNow map scheduleItems.indexOf
-    Option(getActivity) map (_.supportInvalidateOptionsMenu())
+    Option(getActivity) foreach (_.supportInvalidateOptionsMenu())
     scheduleItems.length match {
-      case length if length == 0 && favorites => noFavorites()
+      case 0 if favorites => noFavorites()
       case 0 => empty()
       case _ =>
-        val scheduleAdapter = ScheduleAdapter(timeZone, scheduleItems, new RecyclerClickListener {
+        val scheduleAdapter = ScheduleAdapter(conferenceId, timeZone, scheduleItems, new RecyclerClickListener {
           override def onClick(scheduleItem: ScheduleItem): Unit = if (!scheduleItem.isHeader) {
-              scheduleItem.event map (event => clickEvent(event, timeZone))
-            }
+            scheduleItem.event foreach (event => clickEvent(event, timeZone))
+          }
+          override def onVoteClick(event: Event): Unit = {
+            val ft = getFragmentManager.beginTransaction()
+            Option(getFragmentManager.findFragmentByTag(tagDialog)) foreach ft.remove
+            ft.addToBackStack(null)
+            val dialog = new VoteDialog(conferenceId, event)
+            dialog.setTargetFragment(self, voteResult)
+            dialog.show(ft, tagDialog)
+          }
         })
         adapter(scheduleAdapter)
     }
@@ -188,5 +201,11 @@ class ScheduleFragment
     intent.putExtra(ScheduleDetailActivity.timeZoneKey, timeZone)
     startActivityForResult(intent, detailResult)
   }
+
+}
+
+object ScheduleFragment {
+
+  def getPreferenceKeyForVote(conferenceId: Int, talkId: Int) = s"${conferenceId}_${talkId}_vote"
 
 }

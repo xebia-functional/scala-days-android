@@ -59,22 +59,22 @@ trait AdapterStyles {
 
   def nameItemStyle(implicit context: ContextWrapper): Tweak[TextView] =
     lp[LinearLayout](0, WRAP_CONTENT, 1) +
-      tvSize(resGetInteger(R.integer.text_big)) +
+      tvSizeResource(R.dimen.text_big) +
       tvColorResource(R.color.text_title_default)
 
   def dateItemStyle(implicit context: ContextWrapper): Tweak[TextView] =
     vWrapContent +
-      tvSize(resGetInteger(R.integer.text_small)) +
+      tvSizeResource(R.dimen.text_small) +
       tvColorResource(R.color.text_date_default)
 
   def twitterItemStyle(implicit context: ContextWrapper): Tweak[TextView] =
     vWrapContent +
-      tvSize(resGetInteger(R.integer.text_small)) +
+      tvSizeResource(R.dimen.text_small) +
       tvColorResource(R.color.text_twitter_default)
 
   def messageItemStyle(implicit context: ContextWrapper): Tweak[TextView] =
     vWrapContent +
-      tvSize(resGetInteger(R.integer.text_medium)) +
+      tvSizeResource(R.dimen.text_medium) +
       tvColorResource(R.color.text_title_default) +
       vPadding(0, resGetDimensionPixelSize(R.dimen.padding_default_extra_small), 0, 0)
 

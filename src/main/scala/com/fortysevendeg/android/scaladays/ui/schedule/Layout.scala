@@ -16,12 +16,11 @@
 
 package com.fortysevendeg.android.scaladays.ui.schedule
 
-import android.support.v4.widget.SwipeRefreshLayout
 import android.support.v7.widget.RecyclerView
 import android.widget._
 import com.fortysevendeg.android.scaladays.model.Speaker
-import macroid.FullDsl._
 import macroid.ActivityContextWrapper
+import macroid.FullDsl._
 
 class SpeakersLayout(speaker: Speaker)(implicit context: ActivityContextWrapper)
   extends SpeakersLayoutStyles {
@@ -51,6 +50,12 @@ class SpeakersLayout(speaker: Speaker)(implicit context: ActivityContextWrapper)
 class ScheduleLayoutAdapter(implicit context: ActivityContextWrapper)
   extends AdapterStyles {
 
+  var hourContent = slot[LinearLayout]
+
+  var voteAction = slot[TextView]
+
+  var vote = slot[ImageView]
+
   var hour = slot[TextView]
 
   var room = slot[TextView]
@@ -68,7 +73,11 @@ class ScheduleLayoutAdapter(implicit context: ActivityContextWrapper)
   private def layout(implicit context: ActivityContextWrapper) = getUi(
     l[FrameLayout](
       l[LinearLayout](
-        w[TextView] <~ wire(hour) <~ hourStyle,
+        l[LinearLayout](
+          w[TextView] <~ wire(hour) <~ hourStyle,
+          w[TextView] <~ wire(voteAction) <~ voteActionStyle,
+          w[ImageView] <~ wire(vote) <~ voteStyle
+        ) <~ itemHourContentStyle <~ wire(hourContent),
         l[LinearLayout](
           w[TextView] <~ wire(track) <~ trackItemStyle,
           w[TextView] <~ wire(room) <~ roomItemStyle,
@@ -85,6 +94,12 @@ class ViewHolderScheduleAdapter(adapter: ScheduleLayoutAdapter)(implicit context
   extends RecyclerView.ViewHolder(adapter.content) {
 
   val content = adapter.content
+
+  val hourContent = adapter.hourContent
+
+  val voteAction = adapter.voteAction
+
+  val vote = adapter.vote
 
   val hour = adapter.hour
 

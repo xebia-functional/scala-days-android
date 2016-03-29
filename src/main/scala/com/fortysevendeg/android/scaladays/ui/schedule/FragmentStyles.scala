@@ -51,14 +51,14 @@ trait SpeakersLayoutStyles {
 
   def speakerNameItemStyle(name: String)(implicit context: ContextWrapper): Tweak[TextView] =
     vWrapContent +
-      tvSize(resGetInteger(R.integer.text_medium)) +
+      tvSizeResource(R.dimen.text_medium) +
       vPadding(0, 0, resGetDimensionPixelSize(R.dimen.padding_default_extra_small), 0) +
       tvColorResource(R.color.text_schedule_name) +
       tvText(name)
 
   def speakerTwitterItemStyle(twitter: Option[String])(implicit context: ContextWrapper): Tweak[TextView] =
     vWrapContent +
-      tvSize(resGetInteger(R.integer.text_medium)) +
+      tvSizeResource(R.dimen.text_medium) +
       tvColorResource(R.color.text_schedule_twitter) +
       twitter.map(tvText(_) + vVisible).getOrElse(vGone)
 
@@ -86,18 +86,38 @@ trait AdapterStyles {
       flLayoutGravity(Gravity.RIGHT) +
       vPadding(paddingRight = resGetDimensionPixelSize(R.dimen.padding_default_small))
 
+  def itemHourContentStyle(implicit context: ContextWrapper): Tweak[LinearLayout] =
+    lp[LinearLayout](resGetDimensionPixelSize(R.dimen.width_schedule_hour), MATCH_PARENT) +
+      llVertical +
+      vBackgroundColorResource(R.color.background_list_schedule_hour) +
+      llGravity(Gravity.CENTER_HORIZONTAL)
+
   def itemContentStyle(implicit context: ContextWrapper): Tweak[LinearLayout] =
     vMatchParent +
       llHorizontal
 
-  def hourStyle(implicit context: ContextWrapper): Tweak[TextView] =
-    lp[LinearLayout](resGetDimensionPixelSize(R.dimen.width_schedule_hour), MATCH_PARENT) +
-      tvSize(resGetInteger(R.integer.text_small)) +
-      vPadding(0, resGetDimensionPixelSize(R.dimen.padding_default_small), 0, 0) +
-      vBackgroundColorResource(R.color.background_list_schedule_hour) +
-      tvGravity(Gravity.CENTER_HORIZONTAL) +
+  def hourStyle(implicit context: ContextWrapper): Tweak[TextView] = {
+    val padding = resGetDimensionPixelSize(R.dimen.padding_default_small)
+    vWrapContent +
+      tvSizeResource(R.dimen.text_small) +
+      vPadding(0, padding, 0, padding) +
       tvColorResource(R.color.text_schedule_name) +
       tvBold
+  }
+
+  def voteActionStyle(implicit context: ContextWrapper): Tweak[TextView] =
+    vWrapContent +
+      tvText(R.string.vote) +
+      tvSizeResource(R.dimen.text_small) +
+      vPaddings(resGetDimensionPixelSize(R.dimen.padding_default_small), 0) +
+      vBackgroundColorResource(R.color.primary) +
+      tvColorResource(R.color.text_vote) +
+      tvAllCaps +
+      vGone
+
+  def voteStyle(implicit context: ContextWrapper): Tweak[ImageView] =
+    vWrapContent +
+      vGone
 
   def itemInfoContentStyle(implicit context: ContextWrapper): Tweak[LinearLayout] =
     vMatchWidth +
@@ -111,19 +131,19 @@ trait AdapterStyles {
 
   def roomItemStyle(implicit context: ContextWrapper): Tweak[TextView] =
     vWrapContent +
-      tvSize(resGetInteger(R.integer.text_small)) +
+      tvSizeResource(R.dimen.text_small) +
       tvColorResource(R.color.text_schedule_room) +
       vPadding(0, 0, 0, resGetDimensionPixelSize(R.dimen.padding_default_extra_small))
 
   def trackItemStyle(implicit context: ContextWrapper): Tweak[TextView] =
     vWrapContent +
-      tvSize(resGetInteger(R.integer.text_small)) +
+      tvSizeResource(R.dimen.text_small) +
       tvColorResource(R.color.text_schedule_room) +
       vPadding(0, 0, 0, resGetDimensionPixelSize(R.dimen.padding_default_extra_small))
 
   def nameItemStyle(implicit context: ContextWrapper): Tweak[TextView] =
     vWrapContent +
-      tvSize(resGetInteger(R.integer.text_medium)) +
+      tvSizeResource(R.dimen.text_medium) +
       tvColorResource(R.color.text_schedule_name) +
       tvBold
 

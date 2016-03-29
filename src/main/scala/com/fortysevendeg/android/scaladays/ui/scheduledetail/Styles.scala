@@ -90,7 +90,7 @@ trait ActivityStyles {
       tvText(title) +
       tvGravity(Gravity.BOTTOM) +
       tvColorResource(R.color.toolbar_title) +
-      tvSize(resGetInteger(R.integer.text_huge)) +
+      tvSizeResource(R.dimen.text_huge) +
       tvMaxLines(3) +
       tvEllipsize(TruncateAt.END) +
       vPadding(padding, 0, padding, padding)
@@ -117,14 +117,14 @@ trait ActivityStyles {
 
   def dateStyle(startTime: DateTime, timeZone: String)(implicit context: ContextWrapper): Tweak[TextView] =
     vWrapContent +
-      tvSize(resGetInteger(R.integer.text_big)) +
+      tvSizeResource(R.dimen.text_big) +
       tvColor(context.application.getResources.getColor(R.color.primary)) +
       vPadding(0, 0, 0, resGetDimensionPixelSize(R.dimen.padding_default_extra_small)) +
       tvDateDateTime(startTime, timeZone)
 
   def roomStyle(location: Option[Location])(implicit context: ContextWrapper): Tweak[TextView] =
     vWrapContent +
-      tvSize(resGetInteger(R.integer.text_medium)) +
+      tvSizeResource(R.dimen.text_medium) +
       tvColorResource(R.color.text_schedule_detail_secondary) +
       vPadding(0, 0, 0, resGetDimensionPixelSize(R.dimen.padding_default_small)) +
       (location map (
@@ -139,6 +139,7 @@ trait ActivityStyles {
                 Ui {
                   val intent = new Intent(Intent.ACTION_VIEW,
                     Uri.parse(location.mapUrl))
+                  intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
                   context.application.startActivity(intent)
                 }
               }
@@ -148,14 +149,14 @@ trait ActivityStyles {
 
   def trackStyle(track: Option[Track])(implicit context: ContextWrapper): Tweak[TextView] =
     vWrapContent +
-      tvSize(resGetInteger(R.integer.text_medium)) +
+      tvSizeResource(R.dimen.text_medium) +
       tvColorResource(R.color.text_schedule_detail_secondary) +
       vPadding(0, 0, 0, resGetDimensionPixelSize(R.dimen.padding_default_small)) +
       (track map (track => tvText(track.name) + vVisible) getOrElse vGone)
 
   def descriptionStyle(description: String)(implicit context: ContextWrapper): Tweak[TextView] =
     vWrapContent +
-      tvSize(resGetInteger(R.integer.text_medium)) +
+      tvSizeResource(R.dimen.text_medium) +
       tvColorResource(R.color.primary) +
       vPadding(0, 0, 0, resGetDimensionPixelSize(R.dimen.padding_default)) +
       tvText(description)
@@ -167,7 +168,7 @@ trait ActivityStyles {
   def speakerTitleStyle(show: Boolean)(implicit context: ContextWrapper): Tweak[TextView] =
     vWrapContent +
       (if (show)
-        tvSize(resGetInteger(R.integer.text_small)) +
+        tvSizeResource(R.dimen.text_small) +
           tvText(R.string.speakers) +
           vPadding(0, resGetDimensionPixelSize(R.dimen.padding_default_small), 0, 0) +
           tvColorResource(R.color.text_schedule_detail_secondary)
@@ -195,27 +196,27 @@ trait SpeakersDetailStyles {
 
   def speakerNameItemStyle(name: String)(implicit context: ContextWrapper): Tweak[TextView] =
     vWrapContent +
-      tvSize(resGetInteger(R.integer.text_big)) +
+      tvSizeResource(R.dimen.text_big) +
       vPadding(0, 0, resGetDimensionPixelSize(R.dimen.padding_default_extra_small), 0) +
       tvColorResource(R.color.primary) +
       tvText(name)
 
   def speakerCompanyItemStyle(company: String)(implicit context: ContextWrapper): Tweak[TextView] =
     vWrapContent +
-      tvSize(resGetInteger(R.integer.text_medium)) +
+      tvSizeResource(R.dimen.text_medium) +
       vPadding(0, 0, resGetDimensionPixelSize(R.dimen.padding_default_extra_small), 0) +
       tvColorResource(R.color.text_schedule_detail_secondary) +
       tvText(company)
 
   def speakerTwitterItemStyle(twitter: Option[String])(implicit context: ContextWrapper): Tweak[TextView] =
     vWrapContent +
-      tvSize(resGetInteger(R.integer.text_small)) +
+      tvSizeResource(R.dimen.text_small) +
       tvColorResource(R.color.text_twitter_default) +
       twitter.map(tvText(_) + vVisible).getOrElse(vGone)
 
   def speakerBioItemStyle(bio: String)(implicit context: ContextWrapper): Tweak[TextView] =
     vWrapContent +
-      tvSize(resGetInteger(R.integer.text_medium)) +
+      tvSizeResource(R.dimen.text_medium) +
       vPadding(0, 0, resGetDimensionPixelSize(R.dimen.padding_default_extra_small), 0) +
       tvColorResource(R.color.text_schedule_detail_secondary) +
       tvText(bio)

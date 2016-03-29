@@ -46,7 +46,7 @@ trait Styles {
       tvText(R.string.scanMessage) +
       tvGravity(Gravity.CENTER) +
       tvColorResource(R.color.text_error_message) +
-      tvSize(resGetInteger(R.integer.text_big)) +
+      tvSizeResource(R.dimen.text_big) +
       vPaddings(resGetDimensionPixelSize(R.dimen.padding_default_big))
 
   def qrButtonStyle(implicit context: ContextWrapper): Tweak[TextView] =
@@ -56,7 +56,7 @@ trait Styles {
       tvColorResource(R.color.text_error_button) +
       vBackground(R.drawable.background_error_button) +
       tvAllCaps +
-      tvSize(resGetInteger(R.integer.text_big)) +
+      tvSizeResource(R.dimen.text_big) +
       tvGravity(Gravity.CENTER)
 
 }

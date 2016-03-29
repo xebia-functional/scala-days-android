@@ -38,13 +38,13 @@ trait PlacesInfoWindowStyles {
 
   def titleStyle(implicit context: ContextWrapper): Tweak[TextView] =
     vWrapContent +
-      tvSize(resGetInteger(R.integer.text_small)) +
+      tvSizeResource(R.dimen.text_small) +
       tvColorResource(R.color.info_window_title) +
       vPadding(0, 0, 0, resGetDimensionPixelSize(R.dimen.padding_info_window_inner))
 
   def snippetStyle(implicit context: ContextWrapper): Tweak[TextView] =
     vWrapContent +
-      tvSize(resGetInteger(R.integer.text_info_window_snippet)) +
+      tvSizeResource(R.dimen.text_info_window_snippet) +
       tvColorResource(R.color.info_window_snippet) +
       vPadding(0, 0, 0, resGetDimensionPixelSize(R.dimen.padding_default_extra_small))
   

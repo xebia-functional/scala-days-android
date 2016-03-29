@@ -50,6 +50,14 @@ trait PreferenceServicesComponentImpl
       PreferenceResponse(request.value)
     }
 
+    def fetchStringPreference(request: PreferenceRequest[String]): PreferenceResponse[String] =
+      PreferenceResponse(sharedPreferences.getString(request.name, request.value))
+
+    def saveStringPreference(request: PreferenceRequest[String]): PreferenceResponse[String] = {
+      sharedPreferences.edit().putString(request.name, request.value).apply()
+      PreferenceResponse(request.value)
+    }
+
   }
 
 }

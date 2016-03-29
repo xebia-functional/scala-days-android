@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2015 47 Degrees, LLC http://47deg.com hello@47deg.com
+ *  Copyright (C) 2015 47 Degrees, LLC http://47deg.com hello@47deg.com
  *
  *  Licensed under the Apache License, Version 2.0 (the "License"); you may
  *  not use this file except in compliance with the License. You may obtain
@@ -16,11 +16,34 @@
 
 package com.fortysevendeg.android.scaladays.ui.commons
 
-object IntegerResults {
+sealed trait Vote {
+  def value: String
+}
 
-  val authResult = 1001
-  val scanResult = 1002
-  val detailResult = 1003
-  val voteResult = 1004
+case object VoteUnlike
+  extends Vote{
+  override def value: String = Vote.voteUnlike
+}
+
+case object VoteLike
+  extends Vote{
+  override def value: String = Vote.voteLike
+}
+
+case object VoteNeutral
+  extends Vote{
+  override def value: String = Vote.voteNeutral
+}
+
+object Vote {
+  val voteUnlike = "0"
+  val voteNeutral = "1"
+  val voteLike = "2"
+
+  def apply(vote: String): Vote = vote match {
+    case `voteUnlike` => VoteUnlike
+    case `voteLike` => VoteLike
+    case _ => VoteNeutral
+  }
 
 }

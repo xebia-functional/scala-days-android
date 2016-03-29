@@ -15,14 +15,13 @@ case class ServiceClientRequest[Res](
   reads: Option[Reads[Res]] = None,
   emptyResponse: Boolean = false)
 
-case class ServiceClientWithBodyRequest[Res](
+case class ServiceClientWithBodyRequest(
   path: String,
-  body: Map[String, String],
-  headers: Seq[(String, String)] = Seq.empty,
-  reads: Option[Reads[Res]] = None,
-  emptyResponse: Boolean = false)
+  body: Map[String, String])
 
 case class ServiceClientResponse[T](statusCode: Int, data: Option[T])
+
+case class ServiceClientWithBodyResponse(statusCode: Int, data: Option[String])
 
 case class HttpClientRequest(url: String, httpHeaders: Seq[(String, String)])
 
