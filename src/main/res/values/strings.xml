@@ -31,7 +31,7 @@
     <string name="vote">Vote</string>
 
     <string name="openMenu">Open</string>
-    <string name="clodeMenu">Close</string>
+    <string name="closeMenu">Close</string>
 
     <string name="filter">Filter</string>
 
@@ -39,10 +39,11 @@
 
     <string name="roomName">Room: %s</string>
 
+    <string name="sendingVote">Sending vote</string>
+
     <string name="titleVoteConference">What do you think about this talk?</string>
 
-    <string name="voteSuccess">Vote added successful</string>
-    <string name="voteFailed">Vote failed. Try again later</string>
+    <string name="voteFailed">There was a problem while trying to send your vote. Please try again in a few moments.</string>
 
     <string-array name="filter_menu">
         <item>All</item>
@@ -55,6 +56,8 @@
     <string name="generalMessageEmpty">We haven\'t found enough data for this section yet. Please tap on the \"Reload\" button to try again</string>
     <string name="noFavoritesMessage">You haven\'t selected any favorite events. You can select an event and mark it as favorite by tapping on the button at the upper-right part of the screen</string>
     <string name="reload">Reload</string>
+
+    <string name="twitterMessageError">There was an error connecting with Twitter. Try again later</string>
 
     <string name="scanMessage">You can scan the QR Code in the conference and add it to your contacts</string>
     <string name="scan">Scan</string>

@@ -123,7 +123,7 @@ class SpeakersDetailLayout(speaker: Speaker)(implicit context: ActivityContextWr
       ) <~ verticalLayoutStyle
     ) <~ itemSpeakerContentStyle <~ On.click {
       Ui {
-        speaker.twitter map {
+        speaker.twitter foreach {
           twitterName =>
             val twitterUser = if (twitterName.startsWith("@")) twitterName.substring(1) else twitterName
             analyticsServices.sendEvent(

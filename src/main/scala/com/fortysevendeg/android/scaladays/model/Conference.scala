@@ -64,8 +64,8 @@ case class Event(
   def isCurrentEvent: Boolean = endTime.isAfterNow && startTime.isBeforeNow
 
   def canVote(conferenceTimeZone: DateTimeZone): Boolean = {
-    val startDay = DateTime.now(conferenceTimeZone).withHourOfDay(0).withMinuteOfHour(0).withSecondOfMinute(0)
-    startDay.isBefore(startTime) && startTime.isBeforeNow
+    val startDay = DateTime.now(conferenceTimeZone)
+    startDay.getDayOfYear == startTime.getDayOfYear && startTime.isBeforeNow
   }
 
 }

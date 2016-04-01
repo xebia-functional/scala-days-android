@@ -23,7 +23,6 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.support.v4.app.Fragment
-import android.support.v4.widget.SwipeRefreshLayout.OnRefreshListener
 import android.support.v7.widget.LinearLayoutManager
 import android.view._
 import com.fortysevendeg.android.scaladays.R
@@ -83,11 +82,6 @@ class SocialFragment
         (refreshLayout <~ srlOnRefreshListener(getSinceId map addTweets getOrElse(refreshLayout <~ srlRefreshing(false)))) ~
         (reloadButton <~ On.click(search())) ~
         search())
-
-    if (!twitterServices.isConnected()) {
-      val intent = new Intent(getActivity, classOf[AuthorizationActivity])
-      startActivityForResult(intent, authResult)
-    }
   }
 
   override def onCreateOptionsMenu(menu: Menu, inflater: MenuInflater): Unit = {
@@ -97,7 +91,7 @@ class SocialFragment
 
   override def onOptionsItemSelected(item: MenuItem): Boolean = item.getItemId match {
     case R.id.action_new_tweet =>
-      hashtag map {
+      hashtag foreach {
         ht =>
           analyticsServices.sendEvent(
             screenName = Some(analyticsSocialScreen),
@@ -118,30 +112,37 @@ class SocialFragment
       case request if request == authResult =>
         resultCode match {
           case Activity.RESULT_OK => runUi(search())
-          case Activity.RESULT_CANCELED => runUi(failed())
+          case Activity.RESULT_CANCELED => runUi(twitterError())
         }
     }
   }
 
   def search(): Ui[_] = {
-    val result = for {
-      conference <- loadSelectedConference()
-      searchResponse <- twitterServices.search(SearchRequest(conference.info.query))
-    } yield {
-      hashtag = Some(conference.info.hashTag)
-      searchResponse.messages
+    if (twitterServices.isConnected()) {
+      val result = for {
+        conference <- loadSelectedConference()
+        searchResponse <- twitterServices.search(SearchRequest(conference.info.query))
+      } yield {
+        hashtag = Some(conference.info.hashTag)
+        searchResponse.messages
+      }
+      result mapUi {
+        messages =>
+          messages.length match {
+            case 0 => empty()
+            case _ =>
+              getAdapter map (a => adapter(a.copy(messages = messages))) getOrElse Ui.nop
+          }
+      } recoverUi {
+        case _ => failed()
+      }
+      loading()
+    } else {
+      Ui {
+        val intent = new Intent(getActivity, classOf[AuthorizationActivity])
+        startActivityForResult(intent, authResult)
+      }
     }
-    result mapUi {
-      messages =>
-        messages.length match {
-          case 0 => empty()
-          case _ =>
-            getAdapter map (a => adapter(a.copy(messages = messages))) getOrElse Ui.nop
-        }
-    } recoverUi {
-      case _ => failed()
-    }
-    loading()
   }
 
   def addTweets(sinceId: Long): Ui[_] = {
@@ -154,7 +155,7 @@ class SocialFragment
       }
     result mapUi {
       messages =>
-        (if (messages.length > 0) {
+        (if (messages.nonEmpty) {
             getAdapter map (a => adapter(a.copy(messages = messages ++ getMessages))) getOrElse Ui.nop
         } else Ui.nop) ~ (refreshLayout <~ srlRefreshing(false))
     } recoverUi {
