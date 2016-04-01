@@ -25,7 +25,7 @@ import android.support.v7.app.AlertDialog
 import android.view.Gravity
 import android.view.ViewGroup.LayoutParams._
 import android.widget.ImageView.ScaleType
-import android.widget.{ImageView, LinearLayout, TextView}
+import android.widget._
 import com.fortysevendeg.android.scaladays.R
 import com.fortysevendeg.android.scaladays.model.Event
 import com.fortysevendeg.android.scaladays.modules.ComponentRegistryImpl
@@ -44,8 +44,12 @@ import scala.concurrent.ExecutionContext.Implicits.global
 
 class VoteDialog(conferenceId: Int, event: Event)(implicit contextWrapper: ContextWrapper)
   extends DialogFragment
-  with ComponentRegistryImpl
-  with Styles {
+    with ComponentRegistryImpl
+    with Styles {
+
+  var infoContent = slot[LinearLayout]
+
+  var votingContent = slot[LinearLayout]
 
   val defaultAndroidId = "not-found-android-id"
 
@@ -65,44 +69,53 @@ class VoteDialog(conferenceId: Int, event: Event)(implicit contextWrapper: Conte
       conferenceId = conferenceId.toString)
 
     val rootView = getUi(
-      l[LinearLayout](
-        w[TextView] <~ titleStyle,
-        w[TextView] <~ textStyle(event.title),
+      l[FrameLayout](
         l[LinearLayout](
-          w[ImageView] <~ voteStyle(R.drawable.popup_icon_vote_like) <~ On.click {
-            addVote(voteRequest.copy(vote = VoteLike))
-          },
-          w[ImageView] <~ voteStyle(R.drawable.popup_icon_vote_neutral) <~ On.click {
-            addVote(voteRequest.copy(vote = VoteNeutral))
-          },
-          w[ImageView] <~ voteStyle(R.drawable.popup_icon_vote_unlike) <~ On.click {
-            addVote(voteRequest.copy(vote = VoteUnlike))
-          }
-        )
-      ) <~ contentStyle
+          w[ProgressBar] <~ progressBarStyle,
+          w[TextView] <~ votingStyle
+        ) <~ votingContentStyle <~ wire(votingContent),
+        l[LinearLayout](
+          w[TextView] <~ titleStyle,
+          w[TextView] <~ textStyle(event.title),
+          l[LinearLayout](
+            w[ImageView] <~ voteStyle(R.drawable.popup_icon_vote_like) <~ On.click {
+              addVote(voteRequest.copy(vote = VoteLike))
+            },
+            w[ImageView] <~ voteStyle(R.drawable.popup_icon_vote_neutral) <~ On.click {
+              addVote(voteRequest.copy(vote = VoteNeutral))
+            },
+            w[ImageView] <~ voteStyle(R.drawable.popup_icon_vote_unlike) <~ On.click {
+              addVote(voteRequest.copy(vote = VoteUnlike))
+            }
+          )
+        ) <~ contentStyle <~ wire(infoContent)
+      )
     )
 
     new AlertDialog.Builder(getActivity).setView(rootView).create()
   }
 
-  private[this] def addVote(voteRequest: VoteRequest) = Ui {
-    val responseIntent = new Intent
-    netServices.addVote(voteRequest) map { response =>
-      if (response.statusCode == statusCodeOk) {
-        val key = ScheduleFragment.getPreferenceKeyForVote(conferenceId, event.id)
-        preferenceServices.saveStringPreference(PreferenceRequest[String](key, voteRequest.vote.value))
-        getTargetFragment.onActivityResult(getTargetRequestCode, Activity.RESULT_OK, responseIntent)
-        dismiss()
-      } else {
-        getTargetFragment.onActivityResult(getTargetRequestCode, Activity.RESULT_CANCELED, responseIntent)
-        dismiss()
+  private[this] def addVote(voteRequest: VoteRequest) =
+    (infoContent <~ vGone) ~
+      (votingContent <~ vVisible) ~
+      Ui {
+        val responseIntent = new Intent
+        netServices.addVote(voteRequest) map { response =>
+          if (response.statusCode == statusCodeOk) {
+            val key = ScheduleFragment.getPreferenceKeyForVote(conferenceId, event.id)
+            preferenceServices.saveStringPreference(PreferenceRequest[String](key, voteRequest.vote.value))
+            getTargetFragment.onActivityResult(getTargetRequestCode, Activity.RESULT_OK, responseIntent)
+            dismiss()
+          } else {
+            getTargetFragment.onActivityResult(getTargetRequestCode, Activity.RESULT_CANCELED, responseIntent)
+            dismiss()
+          }
+        } recover {
+          case _ =>
+            getTargetFragment.onActivityResult(getTargetRequestCode, Activity.RESULT_CANCELED, responseIntent)
+            dismiss()
+        }
       }
-    } recover {
-      case _ =>
-        getTargetFragment.onActivityResult(getTargetRequestCode, Activity.RESULT_CANCELED, responseIntent)
-        dismiss()
-    }
-  }
 
   private[this] def getAndroidId: Option[String] = {
     val cursor = Option(contextWrapper.application.getContentResolver.query(Uri.parse(contentGServices), null, null, Array(androidId), null))
@@ -114,6 +127,24 @@ class VoteDialog(conferenceId: Int, event: Event)(implicit contextWrapper: Conte
 }
 
 trait Styles {
+
+  def votingContentStyle(implicit contextWrapper: ContextWrapper) =
+    vMatchParent +
+      llVertical +
+      vPaddings(resGetDimensionPixelSize(R.dimen.padding_default)) +
+      llGravity(Gravity.CENTER) +
+      vGone
+
+  def progressBarStyle(implicit contextWrapper: ContextWrapper) =
+    vWrapContent
+
+  def votingStyle(implicit contextWrapper: ContextWrapper) =
+    vWrapContent +
+      vPaddings(resGetDimensionPixelSize(R.dimen.padding_default)) +
+      tvSizeResource(R.dimen.text_big) +
+      tvGravity(Gravity.CENTER) +
+      tvText(R.string.sendingVote) +
+      tvColorResource(R.color.text_vote_title)
 
   def contentStyle(implicit contextWrapper: ContextWrapper) =
     vMatchParent +

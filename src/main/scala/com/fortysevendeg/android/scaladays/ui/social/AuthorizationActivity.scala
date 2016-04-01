@@ -23,6 +23,7 @@ import android.os.{Build, Bundle}
 import android.support.v4.app.FragmentActivity
 import android.support.v7.app.AppCompatActivity
 import android.webkit._
+import android.widget.TextView
 import com.fortysevendeg.android.scaladays.R
 import com.fortysevendeg.android.scaladays.modules.ComponentRegistryImpl
 import com.fortysevendeg.android.scaladays.modules.twitter.{GetAuthenticationURLRequest, FinalizeAuthenticationRequest, FinalizeAuthenticationResponse}

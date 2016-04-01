@@ -59,6 +59,11 @@ trait ListLayout
     (recyclerView <~ vGone) ~
     (placeholderContent <~ vGone)
 
+  def twitterError(): Ui[_] = loadTwitterError() ~
+    (progressBar <~ vGone) ~
+    (recyclerView <~ vGone) ~
+    (placeholderContent <~ vVisible)
+
   def failed(): Ui[_] = loadFailed() ~
     (progressBar <~ vGone) ~
     (recyclerView <~ vGone) ~

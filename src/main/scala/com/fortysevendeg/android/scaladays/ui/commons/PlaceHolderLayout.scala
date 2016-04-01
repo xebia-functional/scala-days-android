@@ -41,6 +41,8 @@ trait PlaceHolderLayout
     ) <~ placeholderContentStyle
   }
 
+  def loadTwitterError(): Ui[_] = load(R.string.twitterMessageError, R.drawable.placeholder_error)
+
   def loadFailed(): Ui[_] = load(R.string.generalMessageError, R.drawable.placeholder_error)
 
   def loadEmpty(): Ui[_] = load(R.string.generalMessageEmpty, R.drawable.placeholder_general)

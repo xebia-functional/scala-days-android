@@ -25,7 +25,7 @@ object Versions {
   val macroidV = "2.0.0-20150427"
   val playJsonV = "2.3.4"
   val specs2V = "2.4.15"
-  val twitter4jV = "4.0.2"
+  val twitter4jV = "4.0.4"
   val prettytimeV = "3.2.7.Final"
   val zxingCoreV = "2.2"
   val zxingAndroidV = "1.2.0"

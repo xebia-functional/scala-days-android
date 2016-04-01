@@ -56,7 +56,7 @@ class ScheduleDetailActivity
     } yield {
         analyticsServices.sendScreenName(analyticsScheduleDetailScreen)
         setContentView(layout(event, timeZone))
-        toolBar map setSupportActionBar
+        toolBar foreach setSupportActionBar
         getSupportActionBar.setDisplayHomeAsUpEnabled(true)
       }) getOrElse finish()
   }

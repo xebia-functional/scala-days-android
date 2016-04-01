@@ -71,7 +71,7 @@ class MainActivity
     AlarmUtils.setReloadJsonService(this)
 
     drawerLayout foreach { drawerLayout =>
-      val drawerToggle = new ActionBarDrawerToggle(this, drawerLayout, R.string.openMenu, R.string.clodeMenu) {
+      val drawerToggle = new ActionBarDrawerToggle(this, drawerLayout, R.string.openMenu, R.string.closeMenu) {
         override def onDrawerClosed(drawerView: View): Unit = {
           super.onDrawerClosed(drawerView)
           invalidateOptionsMenu()

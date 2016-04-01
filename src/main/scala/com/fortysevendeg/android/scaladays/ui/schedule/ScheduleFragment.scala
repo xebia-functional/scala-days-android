@@ -135,8 +135,7 @@ class ScheduleFragment
         )
       case (`voteResult`, Activity.RESULT_OK) =>
         runUi(
-          (recyclerView <~ Tweak[RecyclerView] (_.getAdapter.notifyDataSetChanged())) ~
-            uiShortToast(R.string.voteSuccess))
+          recyclerView <~ Tweak[RecyclerView](_.getAdapter.notifyDataSetChanged()))
       case (`voteResult`, Activity.RESULT_CANCELED) =>
         runUi(uiShortToast(R.string.voteFailed))
       case _ =>
