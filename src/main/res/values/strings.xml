@@ -41,7 +41,7 @@
 
     <string name="sendingVote">Sending vote</string>
 
-    <string name="titleVoteConference">What do you think about this talk?</string>
+    <string name="titleVoteConference">What did you think about this talk?</string>
 
     <string name="voteFailed">There was a problem while trying to send your vote. Please try again in a few moments.</string>
 
@@ -54,7 +54,7 @@
 
     <string name="generalMessageError">There was an error while trying to retrieve the latest Scala Days information. Please tap on the \"Reload\" button to try again</string>
     <string name="generalMessageEmpty">We haven\'t found enough data for this section yet. Please tap on the \"Reload\" button to try again</string>
-    <string name="noFavoritesMessage">You haven\'t selected any favorite events. You can select an event and mark it as favorite by tapping on the button at the upper-right part of the screen</string>
+    <string name="noFavoritesMessage">You haven\'t selected any favorite events. You can select an event and mark it as favorite by tapping on the button at the upper-left part of the screen</string>
     <string name="reload">Reload</string>
 
     <string name="twitterMessageError">There was an error connecting with Twitter. Try again later</string>
