@@ -82,7 +82,8 @@ trait NetServicesComponentImpl
           "vote" -> request.vote.value,
           "talkId" -> request.talkId,
           "conferenceId" -> request.conferenceId,
-          "deviceUID" -> request.uid
+          "deviceUID" -> request.uid,
+          "message" -> request.message.getOrElse("")
         )
       )
       serviceClient.post(serviceRequest) map (response => VoteResponse(response.statusCode))

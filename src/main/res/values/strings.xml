@@ -41,6 +41,14 @@
 
     <string name="sendingVote">Sending vote</string>
 
+    <string name="send">Send</string>
+
+    <string name="cancel">Cancel</string>
+
+    <string name="fillFieldsVoteDialog">Please select one of the three voting options before sending the vote</string>
+
+    <string name="addMessage">Write here a comment to help the speaker know what is your opinion on the talk</string>
+
     <string name="titleVoteConference">What did you think about this talk?</string>
 
     <string name="voteFailed">There was a problem while trying to send your vote. Please try again in a few moments.</string>
