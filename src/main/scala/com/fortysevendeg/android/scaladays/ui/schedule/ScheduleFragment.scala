@@ -207,4 +207,6 @@ object ScheduleFragment {
 
   def getPreferenceKeyForVote(conferenceId: Int, talkId: Int) = s"${conferenceId}_${talkId}_vote"
 
+  def getPreferenceKeyForVoteMessage(conferenceId: Int, talkId: Int) = s"${conferenceId}_${talkId}_message"
+
 }

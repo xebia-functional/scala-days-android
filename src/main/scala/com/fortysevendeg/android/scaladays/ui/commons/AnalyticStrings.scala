@@ -22,11 +22,17 @@ object AnalyticStrings {
 
   val analyticsScheduleDetailScreen = "Schedule Detail"
 
+  val analyticsCategoryVote = "Vote"
+
   val analyticsCategoryFilter = "Filter"
 
   val analyticsCategoryFavorites = "Favorites"
 
   val analyticsCategoryNavigate = "Navigate"
+
+  val analyticsScheduleActionShowVotingDialog = "Show Voting Dialog"
+
+  val analyticsScheduleActionSendVote = "Send Vote"
 
   val analyticsScheduleActionFilterAll = "All"
 

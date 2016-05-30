@@ -66,6 +66,7 @@
     <!-- Vote -->
     <color name="text_vote_title">#000000</color>
     <color name="text_vote_text">#da000000</color>
+    <color name="text_vote_hint_message">#68000000</color>
 
     <!-- Schedule Detail -->
     <color name="text_schedule_detail_secondary">#ad364550</color>

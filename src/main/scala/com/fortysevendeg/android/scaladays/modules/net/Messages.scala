@@ -28,7 +28,8 @@ case class VoteRequest(
   vote: Vote,
   uid: String,
   talkId: String,
-  conferenceId: String)
+  conferenceId: String,
+  message: Option[String] = None)
 
 case class VoteResponse(
   statusCode: Int)
