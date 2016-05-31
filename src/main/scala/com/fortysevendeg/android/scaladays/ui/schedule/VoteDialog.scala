@@ -23,6 +23,8 @@ import android.net.Uri
 import android.os.Bundle
 import android.support.v4.app.DialogFragment
 import android.support.v7.app.AlertDialog
+import android.text.InputFilter.LengthFilter
+import android.text.{InputFilter, Spanned}
 import android.view.{Gravity, View}
 import android.view.ViewGroup.LayoutParams._
 import android.widget.ImageView.ScaleType
@@ -258,7 +260,10 @@ trait Styles {
       tvSizeResource(R.dimen.text_medium) +
       tvGravity(Gravity.TOP) +
       tvHint(R.string.addMessage) +
-      Tweak[TextView](_.setHintTextColor(resGetColor(R.color.text_vote_hint_message))) +
+      Tweak[TextView] { view =>
+        view.setHintTextColor(resGetColor(R.color.text_vote_hint_message))
+        view.setFilters(Seq(new LengthFilter(500)).toArray)
+      } +
       tvLines(2) +
       (message map tvText getOrElse Tweak.blank)
 
