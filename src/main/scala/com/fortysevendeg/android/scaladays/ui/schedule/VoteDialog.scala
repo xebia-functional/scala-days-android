@@ -103,9 +103,9 @@ class VoteDialog(conferenceId: Int, event: Event)(implicit contextWrapper: Conte
           w[TextView] <~ titleStyle,
           w[TextView] <~ textStyle(event.title),
           l[LinearLayout](
-            createIcon(VoteLike),
+            createIcon(VoteUnlike),
             createIcon(VoteNeutral),
-            createIcon(VoteUnlike)
+            createIcon(VoteLike)
           ),
           w[EditText] <~ messageStyle(storedVote.flatMap(_.message)) <~ wire(messageVote)
         ) <~ contentStyle <~ wire(infoContent)
