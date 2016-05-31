@@ -23,7 +23,9 @@ import android.net.Uri
 import android.os.Bundle
 import android.support.v4.app.DialogFragment
 import android.support.v7.app.AlertDialog
-import android.view.Gravity
+import android.text.InputFilter.LengthFilter
+import android.text.{InputFilter, Spanned}
+import android.view.{Gravity, View}
 import android.view.ViewGroup.LayoutParams._
 import android.widget.ImageView.ScaleType
 import android.widget._
@@ -39,7 +41,7 @@ import com.fortysevendeg.macroid.extras.LinearLayoutTweaks._
 import com.fortysevendeg.macroid.extras.ResourcesExtras._
 import com.fortysevendeg.macroid.extras.TextTweaks._
 import com.fortysevendeg.macroid.extras.UIActionsExtras._
-import com.fortysevendeg.macroid.extras.ViewTweaks._
+import com.fortysevendeg.macroid.extras.ViewTweaks.{W, _}
 import macroid.FullDsl._
 import macroid.{ContextWrapper, Transformer, Tweak, Ui}
 
@@ -103,9 +105,9 @@ class VoteDialog(conferenceId: Int, event: Event)(implicit contextWrapper: Conte
           w[TextView] <~ titleStyle,
           w[TextView] <~ textStyle(event.title),
           l[LinearLayout](
-            createIcon(VoteLike),
+            createIcon(VoteUnlike),
             createIcon(VoteNeutral),
-            createIcon(VoteUnlike)
+            createIcon(VoteLike)
           ),
           w[EditText] <~ messageStyle(storedVote.flatMap(_.message)) <~ wire(messageVote)
         ) <~ contentStyle <~ wire(infoContent)
@@ -113,20 +115,28 @@ class VoteDialog(conferenceId: Int, event: Event)(implicit contextWrapper: Conte
     )
     val dialog = new AlertDialog.Builder(getActivity).
       setView(rootView).
-      setPositiveButton(R.string.send, new OnClickListener {
-        override def onClick(dialog: DialogInterface, which: Int): Unit = {
-          (newVote map { v =>
-            val text = messageVote map (_.getText.toString) getOrElse ""
-            addVote(voteRequest.copy(vote = v.vote, message = Some(text)))
-          } getOrElse uiShortToast(R.string.fillFieldsVoteDialog)).run
-        }
-      }).
+      setPositiveButton(R.string.send, null).
       setNegativeButton(R.string.cancel, new OnClickListener {
         override def onClick(dialog: DialogInterface, which: Int): Unit = dialog.dismiss()
       }).
       create()
     dialog.setOnShowListener(new OnShowListener {
+
+      def clickButtonPositive(dialog: DialogInterface) = dialog match {
+        case d: AlertDialog =>
+          d.getButton(DialogInterface.BUTTON_POSITIVE).setOnClickListener(new View.OnClickListener {
+            override def onClick(view: View): Unit = {
+              (newVote map { v =>
+                val text = messageVote map (_.getText.toString) getOrElse ""
+                addVote(voteRequest.copy(vote = v.vote, message = Some(text)))
+              } getOrElse uiShortToast(R.string.fillFieldsVoteDialog)).run
+            }
+          })
+        case _ =>
+      }
+
       override def onShow(dialog: DialogInterface): Unit = {
+        clickButtonPositive(dialog)
         if (storedVote.isEmpty) enableButtonPositive(dialog, enable = false)
       }
     })
@@ -135,6 +145,13 @@ class VoteDialog(conferenceId: Int, event: Event)(implicit contextWrapper: Conte
 
   private[this] def enableButtonPositive(dialog: DialogInterface, enable: Boolean) = dialog match {
     case d: AlertDialog => d.getButton(DialogInterface.BUTTON_POSITIVE).setEnabled(enable)
+    case _ =>
+  }
+
+  private[this] def hideButtons(dialog: DialogInterface) = dialog match {
+    case d: AlertDialog =>
+      d.getButton(DialogInterface.BUTTON_POSITIVE).setVisibility(View.GONE)
+      d.getButton(DialogInterface.BUTTON_NEGATIVE).setVisibility(View.GONE)
     case _ =>
   }
 
@@ -154,6 +171,7 @@ class VoteDialog(conferenceId: Int, event: Event)(implicit contextWrapper: Conte
     (infoContent <~ vGone) ~
       (votingContent <~ vVisible) ~
       Ui {
+        hideButtons(getDialog)
         val responseIntent = new Intent
         netServices.addVote(voteRequest) map { response =>
           if (response.statusCode == statusCodeOk) {
@@ -242,7 +260,10 @@ trait Styles {
       tvSizeResource(R.dimen.text_medium) +
       tvGravity(Gravity.TOP) +
       tvHint(R.string.addMessage) +
-      Tweak[TextView](_.setHintTextColor(resGetColor(R.color.text_vote_hint_message))) +
+      Tweak[TextView] { view =>
+        view.setHintTextColor(resGetColor(R.color.text_vote_hint_message))
+        view.setFilters(Seq(new LengthFilter(500)).toArray)
+      } +
       tvLines(2) +
       (message map tvText getOrElse Tweak.blank)
 
