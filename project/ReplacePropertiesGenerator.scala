@@ -50,7 +50,8 @@ object ReplacePropertiesGenerator {
   }
 
   def replaceContent(origin: File, target: File) = {
-    val content = IO.readLines(origin) map (replaceLine(propertiesMap, _))
+    val properties = propertiesMap
+    val content = IO.readLines(origin) map (replaceLine(properties, _))
     IO.write(target, content.mkString("\n"))
   }
 
