@@ -1,19 +1,18 @@
 package com.fortysevendeg.android.scaladays.modules.net.client.http
 
 import com.fortysevendeg.android.scaladays.modules.net.client.http.Methods._
-import com.fortysevendeg.android.scaladays.modules.net.client.messages.{HttpClientWithBodyRequest, HttpClientRequest, HttpClientResponse}
+import com.fortysevendeg.android.scaladays.modules.net.client.messages.{HttpClientRequest, HttpClientResponse, HttpClientWithBodyRequest}
 import com.fortysevendeg.android.scaladays.scaladays.Service
-import com.squareup.okhttp.FormEncodingBuilder
-import com.squareup.{okhttp => okHttp}
+import okhttp3.MediaType
 
 import scala.collection.JavaConverters._
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
 
-class OkHttpClient(okHttpClient: okHttp.OkHttpClient = new okHttp.OkHttpClient)
+class OkHttpClient(okHttpClient: okhttp3.OkHttpClient = new okhttp3.OkHttpClient)
   extends HttpClient {
 
-  val textPlainMediaType = okHttp.MediaType.parse("text/plain")
+  val textPlainMediaType: MediaType = okhttp3.MediaType.parse("text/plain")
 
   override def doGet: Service[HttpClientRequest, HttpClientResponse] =
     (request: HttpClientRequest) => doMethod(GET, request.url, request.httpHeaders)
@@ -40,7 +39,7 @@ class OkHttpClient(okHttpClient: okHttp.OkHttpClient = new okHttp.OkHttpClient)
     url: String,
     httpHeaders: Seq[(String, String)],
     body: Option[Map[String, String]] = None,
-    responseHandler: okHttp.Response => T = defaultResponseHandler _): Future[T] = Future {
+    responseHandler: okhttp3.Response => T = defaultResponseHandler _): Future[T] = Future {
       val builder = createBuilderRequest(url, httpHeaders)
       val request = (method match {
         case GET => builder.get()
@@ -51,26 +50,26 @@ class OkHttpClient(okHttpClient: okHttp.OkHttpClient = new okHttp.OkHttpClient)
       responseHandler(okHttpClient.newCall(request).execute())
   }
 
-  private[this] def defaultResponseHandler(response: okHttp.Response): HttpClientResponse =
+  private[this] def defaultResponseHandler(response: okhttp3.Response): HttpClientResponse =
     HttpClientResponse(response.code(), Option(response.body()) map (_.string()))
 
-  private[this] def createBuilderRequest(url: String, httpHeaders: Seq[(String, String)]): okHttp.Request.Builder =
-    new okHttp.Request.Builder()
+  private[this] def createBuilderRequest(url: String, httpHeaders: Seq[(String, String)]): okhttp3.Request.Builder =
+    new okhttp3.Request.Builder()
       .url(url)
       .headers(createHeaders(httpHeaders))
 
-  private[this] def createHeaders(httpHeaders: Seq[(String, String)]): okHttp.Headers =
-    okHttp.Headers.of(httpHeaders.map {
+  private[this] def createHeaders(httpHeaders: Seq[(String, String)]): okhttp3.Headers =
+    okhttp3.Headers.of(httpHeaders.map {
       case (key, value) => key -> value
     }.toMap.asJava)
 
   private[this] def createBody(body: Option[Map[String, String]]) =
     body match {
       case Some(b) =>
-        val requestBody = new FormEncodingBuilder()
+        val requestBody = new okhttp3.FormBody.Builder()
         b foreach { case (key, value) => requestBody.add(key, value) }
         requestBody.build()
-      case _ => okHttp.RequestBody.create(textPlainMediaType, "")
+      case _ => okhttp3.RequestBody.create(textPlainMediaType, "")
     }
 
 }

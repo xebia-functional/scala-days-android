@@ -21,12 +21,12 @@ import android.view.ViewGroup.LayoutParams._
 import android.view.{ViewGroup, Gravity}
 import android.widget._
 import com.fortysevendeg.android.scaladays.R
-import com.fortysevendeg.macroid.extras.FrameLayoutTweaks._
-import com.fortysevendeg.macroid.extras.LinearLayoutTweaks._
-import com.fortysevendeg.macroid.extras.ViewTweaks._
-import com.fortysevendeg.macroid.extras.RecyclerViewTweaks._
-import com.fortysevendeg.macroid.extras.TextTweaks._
-import com.fortysevendeg.macroid.extras.ResourcesExtras._
+import macroid.extras.FrameLayoutTweaks._
+import macroid.extras.LinearLayoutTweaks._
+import macroid.extras.ViewTweaks._
+import macroid.extras.RecyclerViewTweaks._
+import macroid.extras.TextViewTweaks._
+import macroid.extras.ResourcesExtras._
 import macroid.{Tweak, ContextWrapper}
 import macroid.FullDsl._
 
@@ -65,7 +65,7 @@ trait PlaceHolderStyles {
       tvText(R.string.reload) +
       tvColorResource(R.color.text_error_button) +
       vBackground(R.drawable.background_error_button) +
-      tvAllCaps +
+      tvAllCaps() +
       tvSizeResource(R.dimen.text_medium) +
       tvGravity(Gravity.CENTER)
 
@@ -84,7 +84,7 @@ trait HeaderAdapterStyles {
       llLayoutGravity(Gravity.CENTER_VERTICAL) +
       tvColorResource(R.color.text_schedule_name) +
       tvBold +
-      tvAllCaps +
+      tvAllCaps() +
       vPadding(resGetDimensionPixelSize(R.dimen.padding_default), 0, 0, 0)
 
 }

@@ -26,13 +26,14 @@ import com.fortysevendeg.android.scaladays.modules.preferences.PreferenceRequest
 import com.fortysevendeg.android.scaladays.ui.commons.DateTimeTextViewTweaks._
 import com.fortysevendeg.android.scaladays.ui.commons._
 import com.fortysevendeg.android.scaladays.ui.schedule.ScheduleAdapter._
-import com.fortysevendeg.macroid.extras.TextTweaks._
-import com.fortysevendeg.macroid.extras.ViewGroupTweaks._
-import com.fortysevendeg.macroid.extras.ViewTweaks._
-import com.fortysevendeg.macroid.extras.ImageViewTweaks._
+import macroid.extras.TextViewTweaks._
+import macroid.extras.ViewGroupTweaks._
+import macroid.extras.ViewTweaks._
+import macroid.extras.ImageViewTweaks._
+import macroid._
 import macroid.FullDsl._
 import macroid.{Ui, ActivityContextWrapper, ContextWrapper}
-import org.joda.time.{DateTimeZone, DateTime}
+import org.joda.time.DateTimeZone
 
 case class ScheduleAdapter(conferenceId: Int, timeZone: String, scheduleItems: Seq[ScheduleItem], listener: RecyclerClickListener)
     (implicit context: ActivityContextWrapper)
@@ -42,9 +43,9 @@ case class ScheduleAdapter(conferenceId: Int, timeZone: String, scheduleItems: S
 
   override val contextProvider: ContextWrapper = context
 
-  val recyclerClickListener = listener
+  val recyclerClickListener: RecyclerClickListener = listener
 
-  val dateTimeZone = DateTimeZone.forID(timeZone)
+  val dateTimeZone: DateTimeZone = DateTimeZone.forID(timeZone)
 
   override def onCreateViewHolder(parentViewGroup: ViewGroup, viewType: Int): RecyclerView.ViewHolder = {
     viewType match {
@@ -76,13 +77,13 @@ case class ScheduleAdapter(conferenceId: Int, timeZone: String, scheduleItems: S
           event =>
             vh.content.setTag(position)
             if (event.speakers.isEmpty) {
-              runUi(vh.speakerContent <~ vGone)
+              Ui.run(vh.speakerContent <~ vGone)
             } else {
-              runUi(vh.speakerContent <~ vVisible <~ vgRemoveAllViews)
+              Ui.run(vh.speakerContent <~ vVisible <~ vgRemoveAllViews)
               event.speakers.map(
                 speaker => {
                   val speakerLayout = new SpeakersLayout(speaker)
-                  runUi(vh.speakerContent <~ vgAddView(speakerLayout.content))
+                  Ui.run(vh.speakerContent <~ vgAddView(speakerLayout.content))
                 }
               )
             }
@@ -118,7 +119,7 @@ case class ScheduleAdapter(conferenceId: Int, timeZone: String, scheduleItems: S
               }
             }
 
-            runUi(
+            Ui.run(
               (vh.hourContent <~
                 vBackgroundColorResource(if (currentEvent) R.color.background_list_schedule_hour_current_event else R.color.background_list_schedule_hour)) ~
                 (vh.hour <~
@@ -136,7 +137,7 @@ case class ScheduleAdapter(conferenceId: Int, timeZone: String, scheduleItems: S
         }
       case `itemViewTypeHeader` =>
         val vh = viewHolder.asInstanceOf[ViewHolderHeaderAdapter]
-        runUi(
+        Ui.run(
           vh.headerName <~ (scheduleItem.header map (tvText(_) + vVisible) getOrElse vGone)
         )
     }

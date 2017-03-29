@@ -24,15 +24,15 @@ import com.fortysevendeg.android.scaladays.R
 import com.fortysevendeg.android.scaladays.model.TwitterMessage
 import com.fortysevendeg.android.scaladays.ui.commons.DateTimeTextViewTweaks._
 import com.fortysevendeg.android.scaladays.ui.commons.AsyncImageTweaks._
-import com.fortysevendeg.macroid.extras.TextTweaks._
-import macroid.FullDsl._
+import macroid.extras.TextViewTweaks._
+import macroid._
 import macroid.ActivityContextWrapper
 
 case class SocialAdapter(messages: Seq[TwitterMessage], listener: RecyclerClickListener)
     (implicit context: ActivityContextWrapper)
     extends RecyclerView.Adapter[ViewHolderSocialAdapter] {
 
-  val recyclerClickListener = listener
+  val recyclerClickListener: RecyclerClickListener = listener
 
   override def onCreateViewHolder(parentViewGroup: ViewGroup, i: Int): ViewHolderSocialAdapter = {
     val adapter = new SocialLayoutAdapter()
@@ -48,7 +48,7 @@ case class SocialAdapter(messages: Seq[TwitterMessage], listener: RecyclerClickL
     val message = messages(position)
     val avatarSize = context.application.getResources.getDimensionPixelSize(R.dimen.size_avatar)
     viewHolder.content.setTag(position)
-    runUi(
+    Ui.run(
       (viewHolder.avatar <~
         roundedImage(message.avatar, R.drawable.placeholder_circle, avatarSize, Some(R.drawable.placeholder_avatar_failed))) ~
           (viewHolder.name <~ tvText(message.fullName)) ~

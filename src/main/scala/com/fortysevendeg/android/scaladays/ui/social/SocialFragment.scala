@@ -31,8 +31,9 @@ import com.fortysevendeg.android.scaladays.modules.ComponentRegistryImpl
 import com.fortysevendeg.android.scaladays.modules.twitter.SearchRequest
 import com.fortysevendeg.android.scaladays.ui.commons.AnalyticStrings._
 import com.fortysevendeg.android.scaladays.ui.commons.{ListLayout, LineItemDecorator, UiServices}
-import com.fortysevendeg.macroid.extras.RecyclerViewTweaks._
-import com.fortysevendeg.macroid.extras.ResourcesExtras._
+import macroid.extras.RecyclerViewTweaks._
+import macroid.extras.ResourcesExtras._
+import macroid._
 import macroid.FullDsl._
 import macroid.{ContextWrapper, Contexts, Ui}
 
@@ -74,7 +75,7 @@ class SocialFragment
       }
     })
 
-    runUi(
+    Ui.run(
       (recyclerView
         <~ rvLayoutManager(new LinearLayoutManager(fragmentContextWrapper.application))
         <~ rvAdapter(socialAdapter)
@@ -111,8 +112,8 @@ class SocialFragment
     requestCode match {
       case request if request == authResult =>
         resultCode match {
-          case Activity.RESULT_OK => runUi(search())
-          case Activity.RESULT_CANCELED => runUi(twitterError())
+          case Activity.RESULT_OK => Ui.run(search())
+          case Activity.RESULT_CANCELED => Ui.run(twitterError())
         }
     }
   }

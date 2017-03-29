@@ -29,9 +29,10 @@ import com.fortysevendeg.android.scaladays.ui.commons.AnalyticStrings._
 import com.fortysevendeg.android.scaladays.ui.commons.{ListLayout, UiServices, LineItemDecorator}
 import macroid.{Ui, ContextWrapper, Contexts}
 import scala.concurrent.ExecutionContext.Implicits.global
+import macroid._
 import macroid.FullDsl._
-import com.fortysevendeg.macroid.extras.ResourcesExtras._
-import com.fortysevendeg.macroid.extras.RecyclerViewTweaks._
+import macroid.extras.ResourcesExtras._
+import macroid.extras.RecyclerViewTweaks._
 
 class SpeakersFragment
   extends Fragment
@@ -49,7 +50,7 @@ class SpeakersFragment
 
   override def onViewCreated(view: View, savedInstanceState: Bundle): Unit = {
     super.onViewCreated(view, savedInstanceState)
-    runUi(
+    Ui.run(
       (recyclerView
         <~ rvLayoutManager(new LinearLayoutManager(fragmentContextWrapper.application))
         <~ rvAddItemDecoration(new LineItemDecorator())) ~
@@ -75,7 +76,7 @@ class SpeakersFragment
       case _ =>
         val speakersAdapter = new SpeakersAdapter(speakers, new RecyclerClickListener {
           override def onClick(speaker: Speaker): Unit = {
-            speaker.twitter map {
+            speaker.twitter foreach {
               twitterName =>
                 val twitterUser = if (twitterName.startsWith("@")) twitterName.substring(1) else twitterName
                 analyticsServices.sendEvent(

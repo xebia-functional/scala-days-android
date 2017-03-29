@@ -27,7 +27,6 @@ import com.fortysevendeg.android.scaladays.ui.commons.UiServices
 import com.google.android.gms.maps.GoogleMap.OnInfoWindowClickListener
 import com.google.android.gms.maps._
 import com.google.android.gms.maps.model.{BitmapDescriptorFactory, LatLng, Marker, MarkerOptions}
-import macroid.FullDsl._
 import macroid.{ContextWrapper, Contexts, Ui}
 
 import scala.concurrent.ExecutionContext.Implicits.global
@@ -47,18 +46,18 @@ class PlacesFragment
 
   private val markersMap = scala.collection.mutable.Map[String, String]()
 
-  override def onCreate(savedInstanceState: Bundle) = {
+  override def onCreate(savedInstanceState: Bundle): Unit = {
     super.onCreate(savedInstanceState)
     analyticsServices.sendScreenName(analyticsPlacesScreen)
     getMapAsync(this)
   }
 
-  override def onMapReady(googleMap: GoogleMap) = {
+  override def onMapReady(googleMap: GoogleMap): Unit = {
     this.googleMap = Some(googleMap)
     googleMap.setInfoWindowAdapter(new PlacesInfoWindowAdapter)
     googleMap.setOnInfoWindowClickListener(new OnInfoWindowClickListener {
       override def onInfoWindowClick(marker: Marker): Unit = {
-        markersMap.get(marker.getId) map openLink
+        markersMap.get(marker.getId) foreach openLink
       }
     })
     val result = for {
@@ -70,7 +69,7 @@ class PlacesFragment
     }
   }
 
-  def openLink(link: String) = {
+  def openLink(link: String): Unit = {
     analyticsServices.sendEvent(
       screenName = Some(analyticsPlacesScreen),
       category = analyticsCategoryNavigate,
@@ -81,10 +80,10 @@ class PlacesFragment
   private def showVenueMarkers(venues: Seq[Venue]) = {
     val uis = (venues map createMarker) :+ (venues.headOption map { venue =>
       Ui {
-        googleMap map (_.moveCamera(toCameraUpdate(venue)))
+        googleMap foreach (_.moveCamera(toCameraUpdate(venue)))
       }
     } getOrElse Ui.nop)
-    runUi(Ui.sequence(uis :_*))
+    Ui.run(Ui.sequence(uis :_*))
   }
 
   private def createMarker(venue: Venue): Ui[_] = {
@@ -106,6 +105,6 @@ class PlacesFragment
   private def toCameraUpdate(venue: Venue): CameraUpdate =
     CameraUpdateFactory.newLatLngZoom(new LatLng(venue.latitude, venue.longitude), defaultZoom)
 
-  def failed() = {}
+  def failed(): Unit = {}
 
 }

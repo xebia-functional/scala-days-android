@@ -19,9 +19,9 @@ package com.fortysevendeg.android.scaladays.ui.sponsors
 import android.view.Gravity
 import android.widget.{ImageView, LinearLayout}
 import com.fortysevendeg.android.scaladays.R
-import com.fortysevendeg.macroid.extras.LinearLayoutTweaks._
-import com.fortysevendeg.macroid.extras.ResourcesExtras._
-import com.fortysevendeg.macroid.extras.ViewTweaks._
+import macroid.extras.LinearLayoutTweaks._
+import macroid.extras.ResourcesExtras._
+import macroid.extras.ViewTweaks._
 import macroid.FullDsl._
 import macroid.{ContextWrapper, Tweak}
 
@@ -30,7 +30,7 @@ import scala.language.postfixOps
 trait AdapterStyles {
 
   def itemContentStyle(implicit context: ContextWrapper): Tweak[LinearLayout] =
-    vMatchParent +
+    vMatchWidth +
       vPaddings(resGetDimensionPixelSize(R.dimen.padding_default)) +
       llGravity(Gravity.CENTER) +
       vBackground(R.drawable.background_list_default)

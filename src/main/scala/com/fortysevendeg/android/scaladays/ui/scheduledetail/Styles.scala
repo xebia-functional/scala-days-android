@@ -19,6 +19,7 @@ package com.fortysevendeg.android.scaladays.ui.scheduledetail
 import android.content.Intent
 import android.graphics.Color
 import android.net.Uri
+import android.support.v4.content.ContextCompat
 import android.text.SpannableString
 import android.text.TextUtils.TruncateAt
 import android.text.style.UnderlineSpan
@@ -27,20 +28,20 @@ import android.view.ViewGroup.LayoutParams._
 import android.widget.ImageView.ScaleType
 import android.widget._
 import com.fortysevendeg.android.scaladays.R
-import com.fortysevendeg.android.scaladays.model.{Location, Track, Speaker}
+import com.fortysevendeg.android.scaladays.model.{Location, Speaker, Track}
 import com.fortysevendeg.android.scaladays.ui.commons.AsyncImageTweaks._
 import com.fortysevendeg.android.scaladays.ui.commons.DateTimeTextViewTweaks._
 import com.fortysevendeg.android.scaladays.ui.components.{IconTypes, PathMorphDrawable}
-import com.fortysevendeg.macroid.extras.ImageViewTweaks._
-import com.fortysevendeg.macroid.extras.LinearLayoutTweaks._
-import com.fortysevendeg.macroid.extras.ResourcesExtras._
-import com.fortysevendeg.macroid.extras.ScrollViewTweaks._
-import com.fortysevendeg.macroid.extras.TextTweaks._
-import com.fortysevendeg.macroid.extras.ViewGroupTweaks._
-import com.fortysevendeg.macroid.extras.ViewTweaks._
-import com.fortysevendeg.macroid.extras.DeviceVersion._
+import macroid.extras.ImageViewTweaks._
+import macroid.extras.LinearLayoutTweaks._
+import macroid.extras.ResourcesExtras._
+import macroid.extras.ScrollViewTweaks._
+import macroid.extras.TextViewTweaks._
+import macroid.extras.ViewGroupTweaks._
+import macroid.extras.ViewTweaks._
+import macroid.extras.DeviceVersion._
 import macroid.FullDsl._
-import macroid.{Ui, ActivityContextWrapper, ContextWrapper, Tweak}
+import macroid.{ActivityContextWrapper, ContextWrapper, Tweak, Ui}
 import org.joda.time.DateTime
 
 import scala.language.postfixOps
@@ -118,7 +119,7 @@ trait ActivityStyles {
   def dateStyle(startTime: DateTime, timeZone: String)(implicit context: ContextWrapper): Tweak[TextView] =
     vWrapContent +
       tvSizeResource(R.dimen.text_big) +
-      tvColor(context.application.getResources.getColor(R.color.primary)) +
+      tvColor(ContextCompat.getColor(context.application, R.color.primary)) +
       vPadding(0, 0, 0, resGetDimensionPixelSize(R.dimen.padding_default_extra_small)) +
       tvDateDateTime(startTime, timeZone)
 

@@ -28,8 +28,9 @@ import com.fortysevendeg.android.scaladays.ui.commons.AnalyticStrings._
 import com.fortysevendeg.android.scaladays.ui.commons.{ToolbarLayout, UiServices}
 import com.fortysevendeg.android.scaladays.ui.components.IconTypes
 import com.fortysevendeg.android.scaladays.ui.components.PathMorphDrawableTweaks._
-import com.fortysevendeg.macroid.extras.ResourcesExtras._
-import com.fortysevendeg.macroid.extras.ViewTweaks._
+import macroid.extras.ResourcesExtras._
+import macroid.extras.ViewTweaks._
+import macroid._
 import macroid.FullDsl._
 import macroid.{ActivityContextWrapper, ContextWrapper, Ui}
 
@@ -43,9 +44,9 @@ trait Layout
 
   protected var favoriteChanged = false
 
-  var titleToolbar = slot[TextView]
+  var titleToolbar: Option[TextView] = slot[TextView]
 
-  var fabFavorite = slot[ImageView]
+  var fabFavorite: Option[ImageView] = slot[ImageView]
 
   def layout(event: Event, timeZone: String)(implicit context: ActivityContextWrapper) = {
     val namePreferenceFavorite = getNamePreferenceFavorite(event.id)
@@ -54,7 +55,7 @@ trait Layout
 
     val showSpeakers = event.speakers.nonEmpty
 
-    getUi(
+    Ui.get(
       l[FrameLayout](
         l[ScrollView](
           l[LinearLayout](
@@ -112,7 +113,7 @@ class SpeakersDetailLayout(speaker: Speaker)(implicit context: ActivityContextWr
 
   val content = layout
 
-  private def layout(implicit context: ActivityContextWrapper) = getUi(
+  private def layout(implicit context: ActivityContextWrapper) = Ui.get(
     l[LinearLayout](
       w[ImageView] <~ speakerAvatarStyle(speaker.picture),
       l[LinearLayout](

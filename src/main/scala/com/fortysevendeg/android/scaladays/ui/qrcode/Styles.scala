@@ -19,12 +19,12 @@ package com.fortysevendeg.android.scaladays.ui.qrcode
 import android.view.Gravity
 import android.widget.{ImageView, LinearLayout, TextView}
 import com.fortysevendeg.android.scaladays.R
-import com.fortysevendeg.macroid.extras.FrameLayoutTweaks._
-import com.fortysevendeg.macroid.extras.ImageViewTweaks._
-import com.fortysevendeg.macroid.extras.LinearLayoutTweaks._
-import com.fortysevendeg.macroid.extras.ResourcesExtras._
-import com.fortysevendeg.macroid.extras.TextTweaks._
-import com.fortysevendeg.macroid.extras.ViewTweaks._
+import macroid.extras.FrameLayoutTweaks._
+import macroid.extras.ImageViewTweaks._
+import macroid.extras.LinearLayoutTweaks._
+import macroid.extras.ResourcesExtras._
+import macroid.extras.TextViewTweaks._
+import macroid.extras.ViewTweaks._
 import macroid.{ContextWrapper, Tweak}
 
 import scala.language.postfixOps
@@ -55,7 +55,7 @@ trait Styles {
       tvText(R.string.scan) +
       tvColorResource(R.color.text_error_button) +
       vBackground(R.drawable.background_error_button) +
-      tvAllCaps +
+      tvAllCaps() +
       tvSizeResource(R.dimen.text_big) +
       tvGravity(Gravity.CENTER)
 

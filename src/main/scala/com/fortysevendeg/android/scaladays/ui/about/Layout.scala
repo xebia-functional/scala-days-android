@@ -24,9 +24,10 @@ import com.fortysevendeg.android.scaladays.R
 import com.fortysevendeg.android.scaladays.modules.analytics.AnalyticsServicesComponent
 import com.fortysevendeg.android.scaladays.ui.commons.AnalyticStrings._
 import com.fortysevendeg.android.scaladays.ui.commons.PlaceHolderLayout
-import com.fortysevendeg.macroid.extras.ResourcesExtras._
+import macroid.extras.ResourcesExtras._
 import macroid.{Ui, ActivityContextWrapper}
 import macroid.FullDsl._
+import macroid._
 
 trait Layout
   extends Styles
@@ -42,7 +43,7 @@ trait Layout
 
   var aboutContent = slot[LinearLayout]
 
-  def content(implicit context: ActivityContextWrapper) = getUi(
+  def content(implicit context: ActivityContextWrapper) = Ui.get(
     l[FrameLayout](
       l[LinearLayout](
         l[ScrollView](

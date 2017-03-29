@@ -20,21 +20,22 @@ import android.support.v4.widget.DrawerLayout
 import android.widget.{FrameLayout, LinearLayout}
 import com.fortysevendeg.android.scaladays.ui.commons.ToolbarLayout
 import macroid.FullDsl._
-import macroid.{ActivityContextWrapper, IdGeneration}
+import macroid.{ActivityContextWrapper, IdGenerator, Ui}
 
 trait Layout
     extends ToolbarLayout
-    with IdGeneration
     with Styles {
 
-  var drawerLayout = slot[DrawerLayout]
+  object Id extends IdGenerator(start = 1000)
 
-  var fragmentMenu = slot[FrameLayout]
+  var drawerLayout: Option[DrawerLayout] = slot[DrawerLayout]
 
-  var fragmentContent = slot[FrameLayout]
+  var fragmentMenu: Option[FrameLayout] = slot[FrameLayout]
 
-  def layout(implicit context: ActivityContextWrapper) = {
-    getUi(
+  var fragmentContent: Option[FrameLayout] = slot[FrameLayout]
+
+  def layout(implicit context: ActivityContextWrapper): DrawerLayout = {
+    Ui.get(
       l[DrawerLayout](
         l[LinearLayout](
           toolBarLayout(),

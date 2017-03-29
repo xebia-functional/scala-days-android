@@ -24,7 +24,6 @@ import android.os.Bundle
 import android.support.v4.app.DialogFragment
 import android.support.v7.app.AlertDialog
 import android.text.InputFilter.LengthFilter
-import android.text.{InputFilter, Spanned}
 import android.view.{Gravity, View}
 import android.view.ViewGroup.LayoutParams._
 import android.widget.ImageView.ScaleType
@@ -36,12 +35,13 @@ import com.fortysevendeg.android.scaladays.modules.net.VoteRequest
 import com.fortysevendeg.android.scaladays.modules.preferences.PreferenceRequest
 import com.fortysevendeg.android.scaladays.ui.commons.AnalyticStrings._
 import com.fortysevendeg.android.scaladays.ui.commons.{Vote, VoteLike, VoteNeutral, VoteUnlike}
-import com.fortysevendeg.macroid.extras.ImageViewTweaks._
-import com.fortysevendeg.macroid.extras.LinearLayoutTweaks._
-import com.fortysevendeg.macroid.extras.ResourcesExtras._
-import com.fortysevendeg.macroid.extras.TextTweaks._
-import com.fortysevendeg.macroid.extras.UIActionsExtras._
-import com.fortysevendeg.macroid.extras.ViewTweaks.{W, _}
+import macroid.extras.ImageViewTweaks._
+import macroid.extras.LinearLayoutTweaks._
+import macroid.extras.ResourcesExtras._
+import macroid.extras.TextViewTweaks._
+import macroid.extras.UIActionsExtras._
+import macroid.extras.ViewTweaks._
+import macroid._
 import macroid.FullDsl._
 import macroid.{ContextWrapper, Transformer, Tweak, Ui}
 
@@ -52,11 +52,11 @@ class VoteDialog(conferenceId: Int, event: Event)(implicit contextWrapper: Conte
     with ComponentRegistryImpl
     with Styles {
 
-  var infoContent = slot[LinearLayout]
+  var infoContent: Option[LinearLayout] = slot[LinearLayout]
 
-  var votingContent = slot[LinearLayout]
+  var votingContent: Option[LinearLayout] = slot[LinearLayout]
 
-  var messageVote = slot[EditText]
+  var messageVote: Option[EditText] = slot[EditText]
 
   val defaultAndroidId = "not-found-android-id"
 
@@ -95,7 +95,7 @@ class VoteDialog(conferenceId: Int, event: Event)(implicit contextWrapper: Conte
 
     newVote = storedVote
 
-    val rootView = getUi(
+    val rootView = Ui.get(
       l[FrameLayout](
         l[LinearLayout](
           w[ProgressBar] <~ progressBarStyle,
@@ -122,7 +122,7 @@ class VoteDialog(conferenceId: Int, event: Event)(implicit contextWrapper: Conte
       create()
     dialog.setOnShowListener(new OnShowListener {
 
-      def clickButtonPositive(dialog: DialogInterface) = dialog match {
+      def clickButtonPositive(dialog: DialogInterface): Unit = dialog match {
         case d: AlertDialog =>
           d.getButton(DialogInterface.BUTTON_POSITIVE).setOnClickListener(new View.OnClickListener {
             override def onClick(view: View): Unit = {

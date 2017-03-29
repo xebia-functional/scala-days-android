@@ -19,20 +19,19 @@ package com.fortysevendeg.android.scaladays.ui.sponsors
 import android.support.v7.widget.RecyclerView
 import android.view.View.OnClickListener
 import android.view.{View, ViewGroup}
-import com.fortysevendeg.android.scaladays.R
 import com.fortysevendeg.android.scaladays.ui.commons.AsyncImageTweaks._
 import com.fortysevendeg.android.scaladays.ui.commons.{HeaderLayoutAdapter, ViewHolderHeaderAdapter}
 import com.fortysevendeg.android.scaladays.ui.sponsors.SponsorsAdapter._
-import com.fortysevendeg.macroid.extras.TextTweaks._
-import com.fortysevendeg.macroid.extras.ViewTweaks._
-import macroid.FullDsl._
+import macroid.extras.TextViewTweaks._
+import macroid.extras.ViewTweaks._
+import macroid._
 import macroid.ActivityContextWrapper
 
 class SponsorsAdapter(sponsorItems: Seq[SponsorItem], listener: RecyclerClickListener)
     (implicit context: ActivityContextWrapper)
     extends RecyclerView.Adapter[RecyclerView.ViewHolder] {
 
-  val recyclerClickListener = listener
+  val recyclerClickListener: RecyclerClickListener = listener
 
   override def onCreateViewHolder(parentViewGroup: ViewGroup, viewType: Int): RecyclerView.ViewHolder = {
     viewType match {
@@ -62,11 +61,11 @@ class SponsorsAdapter(sponsorItems: Seq[SponsorItem], listener: RecyclerClickLis
         sponsorItem.sponsor map {
           sponsor =>
             vh.content.setTag(position)
-            runUi(vh.logo <~ srcImage(sponsor.logo))
+            Ui.run(vh.logo <~ srcImage(sponsor.logo))
         }
       case `itemViewTypeHeader` =>
         val vh = viewHolder.asInstanceOf[ViewHolderHeaderAdapter]
-        runUi(
+        Ui.run(
           vh.headerName <~ sponsorItem.header.map(tvText(_) + vVisible).getOrElse(vGone)
         )
     }

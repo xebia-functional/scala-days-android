@@ -16,6 +16,8 @@
 
 package com.fortysevendeg.android.scaladays.ui.social
 
+import java.lang.Boolean
+
 import android.app.Activity
 import android.net.Uri
 import android.net.http.SslError
@@ -26,11 +28,11 @@ import android.webkit._
 import android.widget.TextView
 import com.fortysevendeg.android.scaladays.R
 import com.fortysevendeg.android.scaladays.modules.ComponentRegistryImpl
-import com.fortysevendeg.android.scaladays.modules.twitter.{GetAuthenticationURLRequest, FinalizeAuthenticationRequest, FinalizeAuthenticationResponse}
-import com.fortysevendeg.macroid.extras.DeviceVersion._
-import com.fortysevendeg.macroid.extras.ViewTweaks._
-import com.fortysevendeg.macroid.extras.WebViewTweaks._
-import macroid.FullDsl._
+import com.fortysevendeg.android.scaladays.modules.twitter.{FinalizeAuthenticationRequest, FinalizeAuthenticationResponse, GetAuthenticationURLRequest}
+import macroid.extras.DeviceVersion._
+import macroid.extras.ViewTweaks._
+import macroid.extras.WebViewTweaks._
+import macroid._
 import macroid.{ContextWrapper, Contexts}
 
 import scala.concurrent.ExecutionContext.Implicits.global
@@ -62,24 +64,25 @@ class AuthorizationActivity
 
     }
     override def onReceivedSslError(view: WebView, handler: SslErrorHandler, error: SslError) {
-      handler.proceed
+      handler.proceed()
     }
   }
 
   override def onCreate(savedInstanceState: Bundle): Unit = {
     super.onCreate(savedInstanceState)
 
-    Lollipop ifSupportedThen (CookieSyncManager.createInstance(this))
-
     setContentView(layout)
 
-    runUi(webView <~ wvClient(webViewClient))
+    Ui.run(webView <~ wvClient(webViewClient))
 
     Lollipop ifSupportedThen {
-      CookieManager.getInstance.removeAllCookie
-      CookieManager.getInstance.removeExpiredCookie
-      CookieManager.getInstance.removeSessionCookie
-      CookieSyncManager.getInstance.sync
+      CookieManager.getInstance.removeAllCookies(new ValueCallback[Boolean] {
+        override def onReceiveValue(t: Boolean): Unit = {}
+      })
+      CookieManager.getInstance.removeSessionCookies(new ValueCallback[Boolean] {
+        override def onReceiveValue(t: Boolean): Unit = {}
+      })
+      CookieManager.getInstance.flush()
     }
 
   }
@@ -90,25 +93,25 @@ class AuthorizationActivity
       r <- twitterServices.getAuthenticationURL(GetAuthenticationURLRequest())
     } yield r.url
     urlOp map {
-      case Some(url) => runUi(webView <~ wvLoadUrl(url))
+      case Some(url) => Ui.run(webView <~ wvLoadUrl(url))
       case None => failed()
     } recover {
       case _ => failed()
     }
   }
 
-  def success() = {
+  def success(): Unit = {
     setResult(Activity.RESULT_OK)
     finish()
   }
 
-  def failed() = {
+  def failed(): Unit = {
     setResult(Activity.RESULT_CANCELED)
     finish()
   }
 
-  def showRedirecting = {
-    runUi(
+  def showRedirecting() = {
+    Ui.run(
       (progressBar <~ vVisible) ~
           (webView <~ vGone))
   }

@@ -18,7 +18,7 @@ package com.fortysevendeg.android.scaladays.ui.places
 
 import android.widget.{LinearLayout, TextView}
 import macroid.FullDsl._
-import macroid.ActivityContextWrapper
+import macroid.{ActivityContextWrapper, Ui}
 
 class PlacesInfoWindowLayout(implicit context: ActivityContextWrapper)
   extends PlacesInfoWindowStyles {
@@ -27,7 +27,7 @@ class PlacesInfoWindowLayout(implicit context: ActivityContextWrapper)
   
   var snippet = slot[TextView]
 
-  val content = getUi(
+  val content = Ui.get(
     l[LinearLayout](
       w[TextView] <~ wire(title) <~ titleStyle,
       w[TextView] <~ wire(snippet) <~ snippetStyle

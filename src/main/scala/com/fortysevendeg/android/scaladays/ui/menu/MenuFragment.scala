@@ -23,6 +23,7 @@ import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v7.widget.LinearLayoutManager
 import android.view.{LayoutInflater, View, ViewGroup}
+import android.widget.ImageView
 import com.fortysevendeg.android.scaladays.R
 import com.fortysevendeg.android.scaladays.model.Information
 import com.fortysevendeg.android.scaladays.modules.ComponentRegistryImpl
@@ -30,9 +31,9 @@ import com.fortysevendeg.android.scaladays.ui.commons.AnalyticStrings._
 import com.fortysevendeg.android.scaladays.ui.commons.AsyncImageTweaks._
 import com.fortysevendeg.android.scaladays.ui.commons.UiServices
 import com.fortysevendeg.android.scaladays.ui.main.MainActivity
-import com.fortysevendeg.macroid.extras.RecyclerViewTweaks._
-import com.fortysevendeg.macroid.extras.TextTweaks._
-import com.fortysevendeg.macroid.extras.ImageViewTweaks._
+import macroid.extras.RecyclerViewTweaks._
+import macroid.extras.TextViewTweaks._
+import macroid.extras.ImageViewTweaks._
 import macroid.FullDsl._
 import macroid._
 
@@ -43,8 +44,9 @@ class MenuFragment
   with Contexts[Fragment]
   with ComponentRegistryImpl
   with UiServices
-  with IdGeneration
   with Layout {
+
+  object Id extends IdGenerator(start = 1000)
 
   override implicit lazy val contextProvider: ContextWrapper = fragmentContextWrapper
 
@@ -57,14 +59,14 @@ class MenuFragment
   private val previousItemSelectedKey = "previous_item_selected_key"
 
   lazy val mainMenuAdapter: MainMenuAdapter = new MainMenuAdapter(new MainMenuClickListener {
-    override def onClick(mainMenuItem: MainMenuItem) =
+    override def onClick(mainMenuItem: MainMenuItem): Unit =
       mainMenuItem.section match {
         case MenuSection.TICKETS =>
           analyticsServices.sendEvent(
             screenName = None,
             category = analyticsCategoryNavigate,
             action = analyticsActionGoToTickets)
-          urlTickets map {
+          urlTickets foreach {
             url =>
               val intent = new Intent(Intent.ACTION_VIEW,
                 Uri.parse(url))
@@ -75,7 +77,7 @@ class MenuFragment
   })
 
   lazy val conferenceMenuAdapter: ConferenceMenuAdapter = new ConferenceMenuAdapter(new ConferenceMenuClickListener {
-    override def onClick(conferenceMenuItem: ConferenceMenuItem) = {
+    override def onClick(conferenceMenuItem: ConferenceMenuItem): Unit = {
       analyticsServices.sendEvent(
         screenName = None,
         category = analyticsCategoryNavigate,
@@ -87,22 +89,22 @@ class MenuFragment
 
   private var mainMenuVisible: Boolean = true
 
-  override def onAttach(activity: Activity) = {
+  override def onAttach(activity: Activity): Unit = {
     super.onAttach(activity)
     mainActivity = Some(activity.asInstanceOf[MainActivity])
   }
 
   override def onCreateView(inflater: LayoutInflater, container: ViewGroup, savedInstanceState: Bundle): View = {
     val root = content
-    runUi(
+    Ui.run(
       recyclerView <~ rvLayoutManager(new LinearLayoutManager(fragmentContextWrapper.application))
     )
     root
   }
 
-  override def onViewCreated(view: View, savedInstanceState: Bundle) = {
+  override def onViewCreated(view: View, savedInstanceState: Bundle): Unit = {
     super.onViewCreated(view, savedInstanceState)
-    runUi(
+    Ui.run(
       (recyclerView <~ rvAdapter(mainMenuAdapter)) ~
         (bigImageLayout <~ On.click {
           Ui {
@@ -126,7 +128,7 @@ class MenuFragment
     }
   }
 
-  def failed() = {}
+  def failed(): Unit = {}
 
 
   override def onSaveInstanceState(outState: Bundle): Unit = {
@@ -141,14 +143,14 @@ class MenuFragment
 
   def toggleMenu() = {
     mainMenuVisible = !mainMenuVisible
-    if (mainMenuVisible) runUi(
+    if (mainMenuVisible) Ui.run(
       (conferenceSelector <~ ivSrc(R.drawable.menu_header_select_arrow)) ~
         (recyclerView <~ rvAdapter(mainMenuAdapter)))
     else for {
       conferences <- loadConferences()
     } yield {
       conferenceMenuAdapter.loadConferences(conferences map (_.info))
-      runUi(
+      Ui.run(
         (conferenceSelector <~ ivSrc(R.drawable.menu_header_select_arrow_up)) ~
           (recyclerView <~ rvAdapter(conferenceMenuAdapter)))
     }
@@ -159,19 +161,26 @@ class MenuFragment
 
   def itemSelected(menuItem: MainMenuItem, callCallback: Boolean = true) = {
     mainMenuAdapter.selectItem(Some(menuItem))
-    if (callCallback) mainActivity map (_.itemSelected(menuItem.section, menuItem.name))
+    if (callCallback) mainActivity foreach (_.itemSelected(menuItem.section, menuItem.name))
   }
 
   def conferenceSelected(menuItem: ConferenceMenuItem) = {
     urlTickets = Some(menuItem.information.registrationSite)
     showConference(menuItem.information)
     saveSelectedConferenceId(menuItem.id)
-    mainMenuAdapter.selectedItem map (itemSelected(_))
+    mainMenuAdapter.selectedItem foreach (itemSelected(_))
   }
 
-  def showConference(information: Information) =
-    runUi(
-      (bigImage <~ srcImage(information.pictures(0).url, R.drawable.placeholder_square)) ~
-        (conferenceTitle <~ tvText(information.longName)))
+  def showConference(information: Information) = {
+
+    def srcTweak(): Tweak[ImageView] =
+      information.pictures.headOption map { pic =>
+        srcImage(pic.url, R.drawable.placeholder_square)
+      } getOrElse ivSrc(R.drawable.placeholder_square)
+
+    Ui.run(
+      (bigImage <~ srcTweak()) ~
+        (conferenceTitle <~ tvText("Scala Days Chicago")))
+  }
 
 }

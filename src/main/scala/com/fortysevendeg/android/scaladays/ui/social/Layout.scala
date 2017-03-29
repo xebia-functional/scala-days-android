@@ -19,7 +19,7 @@ package com.fortysevendeg.android.scaladays.ui.social
 import android.support.v7.widget.RecyclerView
 import android.webkit.WebView
 import android.widget._
-import macroid.ActivityContextWrapper
+import macroid.{ActivityContextWrapper, Ui}
 import macroid.FullDsl._
 
 class SocialLayoutAdapter(implicit context: ActivityContextWrapper)
@@ -37,7 +37,7 @@ class SocialLayoutAdapter(implicit context: ActivityContextWrapper)
 
   val content = layout
 
-  private def layout(implicit context: ActivityContextWrapper) = getUi(
+  private def layout(implicit context: ActivityContextWrapper) = Ui.get(
     l[LinearLayout](
       w[ImageView] <~ wire(avatar) <~ avatarStyle,
       l[LinearLayout](
@@ -72,12 +72,12 @@ class ViewHolderSocialAdapter(adapter: SocialLayoutAdapter)(implicit context: Ac
 trait AuthorizationLayout
     extends AuthorizationStyles {
 
-  var webView = slot[WebView]
+  var webView: Option[WebView] = slot[WebView]
 
-  var progressBar = slot[ProgressBar]
+  var progressBar: Option[ProgressBar] = slot[ProgressBar]
 
-  def layout(implicit context: ActivityContextWrapper) = {
-    getUi(
+  def layout(implicit context: ActivityContextWrapper): FrameLayout = {
+    Ui.get(
       l[FrameLayout](
         w[ProgressBar] <~ wire(progressBar) <~ progressBarAuthStyle,
         w[WebView] <~ wire(webView) <~ webViewAuthStyle

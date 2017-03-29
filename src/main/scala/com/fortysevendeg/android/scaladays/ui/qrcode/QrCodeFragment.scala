@@ -26,12 +26,12 @@ import com.fortysevendeg.android.scaladays.R
 import com.fortysevendeg.android.scaladays.modules.ComponentRegistryImpl
 import com.fortysevendeg.android.scaladays.ui.commons.AnalyticStrings._
 import com.google.zxing.Result
-import com.google.zxing.client.android.CaptureActivity
 import com.google.zxing.client.result.VCardResultParser
-import macroid.FullDsl._
-import macroid.{Ui, ContextWrapper, Contexts}
-import com.fortysevendeg.macroid.extras.UIActionsExtras._
+import macroid.{ContextWrapper, Contexts, Ui}
+import macroid.extras.UIActionsExtras._
 import com.fortysevendeg.android.scaladays.ui.commons.IntegerResults._
+
+import scala.concurrent.Future
 
 class QrCodeFragment
   extends Fragment
@@ -68,7 +68,7 @@ class QrCodeFragment
         val addContactIntent = new Intent(ContactsContract.Intents.Insert.ACTION, ContactsContract.Contacts.CONTENT_URI)
         addContactIntent.setType(ContactsContract.Contacts.CONTENT_TYPE)
         Option(vcard.getNames) map {
-          case names if names.size > 0 => addContactIntent.putExtra(ContactsContract.Intents.Insert.NAME, names(0).replace(";", " "))
+          case names if names.nonEmpty => addContactIntent.putExtra(ContactsContract.Intents.Insert.NAME, names(0).replace(";", " "))
         }
         Option(vcard.getTitle) map (addContactIntent.putExtra(ContactsContract.Intents.Insert.JOB_TITLE, _))
         Option(vcard.getOrg) map (addContactIntent.putExtra(ContactsContract.Intents.Insert.COMPANY, _))
@@ -98,6 +98,6 @@ class QrCodeFragment
     }
   }
 
-  def failed() = runUi(uiShortToast(R.string.scanError))
+  def failed(): Future[Unit] = Ui.run(uiShortToast(R.string.scanError))
 
 }

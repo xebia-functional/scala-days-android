@@ -20,24 +20,25 @@ import android.support.v4.widget.SwipeRefreshLayout
 import android.support.v4.widget.SwipeRefreshLayout.OnRefreshListener
 import android.support.v7.widget.RecyclerView
 import android.widget.{FrameLayout, LinearLayout, ProgressBar}
-import com.fortysevendeg.macroid.extras.RecyclerViewTweaks._
+import macroid.extras.RecyclerViewTweaks.{W, _}
+import macroid._
 import macroid.FullDsl._
-import macroid.{Tweak, Ui, ActivityContextWrapper}
-import com.fortysevendeg.macroid.extras.ViewTweaks._
+import macroid.{ActivityContextWrapper, Tweak, Ui}
+import macroid.extras.ViewTweaks._
 
 trait ListLayout
   extends ListStyles
   with PlaceHolderLayout {
 
-  var recyclerView = slot[RecyclerView]
+  var recyclerView: Option[W] = slot[RecyclerView]
 
-  var progressBar = slot[ProgressBar]
+  var progressBar: Option[ProgressBar] = slot[ProgressBar]
 
-  var placeholderContent = slot[LinearLayout]
+  var placeholderContent: Option[LinearLayout] = slot[LinearLayout]
 
-  var refreshLayout = slot[SwipeRefreshLayout]
+  var refreshLayout: Option[SwipeRefreshLayout] = slot[SwipeRefreshLayout]
 
-  def content(implicit context: ActivityContextWrapper) = getUi(
+  def content(implicit context: ActivityContextWrapper): FrameLayout = Ui.get(
     l[FrameLayout](
       w[ProgressBar] <~ wire(progressBar) <~ progressBarStyle,
       w[RecyclerView] <~ wire(recyclerView) <~ recyclerViewStyle,
@@ -45,7 +46,7 @@ trait ListLayout
     ) <~ rootStyle
   )
 
-  def contentWithSwipeRefresh(implicit context: ActivityContextWrapper) = getUi(
+  def contentWithSwipeRefresh(implicit context: ActivityContextWrapper): FrameLayout = Ui.get(
     l[FrameLayout](
       w[ProgressBar] <~ wire(progressBar) <~ progressBarStyle,
       l[SwipeRefreshLayout](
@@ -83,12 +84,10 @@ trait ListLayout
     (placeholderContent <~ vGone) ~
     (recyclerView <~ vVisible <~ rvAdapter(adapter))
 
-  def srlRefreshing(refreshing: Boolean) = Tweak[SwipeRefreshLayout](_.setRefreshing(refreshing))
+  def srlRefreshing(refreshing: Boolean): Tweak[SwipeRefreshLayout] = Tweak[SwipeRefreshLayout](_.setRefreshing(refreshing))
 
-  def srlOnRefreshListener(f: => Ui[_]) = Tweak[SwipeRefreshLayout](_.setOnRefreshListener(new OnRefreshListener {
-    override def onRefresh(): Unit = {
-      runUi(f)
-    }
+  def srlOnRefreshListener(f: => Ui[_]): Tweak[SwipeRefreshLayout] = Tweak[SwipeRefreshLayout](_.setOnRefreshListener(new OnRefreshListener {
+    override def onRefresh(): Unit = Ui.run(f)
   }))
 
 }

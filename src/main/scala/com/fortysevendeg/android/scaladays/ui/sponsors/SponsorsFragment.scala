@@ -26,7 +26,8 @@ import com.fortysevendeg.android.scaladays.model.SponsorType
 import com.fortysevendeg.android.scaladays.modules.ComponentRegistryImpl
 import com.fortysevendeg.android.scaladays.ui.commons.AnalyticStrings._
 import com.fortysevendeg.android.scaladays.ui.commons.{ListLayout, UiServices}
-import com.fortysevendeg.macroid.extras.RecyclerViewTweaks._
+import macroid.extras.RecyclerViewTweaks._
+import macroid._
 import macroid.FullDsl._
 import macroid.{ContextWrapper, Contexts, Ui}
 
@@ -48,7 +49,7 @@ class SponsorsFragment
 
   override def onViewCreated(view: View, savedInstanceState: Bundle): Unit = {
     super.onViewCreated(view, savedInstanceState)
-    runUi(
+    Ui.run(
       (recyclerView
         <~ rvLayoutManager(new LinearLayoutManager(fragmentContextWrapper.application))) ~
         loadSponsors() ~

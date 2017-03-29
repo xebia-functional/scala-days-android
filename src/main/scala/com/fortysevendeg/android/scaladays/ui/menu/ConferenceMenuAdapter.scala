@@ -22,16 +22,16 @@ import android.view.{View, ViewGroup}
 import com.fortysevendeg.android.scaladays.R
 import com.fortysevendeg.android.scaladays.model.{Picture, Information}
 import com.fortysevendeg.android.scaladays.ui.commons.AsyncImageTweaks._
-import com.fortysevendeg.macroid.extras.ImageViewTweaks._
-import com.fortysevendeg.macroid.extras.TextTweaks._
+import macroid.extras.ImageViewTweaks._
+import macroid.extras.TextViewTweaks._
 import macroid.ActivityContextWrapper
-import macroid.FullDsl._
+import macroid._
 
 class ConferenceMenuAdapter(listener: ConferenceMenuClickListener)
     (implicit context: ActivityContextWrapper)
     extends RecyclerView.Adapter[ViewHolderConferenceMenuAdapter] {
 
-  val recyclerClickListener = listener
+  val recyclerClickListener: ConferenceMenuClickListener = listener
 
   var list = Seq.empty[ConferenceMenuItem]
   
@@ -52,7 +52,7 @@ class ConferenceMenuAdapter(listener: ConferenceMenuClickListener)
     val conferenceMenuItem = list(position)
     val iconSize = context.application.getResources.getDimensionPixelSize(R.dimen.size_menu_conference_icon)
     viewHolder.content.setTag(position)
-    runUi(
+    Ui.run(
       (viewHolder.title <~ tvText(conferenceMenuItem.name)) ~
         (viewHolder.icon <~ (conferenceMenuItem.icon map (roundedImage(_, R.drawable.placeholder_circle, iconSize)) getOrElse ivSrc(R.drawable.placeholder_circle)))
     )

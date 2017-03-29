@@ -20,7 +20,7 @@ import android.support.v7.widget.RecyclerView
 import android.widget._
 import com.fortysevendeg.android.scaladays.ui.components.CheckableFrameLayout
 import macroid.FullDsl._
-import macroid.ActivityContextWrapper
+import macroid.{ActivityContextWrapper, Ui}
 
 trait Layout
     extends Styles {
@@ -37,7 +37,7 @@ trait Layout
 
   var recyclerView = slot[RecyclerView]
 
-  def content(implicit context: ActivityContextWrapper) = getUi(
+  def content(implicit context: ActivityContextWrapper) = Ui.get(
     l[LinearLayout](
       l[FrameLayout](
         w[ImageView] <~ wire(bigImage) <~ bigImageStyle,
@@ -59,7 +59,7 @@ class MainMenuAdapterLayout(implicit context: ActivityContextWrapper)
 
   val content = layout
 
-  private def layout(implicit context: ActivityContextWrapper) = getUi(
+  private def layout(implicit context: ActivityContextWrapper) = Ui.get(
     l[CheckableFrameLayout](
       w[TextView] <~ wire(menuItem) <~ textMenuItemStyle
     ) <~ mainMenuItemStyle
@@ -85,7 +85,7 @@ class ConferenceMenuAdapterLayout(implicit context: ActivityContextWrapper)
 
   val content = layout
 
-  private def layout(implicit context: ActivityContextWrapper) = getUi(
+  private def layout(implicit context: ActivityContextWrapper) = Ui.get(
     l[LinearLayout](
       w[ImageView] <~ wire(menuIcon) <~ conferenceMenuItemIconStyle,
       w[TextView] <~ wire(menuItem) <~ conferenceMenuItemStyle

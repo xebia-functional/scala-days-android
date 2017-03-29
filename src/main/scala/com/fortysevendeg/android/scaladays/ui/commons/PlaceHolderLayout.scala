@@ -18,22 +18,23 @@ package com.fortysevendeg.android.scaladays.ui.commons
 
 import android.widget.{Button, ImageView, LinearLayout, TextView}
 import com.fortysevendeg.android.scaladays.R
-import com.fortysevendeg.macroid.extras.TextTweaks._
-import com.fortysevendeg.macroid.extras.ImageViewTweaks._
-import com.fortysevendeg.macroid.extras.ViewTweaks._
-import macroid.{Ui, ActivityContextWrapper}
+import macroid.extras.TextViewTweaks._
+import macroid.extras.ImageViewTweaks._
+import macroid.extras.ViewTweaks._
+import macroid.{ActivityContextWrapper, Ui}
+import macroid._
 import macroid.FullDsl._
 
 trait PlaceHolderLayout
   extends PlaceHolderStyles {
 
-  var reloadButton = slot[Button]
+  var reloadButton: Option[Button] = slot[Button]
 
-  var image = slot[ImageView]
+  var image: Option[ImageView] = slot[ImageView]
 
-  var text = slot[TextView]
+  var text: Option[TextView] = slot[TextView]
 
-  def placeholder(implicit context: ActivityContextWrapper) = {
+  def placeholder(implicit context: ActivityContextWrapper): Ui[LinearLayout] = {
     l[LinearLayout](
       w[ImageView] <~ placeholderImageStyle <~ wire(image),
       w[TextView] <~ placeholderMessageStyle <~ wire(text),

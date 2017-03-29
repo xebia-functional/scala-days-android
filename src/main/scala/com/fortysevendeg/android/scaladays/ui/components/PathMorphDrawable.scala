@@ -25,6 +25,7 @@ import android.view.animation.DecelerateInterpolator
 import android.widget.ImageView
 import macroid.{ContextWrapper, Tweak}
 import IconTypes._
+import android.support.v4.content.ContextCompat
 
 import scala.util.Try
 
@@ -36,51 +37,51 @@ class PathMorphDrawable(val defaultIcon: Int = NOICON, val defaultStroke: Int = 
   implicit var size: Option[Dim] = None
 
   lazy val burgerIcon = List(
-    new Segment().fromRatios(0.2f, 0.3f, 0.8f, 0.3f),
-    new Segment().fromRatios(0.2f, 0.5f, 0.8f, 0.5f),
-    new Segment().fromRatios(0.2f, 0.7f, 0.8f, 0.7f)
+    Segment().fromRatios(0.2f, 0.3f, 0.8f, 0.3f),
+    Segment().fromRatios(0.2f, 0.5f, 0.8f, 0.5f),
+    Segment().fromRatios(0.2f, 0.7f, 0.8f, 0.7f)
   )
 
   lazy val backIcon = List(
-    new Segment().fromRatios(0.3f, 0.51f, 0.5f, 0.3f),
-    new Segment().fromRatios(0.33f, 0.5f, 0.7f, 0.5f),
-    new Segment().fromRatios(0.3f, 0.49f, 0.5f, 0.7f)
+    Segment().fromRatios(0.3f, 0.51f, 0.5f, 0.3f),
+    Segment().fromRatios(0.33f, 0.5f, 0.7f, 0.5f),
+    Segment().fromRatios(0.3f, 0.49f, 0.5f, 0.7f)
   )
 
   lazy val upIcon = List(
-    new Segment().fromRatios(0.49f, 0.3f, 0.7f, 0.5f),
-    new Segment().fromRatios(0.5f, 0.33f, 0.5f, 0.7f),
-    new Segment().fromRatios(0.51f, 0.3f, 0.3f, 0.5f)
+    Segment().fromRatios(0.49f, 0.3f, 0.7f, 0.5f),
+    Segment().fromRatios(0.5f, 0.33f, 0.5f, 0.7f),
+    Segment().fromRatios(0.51f, 0.3f, 0.3f, 0.5f)
   )
 
   lazy val downIcon = List(
-    new Segment().fromRatios(0.51f, 0.7f, 0.3f, 0.5f),
-    new Segment().fromRatios(0.5f, 0.67f, 0.5f, 0.3f),
-    new Segment().fromRatios(0.49f, 0.7f, 0.7f, 0.5f)
+    Segment().fromRatios(0.51f, 0.7f, 0.3f, 0.5f),
+    Segment().fromRatios(0.5f, 0.67f, 0.5f, 0.3f),
+    Segment().fromRatios(0.49f, 0.7f, 0.7f, 0.5f)
   )
 
   lazy val nextIcon = List(
-    new Segment().fromRatios(0.7f, 0.49f, 0.5f, 0.7f),
-    new Segment().fromRatios(0.67f, 0.5f, 0.3f, 0.5f),
-    new Segment().fromRatios(0.7f, 0.51f, 0.5f, 0.3f)
+    Segment().fromRatios(0.7f, 0.49f, 0.5f, 0.7f),
+    Segment().fromRatios(0.67f, 0.5f, 0.3f, 0.5f),
+    Segment().fromRatios(0.7f, 0.51f, 0.5f, 0.3f)
   )
 
   lazy val checkIcon = List(
-    new Segment().fromRatios(0.2f, 0.6f, 0.4f, 0.8f),
-    new Segment().fromRatios(0.4f, 0.8f, 0.8f, 0.2f)
+    Segment().fromRatios(0.2f, 0.6f, 0.4f, 0.8f),
+    Segment().fromRatios(0.4f, 0.8f, 0.8f, 0.2f)
   )
 
   lazy val addIcon = List(
-    new Segment().fromRatios(0.5f, 0.2f, 0.5f, 0.8f),
-    new Segment().fromRatios(0.2f, 0.5f, 0.8f, 0.5f)
+    Segment().fromRatios(0.5f, 0.2f, 0.5f, 0.8f),
+    Segment().fromRatios(0.2f, 0.5f, 0.8f, 0.5f)
   )
 
   lazy val closeIcon = List(
-    new Segment().fromRatios(0.712f, 0.288f, 0.288f, 0.712f),
-    new Segment().fromRatios(0.288f, 0.288f, 0.712f, 0.712f)
+    Segment().fromRatios(0.712f, 0.288f, 0.288f, 0.712f),
+    Segment().fromRatios(0.288f, 0.288f, 0.712f, 0.712f)
   )
 
-  val noIcon = List.empty
+  val noIcon: List[Segment] = List.empty
 
   val iconPaint: Paint = {
     val paint = new Paint
@@ -101,15 +102,15 @@ class PathMorphDrawable(val defaultIcon: Int = NOICON, val defaultStroke: Int = 
 
   override def onBoundsChange(bounds: Rect): Unit = {
     super.onBoundsChange(bounds)
-    size = Some(new Dim(bounds.width(), bounds.height()))
+    size = Some(Dim(bounds.width(), bounds.height()))
     setTypeIcon(defaultIcon)
   }
 
   override def draw(canvas: Canvas): Unit = {
     if (running) {
-      transformIcon.map(drawIcon(canvas, _))
+      transformIcon.foreach(drawIcon(canvas, _))
     } else {
-      currentIcon.map(drawIcon(canvas, _))
+      currentIcon.foreach(drawIcon(canvas, _))
     }
   }
 
@@ -120,7 +121,7 @@ class PathMorphDrawable(val defaultIcon: Int = NOICON, val defaultStroke: Int = 
   override def getOpacity: Int = PixelFormat.TRANSPARENT
 
   override def stop(): Unit = {
-    toIcon map setIcon
+    toIcon foreach setIcon
     toIcon = None
     running = false
   }
@@ -141,30 +142,30 @@ class PathMorphDrawable(val defaultIcon: Int = NOICON, val defaultStroke: Int = 
   }
 
   def setColorResource(color: Int): Unit = {
-    iconPaint.setColor(context.application.getResources.getColor(color))
+    iconPaint.setColor(ContextCompat.getColor(context.application, color))
     invalidateSelf()
   }
 
-  def setStroke(stroke: Float) = {
+  def setStroke(stroke: Float): Unit = {
     iconPaint.setStrokeWidth(stroke)
     invalidateSelf()
   }
 
-  def setTransformIcon(icon: Icon) = {
+  def setTransformIcon(icon: Icon): Unit = {
     transformIcon = Some(icon)
     invalidateSelf()
   }
 
-  def setIcon(icon: Icon) = {
+  def setIcon(icon: Icon): Unit = {
     currentIcon = Some(icon)
     invalidateSelf()
   }
 
-  def setToIcon(icon: Icon) = {
+  def setToIcon(icon: Icon): Unit = {
     toIcon = Some(icon)
   }
 
-  def setTypeIcon(icon: Int) = icon match {
+  def setTypeIcon(icon: Int): Unit = icon match {
     case ADD => setIcon(addIcon)
     case BACK => setIcon(backIcon)
     case BURGER => setIcon(burgerIcon)
@@ -176,7 +177,7 @@ class PathMorphDrawable(val defaultIcon: Int = NOICON, val defaultStroke: Int = 
     case UP => setIcon(upIcon)
   }
 
-  def setToTypeIcon(icon: Int) = icon match {
+  def setToTypeIcon(icon: Int): Unit = icon match {
     case ADD => setToIcon(addIcon)
     case BACK => setToIcon(backIcon)
     case BURGER => setToIcon(burgerIcon)
@@ -188,14 +189,14 @@ class PathMorphDrawable(val defaultIcon: Int = NOICON, val defaultStroke: Int = 
     case UP => setToIcon(upIcon)
   }
 
-  private def drawIcon(canvas: Canvas, icon: Icon): Unit = icon.map(drawSegment(canvas, _))
+  private def drawIcon(canvas: Canvas, icon: Icon): Unit = icon.foreach(drawSegment(canvas, _))
 
   private def drawSegment(canvas: Canvas, segment: Segment): Unit = {
     iconPaint.setAlpha((segment.alpha * 255).toInt)
     canvas.drawLine(segment.point1.x, segment.point1.y, segment.point2.x, segment.point2.y, iconPaint)
   }
 
-  def moveIcon(from: Icon, to: Icon) = {
+  def moveIcon(from: Icon, to: Icon): Unit = {
     val valueAnimator: ValueAnimator = ValueAnimator.ofInt(0, 100)
     valueAnimator.addUpdateListener(new AnimatorUpdateListener {
       override def onAnimationUpdate(animation: ValueAnimator): Unit = {
@@ -213,7 +214,7 @@ class PathMorphDrawable(val defaultIcon: Int = NOICON, val defaultStroke: Int = 
         }
 
         val segmentToOver = toOver map { segment =>
-          transformSegment(new Segment(
+          transformSegment(Segment(
             Point(segment.point1.x + 1, segment.point1.y + 1),
             Point(segment.point1.x, segment.point1.y)), segment, fraction)
         }
@@ -307,20 +308,20 @@ case class Segment(
 object PathMorphDrawableTweaks {
   type W = ImageView
 
-  def pmdAnimIcon(icon: Int) = Tweak[W] {
+  def pmdAnimIcon(icon: Int): Tweak[W] = Tweak[W] {
     view =>
       view.getDrawable.asInstanceOf[PathMorphDrawable].setToTypeIcon(icon)
-      view.getDrawable.asInstanceOf[PathMorphDrawable].start
+      view.getDrawable.asInstanceOf[PathMorphDrawable].start()
   }
-  def pmdChangeIcon(icon: Int) = Tweak[W](view =>
+  def pmdChangeIcon(icon: Int): Tweak[W] = Tweak[W](view =>
     Try(view.getDrawable.asInstanceOf[PathMorphDrawable].setTypeIcon(icon)))
 
-  def pmdColor(color: Int) = Tweak[W](view =>
+  def pmdColor(color: Int): Tweak[W] = Tweak[W](view =>
     Try(view.getDrawable.asInstanceOf[PathMorphDrawable].setColor(color)))
 
-  def pmdColorResource(color: Int) = Tweak[W](view =>
+  def pmdColorResource(color: Int): Tweak[W] = Tweak[W](view =>
     Try(view.getDrawable.asInstanceOf[PathMorphDrawable].setColorResource(color)))
 
-  def pmdStroke(stroke: Float) = Tweak[W](view =>
+  def pmdStroke(stroke: Float): Tweak[W] = Tweak[W](view =>
     Try(view.getDrawable.asInstanceOf[PathMorphDrawable].setStroke(stroke)))
 }

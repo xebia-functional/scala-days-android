@@ -19,22 +19,22 @@ package com.fortysevendeg.android.scaladays.ui.speakers
 import android.support.v7.widget.RecyclerView
 import android.widget._
 import macroid.FullDsl._
-import macroid.ActivityContextWrapper
+import macroid.{ActivityContextWrapper, Ui}
 
 class SpeakersLayoutAdapter(implicit context: ActivityContextWrapper)
     extends AdapterStyles {
 
-  var avatar = slot[ImageView]
+  var avatar: Option[ImageView] = slot[ImageView]
 
-  var name = slot[TextView]
+  var name: Option[TextView] = slot[TextView]
 
-  var twitter = slot[TextView]
+  var twitter: Option[TextView] = slot[TextView]
 
-  var bio = slot[TextView]
+  var bio: Option[TextView] = slot[TextView]
 
-  val content = layout
+  val content: LinearLayout = layout
 
-  private def layout(implicit context: ActivityContextWrapper) = getUi(
+  private def layout(implicit context: ActivityContextWrapper) = Ui.get(
     l[LinearLayout](
       w[ImageView] <~ wire(avatar) <~ avatarStyle,
       l[LinearLayout](
@@ -49,14 +49,14 @@ class SpeakersLayoutAdapter(implicit context: ActivityContextWrapper)
 class ViewHolderSpeakersAdapter(adapter: SpeakersLayoutAdapter)(implicit context: ActivityContextWrapper)
     extends RecyclerView.ViewHolder(adapter.content) {
 
-  val content = adapter.content
+  val content: LinearLayout = adapter.content
 
-  val avatar = adapter.avatar
+  val avatar: Option[ImageView] = adapter.avatar
 
-  val name = adapter.name
+  val name: Option[TextView] = adapter.name
 
-  val twitter = adapter.twitter
+  val twitter: Option[TextView] = adapter.twitter
 
-  val bio = adapter.bio
+  val bio: Option[TextView] = adapter.bio
 
 }

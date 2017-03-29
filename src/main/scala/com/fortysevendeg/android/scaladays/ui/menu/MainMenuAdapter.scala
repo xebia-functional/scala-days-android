@@ -21,18 +21,19 @@ import android.view.View.OnClickListener
 import android.view.{View, ViewGroup}
 import com.fortysevendeg.android.scaladays.R
 import MenuSection._
-import macroid.{IdGeneration, ActivityContextWrapper}
-import com.fortysevendeg.macroid.extras.TextTweaks._
-import macroid.FullDsl._
+import macroid.{ActivityContextWrapper, IdGenerator}
+import macroid.extras.TextViewTweaks._
+import macroid._
 
 class MainMenuAdapter(listener: MainMenuClickListener)
     (implicit context: ActivityContextWrapper)
-    extends RecyclerView.Adapter[ViewHolderMainMenuAdapter]
-    with IdGeneration {
+    extends RecyclerView.Adapter[ViewHolderMainMenuAdapter] {
+
+  object Id extends IdGenerator(start = 1000)
   
   var selectedItem: Option[MainMenuItem] = None
 
-  val recyclerClickListener = listener
+  val recyclerClickListener: MainMenuClickListener = listener
 
   val list = List(
     MainMenuItem(Id.schedule,
@@ -73,8 +74,8 @@ class MainMenuAdapter(listener: MainMenuClickListener)
   override def onBindViewHolder(viewHolder: ViewHolderMainMenuAdapter, position: Int): Unit = {
     val mainMenuItem = list(position)
     viewHolder.content.setTag(position)
-    runUi(
-      viewHolder.title <~ tvText(mainMenuItem.name) <~ tvCompoundDrawablesWithIntrinsicBounds(mainMenuItem.icon, 0, 0, 0)
+    Ui.run(
+      viewHolder.title <~ tvText(mainMenuItem.name) <~ tvCompoundDrawablesWithIntrinsicBoundsResources(mainMenuItem.icon, 0, 0, 0)
     )
     
     selectedItem match {

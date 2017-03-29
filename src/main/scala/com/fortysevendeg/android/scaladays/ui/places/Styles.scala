@@ -18,10 +18,10 @@ package com.fortysevendeg.android.scaladays.ui.places
 
 import android.widget.{TextView, LinearLayout}
 import com.fortysevendeg.android.scaladays.R
-import com.fortysevendeg.macroid.extras.ResourcesExtras._
-import com.fortysevendeg.macroid.extras.TextTweaks._
-import com.fortysevendeg.macroid.extras.ViewTweaks._
-import com.fortysevendeg.macroid.extras.LinearLayoutTweaks._
+import macroid.extras.ResourcesExtras._
+import macroid.extras.TextViewTweaks._
+import macroid.extras.ViewTweaks._
+import macroid.extras.LinearLayoutTweaks._
 import macroid.{ContextWrapper, Tweak}
 
 trait PlacesInfoWindowStyles {
