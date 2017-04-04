@@ -54,10 +54,6 @@ class MainActivity
 
     setContentView(layout)
 
-    getApplication.registerActivityLifecycleCallbacks(
-      new LocalyticsActivityLifecycleCallbacks(this)
-    )
-
     startCrashlytics()
 
     Localytics.registerPush(getString(R.string.google_project_number))
@@ -83,7 +79,7 @@ class MainActivity
         }
       }
       actionBarDrawerToggle = Some(drawerToggle)
-      drawerLayout.setDrawerListener(drawerToggle)
+      drawerLayout.addDrawerListener(drawerToggle)
     }
 
     if (savedInstanceState == null) {
@@ -95,9 +91,17 @@ class MainActivity
     }
   }
 
+  override def onDestroy(): Unit = {
+    (drawerLayout, actionBarDrawerToggle) match {
+      case (Some(layout), Some(drawer)) => layout.removeDrawerListener(drawer)
+      case _ =>
+    }
+    super.onDestroy()
+  }
+
   override def onNewIntent(intent: Intent): Unit = {
     super.onNewIntent(intent)
-    setIntent(intent)
+    Localytics.onNewIntent(this, intent)
   }
 
   override def onActivityResult(requestCode: Int, resultCode: Int, data: Intent): Unit =
@@ -108,7 +112,6 @@ class MainActivity
   override def onPostCreate(savedInstanceState: Bundle): Unit = {
     super.onPostCreate(savedInstanceState)
     actionBarDrawerToggle foreach (_.syncState)
-
   }
 
   override def onConfigurationChanged(newConfig: Configuration): Unit = {

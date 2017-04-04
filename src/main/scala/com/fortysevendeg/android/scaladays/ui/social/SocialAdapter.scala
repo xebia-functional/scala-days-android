@@ -16,17 +16,19 @@
 
 package com.fortysevendeg.android.scaladays.ui.social
 
+import android.annotation.SuppressLint
+import android.os.Build.VERSION_CODES
 import android.support.v7.widget.RecyclerView
-import android.text.Html
+import android.text.{Html, Spanned}
 import android.view.View.OnClickListener
 import android.view.{View, ViewGroup}
 import com.fortysevendeg.android.scaladays.R
 import com.fortysevendeg.android.scaladays.model.TwitterMessage
-import com.fortysevendeg.android.scaladays.ui.commons.DateTimeTextViewTweaks._
 import com.fortysevendeg.android.scaladays.ui.commons.AsyncImageTweaks._
-import macroid.extras.TextViewTweaks._
+import com.fortysevendeg.android.scaladays.ui.commons.DateTimeTextViewTweaks._
 import macroid._
-import macroid.ActivityContextWrapper
+import macroid.extras.DeviceVersion.Version
+import macroid.extras.TextViewTweaks._
 
 case class SocialAdapter(messages: Seq[TwitterMessage], listener: RecyclerClickListener)
     (implicit context: ActivityContextWrapper)
@@ -45,6 +47,13 @@ case class SocialAdapter(messages: Seq[TwitterMessage], listener: RecyclerClickL
   override def getItemCount: Int = messages.size
 
   override def onBindViewHolder(viewHolder: ViewHolderSocialAdapter, position: Int): Unit = {
+
+    @SuppressLint(Array("NewApi"))
+    def fromHtml(message: String): Spanned =
+      new Version(VERSION_CODES.N) ifSupportedThen {
+        Html.fromHtml(message, Html.FROM_HTML_MODE_LEGACY)
+      } getOrElse Html.fromHtml(message)
+
     val message = messages(position)
     val avatarSize = context.application.getResources.getDimensionPixelSize(R.dimen.size_avatar)
     viewHolder.content.setTag(position)
@@ -54,7 +63,7 @@ case class SocialAdapter(messages: Seq[TwitterMessage], listener: RecyclerClickL
           (viewHolder.name <~ tvText(message.fullName)) ~
           (viewHolder.date <~ tvPrettyTime(message.date)) ~
           (viewHolder.twitter <~ tvText("@%s".format(message.screenName))) ~
-          (viewHolder.message <~ tvText(Html.fromHtml(message.message)))
+          (viewHolder.message <~ tvText(fromHtml(message.message)))
     )
   }
 }

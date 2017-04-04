@@ -91,7 +91,10 @@ class MenuFragment
 
   override def onAttach(activity: Activity): Unit = {
     super.onAttach(activity)
-    mainActivity = Some(activity.asInstanceOf[MainActivity])
+    mainActivity = activity match {
+      case a: MainActivity => Some(a)
+      case _               => None
+    }
   }
 
   override def onCreateView(inflater: LayoutInflater, container: ViewGroup, savedInstanceState: Bundle): View = {

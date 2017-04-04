@@ -27,7 +27,8 @@
     <application
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
-        android:theme="@style/AppTheme">
+        android:theme="@style/AppTheme"
+        android:name=".ui.ScalaDaysApplication">
 
         <meta-data
             android:name="com.google.android.gms.version"
@@ -80,6 +81,8 @@
             android:name="com.google.zxing.client.android.HelpActivity"
             android:screenOrientation="user"/>
 
+        <activity android:name="com.localytics.android.PushTrackingActivity"/>
+
         <service android:name=".services.ReloadJsonService"/>
 
         <receiver
@@ -95,15 +98,38 @@
         <!-- Localytics Receiver -->
 
         <receiver
-            android:name="com.localytics.android.PushReceiver"
-            android:permission="com.google.android.c2dm.permission.SEND">
+            android:name="com.localytics.android.ReferralReceiver"
+            android:exported="true">
             <intent-filter>
-                <action android:name="com.google.android.c2dm.intent.REGISTRATION"/>
-                <action android:name="com.google.android.c2dm.intent.RECEIVE"/>
-
-                <category android:name="com.fortysevendeg.android.scaladays"/>
+                <action android:name="com.android.vending.INSTALL_REFERRER" />
             </intent-filter>
         </receiver>
+
+        <receiver
+            android:name="com.google.android.gms.gcm.GcmReceiver"
+            android:exported="true"
+            android:permission="com.google.android.c2dm.permission.SEND" >
+            <intent-filter>
+                <action android:name="com.google.android.c2dm.intent.RECEIVE" />
+                <category android:name="com.fortysevendeg.android.scaladays" />
+            </intent-filter>
+        </receiver>
+
+        <service
+            android:name="com.localytics.android.GcmListenerService"
+            android:exported="false" >
+            <intent-filter>
+                <action android:name="com.google.android.c2dm.intent.RECEIVE" />
+            </intent-filter>
+        </service>
+
+        <service
+            android:name="com.localytics.android.InstanceIDListenerService"
+            android:exported="false" >
+            <intent-filter>
+                <action android:name="com.google.android.gms.iid.InstanceID" />
+            </intent-filter>
+        </service>
 
     </application>
 

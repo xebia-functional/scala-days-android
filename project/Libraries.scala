@@ -21,75 +21,39 @@ object Libraries {
   def onCompile(dep: ModuleID): ModuleID = dep % "compile"
   def onTest(dep: ModuleID): ModuleID = dep % "test"
 
-  object scala {
+  def androidDep(module: String): ModuleID =
+    "com.android.support" % module % Versions.androidV
+  def playServicesDep(module: String): ModuleID =
+    "com.google.android.gms" % module % Versions.playServicesV
+  def macroid(module: String = ""): ModuleID =
+    "org.macroid" %% s"macroid${if (!module.isEmpty) s"-$module" else ""}" % Versions.macroidV
 
-    lazy val scalaReflect = "org.scala-lang" % "scala-reflect" % Versions.scalaV
-    lazy val scalap = "org.scala-lang" % "scalap" % Versions.scalaV
-  }
+  lazy val androidSupportv4 = androidDep("support-v4")
+  lazy val androidAppCompat = androidDep("appcompat-v7")
+  lazy val androidRecyclerview = androidDep("recyclerview-v7")
+  lazy val androidCardView = androidDep("cardview-v7")
 
-  object android {
+  lazy val macroidRoot = macroid()
+  lazy val macroidExtras = macroid("extras")
 
-    def androidDep(module: String) = "com.android.support" % module % Versions.androidV
+  lazy val okHttp = "com.squareup.okhttp3" % "okhttp" % Versions.okHttpV
+  lazy val picasso = "com.squareup.picasso" % "picasso" % Versions.picassoV
+  lazy val playJson = "com.typesafe.play" %% "play-json" % Versions.playJsonV
+  lazy val prettytime = "org.ocpsoft.prettytime" % "prettytime" % Versions.prettytimeV
+  lazy val twitter4j = "org.twitter4j" % "twitter4j-core" % Versions.twitter4jV
+  lazy val zxingAndroid = "com.embarkmobile" % "zxing-android-minimal" % Versions.zxingAndroidV
+  lazy val zxingCore = "com.google.zxing" % "core" % Versions.zxingCoreV
 
-    lazy val multiDexLib = "com.android.support" % "multidex" % Versions.multiDexV
+  lazy val playServicesAds = playServicesDep("play-services-ads")
+  lazy val playServicesAnalytics = playServicesDep("play-services-analytics")
+  lazy val playServicesBase = playServicesDep("play-services-base")
+  lazy val playServicesGcm = playServicesDep("play-services-gcm")
+  lazy val playServicesMaps = playServicesDep("play-services-maps")
 
-    lazy val androidSupportv4 = androidDep("support-v4")
-    lazy val androidAppCompat = androidDep("appcompat-v7")
-    lazy val androidRecyclerview = androidDep("recyclerview-v7")
-    lazy val androidCardView = androidDep("cardview-v7")
-  }
+  lazy val crashlytics = "com.crashlytics.sdk.android" % "crashlytics" % Versions.crashlyticsV
+  lazy val localytics = "com.localytics.android" % "library" % Versions.localyticsV
 
-  object macroid {
-
-    def macroid(module: String = "") =
-      "org.macroid" %% s"macroid${if(!module.isEmpty) s"-$module" else ""}" % Versions.macroidV
-
-    lazy val macroidRoot = macroid()
-    lazy val macroidExtras = macroid("extras")
-  }
-
-  object json {
-    lazy val playJson = "com.typesafe.play" %% "play-json" % Versions.playJsonV
-  }
-
-  object net {
-    lazy val okHttp = "com.squareup.okhttp3" % "okhttp" % Versions.okHttpV
-  }
-  
-  object test {
-    lazy val specs2 = "org.specs2" %% "specs2-core" % Versions.specs2V % "test"
-    lazy val androidTest = "com.google.android" % "android" % "4.1.1.4" % "test"
-    lazy val mockito = "org.specs2" % "specs2-mock_2.11" % Versions.mockitoV % "test"
-  }
-
-  object graphics {
-    lazy val picasso = "com.squareup.picasso" % "picasso" % Versions.picassoV
-  }
-
-  object social {
-    lazy val twitter4j = "org.twitter4j" % "twitter4j-core" % Versions.twitter4jV
-  }
-
-  object date {
-    lazy val prettytime = "org.ocpsoft.prettytime" % "prettytime" % Versions.prettytimeV
-  }
-
-  object qr {
-    lazy val zxingCore = "com.google.zxing" % "core" % Versions.zxingCoreV
-    lazy val zxingAndroid = "com.embarkmobile" % "zxing-android-minimal" % Versions.zxingAndroidV
-  }
-
-  object playServices {
-
-    def playServicesDep(module: String) = "com.google.android.gms" % module % Versions.playServicesV
-    
-    lazy val playServicesMaps = playServicesDep("play-services-maps")
-    lazy val playServicesAnalytics = playServicesDep("play-services-analytics")
-    lazy val playServicesBase = playServicesDep("play-services-base")
-  }
-
-  object debug {
-    lazy val crashlytics = "com.crashlytics.sdk.android" % "crashlytics" % Versions.crashlyticsV
-  }
-
+  lazy val specs2 = "org.specs2" %% "specs2-core" % Versions.specs2V % "test"
+  lazy val androidTest = "com.google.android" % "android" % "4.1.1.4" % "test"
+  lazy val mockito = "org.specs2" % "specs2-mock_2.11" % Versions.mockitoV % "test"
 }
