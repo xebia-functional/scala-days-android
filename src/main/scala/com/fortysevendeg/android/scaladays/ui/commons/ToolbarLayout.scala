@@ -19,7 +19,7 @@ package com.fortysevendeg.android.scaladays.ui.commons
 import android.support.v7.widget.Toolbar
 import android.view.{ContextThemeWrapper, View}
 import com.fortysevendeg.android.scaladays.R
-import com.fortysevendeg.macroid.extras.ResourcesExtras._
+import macroid.extras.ResourcesExtras._
 import macroid.FullDsl._
 import macroid.{ActivityContextWrapper, Ui}
 

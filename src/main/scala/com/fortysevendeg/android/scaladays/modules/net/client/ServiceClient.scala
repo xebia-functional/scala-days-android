@@ -61,9 +61,6 @@ class ServiceClient(httpClient: HttpClient) {
       case (None, false) =>
         println("No content")
         None
-      case (Some(d), false) =>
-        println("No transformer found for type")
-        None
       case _ => None
     }
   }

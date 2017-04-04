@@ -31,7 +31,7 @@ object Libraries {
 
     def androidDep(module: String) = "com.android.support" % module % Versions.androidV
 
-    lazy val multiDexLib = "com.google.android" % "multidex" % Versions.multiDexV
+    lazy val multiDexLib = "com.android.support" % "multidex" % Versions.multiDexV
 
     lazy val androidSupportv4 = androidDep("support-v4")
     lazy val androidAppCompat = androidDep("appcompat-v7")
@@ -45,7 +45,7 @@ object Libraries {
       "org.macroid" %% s"macroid${if(!module.isEmpty) s"-$module" else ""}" % Versions.macroidV
 
     lazy val macroidRoot = macroid()
-    lazy val macroidExtras = "com.fortysevendeg" %% "macroid-extras" % Versions.macroidExtrasV
+    lazy val macroidExtras = macroid("extras")
   }
 
   object json {
@@ -53,7 +53,7 @@ object Libraries {
   }
 
   object net {
-    lazy val okHttp = "com.squareup.okhttp" % "okhttp" % Versions.okHttpV
+    lazy val okHttp = "com.squareup.okhttp3" % "okhttp" % Versions.okHttpV
   }
   
   object test {
@@ -84,7 +84,7 @@ object Libraries {
     def playServicesDep(module: String) = "com.google.android.gms" % module % Versions.playServicesV
     
     lazy val playServicesMaps = playServicesDep("play-services-maps")
-    // Google Actions, Google Analytics and Google Cloud Messaging
+    lazy val playServicesAnalytics = playServicesDep("play-services-analytics")
     lazy val playServicesBase = playServicesDep("play-services-base")
   }
 

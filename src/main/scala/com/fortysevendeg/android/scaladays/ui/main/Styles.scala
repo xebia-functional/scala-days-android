@@ -21,10 +21,10 @@ import android.view.Gravity
 import android.view.ViewGroup.LayoutParams._
 import android.widget.{FrameLayout, LinearLayout}
 import com.fortysevendeg.android.scaladays.R
-import com.fortysevendeg.macroid.extras.DrawerLayoutTweaks._
-import com.fortysevendeg.macroid.extras.LinearLayoutTweaks._
-import com.fortysevendeg.macroid.extras.ResourcesExtras._
-import com.fortysevendeg.macroid.extras.ViewTweaks._
+import macroid.extras.DrawerLayoutTweaks._
+import macroid.extras.LinearLayoutTweaks._
+import macroid.extras.ResourcesExtras._
+import macroid.extras.ViewTweaks._
 import macroid.FullDsl._
 import macroid.{ContextWrapper, Tweak}
 

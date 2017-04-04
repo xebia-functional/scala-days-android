@@ -22,12 +22,12 @@ import android.widget.ImageView.ScaleType
 import android.widget._
 import com.fortysevendeg.android.scaladays.R
 import com.fortysevendeg.android.scaladays.ui.commons.AsyncImageTweaks._
-import com.fortysevendeg.macroid.extras.FrameLayoutTweaks._
-import com.fortysevendeg.macroid.extras.LinearLayoutTweaks._
-import com.fortysevendeg.macroid.extras.ResourcesExtras._
-import com.fortysevendeg.macroid.extras.TextTweaks._
-import com.fortysevendeg.macroid.extras.ImageViewTweaks._
-import com.fortysevendeg.macroid.extras.ViewTweaks._
+import macroid.extras.FrameLayoutTweaks._
+import macroid.extras.LinearLayoutTweaks._
+import macroid.extras.ResourcesExtras._
+import macroid.extras.TextViewTweaks._
+import macroid.extras.ImageViewTweaks._
+import macroid.extras.ViewTweaks._
 import macroid.FullDsl._
 import macroid.{ActivityContextWrapper, ContextWrapper, Tweak}
 
@@ -77,7 +77,7 @@ trait SpeakersLayoutStyles {
 trait AdapterStyles {
 
   def itemRootContentStyle(implicit context: ContextWrapper): Tweak[FrameLayout] =
-    vMatchParent +
+    vMatchWidth +
       flForeground(resGetDrawable(R.drawable.foreground_list_dark))
 
   def tagFavoriteStyle(implicit context: ContextWrapper): Tweak[ImageView] =
@@ -112,7 +112,7 @@ trait AdapterStyles {
       vPaddings(resGetDimensionPixelSize(R.dimen.padding_default_small), 0) +
       vBackgroundColorResource(R.color.primary) +
       tvColorResource(R.color.text_vote) +
-      tvAllCaps +
+      tvAllCaps() +
       vGone
 
   def voteStyle(implicit context: ContextWrapper): Tweak[ImageView] =

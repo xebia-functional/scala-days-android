@@ -19,11 +19,11 @@ package com.fortysevendeg.android.scaladays.ui.about
 import android.view.Gravity
 import android.widget.{ImageView, LinearLayout, ScrollView, TextView}
 import com.fortysevendeg.android.scaladays.R
-import com.fortysevendeg.macroid.extras.ImageViewTweaks._
-import com.fortysevendeg.macroid.extras.LinearLayoutTweaks._
-import com.fortysevendeg.macroid.extras.ResourcesExtras._
-import com.fortysevendeg.macroid.extras.TextTweaks._
-import com.fortysevendeg.macroid.extras.ViewTweaks._
+import macroid.extras.ImageViewTweaks._
+import macroid.extras.LinearLayoutTweaks._
+import macroid.extras.ResourcesExtras._
+import macroid.extras.TextViewTweaks._
+import macroid.extras.ViewTweaks._
 import macroid.{ContextWrapper, Tweak}
 
 import scala.language.postfixOps

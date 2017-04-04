@@ -37,7 +37,7 @@ trait Layout
 
   val DisplayDurationKey: String = "RESULT_DISPLAY_DURATION_MS"
 
-  def content(implicit context: ActivityContextWrapper) = getUi(
+  def content(implicit context: ActivityContextWrapper) = Ui.get(
     l[LinearLayout](
       w[ImageView] <~ qrImageStyle,
       w[TextView] <~ qrMessageStyle,

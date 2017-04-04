@@ -43,6 +43,7 @@ libraryDependencies ++= Seq(
   aar(androidRecyclerview),
   aar(macroidExtras),
   aar(playServicesBase),
+  aar(playServicesAnalytics),
   aar(playServicesMaps),
   okHttp,
   crashlytics,
@@ -81,7 +82,8 @@ packagingOptions in Android := PackagingOptions(excludes = Seq(
   "META-INF/LICENSE",
   "META-INF/LICENSE.txt",
   "META-INF/NOTICE",
-  "META-INF/NOTICE.txt"))
+  "META-INF/NOTICE.txt",
+  "META-INF/services/com.fasterxml.jackson.databind.Module"))
 
 packageResources in Android <<= (packageResources in Android).dependsOn(replaceValuesTask)
 

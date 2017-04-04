@@ -23,12 +23,12 @@ import android.view.ViewGroup.LayoutParams._
 import android.widget.ImageView.ScaleType
 import android.widget._
 import com.fortysevendeg.android.scaladays.R
-import com.fortysevendeg.macroid.extras.FrameLayoutTweaks._
-import com.fortysevendeg.macroid.extras.ImageViewTweaks._
-import com.fortysevendeg.macroid.extras.LinearLayoutTweaks._
-import com.fortysevendeg.macroid.extras.TextTweaks._
-import com.fortysevendeg.macroid.extras.ViewTweaks._
-import com.fortysevendeg.macroid.extras.ResourcesExtras._
+import macroid.extras.FrameLayoutTweaks._
+import macroid.extras.ImageViewTweaks._
+import macroid.extras.LinearLayoutTweaks._
+import macroid.extras.TextViewTweaks._
+import macroid.extras.ViewTweaks._
+import macroid.extras.ResourcesExtras._
 import macroid.FullDsl._
 import macroid.{ContextWrapper, Tweak}
 

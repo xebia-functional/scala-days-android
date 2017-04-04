@@ -22,17 +22,17 @@ import android.view.{View, ViewGroup}
 import com.fortysevendeg.android.scaladays.R
 import com.fortysevendeg.android.scaladays.model.Speaker
 import com.fortysevendeg.android.scaladays.ui.commons.AsyncImageTweaks._
-import com.fortysevendeg.macroid.extras.ImageViewTweaks._
-import com.fortysevendeg.macroid.extras.TextTweaks._
-import com.fortysevendeg.macroid.extras.ViewTweaks._
-import macroid.FullDsl._
+import macroid.extras.ImageViewTweaks._
+import macroid.extras.TextViewTweaks._
+import macroid.extras.ViewTweaks._
+import macroid._
 import macroid.ActivityContextWrapper
 
 class SpeakersAdapter(speakers: Seq[Speaker], listener: RecyclerClickListener)
     (implicit context: ActivityContextWrapper)
     extends RecyclerView.Adapter[ViewHolderSpeakersAdapter] {
 
-  val recyclerClickListener = listener
+  val recyclerClickListener: RecyclerClickListener = listener
 
   override def onCreateViewHolder(parentViewGroup: ViewGroup, i: Int): ViewHolderSpeakersAdapter = {
     val adapter = new SpeakersLayoutAdapter()
@@ -48,7 +48,7 @@ class SpeakersAdapter(speakers: Seq[Speaker], listener: RecyclerClickListener)
     val speaker = speakers(position)
     val avatarSize = context.application.getResources.getDimensionPixelSize(R.dimen.size_avatar)
     viewHolder.content.setTag(position)
-    runUi(
+    Ui.run(
       (viewHolder.avatar <~
         (speaker.picture map {
           roundedImage(_, R.drawable.placeholder_circle, avatarSize, Some(R.drawable.placeholder_avatar_failed))

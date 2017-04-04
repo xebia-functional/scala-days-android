@@ -17,8 +17,8 @@
 package com.fortysevendeg.android.scaladays.utils
 
 import android.text.format.DateFormat
-import com.fortysevendeg.macroid.extras.ResourcesExtras._
 import macroid.ContextWrapper
+import macroid.extras.ResourcesExtras._
 import org.joda.time.format.{DateTimeFormat, DateTimeFormatterBuilder, DateTimeFormatter, ISODateTimeFormat}
 import org.joda.time.{DateTimeFieldType, DateTime, DateTimeZone}
 import org.ocpsoft.prettytime.PrettyTime
@@ -27,19 +27,19 @@ object DateTimeUtils {
 
   val ordinalPrefix = List("th", "st", "nd", "rd", "th", "th", "th", "th", "th", "th")
 
-  val ISODateFormatterDay = ISODateTimeFormat.date
-  val ISODateFormatterDateTime = ISODateTimeFormat.dateTimeNoMillis
-  val ISODateFormatter24hTime = ISODateTimeFormat.hourMinute
-  val ISODateFormatter12hTime = DateTimeFormat.forPattern("h:mm aa")
-  val ISODateFormatterDayOfMonth = new DateTimeFormatterBuilder()
-      .appendDecimal(DateTimeFieldType.dayOfMonth(), 1, 2)
-      .toFormatter()
-  val ISODateFormatterMonthOfYear = new DateTimeFormatterBuilder()
-      .appendDecimal(DateTimeFieldType.monthOfYear(), 1, 2)
-      .toFormatter()
-  val ISODateFormatterDayOfWeek = new DateTimeFormatterBuilder()
-      .appendDecimal(DateTimeFieldType.dayOfWeek(), 1, 2)
-      .toFormatter()
+  val ISODateFormatterDay: DateTimeFormatter = ISODateTimeFormat.date
+  val ISODateFormatterDateTime: DateTimeFormatter = ISODateTimeFormat.dateTimeNoMillis
+  val ISODateFormatter24hTime: DateTimeFormatter = ISODateTimeFormat.hourMinute
+  val ISODateFormatter12hTime: DateTimeFormatter = DateTimeFormat.forPattern("h:mm aa")
+  val ISODateFormatterDayOfMonth: DateTimeFormatter = new DateTimeFormatterBuilder()
+    .appendDecimal(DateTimeFieldType.dayOfMonth(), 1, 2)
+    .toFormatter
+  val ISODateFormatterMonthOfYear: DateTimeFormatter = new DateTimeFormatterBuilder()
+    .appendDecimal(DateTimeFieldType.monthOfYear(), 1, 2)
+    .toFormatter
+  val ISODateFormatterDayOfWeek: DateTimeFormatter = new DateTimeFormatterBuilder()
+    .appendDecimal(DateTimeFieldType.dayOfWeek(), 1, 2)
+    .toFormatter
 
   def parseDate(
       date: String,

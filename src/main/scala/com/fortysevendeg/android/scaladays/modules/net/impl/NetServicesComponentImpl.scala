@@ -18,7 +18,6 @@ package com.fortysevendeg.android.scaladays.modules.net.impl
 
 import java.io.File
 
-import android.util.Log
 import com.fortysevendeg.android.scaladays.R
 import com.fortysevendeg.android.scaladays.commons.ContextWrapperProvider
 import com.fortysevendeg.android.scaladays.modules.net.client.ServiceClient
@@ -27,7 +26,6 @@ import com.fortysevendeg.android.scaladays.modules.net.client.messages.{ServiceC
 import com.fortysevendeg.android.scaladays.modules.net._
 import com.fortysevendeg.android.scaladays.scaladays.Service
 import com.fortysevendeg.android.scaladays.utils.FileUtils
-import com.squareup.{okhttp => okHttp}
 
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
@@ -94,16 +92,13 @@ trait NetServicesComponentImpl
       Try {
         writeText(file, jsonContent)
       } match {
-        case Success(response) => true
-        case Failure(ex) => false
+        case Success(_) => true
+        case Failure(_) => false
       }
     }
 
   }
 
-  private[this] def createHttpClient = {
-    val okHttpClient = new okHttp.OkHttpClient
-    new OkHttpClient(okHttpClient)
-  }
+  private[this] def createHttpClient = new OkHttpClient(new okhttp3.OkHttpClient)
 
 }

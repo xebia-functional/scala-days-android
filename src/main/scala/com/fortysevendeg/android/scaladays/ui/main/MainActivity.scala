@@ -34,9 +34,9 @@ import com.fortysevendeg.android.scaladays.ui.social.SocialFragment
 import com.fortysevendeg.android.scaladays.ui.speakers.SpeakersFragment
 import com.fortysevendeg.android.scaladays.ui.sponsors.SponsorsFragment
 import com.fortysevendeg.android.scaladays.utils.AlarmUtils
-import com.fortysevendeg.macroid.extras.DrawerLayoutTweaks._
-import com.fortysevendeg.macroid.extras.FragmentExtras._
-import com.fortysevendeg.macroid.extras.ToolbarTweaks._
+import macroid.extras.DrawerLayoutTweaks._
+import macroid.extras.FragmentExtras._
+import macroid.extras.ToolbarTweaks._
 import com.localytics.android.{LocalyticsActivityLifecycleCallbacks, Localytics}
 import io.fabric.sdk.android.Fabric
 import macroid.FullDsl._
@@ -45,12 +45,11 @@ import macroid._
 class MainActivity
   extends AppCompatActivity
   with Contexts[FragmentActivity]
-  with Layout
-  with IdGeneration { self =>
+  with Layout { self =>
 
   var actionBarDrawerToggle: Option[ActionBarDrawerToggle] = None
 
-  override def onCreate(savedInstanceState: Bundle) = {
+  override def onCreate(savedInstanceState: Bundle): Unit = {
     super.onCreate(savedInstanceState)
 
     setContentView(layout)
@@ -88,7 +87,7 @@ class MainActivity
     }
 
     if (savedInstanceState == null) {
-      runUi(
+      Ui.run(
         replaceFragment(
           builder = f[MenuFragment],
           id = Id.menuFragment,
@@ -133,7 +132,7 @@ class MainActivity
       case ABOUT => f[AboutFragment]
       case _ => throw new IllegalStateException
     }
-    runUi(
+    Ui.run(
       (toolBar <~ tbTitle(title)) ~
         (drawerLayout <~ dlCloseDrawer(fragmentMenu)) ~
         replaceFragment(

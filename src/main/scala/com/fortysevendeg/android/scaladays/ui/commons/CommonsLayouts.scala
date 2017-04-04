@@ -19,16 +19,16 @@ package com.fortysevendeg.android.scaladays.ui.commons
 import android.support.v7.widget.RecyclerView
 import android.widget.{LinearLayout, TextView}
 import macroid.FullDsl._
-import macroid.ActivityContextWrapper
+import macroid.{ActivityContextWrapper, Ui}
 
 class HeaderLayoutAdapter(implicit context: ActivityContextWrapper)
     extends HeaderAdapterStyles {
 
-  var headerName = slot[TextView]
+  var headerName: Option[TextView] = slot[TextView]
 
-  val content = layout
+  val content: LinearLayout = layout
 
-  private def layout(implicit context: ActivityContextWrapper) = getUi(
+  private def layout(implicit context: ActivityContextWrapper) = Ui.get(
     l[LinearLayout](
       w[TextView] <~ wire(headerName) <~ headerNameStyle
     ) <~ headerContentStyle
@@ -38,8 +38,8 @@ class HeaderLayoutAdapter(implicit context: ActivityContextWrapper)
 class ViewHolderHeaderAdapter(adapter: HeaderLayoutAdapter)(implicit context: ActivityContextWrapper)
     extends RecyclerView.ViewHolder(adapter.content) {
 
-  val content = adapter.content
+  val content: LinearLayout = adapter.content
 
-  val headerName = adapter.headerName
+  val headerName: Option[TextView] = adapter.headerName
 
 }

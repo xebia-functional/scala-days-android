@@ -23,8 +23,8 @@ import com.fortysevendeg.android.scaladays.utils.DateTimeUtils
 import com.squareup.picasso.Picasso
 import macroid.{ContextWrapper, ActivityContextWrapper, Tweak}
 import org.joda.time.DateTime
-import com.fortysevendeg.macroid.extras.ViewTweaks._
-import com.fortysevendeg.macroid.extras.DeviceVersion._
+import macroid.extras.ViewTweaks._
+import macroid.extras.DeviceVersion._
 
 object AsyncImageTweaks {
   type W = ImageView

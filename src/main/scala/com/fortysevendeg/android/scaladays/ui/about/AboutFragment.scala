@@ -22,9 +22,9 @@ import android.view.{LayoutInflater, View, ViewGroup}
 import com.fortysevendeg.android.scaladays.modules.ComponentRegistryImpl
 import com.fortysevendeg.android.scaladays.ui.commons.AnalyticStrings._
 import com.fortysevendeg.android.scaladays.ui.commons.UiServices
-import com.fortysevendeg.macroid.extras.TextTweaks._
-import com.fortysevendeg.macroid.extras.ViewTweaks._
-import macroid.FullDsl._
+import macroid.extras.TextViewTweaks._
+import macroid.extras.ViewTweaks._
+import macroid._
 import macroid.{ContextWrapper, Contexts, Ui}
 
 import scala.concurrent.ExecutionContext.Implicits.global

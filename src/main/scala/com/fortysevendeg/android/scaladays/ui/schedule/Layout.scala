@@ -19,21 +19,21 @@ package com.fortysevendeg.android.scaladays.ui.schedule
 import android.support.v7.widget.RecyclerView
 import android.widget._
 import com.fortysevendeg.android.scaladays.model.Speaker
-import macroid.ActivityContextWrapper
+import macroid.{ActivityContextWrapper, Ui}
 import macroid.FullDsl._
 
 class SpeakersLayout(speaker: Speaker)(implicit context: ActivityContextWrapper)
   extends SpeakersLayoutStyles {
 
-  val content = layout
+  val content: LinearLayout = layout
 
-  var avatar = slot[ImageView]
+  var avatar: Option[ImageView] = slot[ImageView]
 
-  var speakerName = slot[TextView]
+  var speakerName: Option[TextView] = slot[TextView]
 
-  var speakerTwitter = slot[TextView]
+  var speakerTwitter: Option[TextView] = slot[TextView]
 
-  private def layout(implicit context: ActivityContextWrapper) = getUi(
+  private def layout(implicit context: ActivityContextWrapper) = Ui.get(
     l[LinearLayout](
       l[FrameLayout](
         w[ImageView] <~ wire(avatar) <~ avatarStyle(speaker.picture)
@@ -50,27 +50,27 @@ class SpeakersLayout(speaker: Speaker)(implicit context: ActivityContextWrapper)
 class ScheduleLayoutAdapter(implicit context: ActivityContextWrapper)
   extends AdapterStyles {
 
-  var hourContent = slot[LinearLayout]
+  var hourContent: Option[LinearLayout] = slot[LinearLayout]
 
-  var voteAction = slot[TextView]
+  var voteAction: Option[TextView] = slot[TextView]
 
-  var vote = slot[ImageView]
+  var vote: Option[ImageView] = slot[ImageView]
 
-  var hour = slot[TextView]
+  var hour: Option[TextView] = slot[TextView]
 
-  var room = slot[TextView]
+  var room: Option[TextView] = slot[TextView]
 
-  var name = slot[TextView]
+  var name: Option[TextView] = slot[TextView]
 
-  var track = slot[TextView]
+  var track: Option[TextView] = slot[TextView]
 
-  var tagFavorite = slot[ImageView]
+  var tagFavorite: Option[ImageView] = slot[ImageView]
 
-  var speakerContent = slot[LinearLayout]
+  var speakerContent: Option[LinearLayout] = slot[LinearLayout]
 
-  val content = layout
+  val content: FrameLayout = layout
 
-  private def layout(implicit context: ActivityContextWrapper) = getUi(
+  private def layout(implicit context: ActivityContextWrapper) = Ui.get(
     l[FrameLayout](
       l[LinearLayout](
         l[LinearLayout](
@@ -93,24 +93,24 @@ class ScheduleLayoutAdapter(implicit context: ActivityContextWrapper)
 class ViewHolderScheduleAdapter(adapter: ScheduleLayoutAdapter)(implicit context: ActivityContextWrapper)
   extends RecyclerView.ViewHolder(adapter.content) {
 
-  val content = adapter.content
+  val content: FrameLayout = adapter.content
 
-  val hourContent = adapter.hourContent
+  val hourContent: Option[LinearLayout] = adapter.hourContent
 
-  val voteAction = adapter.voteAction
+  val voteAction: Option[TextView] = adapter.voteAction
 
-  val vote = adapter.vote
+  val vote: Option[ImageView] = adapter.vote
 
-  val hour = adapter.hour
+  val hour: Option[TextView] = adapter.hour
 
-  val room = adapter.room
+  val room: Option[TextView] = adapter.room
 
-  val name = adapter.name
+  val name: Option[TextView] = adapter.name
 
-  val track = adapter.track
+  val track: Option[TextView] = adapter.track
 
-  val tagFavorite = adapter.tagFavorite
+  val tagFavorite: Option[ImageView] = adapter.tagFavorite
 
-  val speakerContent = adapter.speakerContent
+  val speakerContent: Option[LinearLayout] = adapter.speakerContent
 
 }

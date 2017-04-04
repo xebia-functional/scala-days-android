@@ -31,8 +31,9 @@ import com.fortysevendeg.android.scaladays.ui.commons.AnalyticStrings._
 import com.fortysevendeg.android.scaladays.ui.commons.IntegerResults._
 import com.fortysevendeg.android.scaladays.ui.commons.{ListLayout, UiServices}
 import com.fortysevendeg.android.scaladays.ui.scheduledetail.ScheduleDetailActivity
-import com.fortysevendeg.macroid.extras.RecyclerViewTweaks._
-import com.fortysevendeg.macroid.extras.UIActionsExtras._
+import macroid._
+import macroid.extras.RecyclerViewTweaks._
+import macroid.extras.UIActionsExtras._
 import macroid.FullDsl._
 import macroid.{ContextWrapper, Contexts, Tweak, Ui}
 
@@ -66,7 +67,7 @@ class ScheduleFragment
 
   override def onViewCreated(view: View, savedInstanceState: Bundle): Unit = {
     super.onViewCreated(view, savedInstanceState)
-    runUi(
+    Ui.run(
       (recyclerView
         <~ rvLayoutManager(layoutManager)
         <~ rvAddItemDecoration(new ScheduleItemDecorator())) ~
@@ -94,7 +95,7 @@ class ScheduleFragment
         .setCancelable(true)
         .setItems(R.array.filter_menu, new OnClickListener() {
         override def onClick(dialog: DialogInterface, which: Int): Unit = {
-          runUi(which match {
+          Ui.run(which match {
             case 0 =>
               analyticsServices.sendEvent(
                 Some(analyticsScheduleListScreen),
@@ -114,7 +115,7 @@ class ScheduleFragment
     case R.id.action_clock =>
       indexEventNow map {
         index =>
-          runUi(recyclerView <~ Tweak[RecyclerView](_.smoothScrollToPosition(index)))
+          Ui.run(recyclerView <~ Tweak[RecyclerView](_.smoothScrollToPosition(index)))
       }
       true
     case _ => super.onOptionsItemSelected(item)
@@ -124,7 +125,7 @@ class ScheduleFragment
     super.onActivityResult(requestCode, resultCode, data)
     (requestCode, resultCode) match {
       case (`detailResult`, Activity.RESULT_OK) =>
-        runUi(
+        Ui.run(
           recyclerView <~ Tweak[RecyclerView] {
             rv =>
               rv.getAdapter match {
@@ -134,10 +135,10 @@ class ScheduleFragment
           }
         )
       case (`voteResult`, Activity.RESULT_OK) =>
-        runUi(
+        Ui.run(
           recyclerView <~ Tweak[RecyclerView](_.getAdapter.notifyDataSetChanged()))
       case (`voteResult`, Activity.RESULT_CANCELED) =>
-        runUi(uiShortToast(R.string.voteFailed))
+        Ui.run(uiShortToast(R.string.voteFailed))
       case _ =>
     }
   }
@@ -145,11 +146,11 @@ class ScheduleFragment
   def loadSchedule(favorites: Boolean = false, forceDownload: Boolean = false, swipe: Boolean = false): Ui[_] = {
     loadSelectedConference(forceDownload) mapUi {
       conference =>
-        if (swipe) runUi(refreshLayout <~ srlRefreshing(false))
+        if (swipe) Ui.run(refreshLayout <~ srlRefreshing(false))
         reloadList(conference.info.id, conference.info.utcTimezoneOffset, conference.schedule, favorites)
     } recoverUi {
       case _ =>
-        if (swipe) runUi(refreshLayout <~ srlRefreshing(false))
+        if (swipe) Ui.run(refreshLayout <~ srlRefreshing(false))
         failed()
     }
     if (swipe) Ui.nop else loading()

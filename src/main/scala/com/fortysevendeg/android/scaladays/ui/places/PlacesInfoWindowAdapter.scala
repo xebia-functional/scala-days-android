@@ -20,6 +20,7 @@ import android.view.View
 import com.google.android.gms.maps.GoogleMap.InfoWindowAdapter
 import com.google.android.gms.maps.model.Marker
 import macroid.ActivityContextWrapper
+import macroid._
 import macroid.FullDsl._
 
 class PlacesInfoWindowAdapter(implicit context: ActivityContextWrapper)
@@ -36,7 +37,7 @@ class PlacesInfoWindowAdapter(implicit context: ActivityContextWrapper)
   }
   
   def renderInfo(marker: Marker): View = {
-    runUi(
+    Ui.run(
       (layout.title <~ text(marker.getTitle)) ~
         (layout.snippet <~ text(marker.getSnippet.replaceAll("\n\r\n", "\n")))
     )

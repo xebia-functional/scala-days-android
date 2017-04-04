@@ -18,7 +18,7 @@
 <resources>
 
     <string name="url_json_conference">http://scala-days-2015.s3.amazonaws.com/conferences_2016.json</string>
-    <string name="add_vote_endpoint">http://www.47deg.com/scaladays/votes/add.php</string>
+    <string name="add_vote_endpoint">https://scaladays-backend.herokuapp.com/votes/add.php</string>
     <string name="url_47deg">http://www.47deg.com</string>
     <string name="url_twitter_user">https://twitter.com/%s</string>
     <string name="url_twitter_status">https://twitter.com/%1$s/status/%2$s</string>
