@@ -81,8 +81,6 @@
             android:name="com.google.zxing.client.android.HelpActivity"
             android:screenOrientation="user"/>
 
-        <activity android:name="com.localytics.android.PushTrackingActivity"/>
-
         <service android:name=".services.ReloadJsonService"/>
 
         <receiver
@@ -116,7 +114,7 @@
         </receiver>
 
         <service
-            android:name="com.localytics.android.GcmListenerService"
+            android:name=".services.PushReceiverService"
             android:exported="false" >
             <intent-filter>
                 <action android:name="com.google.android.c2dm.intent.RECEIVE" />

@@ -1,4 +1,6 @@
-Scala Days for Android [![Build Status](https://travis-ci.org/47deg/scala-days-android.svg?branch=master)]
+![Build Status](https://travis-ci.org/47deg/scala-days-android.svg?branch=master)
+
+Scala Days for Android
 ============================
 
 The official Scala Days App for Android handcrafted by [47 Degrees](http://www.47deg.com). You can download Scala Days from [Google Play](https://play.google.com/store/apps/details?id=com.fortysevendeg.android.scaladays)
@@ -6,20 +8,20 @@ The official Scala Days App for Android handcrafted by [47 Degrees](http://www.4
 Scala on Android
 ==============
 
-This application is written entirely in Scala on Android. We are excited to make the application open source and share the code with you. We have used the [macroid](http://macroid.github.io/) library extensively in this project. In addition we have contributed our own Macroid extensions to this application, that can be found here: [macroid-extras](https://github.com/47deg/macroid-extras).
+This application is written entirely in Scala on Android. We are excited to make the application open source and share the code with you. We have used the [macroid](http://macroid.github.io/) library extensively in this project.
 
 Compile
 ======
 
 You can compile this project and contribute improvements. To compile the project:
 
-* Download [Activator](https://typesafe.com/community/core-tools/activator-and-sbt) and install it
-* Configure the Android SDK on your computer
+* Download [SBT](http://www.scala-sbt.org/download.html) and install it
+* Download [Android SDK](https://developer.android.com/studio/index.html#downloads) (you only need the command line tools) and set `ANDROID_HOME` environment variable pointing to the root folder.
 * Clone this GitHub project to your computer
 * From project root directory run:
 
 ```
-$ ./activator
+$ sbt -mem 2048
 ```
 
 * Connect your phone and execute:

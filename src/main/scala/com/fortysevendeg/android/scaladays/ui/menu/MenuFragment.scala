@@ -183,7 +183,7 @@ class MenuFragment
 
     Ui.run(
       (bigImage <~ srcTweak()) ~
-        (conferenceTitle <~ tvText("Scala Days Chicago")))
+        (conferenceTitle <~ tvText(information.longName)))
   }
 
 }

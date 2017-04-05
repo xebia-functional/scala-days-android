@@ -23,7 +23,7 @@ object ProjectPlugin extends AutoPlugin {
       scalaVersion := Versions.scalaV,
       scalacOptions ++= Seq("-feature", "-deprecation"),
       crashlyticsEnabled := (sys.env.getOrElse("CRASHLYTICS_ENABLED", default = "true") == "true")
-    ) ++ dependenciesSettings ++ aliasSettings ++ androidSettings
+    ) ++ dependenciesSettings ++ aliasSettings ++ androidSettings ++ multiDexSettings
 
   private[this] val dependenciesSettings = Seq(
     resolvers ++= Seq(
@@ -49,6 +49,7 @@ object ProjectPlugin extends AutoPlugin {
       aar(androidAppCompat),
       aar(androidCardView),
       aar(androidRecyclerview),
+      aar(multiDexLib),
       aar(playServicesBase),
       aar(playServicesAds),
       aar(playServicesAnalytics),
@@ -121,4 +122,21 @@ object ProjectPlugin extends AutoPlugin {
           "META-INF/NOTICE.txt",
           "META-INF/services/com.fasterxml.jackson.databind.Module"))
   )
+
+  private[this] val multiDexSettings = Seq(
+    dexMulti in Android := true,
+    dexMainClasses in Android := Seq(
+      "com/fortysevendeg/android/scaladays/ui/ScalaDaysApplication",
+      "android/support/multidex/BuildConfig.class",
+      "android/support/multidex/MultiDex$V14.class",
+      "android/support/multidex/MultiDex$V19.class",
+      "android/support/multidex/MultiDex$V4.class",
+      "android/support/multidex/MultiDex.class",
+      "android/support/multidex/MultiDexApplication.class",
+      "android/support/multidex/MultiDexExtractor$1.class",
+      "android/support/multidex/MultiDexExtractor.class",
+      "android/support/multidex/ZipUtil$CentralDirectory.class",
+      "android/support/multidex/ZipUtil.class")
+  )
+
 }

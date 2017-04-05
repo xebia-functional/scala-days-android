@@ -21,8 +21,8 @@ object Libraries {
   def onCompile(dep: ModuleID): ModuleID = dep % "compile"
   def onTest(dep: ModuleID): ModuleID = dep % "test"
 
-  def androidDep(module: String): ModuleID =
-    "com.android.support" % module % Versions.androidV
+  def androidDep(module: String, version: String = Versions.androidV): ModuleID =
+    "com.android.support" % module % version
   def playServicesDep(module: String): ModuleID =
     "com.google.android.gms" % module % Versions.playServicesV
   def macroid(module: String = ""): ModuleID =
@@ -32,6 +32,7 @@ object Libraries {
   lazy val androidAppCompat = androidDep("appcompat-v7")
   lazy val androidRecyclerview = androidDep("recyclerview-v7")
   lazy val androidCardView = androidDep("cardview-v7")
+  lazy val multiDexLib = androidDep("multidex", Versions.multiDexV)
 
   lazy val macroidRoot = macroid()
   lazy val macroidExtras = macroid("extras")

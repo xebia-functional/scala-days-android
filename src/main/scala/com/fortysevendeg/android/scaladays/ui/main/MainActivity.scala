@@ -18,9 +18,9 @@ package com.fortysevendeg.android.scaladays.ui.main
 
 import android.content.Intent
 import android.content.res.Configuration
-import android.os.{Handler, Bundle}
+import android.os.{Bundle, Handler}
 import android.support.v4.app.FragmentActivity
-import android.support.v7.app.{AppCompatActivity, ActionBarDrawerToggle}
+import android.support.v7.app.{ActionBarDrawerToggle, AppCompatActivity}
 import android.view.{Menu, MenuItem, View}
 import com.crashlytics.android.Crashlytics
 import com.fortysevendeg.android.scaladays.R
@@ -37,7 +37,7 @@ import com.fortysevendeg.android.scaladays.utils.AlarmUtils
 import macroid.extras.DrawerLayoutTweaks._
 import macroid.extras.FragmentExtras._
 import macroid.extras.ToolbarTweaks._
-import com.localytics.android.{LocalyticsActivityLifecycleCallbacks, Localytics}
+import com.localytics.android.Localytics
 import io.fabric.sdk.android.Fabric
 import macroid.FullDsl._
 import macroid._
