@@ -25,7 +25,7 @@ object Libraries {
     "com.android.support" % module % version
   def playServicesDep(module: String): ModuleID =
     "com.google.android.gms" % module % Versions.playServicesV
-  def macroid(module: String = ""): ModuleID =
+  def macroidDep(module: String = ""): ModuleID =
     "org.macroid" %% s"macroid${if (!module.isEmpty) s"-$module" else ""}" % Versions.macroidV
 
   lazy val androidSupportv4 = androidDep("support-v4")
@@ -34,8 +34,8 @@ object Libraries {
   lazy val androidCardView = androidDep("cardview-v7")
   lazy val multiDexLib = androidDep("multidex", Versions.multiDexV)
 
-  lazy val macroidRoot = macroid()
-  lazy val macroidExtras = macroid("extras")
+  lazy val macroidRoot = macroidDep()
+  lazy val macroidExtras = macroidDep("extras")
 
   lazy val okHttp = "com.squareup.okhttp3" % "okhttp" % Versions.okHttpV
   lazy val picasso = "com.squareup.picasso" % "picasso" % Versions.picassoV
@@ -55,6 +55,6 @@ object Libraries {
   lazy val localytics = "com.localytics.android" % "library" % Versions.localyticsV
 
   lazy val specs2 = "org.specs2" %% "specs2-core" % Versions.specs2V % "test"
+  lazy val mockito = "org.specs2" %% "specs2-mock" % Versions.mockitoV % "test"
   lazy val androidTest = "com.google.android" % "android" % "4.1.1.4" % "test"
-  lazy val mockito = "org.specs2" % "specs2-mock_2.11" % Versions.mockitoV % "test"
 }
