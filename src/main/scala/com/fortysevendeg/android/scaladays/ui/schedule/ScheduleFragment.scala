@@ -181,7 +181,7 @@ class ScheduleFragment
             val ft = getFragmentManager.beginTransaction()
             Option(getFragmentManager.findFragmentByTag(tagDialog)) foreach ft.remove
             ft.addToBackStack(null)
-            val dialog = new VoteDialog(conferenceId, event)
+            val dialog = VoteDialog(conferenceId, event)
             dialog.setTargetFragment(self, voteResult)
             dialog.show(ft, tagDialog)
           }

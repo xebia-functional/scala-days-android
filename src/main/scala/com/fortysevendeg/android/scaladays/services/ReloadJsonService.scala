@@ -21,15 +21,14 @@ import android.content.Intent
 import android.os.IBinder
 import com.fortysevendeg.android.scaladays.modules.ComponentRegistryImpl
 import com.fortysevendeg.android.scaladays.modules.net.NetRequest
-import macroid.{Contexts, ContextWrapper}
-import scala.concurrent.ExecutionContext.Implicits.global
+import macroid.{Contexts, ServiceContextWrapper}
 
 class ReloadJsonService
   extends Service
   with Contexts[Service]
   with ComponentRegistryImpl {
 
-  override lazy val contextProvider = serviceContextWrapper
+  override lazy val contextProvider: ServiceContextWrapper = serviceContextWrapper
 
   override def onStartCommand(intent: Intent, flags: Int, startId: Int): Int =
     super.onStartCommand(intent, flags, startId)

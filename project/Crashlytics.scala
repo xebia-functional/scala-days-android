@@ -20,7 +20,7 @@ import sbt._
 
 object Crashlytics {
 
-  val crashlyticsEnabled = settingKey[Boolean]("If Crashlytics is enabled")
+  val crashlyticsEnabled: SettingKey[Boolean] = settingKey[Boolean]("If Crashlytics is enabled")
 
   def createFiles = Def.task[Seq[File]] {
     if (crashlyticsEnabled.value) {

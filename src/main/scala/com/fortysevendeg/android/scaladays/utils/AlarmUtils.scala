@@ -22,7 +22,7 @@ import com.fortysevendeg.android.scaladays.services.ReloadJsonService
 
 object AlarmUtils {
 
-  val fourHours = 1000 * 60 * 60 * 4
+  val fourHours: Int = 1000 * 60 * 60 * 4
 
   def setReloadJsonService(context: Context): Unit = {
     val am = context.getSystemService(Context.ALARM_SERVICE).asInstanceOf[AlarmManager]

@@ -18,14 +18,14 @@ package com.fortysevendeg.android.scaladays.ui.social
 
 import java.lang.Boolean
 
+import android.annotation.SuppressLint
 import android.app.Activity
 import android.net.Uri
 import android.net.http.SslError
-import android.os.{Build, Bundle}
+import android.os.Bundle
 import android.support.v4.app.FragmentActivity
 import android.support.v7.app.AppCompatActivity
 import android.webkit._
-import android.widget.TextView
 import com.fortysevendeg.android.scaladays.R
 import com.fortysevendeg.android.scaladays.modules.ComponentRegistryImpl
 import com.fortysevendeg.android.scaladays.modules.twitter.{FinalizeAuthenticationRequest, FinalizeAuthenticationResponse, GetAuthenticationURLRequest}
@@ -36,6 +36,7 @@ import macroid._
 import macroid.{ContextWrapper, Contexts}
 
 import scala.concurrent.ExecutionContext.Implicits.global
+import scala.concurrent.Future
 
 class AuthorizationActivity
     extends AppCompatActivity
@@ -45,7 +46,7 @@ class AuthorizationActivity
 
   override lazy val contextProvider: ContextWrapper = activityContextWrapper
 
-  lazy val twitterHost = activityContextWrapper.application.getString(R.string.twitter_app_callback_host)
+  lazy val twitterHost: String = activityContextWrapper.application.getString(R.string.twitter_app_callback_host)
 
   val webViewClient: WebViewClient = new WebViewClient {
     override def onLoadResource(view: WebView, url: String) {
@@ -53,7 +54,7 @@ class AuthorizationActivity
         case uri if uri.getHost == twitterHost =>
           val token: String = uri.getQueryParameter("oauth_token")
           if (null != token) {
-            showRedirecting
+            showRedirecting()
             twitterServices.finalizeAuthentication(FinalizeAuthenticationRequest(uri)) map {
               case FinalizeAuthenticationResponse() => success()
               case _ => failed()
@@ -68,6 +69,17 @@ class AuthorizationActivity
     }
   }
 
+  @SuppressLint(Array("NewApi"))
+  private[this] def flushCookies(): Unit = {
+    CookieManager.getInstance.removeAllCookies(new ValueCallback[Boolean] {
+      override def onReceiveValue(t: Boolean): Unit = {}
+    })
+    CookieManager.getInstance.removeSessionCookies(new ValueCallback[Boolean] {
+      override def onReceiveValue(t: Boolean): Unit = {}
+    })
+    CookieManager.getInstance.flush()
+  }
+
   override def onCreate(savedInstanceState: Bundle): Unit = {
     super.onCreate(savedInstanceState)
 
@@ -75,16 +87,7 @@ class AuthorizationActivity
 
     Ui.run(webView <~ wvClient(webViewClient))
 
-    Lollipop ifSupportedThen {
-      CookieManager.getInstance.removeAllCookies(new ValueCallback[Boolean] {
-        override def onReceiveValue(t: Boolean): Unit = {}
-      })
-      CookieManager.getInstance.removeSessionCookies(new ValueCallback[Boolean] {
-        override def onReceiveValue(t: Boolean): Unit = {}
-      })
-      CookieManager.getInstance.flush()
-    }
-
+    Lollipop ifSupportedThen flushCookies()
   }
 
   override def onResume(): Unit = {
@@ -110,7 +113,7 @@ class AuthorizationActivity
     finish()
   }
 
-  def showRedirecting() = {
+  def showRedirecting(): Future[_] = {
     Ui.run(
       (progressBar <~ vVisible) ~
           (webView <~ vGone))

@@ -21,7 +21,7 @@ import scala.util.control.Exception._
 
 object ResourceUtils {
 
-  def withResource[C <: Closeable, R](closeable: C)(f: C => R) = {
+  def withResource[C <: Closeable, R](closeable: C)(f: C => R): R = {
     allCatch.andFinally(closeable.close())(f(closeable))
   }
 
