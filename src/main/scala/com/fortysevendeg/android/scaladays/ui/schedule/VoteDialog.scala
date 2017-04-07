@@ -47,10 +47,16 @@ import macroid.{ContextWrapper, Transformer, Tweak, Ui}
 
 import scala.concurrent.ExecutionContext.Implicits.global
 
-class VoteDialog(conferenceId: Int, event: Event)(implicit contextWrapper: ContextWrapper)
+class VoteDialog
   extends DialogFragment
     with ComponentRegistryImpl
-    with Styles {
+    with Styles { self =>
+
+  override implicit lazy val contextProvider: ContextWrapper = ContextWrapper(self)
+
+  def conferenceId: Int = Option(getArguments).map(_.getInt("conferenceId", 0)).getOrElse(0)
+  def eventId: Int = Option(getArguments).map(_.getInt("eventId", 0)).getOrElse(0)
+  def eventTitle: String = Option(getArguments).map(_.getString("eventTitle", "")).getOrElse("")
 
   var infoContent: Option[LinearLayout] = slot[LinearLayout]
 
@@ -68,24 +74,22 @@ class VoteDialog(conferenceId: Int, event: Event)(implicit contextWrapper: Conte
 
   lazy val storedVote: Option[StoredVote] = {
     val voteValue = preferenceServices.fetchStringPreference(PreferenceRequest[String](
-      ScheduleFragment.getPreferenceKeyForVote(conferenceId, event.id), null)).value
+      ScheduleFragment.getPreferenceKeyForVote(conferenceId, eventId), null)).value
 
     Option(voteValue) map { v =>
       val message = Option(preferenceServices.fetchStringPreference(PreferenceRequest[String](
-        ScheduleFragment.getPreferenceKeyForVoteMessage(conferenceId, event.id), null)).value)
+        ScheduleFragment.getPreferenceKeyForVoteMessage(conferenceId, eventId), null)).value)
       StoredVote(Vote.apply(v), message)
     }
   }
 
   var newVote: Option[StoredVote] = None
 
-  override val contextProvider: ContextWrapper = contextWrapper
-
   override def onCreateDialog(savedInstanceState: Bundle): Dialog = {
     val voteRequest = VoteRequest(
       vote = VoteUnlike,
       uid = getAndroidId getOrElse defaultAndroidId,
-      talkId = event.id.toString,
+      talkId = eventId.toString,
       conferenceId = conferenceId.toString)
 
     analyticsServices.sendEvent(
@@ -103,7 +107,7 @@ class VoteDialog(conferenceId: Int, event: Event)(implicit contextWrapper: Conte
         ) <~ votingContentStyle <~ wire(votingContent),
         l[LinearLayout](
           w[TextView] <~ titleStyle,
-          w[TextView] <~ textStyle(event.title),
+          w[TextView] <~ textStyle(eventTitle),
           l[LinearLayout](
             createIcon(VoteUnlike),
             createIcon(VoteNeutral),
@@ -181,10 +185,10 @@ class VoteDialog(conferenceId: Int, event: Event)(implicit contextWrapper: Conte
               analyticsCategoryVote,
               analyticsScheduleActionSendVote)
 
-            val key = ScheduleFragment.getPreferenceKeyForVote(conferenceId, event.id)
+            val key = ScheduleFragment.getPreferenceKeyForVote(conferenceId, eventId)
             preferenceServices.saveStringPreference(PreferenceRequest[String](key, voteRequest.vote.value))
             voteRequest.message foreach { message =>
-              val keyMessage = ScheduleFragment.getPreferenceKeyForVoteMessage(conferenceId, event.id)
+              val keyMessage = ScheduleFragment.getPreferenceKeyForVoteMessage(conferenceId, eventId)
               preferenceServices.saveStringPreference(PreferenceRequest[String](keyMessage, message))
             }
             getTargetFragment.onActivityResult(getTargetRequestCode, Activity.RESULT_OK, responseIntent)
@@ -201,12 +205,24 @@ class VoteDialog(conferenceId: Int, event: Event)(implicit contextWrapper: Conte
       }
 
   private[this] def getAndroidId: Option[String] = {
-    val cursor = Option(contextWrapper.application.getContentResolver.query(Uri.parse(contentGServices), null, null, Array(androidId), null))
+    val cursor = Option(contextProvider.application.getContentResolver.query(Uri.parse(contentGServices), null, null, Array(androidId), null))
     val result = cursor filter (c => c.moveToFirst && c.getColumnCount >= 2) map (_.getLong(1).toHexString.toUpperCase)
     cursor foreach (_.close())
     result
   }
 
+}
+
+object VoteDialog {
+  def apply(conferenceId: Int, event: Event): VoteDialog = {
+    val bundle = new Bundle()
+    bundle.putInt("conferenceId", conferenceId)
+    bundle.putInt("eventId", event.id)
+    bundle.putString("eventTitle", event.title)
+    val dialog = new VoteDialog()
+    dialog.setArguments(bundle)
+    dialog
+  }
 }
 
 case class StoredVote(vote: Vote, message: Option[String])
