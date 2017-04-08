@@ -65,7 +65,7 @@ class AuthorizationActivity
 
     }
     override def onReceivedSslError(view: WebView, handler: SslErrorHandler, error: SslError) {
-      handler.proceed()
+      handler.cancel()
     }
   }
 
