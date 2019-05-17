@@ -37,6 +37,7 @@ object ProjectPlugin extends AutoPlugin {
       Resolver.sonatypeRepo("releases"),
       Resolver.sonatypeRepo("snapshots"),
       Resolver.defaultLocal,
+      "Google Maven" at "https://dl.google.com/dl/android/maven2",
       "Scalaz Bintray Repo" at "http://dl.bintray.com/scalaz/releases",
       "zxing Android Minimal" at "https://raw.github.com/embarkmobile/zxing-android-minimal/mvn-repo/maven-repository/",
       "crashlytics" at "https://maven.fabric.io/public",
@@ -56,6 +57,7 @@ object ProjectPlugin extends AutoPlugin {
       aar(playServicesGcm),
       aar(playServicesMaps),
       aar(zxingAndroid),
+      aar(firebase),
       okHttp,
       picasso,
       playJson,
@@ -112,7 +114,9 @@ object ProjectPlugin extends AutoPlugin {
       "-keepclassmembernames class * { @com.google.android.gms.common.annotation.KeepName *; }",
       "-keepnames class * implements android.os.Parcelable { public static final ** CREATOR; }",
       "-keep class com.crashlytics.** { *; }",
-      "-dontwarn com.crashlytics.**"
+      "-keepattributes JavascriptInterface",
+      "-dontwarn com.crashlytics.**",
+      "-dontwarn com.localytics.android.**"
     ),
     packagingOptions in Android := PackagingOptions(
       excludes =
@@ -120,6 +124,11 @@ object ProjectPlugin extends AutoPlugin {
           "META-INF/LICENSE.txt",
           "META-INF/NOTICE",
           "META-INF/NOTICE.txt",
+          "META-INF/maven/com.squareup.okio/okio/pom.properties",
+          "META-INF/maven/com.squareup.okio/okio/pom.xml",
+          "META-INF/maven/com.fasterxml.jackson.core/jackson-core/pom.properties",
+          "META-INF/maven/com.fasterxml.jackson.core/jackson-core/pom.xml",
+          "META-INF/services/com.fasterxml.jackson.core.JsonFactory",
           "META-INF/services/com.fasterxml.jackson.databind.Module"))
   )
 

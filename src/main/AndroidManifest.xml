@@ -21,7 +21,7 @@
           android:versionName="2.3.0">
 
     <uses-sdk
-        android:minSdkVersion="15"
+        android:minSdkVersion="19"
         android:targetSdkVersion="21"/>
 
     <application
@@ -37,10 +37,6 @@
         <meta-data
             android:name="com.google.android.maps.v2.API_KEY"
             android:value="@string/google_map_key"/>
-
-        <meta-data
-            android:name="LOCALYTICS_APP_KEY"
-            android:value="@string/localytics_key"/>
 
         <meta-data
             android:name="LOCALYTICS_NOTIFICATION_ICON"
@@ -94,42 +90,6 @@
             </intent-filter>
         </receiver>
 
-        <!-- Localytics Receiver -->
-
-        <receiver
-            android:name="com.localytics.android.ReferralReceiver"
-            android:exported="true">
-            <intent-filter>
-                <action android:name="com.android.vending.INSTALL_REFERRER" />
-            </intent-filter>
-        </receiver>
-
-        <receiver
-            android:name="com.google.android.gms.gcm.GcmReceiver"
-            android:exported="true"
-            android:permission="com.google.android.c2dm.permission.SEND" >
-            <intent-filter>
-                <action android:name="com.google.android.c2dm.intent.RECEIVE" />
-                <category android:name="com.fortysevendeg.android.scaladays" />
-            </intent-filter>
-        </receiver>
-
-        <service
-            android:name=".services.PushReceiverService"
-            android:exported="false" >
-            <intent-filter>
-                <action android:name="com.google.android.c2dm.intent.RECEIVE" />
-            </intent-filter>
-        </service>
-
-        <service
-            android:name="com.localytics.android.InstanceIDListenerService"
-            android:exported="false" >
-            <intent-filter>
-                <action android:name="com.google.android.gms.iid.InstanceID" />
-            </intent-filter>
-        </service>
-
     </application>
 
     <uses-permission android:name="android.permission.INTERNET"/>
@@ -143,6 +103,8 @@
     <uses-permission android:name="android.permission.WAKE_LOCK"/>
     <uses-permission android:name="android.permission.GET_ACCOUNTS"/>
     <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE"/>
+
+    <receiver android:name="com.localytics.android.LocationUpdateReceiver"/>
 
     <permission
         android:name="com.fortysevendeg.android.scaladays.permission.C2D_MESSAGE"

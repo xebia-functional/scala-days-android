@@ -56,7 +56,7 @@ class MainActivity
 
     startCrashlytics()
 
-    Localytics.registerPush(getString(R.string.google_project_number))
+    Localytics.registerPush()
 
     toolBar foreach setSupportActionBar
 

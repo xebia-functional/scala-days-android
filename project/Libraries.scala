@@ -30,6 +30,7 @@ object Libraries {
 
   lazy val androidSupportv4 = androidDep("support-v4")
   lazy val androidAppCompat = androidDep("appcompat-v7")
+  lazy val androidSupportCompat = androidDep("support-compat")
   lazy val androidRecyclerview = androidDep("recyclerview-v7")
   lazy val androidCardView = androidDep("cardview-v7")
   lazy val multiDexLib = androidDep("multidex", Versions.multiDexV)
@@ -50,6 +51,8 @@ object Libraries {
   lazy val playServicesBase = playServicesDep("play-services-base")
   lazy val playServicesGcm = playServicesDep("play-services-gcm")
   lazy val playServicesMaps = playServicesDep("play-services-maps")
+
+  lazy val firebase = "com.google.firebase" % "firebase-messaging" % Versions.firebaseV
 
   lazy val crashlytics = "com.crashlytics.sdk.android" % "crashlytics" % Versions.crashlyticsV
   lazy val localytics = "com.localytics.android" % "library" % Versions.localyticsV

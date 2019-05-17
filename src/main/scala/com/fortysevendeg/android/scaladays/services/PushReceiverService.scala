@@ -8,12 +8,11 @@ import com.fortysevendeg.android.scaladays.R
 import com.fortysevendeg.android.scaladays.modules.ComponentRegistryImpl
 import com.fortysevendeg.android.scaladays.modules.net.NetRequest
 import com.fortysevendeg.android.scaladays.ui.main.MainActivity
-import com.localytics.android.GcmListenerService
+import com.google.android.gms.gcm.GcmListenerService
 import macroid.{Contexts, ServiceContextWrapper}
 import play.api.libs.json.{Json, Reads}
 
 import scala.util.{Failure, Success, Try}
-
 import scala.concurrent.ExecutionContext.Implicits.global
 
 class PushReceiverService

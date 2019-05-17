@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Define your Localytics app key-->
+    <string name="ll_app_key">@string/localytics_key</string>
+
+    <!-- Toggle the Localytics referral receiver which is used to attribute sessions to
+    their installation source -->
+    <bool name="ll_referral_receiver_enabled">true</bool>
+
+    <!-- Toggle the Localytics push tracking activity which is used to track the push opened event
+    as well as ensure deeplinking behavior -->
+    <bool name="ll_push_tracking_activity_enabled">true</bool>
+
+    <!-- Specify the GCM Sender ID which will be used to register for push tokens -->
+    <string name="ll_gcm_sender_id" translatable="false">@string/google_project_number</string>
+
+    <!-- Toggle the Localytics FirebaseInstanceIdService and FirebaseMessagingService, which handle
+    incoming requests from FCM. If this value is set to true, then the app must specify the
+    com.google.firebase:firebase-messaging dependency-->
+    <bool name="ll_fcm_push_services_enabled">true</bool>
+
+    <!-- Toggle the Localytics LocationUpdateReceiver and BootReceiver for Places integrations
+    If this value is set to true then the app must specify the
+    com.google.android.gms:play-services-location dependency-->
+    <bool name="ll_places_enabled">false</bool>
+
+    <!-- Toggle the Localytics BackgroundService for Places integrations
+    Enabling this flag allows Places to be more reliable, as the Localytics
+    SDK can ensure that it is monitoring the correct geofences at all times.
+    If this value is set to true then the app must specify the
+    com.google.android.gms:play-services-gcm dependency-->
+    <bool name="ll_places_background_service_enabled">false</bool>
+
+    <!-- Configure the Localytics session timeout -->
+    <integer name="ll_session_timeout_seconds">15</integer>
+
+    <!--Configure the default channel used for push notifications-->
+    <string name="ll_default_push_channel_id" translatable="false">localytics_default</string>
+    <!--Configure the default channel name used for push notifications-->
+    <string name="ll_default_push_channel_name" translatable="false">Default</string>
+    <!--Configure the default channel description used for push notifications-->
+    <string name="ll_default_push_channel_description" translatable="false"/>
+
+    <!--Configure the default channel used for places notifications-->
+    <string name="ll_default_places_channel_id" translatable="false">localytics_default</string>
+    <!--Configure the default channel name used for places notifications-->
+    <string name="ll_default_places_channel_name" translatable="false">Default</string>
+    <!--Configure the default channel description used for places notifications-->
+    <string name="ll_default_places_channel_description" translatable="false"/>
+</resources>
