@@ -1,5 +1,6 @@
 addSbtPlugin("org.brianmckenna" % "sbt-wartremover" % "0.13")
 addSbtPlugin("org.scala-android" % "sbt-android" % "1.7.10")
+addSbtPlugin("org.scala-android" % "sbt-android-gms" % "0.4")
 resolvers += "Fabric public" at "https://maven.fabric.io/public"
 libraryDependencies ++= Seq(
   "com.amazonaws" % "aws-java-sdk-s3" % "1.10.44",
