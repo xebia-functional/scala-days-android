@@ -20,3 +20,4 @@ proguard-sbt.txt
 
 #Proguard
 proguard-sbt.txt
+google-services\.json
