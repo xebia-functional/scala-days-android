@@ -80,16 +80,16 @@ class ScheduleFragment
         )))
   }
 
-  def preferences(): SharedPreferences = {
-    getActivity().getSharedPreferences(FILTER_PREFERENCES, Context.MODE_PRIVATE)
+  def preferences(): Option[SharedPreferences] = {
+    Option(getActivity()).map(_.getSharedPreferences(FILTER_PREFERENCES, Context.MODE_PRIVATE))
   }
 
   def shouldLoadFavorites(): Boolean = {
-    preferences().getBoolean(FILTER_KEY, false)
+    preferences().map(_.getBoolean(FILTER_KEY, false)).getOrElse(false)
   }
 
   def saveFavorites(favorites: Boolean): Unit = {
-    preferences().edit().putBoolean(FILTER_KEY, favorites).commit()
+    preferences().foreach(_.edit().putBoolean(FILTER_KEY, favorites).apply())
   }
 
   override def onCreateOptionsMenu(menu: Menu, inflater: MenuInflater): Unit = {
