@@ -16,6 +16,10 @@
 
 package com.fortysevendeg.android.scaladays.ui.main
 
+import android.support.v4.content.ContextCompat
+import android.support.v4.app.ActivityCompat
+import android.content.pm.PackageManager
+import android.Manifest
 import android.content.Intent
 import android.content.res.Configuration
 import android.os.{Bundle, Handler}
@@ -89,6 +93,8 @@ class MainActivity
           id = Id.menuFragment,
           tag = Some(Tag.menuFragment)))
     }
+
+    requestPermissions()
   }
 
   override def onDestroy(): Unit = {
@@ -155,4 +161,12 @@ class MainActivity
     })
   }
 
+  val APP_PERMISSIONS = 1010
+  private[this] def requestPermissions(): Unit = {
+    if (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
+      ActivityCompat.requestPermissions(this, Array(Manifest.permission.CAMERA, Manifest.permission.WRITE_CONTACTS, Manifest.permission.WRITE_EXTERNAL_STORAGE), APP_PERMISSIONS)
+    }
+  }
+
+  override def onRequestPermissionsResult(requestCode: Int, permissions: Array[String], grantResults: Array[Int]): Unit = {}
 }
