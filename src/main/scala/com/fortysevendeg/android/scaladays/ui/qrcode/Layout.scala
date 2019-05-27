@@ -16,6 +16,10 @@
 
 package com.fortysevendeg.android.scaladays.ui.qrcode
 
+import android.support.v4.content.ContextCompat
+import android.support.v4.app.ActivityCompat
+import android.content.pm.PackageManager
+import android.Manifest
 import android.content.Intent
 import android.support.v4.app.Fragment
 import android.widget._
@@ -43,14 +47,18 @@ trait Layout
       w[TextView] <~ qrMessageStyle,
       w[Button] <~ qrButtonStyle <~ On.click {
         Ui {
-          analyticsServices.sendEvent(
-            screenName = Some(analyticsContactsScreen),
-            category = analyticsCategoryNavigate,
-            action = analyticsContactsActionScanContact)
-          val intent = new Intent(getActivity, classOf[CaptureActivity])
-          intent.setAction(CaptureActionScan)
-          intent.putExtra(DisplayDurationKey, DefaultDisplayMs)
-          startActivityForResult(intent, scanResult)
+          if (ContextCompat.checkSelfPermission(getActivity, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(getActivity, Array(Manifest.permission.CAMERA), cameraPermissionResult)
+          } else {
+            analyticsServices.sendEvent(
+              screenName = Some(analyticsContactsScreen),
+              category = analyticsCategoryNavigate,
+              action = analyticsContactsActionScanContact)
+            val intent = new Intent(getActivity, classOf[CaptureActivity])
+            intent.setAction(CaptureActionScan)
+            intent.putExtra(DisplayDurationKey, DefaultDisplayMs)
+            startActivityForResult(intent, scanResult)
+          }
         }
       }
     ) <~ qrContentStyle

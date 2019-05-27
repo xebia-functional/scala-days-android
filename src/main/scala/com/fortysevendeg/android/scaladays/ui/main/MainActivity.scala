@@ -16,8 +16,6 @@
 
 package com.fortysevendeg.android.scaladays.ui.main
 
-import android.support.v4.content.ContextCompat
-import android.support.v4.app.ActivityCompat
 import android.content.pm.PackageManager
 import android.Manifest
 import android.content.Intent
@@ -29,6 +27,7 @@ import android.view.{Menu, MenuItem, View}
 import com.crashlytics.android.Crashlytics
 import com.fortysevendeg.android.scaladays.R
 import com.fortysevendeg.android.scaladays.ui.about.AboutFragment
+import com.fortysevendeg.android.scaladays.ui.commons.IntegerResults
 import com.fortysevendeg.android.scaladays.ui.places.PlacesFragment
 import com.fortysevendeg.android.scaladays.ui.qrcode.QrCodeFragment
 import com.fortysevendeg.android.scaladays.ui.menu.MenuSection._
@@ -94,8 +93,6 @@ class MainActivity
           id = Id.menuFragment,
           tag = Some(Tag.menuFragment)))
     }
-
-    requestPermissions()
   }
 
   override def onDestroy(): Unit = {
@@ -162,15 +159,8 @@ class MainActivity
     })
   }
 
-  val APP_PERMISSIONS = 1010
-  private[this] def requestPermissions(): Unit = {
-    if (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
-      ActivityCompat.requestPermissions(this, Array(Manifest.permission.CAMERA), APP_PERMISSIONS)
-    }
-  }
-
   override def onRequestPermissionsResult(requestCode: Int, permissions: Array[String], grantResults: Array[Int]): Unit =
-    if (requestCode == APP_PERMISSIONS) {
+    if (requestCode == IntegerResults.cameraPermissionResult) {
       permissions.toList.zip(grantResults.toList)
         .find(_ == (Manifest.permission.CAMERA, PackageManager.PERMISSION_DENIED))
         .foreach { _ =>
