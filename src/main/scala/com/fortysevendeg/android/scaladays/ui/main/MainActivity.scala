@@ -45,6 +45,7 @@ import com.localytics.android.Localytics
 import io.fabric.sdk.android.Fabric
 import macroid.FullDsl._
 import macroid._
+import macroid.extras.UIActionsExtras.uiShortToast
 
 class MainActivity
   extends AppCompatActivity
@@ -164,9 +165,16 @@ class MainActivity
   val APP_PERMISSIONS = 1010
   private[this] def requestPermissions(): Unit = {
     if (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
-      ActivityCompat.requestPermissions(this, Array(Manifest.permission.CAMERA, Manifest.permission.WRITE_CONTACTS, Manifest.permission.WRITE_EXTERNAL_STORAGE), APP_PERMISSIONS)
+      ActivityCompat.requestPermissions(this, Array(Manifest.permission.CAMERA), APP_PERMISSIONS)
     }
   }
 
-  override def onRequestPermissionsResult(requestCode: Int, permissions: Array[String], grantResults: Array[Int]): Unit = {}
+  override def onRequestPermissionsResult(requestCode: Int, permissions: Array[String], grantResults: Array[Int]): Unit =
+    if (requestCode == APP_PERMISSIONS) {
+      permissions.toList.zip(grantResults.toList)
+        .find(_ == (Manifest.permission.CAMERA, PackageManager.PERMISSION_DENIED))
+        .foreach { _ =>
+          Ui.run(uiShortToast(R.string.cameraPermissions))
+        }
+    }
 }
