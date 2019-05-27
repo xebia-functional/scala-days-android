@@ -69,7 +69,7 @@
 
     <string name="scanMessage">You can scan the QR Code in the conference and add it to your contacts</string>
     <string name="scan">Scan</string>
-    <string name="scanError">QR Code is not a VCard type or the app doesn\'t have camera permissions</string>
+    <string name="scanError">QR Code is not a VCard type</string>
 
     <string name="codeOfConduct">Code Of Conduct</string>
     <string name="about47">The official Scala Days App for Android handcrafted by 47 Degrees</string>
