@@ -26,7 +26,6 @@ import android.widget._
 import com.fortysevendeg.android.scaladays.modules.analytics.AnalyticsServicesComponent
 import com.fortysevendeg.android.scaladays.ui.commons.AnalyticStrings._
 import com.fortysevendeg.android.scaladays.ui.commons.IntegerResults._
-import com.google.zxing.client.android.CaptureActivity
 import macroid.FullDsl._
 import macroid.{Ui, ActivityContextWrapper}
 
@@ -48,16 +47,12 @@ trait Layout
       w[Button] <~ qrButtonStyle <~ On.click {
         Ui {
           if (ContextCompat.checkSelfPermission(getActivity, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(getActivity, Array(Manifest.permission.CAMERA), cameraPermissionResult)
+            requestPermissions(Array(Manifest.permission.CAMERA), cameraPermissionResult)
           } else {
-            analyticsServices.sendEvent(
-              screenName = Some(analyticsContactsScreen),
-              category = analyticsCategoryNavigate,
-              action = analyticsContactsActionScanContact)
-            val intent = new Intent(getActivity, classOf[CaptureActivity])
-            intent.setAction(CaptureActionScan)
-            intent.putExtra(DisplayDurationKey, DefaultDisplayMs)
-            startActivityForResult(intent, scanResult)
+            onRequestPermissionsResult(
+              cameraPermissionResult,
+              Array(Manifest.permission.CAMERA),
+              Array(PackageManager.PERMISSION_GRANTED))
           }
         }
       }

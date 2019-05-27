@@ -158,13 +158,4 @@ class MainActivity
       }
     })
   }
-
-  override def onRequestPermissionsResult(requestCode: Int, permissions: Array[String], grantResults: Array[Int]): Unit =
-    if (requestCode == IntegerResults.cameraPermissionResult) {
-      permissions.toList.zip(grantResults.toList)
-        .find(_ == (Manifest.permission.CAMERA, PackageManager.PERMISSION_DENIED))
-        .foreach { _ =>
-          Ui.run(uiShortToast(R.string.cameraPermissions))
-        }
-    }
 }
