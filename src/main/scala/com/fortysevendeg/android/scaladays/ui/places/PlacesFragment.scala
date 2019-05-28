@@ -103,7 +103,7 @@ class PlacesFragment
     }
 
   private def toCameraUpdate(venue: Venue): CameraUpdate =
-    CameraUpdateFactory.newLatLngZoom(new LatLng(venue.latitude, venue.longitude), defaultZoom)
+    CameraUpdateFactory.newLatLngZoom(new LatLng(venue.latitude, venue.longitude), venue.zoom)
 
   def failed(): Unit = {}
 
