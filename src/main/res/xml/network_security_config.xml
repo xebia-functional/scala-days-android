@@ -2,5 +2,7 @@
 <network-security-config xmlns:android="http://schemas.android.com/apk/res/android">
     <domain-config cleartextTrafficPermitted="true">
         <domain includeSubdomains="true">scala-days-2015.s3.amazonaws.com</domain>
+        <domain includeSubdomains="true">twimg.com</domain>
+        <domain includeSubdomains="true">twitter.com</domain>
     </domain-config>
 </network-security-config>
