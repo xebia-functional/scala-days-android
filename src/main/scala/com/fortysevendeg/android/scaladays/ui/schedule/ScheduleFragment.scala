@@ -18,7 +18,7 @@ package com.fortysevendeg.android.scaladays.ui.schedule
 
 import android.app.{Activity, AlertDialog}
 import android.content.DialogInterface.OnClickListener
-import android.content.{DialogInterface, Intent}
+import android.content.{Context, DialogInterface, Intent, SharedPreferences}
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v7.widget.{LinearLayoutManager, RecyclerView}
@@ -46,6 +46,8 @@ class ScheduleFragment
   with ListLayout { self =>
 
   val tagDialog = "dialog"
+  val FILTER_PREFERENCES = "FILTER_PREFERENCES"
+  val FILTER_KEY = "FILTER_KEY"
 
   var clockMenu: Option[MenuItem] = None
 
@@ -71,11 +73,23 @@ class ScheduleFragment
       (recyclerView
         <~ rvLayoutManager(layoutManager)
         <~ rvAddItemDecoration(new ScheduleItemDecorator())) ~
-        loadSchedule() ~
-        (refreshLayout <~ srlOnRefreshListener(loadSchedule(favorites = false, forceDownload = true, swipe = true))) ~
+        loadSchedule(favorites = shouldLoadFavorites()) ~
+        (refreshLayout <~ srlOnRefreshListener(loadSchedule(favorites = shouldLoadFavorites(), forceDownload = true, swipe = true))) ~
         (reloadButton <~ On.click(
-          loadSchedule(favorites = false, forceDownload = true)
+          loadSchedule(favorites = shouldLoadFavorites(), forceDownload = true)
         )))
+  }
+
+  def preferences(): Option[SharedPreferences] = {
+    Option(getActivity()).map(_.getSharedPreferences(FILTER_PREFERENCES, Context.MODE_PRIVATE))
+  }
+
+  def shouldLoadFavorites(): Boolean = {
+    preferences().map(_.getBoolean(FILTER_KEY, false)).getOrElse(false)
+  }
+
+  def saveFavorites(favorites: Boolean): Unit = {
+    preferences().foreach(_.edit().putBoolean(FILTER_KEY, favorites).apply())
   }
 
   override def onCreateOptionsMenu(menu: Menu, inflater: MenuInflater): Unit = {
@@ -101,12 +115,14 @@ class ScheduleFragment
                 Some(analyticsScheduleListScreen),
                 analyticsCategoryFilter,
                 analyticsScheduleActionFilterAll)
+              saveFavorites(false)
               loadSchedule()
             case 1 =>
               analyticsServices.sendEvent(
                 Some(analyticsScheduleListScreen),
                 analyticsCategoryFilter,
                 analyticsScheduleActionFilterFavorites)
+              saveFavorites(true)
               loadSchedule(favorites = true)
           })
         }

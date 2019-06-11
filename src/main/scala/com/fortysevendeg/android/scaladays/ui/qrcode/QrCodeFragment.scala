@@ -16,6 +16,8 @@
 
 package com.fortysevendeg.android.scaladays.ui.qrcode
 
+import android.content.pm.PackageManager
+import android.Manifest
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
@@ -30,6 +32,7 @@ import com.google.zxing.client.result.VCardResultParser
 import macroid.{ContextWrapper, Contexts, Ui}
 import macroid.extras.UIActionsExtras._
 import com.fortysevendeg.android.scaladays.ui.commons.IntegerResults._
+import com.google.zxing.client.android.CaptureActivity
 
 import scala.concurrent.Future
 
@@ -98,6 +101,35 @@ class QrCodeFragment
     }
   }
 
+  def startCamera(): Unit = {
+    analyticsServices.sendEvent(
+      screenName = Some(analyticsContactsScreen),
+      category = analyticsCategoryNavigate,
+      action = analyticsContactsActionScanContact)
+    val intent = new Intent(getActivity, classOf[CaptureActivity])
+    intent.setAction(CaptureActionScan)
+    intent.putExtra(DisplayDurationKey, DefaultDisplayMs)
+    startActivityForResult(intent, scanResult)
+  }
+
   def failed(): Future[Unit] = Ui.run(uiShortToast(R.string.scanError))
 
+  override def onRequestPermissionsResult(requestCode: Int, permissions: Array[String], grantResults: Array[Int]): Unit = {
+    if (requestCode == cameraPermissionResult) {
+      permissions.toList.zip(grantResults.toList)
+        .find(_ == (Manifest.permission.CAMERA, PackageManager.PERMISSION_GRANTED))
+        .fold(Ui.run(uiShortToast(R.string.cameraPermissions))) { _ =>
+          Ui {
+            analyticsServices.sendEvent(
+              screenName = Some(analyticsContactsScreen),
+              category = analyticsCategoryNavigate,
+              action = analyticsContactsActionScanContact)
+            val intent = new Intent(getActivity, classOf[CaptureActivity])
+            intent.setAction(CaptureActionScan)
+            intent.putExtra(DisplayDurationKey, DefaultDisplayMs)
+            startActivityForResult(intent, scanResult)
+          }.run
+        }
+    }
+  }
 }

@@ -95,4 +95,6 @@
     <string name="monthOfYear11">November</string>
     <string name="monthOfYear12">December</string>
 
+    <string name="cameraPermissions">Camera permissions are needed for scanning VCards</string>
+
 </resources>

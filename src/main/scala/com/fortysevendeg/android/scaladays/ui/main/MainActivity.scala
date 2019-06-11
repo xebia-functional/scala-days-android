@@ -16,6 +16,8 @@
 
 package com.fortysevendeg.android.scaladays.ui.main
 
+import android.content.pm.PackageManager
+import android.Manifest
 import android.content.Intent
 import android.content.res.Configuration
 import android.os.{Bundle, Handler}
@@ -25,6 +27,7 @@ import android.view.{Menu, MenuItem, View}
 import com.crashlytics.android.Crashlytics
 import com.fortysevendeg.android.scaladays.R
 import com.fortysevendeg.android.scaladays.ui.about.AboutFragment
+import com.fortysevendeg.android.scaladays.ui.commons.IntegerResults
 import com.fortysevendeg.android.scaladays.ui.places.PlacesFragment
 import com.fortysevendeg.android.scaladays.ui.qrcode.QrCodeFragment
 import com.fortysevendeg.android.scaladays.ui.menu.MenuSection._
@@ -41,6 +44,7 @@ import com.localytics.android.Localytics
 import io.fabric.sdk.android.Fabric
 import macroid.FullDsl._
 import macroid._
+import macroid.extras.UIActionsExtras.uiShortToast
 
 class MainActivity
   extends AppCompatActivity
@@ -56,7 +60,7 @@ class MainActivity
 
     startCrashlytics()
 
-    Localytics.registerPush(getString(R.string.google_project_number))
+    Localytics.registerPush()
 
     toolBar foreach setSupportActionBar
 
@@ -154,5 +158,4 @@ class MainActivity
       }
     })
   }
-
 }

@@ -18,8 +18,8 @@ object Versions {
 
   val appV = "1.0.0"
   val scalaV = "2.11.8"
-  val androidPlatformV = "android-25"
-  val androidV = "25.3.1"
+  val androidPlatformV = "android-28"
+  val androidV = "26.0.2"
   val multiDexV = "1.0.1"
   val macroidV = "2.0"
   // Play 2.4 now requires Java 8.
@@ -30,9 +30,10 @@ object Versions {
   val zxingCoreV = "3.3.0"
   val zxingAndroidV = "2.0.0"
   val picassoV = "2.5.2"
-  val playServicesV = "10.2.1"
+  val playServicesV = "11.4.2"
   val mockitoV = "3.0-M2"
   val crashlyticsV = "2.6.7"
-  val localyticsV = "4.3.0"
+  val localyticsV = "5.5.0"
   val okHttpV = "3.6.0"
+  val firebaseV = "11.4.2"
 }

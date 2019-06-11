@@ -24,5 +24,6 @@ before_install:
   - echo yes | android update sdk --all --filter extra-android-m2repository --no-ui
   - echo yes | android update sdk --all --filter extra-google-m2repository --no-ui
   - mv debug.properties.default debug.properties
+  - mv google-services.json.default google-services.json
 script:
   - sbt ++$TRAVIS_SCALA_VERSION clean test

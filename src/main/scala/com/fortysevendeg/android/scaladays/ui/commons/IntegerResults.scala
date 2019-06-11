@@ -22,5 +22,6 @@ object IntegerResults {
   val scanResult = 1002
   val detailResult = 1003
   val voteResult = 1004
+  val cameraPermissionResult = 1005
 
 }
