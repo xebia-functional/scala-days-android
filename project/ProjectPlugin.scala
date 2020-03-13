@@ -27,7 +27,7 @@ object ProjectPlugin extends AutoPlugin {
 
   private[this] val dependenciesSettings = Seq(
     resolvers ++= Seq(
-      "Maven Central Server" at "http://repo1.maven.org/maven2",
+      "Maven Central Server" at "https://repo1.maven.org/maven2",
       DefaultMavenRepository,
       "jcenter" at "http://jcenter.bintray.com",
       "47 Degrees Bintray Repo" at "http://dl.bintray.com/47deg/maven",
