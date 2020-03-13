@@ -41,7 +41,7 @@ object ProjectPlugin extends AutoPlugin {
       "Scalaz Bintray Repo" at "http://dl.bintray.com/scalaz/releases",
       "zxing Android Minimal" at "https://raw.github.com/embarkmobile/zxing-android-minimal/mvn-repo/maven-repository/",
       "crashlytics" at "https://maven.fabric.io/public",
-      "localytics" at "http://maven.localytics.com/public"
+      "localytics" at "https://maven.localytics.com/public"
     ),
     libraryDependencies ++= Seq(
       aar(macroidRoot),
