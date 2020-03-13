@@ -1,4 +1,4 @@
-![Build Status](https://travis-ci.org/47deg/scala-days-android.svg?branch=master)
+![Build Status](https://travis-ci.org/47degrees/scala-days-android.svg?branch=master)
 
 Scala Days for Android
 ============================

@@ -27,7 +27,7 @@ object ProjectPlugin extends AutoPlugin {
 
   private[this] val dependenciesSettings = Seq(
     resolvers ++= Seq(
-      "Maven Central Server" at "http://repo1.maven.org/maven2",
+      "Maven Central Server" at "https://repo1.maven.org/maven2",
       DefaultMavenRepository,
       "jcenter" at "http://jcenter.bintray.com",
       "47 Degrees Bintray Repo" at "http://dl.bintray.com/47deg/maven",
@@ -41,7 +41,7 @@ object ProjectPlugin extends AutoPlugin {
       "Scalaz Bintray Repo" at "http://dl.bintray.com/scalaz/releases",
       "zxing Android Minimal" at "https://raw.github.com/embarkmobile/zxing-android-minimal/mvn-repo/maven-repository/",
       "crashlytics" at "https://maven.fabric.io/public",
-      "localytics" at "http://maven.localytics.com/public"
+      "localytics" at "https://maven.localytics.com/public"
     ),
     libraryDependencies ++= Seq(
       aar(macroidRoot),
